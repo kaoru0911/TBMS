@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1421" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Jr2-OO-ePz">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Jr2-OO-ePz">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="185"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S0d-qd-USG" id="qwc-7c-LyM">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="184"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="184.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                                 <connections>
@@ -61,7 +61,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qqW-AD-KSg" id="Gbc-lO-WP9">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="49.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DFk-64-Q2c">
@@ -134,7 +134,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dpc-IQ-ijX" id="hrQ-1K-K13">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Kd-IL-UEl">
@@ -366,14 +366,14 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DateCell" id="bwU-tL-24C" customClass="DateCell" customModule="TBMS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="42"/>
+                                        <rect key="frame" x="24.5" y="0.0" width="365" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="42"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="365" height="42"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hP4-LW-2ag">
-                                                    <rect key="frame" x="350" y="6" width="30" height="30"/>
+                                                    <rect key="frame" x="301" y="6" width="30" height="30"/>
                                                     <state key="normal" title="add"/>
                                                     <connections>
                                                         <action selector="addNewTripDay:" destination="bwU-tL-24C" eventType="touchUpInside" id="fwW-ab-hbO"/>
@@ -393,16 +393,17 @@
                                             <constraint firstItem="rZq-bA-8K2" firstAttribute="centerY" secondItem="bwU-tL-24C" secondAttribute="centerY" id="bMd-CR-2vg"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="hP4-LW-2ag" secondAttribute="trailing" constant="26" id="dhC-qx-CgH"/>
                                         </constraints>
+                                        <size key="customSize" width="365" height="42"/>
                                         <connections>
                                             <outlet property="addNewTripDayButton" destination="hP4-LW-2ag" id="aMe-3H-YvX"/>
                                             <outlet property="dateLabel" destination="rZq-bA-8K2" id="0jO-Bt-0JJ"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ScheduleAndTrafficCell" id="dwf-lD-3Z3" customClass="ScheduleAndTrafficCell" customModule="TBMS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="52" width="414" height="119"/>
+                                        <rect key="frame" x="20.5" y="52" width="373" height="119"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="119"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="373" height="119"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="交通方式, 交通時間" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDd-Em-wTH">
@@ -411,12 +412,6 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dDJ-SF-K3G">
-                                                    <rect key="frame" x="18" y="8" width="355" height="53"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="53" id="RVz-DU-sPu"/>
-                                                    </constraints>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="景點一" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K7Y-go-fwA">
                                                     <rect key="frame" x="38" y="25" width="52" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -436,6 +431,12 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dDJ-SF-K3G">
+                                                    <rect key="frame" x="20" y="8" width="355" height="53"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="53" id="RVz-DU-sPu"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                         </view>
                                         <constraints>
@@ -451,7 +452,7 @@
                                             <constraint firstItem="JM7-vt-lDb" firstAttribute="width" secondItem="JM7-vt-lDb" secondAttribute="height" multiplier="4:7" id="wVR-au-2XA"/>
                                             <constraint firstItem="K7Y-go-fwA" firstAttribute="centerY" secondItem="dDJ-SF-K3G" secondAttribute="centerY" id="x0L-on-RwL"/>
                                         </constraints>
-                                        <size key="customSize" width="414" height="119"/>
+                                        <size key="customSize" width="373" height="119"/>
                                         <connections>
                                             <outlet property="arrow" destination="JM7-vt-lDb" id="3ui-9P-tcB"/>
                                             <outlet property="trafficInf" destination="ZDd-Em-wTH" id="EXu-ef-FVv"/>
@@ -482,7 +483,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gSK-db-lrl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2991" y="-254"/>
+            <point key="canvasLocation" x="2989.5999999999999" y="-254.12293853073464"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="yHp-h9-rRp">
