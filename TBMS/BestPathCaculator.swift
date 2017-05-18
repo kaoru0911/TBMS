@@ -34,8 +34,9 @@ class BestPathCaculator : NSObject {
         return bestPathViewPointArray
     }
     
+    
     //讀入起始點＆array, 傳出第二點＆剩餘Array
-    func findTheNextViewPoint (startingPoint:[String:Any], viewPointArray:[[String:Any]]) -> (nextViewPoint:[String:Any], remainingViewPointArray:[[String:Any]])!{
+    private func findTheNextViewPoint (startingPoint:[String:Any], viewPointArray:[[String:Any]]) -> (nextViewPoint:[String:Any], remainingViewPointArray:[[String:Any]])!{
         
         //設定起點
         let sourceCoordinate = startingPoint["viewPointCoordinate"] as? CLLocationCoordinate2D
