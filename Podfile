@@ -11,4 +11,7 @@ target 'TBMS' do
   pod 'GoogleMaps'
   pod 'GooglePlaces'
   pod 'GooglePlacePicker'
+  pod'Alamofire', '~> 4.4.0'
+  pod 'AlamofireImage'
+  pod 'SwiftyJSON'
 end
