@@ -18,6 +18,7 @@
 		22F43F541ECD667900791D55 /* RearrangeScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F43F521ECD667900791D55 /* RearrangeScheduleCell.swift */; };
 		22F43F581ECD6AE600791D55 /* RequestURLGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F43F561ECD6AE600791D55 /* RequestURLGenerator.swift */; };
 		22F43F591ECD6AE600791D55 /* ResponceAndJsonAnalyst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F43F571ECD6AE600791D55 /* ResponceAndJsonAnalyst.swift */; };
+		22FCB46B1ED2CB6200F6F54E /* BestPathCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FCB46A1ED2CB6200F6F54E /* BestPathCalculator.swift */; };
 		417F7970D1EED0E3404633E6 /* Pods_TBMS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A47D2D8565775007FF8F6F4 /* Pods_TBMS.framework */; };
 		A76BA9E21ECC67ED00443947 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9E01ECC67ED00443947 /* Main.storyboard */; };
 		A76BA9E41ECC67ED00443947 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9E31ECC67ED00443947 /* Assets.xcassets */; };
@@ -57,6 +58,7 @@
 		22F43F521ECD667900791D55 /* RearrangeScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RearrangeScheduleCell.swift; sourceTree = "<group>"; };
 		22F43F561ECD6AE600791D55 /* RequestURLGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestURLGenerator.swift; sourceTree = "<group>"; };
 		22F43F571ECD6AE600791D55 /* ResponceAndJsonAnalyst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponceAndJsonAnalyst.swift; sourceTree = "<group>"; };
+		22FCB46A1ED2CB6200F6F54E /* BestPathCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BestPathCalculator.swift; sourceTree = "<group>"; };
 		3FBF8B759B0AEF6C32784BD2 /* Pods-TBMS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TBMS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TBMS/Pods-TBMS.debug.xcconfig"; sourceTree = "<group>"; };
 		4A47D2D8565775007FF8F6F4 /* Pods_TBMS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TBMS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		752395F9B48095F5C174C1E8 /* Pods-TBMS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TBMS.release.xcconfig"; path = "Pods/Target Support Files/Pods-TBMS/Pods-TBMS.release.xcconfig"; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 			children = (
 				22F43F561ECD6AE600791D55 /* RequestURLGenerator.swift */,
 				22F43F571ECD6AE600791D55 /* ResponceAndJsonAnalyst.swift */,
+				22FCB46A1ED2CB6200F6F54E /* BestPathCalculator.swift */,
 				22F43F4B1ECD662900791D55 /* BestPathCaculator.swift */,
 				22F43F4C1ECD662900791D55 /* FindTrafficTimeAndWay.swift */,
 				22F43F451ECD662000791D55 /* CallGooglePlaceAPI.swift */,
@@ -382,6 +385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22F43F4E1ECD662900791D55 /* FindTrafficTimeAndWay.swift in Sources */,
+				22FCB46B1ED2CB6200F6F54E /* BestPathCalculator.swift in Sources */,
 				22F43F431ECD661200791D55 /* ViewPointAndPathStoraged.swift in Sources */,
 				A76BAA121ECC697000443947 /* SetStartPointViewController.swift in Sources */,
 				22F43F591ECD6AE600791D55 /* ResponceAndJsonAnalyst.swift in Sources */,
