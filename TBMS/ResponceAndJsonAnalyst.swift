@@ -9,17 +9,16 @@
 import UIKit
 import SwiftyJSON
 
-/* 
-Model主要功能：
+/*
+ Model主要功能：
  1. 將回傳的JSON資料物件化
  
-未完成部分：
- 1. 大眾運輸 ： transit disctionary下層資料讀取異常
+ 未完成部分：
  2. 解析模式切換 - steps內有三種資料結構：
-    a. 捷運地鐵模式: transit_detail（dictionary）資料存在, 解析這層作為路線資訊
-    b. 公車客運模式: steps (第二層steps, 也是array) 資料存在, 解析這層作為路線資訊
-    c. 走路模式: steps內“transit_detail”與第二層“steps”均不存在, 以html_instructions作為路線資訊
-*/
+ a. 捷運地鐵模式: transit_detail（dictionary）資料存在, 解析這層作為路線資訊
+ b. 公車客運模式: steps (第二層steps, 也是array) 資料存在, 解析這層作為路線資訊
+ c. 走路模式: steps內“transit_detail”與第二層“steps”均不存在, 以html_instructions作為路線資訊
+ */
 
 class DirectionJsonAnalyst: NSObject {
     
@@ -51,7 +50,7 @@ class DirectionJsonAnalyst: NSObject {
     private let keyTransitDetails = "transit_details"
     
     // Dictionary key words setting : transitDetails
-    private let keyLine = "icon"
+    private let keyLine = "line"
     private let keyAgencies = "agencies"
     private let keyColor = "color"
     private let keyShortName = "short_name"
@@ -86,13 +85,6 @@ class DirectionJsonAnalyst: NSObject {
                                      endLctLng: endLctlng,
                                      strLctLat: starLctLat,
                                      starLctLng: starLctlng )
-//        //____________做測試囉～～～
-//        print("legsData開始測試")
-//        testPrint(array: [legs.distance,
-//                          legs.duration,
-//                          legs.startLocation.latitude,
-//                          legs.endLocation.address])
-        
         
         // get the legs detail information from JSON and put into the property "steps"
         legs.steps = [StepsData]()
@@ -120,78 +112,67 @@ class DirectionJsonAnalyst: NSObject {
             stepDetail.travelMode = step[keyTravelMode].string
             stepDetail.htmlInstructions = step[keyInstructions].string ?? ""
             stepDetail.maneuver = step[keyManeuver].string ?? ""
-            //stepDetail.polyline = step["polyline"].dictionary ?? ["key":"no value"]
-            
-//            //____________做測試囉～～～
-//            print("stepcommend測試囉")
-//            testPrint(array: [stepDetail.distance,
-//                              stepDetail.duration,
-//                              stepDetail.startLocation.latitude,
-//                              stepDetail.endLocation.address])
-            
-            
-            //____________做測試囉～～～
-            print("step測試囉")
-            testPrint(array: [stepDetail.travelMode,stepDetail.htmlInstructions,stepDetail.maneuver])
             
             if travelMode == "transit" {
                 // setting each step's detail
                 let transitDetailsData = step[keyTransitDetails]
                 
-//                print(transitDetailsData) //測試用
-//                print("///////////")
+                //                print(transitDetailsData) //測試用
+                //                print("///////////")
+                
+                
+                var tmpStopData = StopInformation()
+                tmpStopData.location = LocationInformation()
                 
                 // setting arrivalStop information
-                var tmpStopLct = step[keyTransitDetails][keyArrivalStop][keyLocation]
-//                print(step)
-//                print("--------------")
-//                print(tmpStopLct)
+                var tmpStopLct = step[keyTransitDetails][keyArrivalStop][keyLocation].dictionaryValue
+                tmpStopData.name = transitDetailsData[keyArrivalStop][keyName].string ?? ""
+                tmpStopData.location.latitude = tmpStopLct[keyLat]!.doubleValue
+                tmpStopData.location.longitude = tmpStopLct[keyLng]!.doubleValue
+                stepDetail.arrivalStop = tmpStopData
                 
-                //----以下開始程式碼是目前尚待處理的部分, 暫時註解方便你做測試-----------
+                // setting departureStop information
+                tmpStopLct = (transitDetailsData[keyDepartureStop][keyLocation].dictionaryValue)
+                tmpStopData.name = transitDetailsData[keyArrivalStop][keyName].string ?? ""
+                tmpStopData.location.latitude = tmpStopLct[keyLat]!.doubleValue
+                tmpStopData.location.longitude = tmpStopLct[keyLng]!.doubleValue
+                stepDetail.departureStop = tmpStopData
                 
-//                stepDetail.arrivalStop.name = transitDetailsData[keyArrivalStop][keyName].string ?? ""
-//                print(stepDetail.arrivalStop.name)
-//                
-//                stepDetail.arrivalStop.location.latitude = tmpStopLct[keyLat].double
-//                stepDetail.arrivalStop.location.longitude = tmpStopLct[keyLng].double
-//                
-//                // setting departureStop information
-//                tmpStopLct = (transitDetailsData[keyDepartureStop][keyLocation])
-//                stepDetail.departureStop.name = transitDetailsData[keyArrivalStop][keyName].string
-//                stepDetail.departureStop.location.latitude = tmpStopLct[keyLat].double
-//                stepDetail.departureStop.location.longitude = tmpStopLct[keyLng].double
-//                
-//                // setting time information
-//                stepDetail.arrivalTime = transitDetailsData[keyArrivalTime][keyText].string
-//                stepDetail.departureTime = transitDetailsData[keyDepartureTime][keyText].string
-//                
-//                stepDetail.headsign = transitDetailsData[keyHeadsign].string
-//                stepDetail.headway = transitDetailsData[keyHeadway].int
-//                stepDetail.numbersOfStops = transitDetailsData[keyNumStops].int
-//                
-//                // setting line information
-//                let tmpLineDetail = transitDetailsData[keyLine]
-//                stepDetail.lineAgencies = tmpLineDetail[keyAgencies][keyName].string
-//                stepDetail.lineColor = tmpLineDetail[keyColor].string
-//                stepDetail.lineShortame = tmpLineDetail[keyShortName].string
-//                stepDetail.lineIcon = tmpLineDetail[keyVehicle][keyIcon].string
-//                stepDetail.lineLocalIcon = tmpLineDetail[keyVehicle][keyLocalIcon].string
-//                //____________做測試囉～～～
-//                print("transit測試囉")
-//                testPrint(array: [stepDetail.arrivalStop.name,
-//                                  stepDetail.departureStop.location.latitude,
-//                                  stepDetail.arrivalTime,
-//                                  stepDetail.departureTime,
-//                                  stepDetail.headsign,
-//                                  stepDetail.headway,
-//                                  stepDetail.lineAgencies,
-//                                  stepDetail.lineColor,
-//                                  stepDetail.lineIcon,
-//                                  stepDetail.lineShortame,
-//                                  stepDetail.lineColor,
-//                                  stepDetail.lineLocalIcon,
-//                                  stepDetail.lineShortame,
-//                                  stepDetail.numbersOfStops])
+                // setting time information
+                stepDetail.arrivalTime = transitDetailsData[keyArrivalTime][keyText].string
+                stepDetail.departureTime = transitDetailsData[keyDepartureTime][keyText].string
+                
+                stepDetail.headsign = transitDetailsData[keyHeadsign].string
+                stepDetail.headway = transitDetailsData[keyHeadway].int
+                stepDetail.numbersOfStops = transitDetailsData[keyNumStops].int
+                
+                // setting line information
+                let tmpLineDetail = transitDetailsData[keyLine].dictionaryValue
+                print(transitDetailsData[keyLine])
+                
+                let agenciesData = tmpLineDetail[keyAgencies]!.arrayValue
+                stepDetail.lineAgencies = [String]()
+                for agency in agenciesData {
+                    stepDetail.lineAgencies.append(agency[keyName].stringValue)
+                }
+                stepDetail.lineColor = tmpLineDetail[keyColor]!.string
+                stepDetail.lineShortame = tmpLineDetail[keyShortName]!.string
+                stepDetail.lineIcon = tmpLineDetail[keyVehicle]![keyIcon].string ?? ""
+                stepDetail.lineLocalIcon = tmpLineDetail[keyVehicle]![keyLocalIcon].string ?? ""
+                
+                //____________做測試囉～～～
+                print("transit測試囉")
+                testPrint(array: [stepDetail.arrivalStop.name,
+                                  stepDetail.departureStop.location.latitude,
+                                  stepDetail.arrivalTime,
+                                  stepDetail.departureTime,
+                                  stepDetail.headsign,
+                                  stepDetail.headway,
+                                  stepDetail.lineAgencies,
+                                  stepDetail.lineIcon,
+                                  stepDetail.lineShortame,
+                                  stepDetail.lineColor,
+                                  stepDetail.numbersOfStops])
                 
                 //--------------到這邊結束--------------------------------
             }
@@ -199,20 +180,18 @@ class DirectionJsonAnalyst: NSObject {
         }
         return legs
     }
-    
-    // 測試用func : 測試物件屬性的值有被正確帶入
-    private func testPrint(array:[Any?]){
-        var i = 0
-        for obj in array {
-            i += 1
-            guard obj != nil else {
-                print("\(i):    ")
-                return
-            }
+}
+// 測試用func : 測試物件屬性的值有被正確帶入
+private func testPrint(array:[Any?]){
+    var i = 0
+    for obj in array {
+        i += 1
+        if obj == nil {
+            print("\(i):    ")
+        } else {
             print("\(i): \(obj!)")
         }
     }
-    
 }
 
 // 撰寫Error情況
@@ -292,13 +271,13 @@ class StepsData: GeneralDirectionData {
     var numbersOfStops : Int!
     
     // Line Information
-    var lineAgencies : String!
+    var lineAgencies : [String]!
     var lineColor : String!
     var lineShortame : String!
-    var lineIcon : String! {
+    var lineIcon = "" {
         willSet{ self.lineIcon = "http:" + newValue }
     }
-    var lineLocalIcon : String! {
+    var lineLocalIcon = "" {
         willSet{ self.lineLocalIcon = "http:" + newValue }
     }
     
