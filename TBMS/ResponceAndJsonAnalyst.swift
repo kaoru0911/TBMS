@@ -113,6 +113,8 @@ class DirectionJsonAnalyst: NSObject {
             stepDetail.htmlInstructions = step[keyInstructions].string ?? ""
             stepDetail.maneuver = step[keyManeuver].string ?? ""
             
+            
+            
             if travelMode == "transit" {
                 // setting each step's detail
                 let transitDetailsData = step[keyTransitDetails]
