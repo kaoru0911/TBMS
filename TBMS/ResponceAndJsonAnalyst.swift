@@ -113,7 +113,7 @@ class DirectionJsonAnalyst: NSObject {
                 
                 if step[keySteps].array != nil {
                     self.analyteBusModeResponseJSON(stepDetail: &stepDetail, steps:step[keySteps].arrayValue )
-                    
+         
                 } else if step[keyTransitDetails].dictionary != nil {
                     self.analyteSubwayModeResponseJSON(stepDetail: &stepDetail, step: step)
                     
