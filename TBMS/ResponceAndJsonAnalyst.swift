@@ -126,9 +126,8 @@ class DirectionJsonAnalyst: NSObject {
         return legs
     }
     
-    
     func analyteWalkingModeResponseJSON () {
-        print("走路囉")
+        //只是做個註解, 沒什麼事好做唷
     }
     
     func analyteBusModeResponseJSON (stepDetail:inout StepsData ,steps:[JSON]) {
