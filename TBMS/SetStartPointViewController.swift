@@ -7,51 +7,10 @@
 //
 
 import UIKit
-<<<<<<< HEAD
-//import GooglePlaces
-=======
->>>>>>> d8cb9c196c980847b63722bc8739d53f0ff3e790
 import GooglePlacePicker
 
 class SetStartPointViewController: UIViewController {
-    
-<<<<<<< HEAD
-    @IBOutlet weak var startingPointText: UITextField!
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    @IBAction func btn(_ sender: Any) {
-        let config = GMSPlacePickerConfig(viewport: nil)
-        let placePicker = GMSPlacePicker(config: config)
-        
-        placePicker.pickPlace(callback: { (place, error) -> Void in
-            if let error = error {
-                print("Pick Place error: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let place = place else {
-                print("No place selected")
-                return
-            }
-            
-            self.startingPointText.text = place.name
-        })
 
-    }
-    
-    @IBAction func inputStartPoint(_ sender: Any) {
-        
-            }
-=======
     @IBOutlet weak var chosenStartingPoint: UILabel!
     @IBOutlet weak var startingPointText: UITextField!
     @IBOutlet weak var chooseStartingPtBtn: UIButton!
@@ -118,5 +77,4 @@ struct Attraction {
         if let phoneNumber = place.phoneNumber { self.phoneNumber = phoneNumber }
         if let address = place.formattedAddress { self.address = address }
     }
->>>>>>> d8cb9c196c980847b63722bc8739d53f0ff3e790
 }
