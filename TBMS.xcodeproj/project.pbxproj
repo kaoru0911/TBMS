@@ -43,6 +43,9 @@
 		A76BAA141ECC697000443947 /* ViewPointListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BAA001ECC697000443947 /* ViewPointListCell.swift */; };
 		A76BAA151ECC697000443947 /* viewPointTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */; };
 		A76BAC401ECC6B4000443947 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BAC3F1ECC6B4000443947 /* AppDelegate.swift */; };
+		A7929A401ED56A2C0024B4D7 /* ServerConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A3F1ED56A2C0024B4D7 /* ServerConnector.swift */; };
+		A7929A441ED573F00024B4D7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A431ED573F00024B4D7 /* RegisterViewController.swift */; };
+		A7929A461ED574520024B4D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A451ED574520024B4D7 /* LoginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +89,9 @@
 		A76BAA001ECC697000443947 /* ViewPointListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPointListCell.swift; sourceTree = "<group>"; };
 		A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = viewPointTableViewCell.swift; sourceTree = "<group>"; };
 		A76BAC3F1ECC6B4000443947 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A7929A3F1ED56A2C0024B4D7 /* ServerConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerConnector.swift; sourceTree = "<group>"; };
+		A7929A431ED573F00024B4D7 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		A7929A451ED574520024B4D7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,12 +203,15 @@
 				A76BA9FB1ECC697000443947 /* MenuTableViewCell.swift */,
 				A76BA9FC1ECC697000443947 /* MenuTableViewController.swift */,
 				A76BA9FD1ECC697000443947 /* SectionInfo.swift */,
+				A7929A3F1ED56A2C0024B4D7 /* ServerConnector.swift */,
 				22F43F4F1ECD664D00791D55 /* Controller */,
 				22F43F3E1ECD660000791D55 /* Model */,
 				A76BA9FF1ECC697000443947 /* ViewPointDetailViewController.swift */,
 				A76BAA001ECC697000443947 /* ViewPointListCell.swift */,
 				A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */,
 				A76BA9E01ECC67ED00443947 /* Main.storyboard */,
+				A7929A431ED573F00024B4D7 /* RegisterViewController.swift */,
+				A7929A451ED574520024B4D7 /* LoginViewController.swift */,
 				A76BA9E31ECC67ED00443947 /* Assets.xcassets */,
 				A76BA9E51ECC67ED00443947 /* LaunchScreen.storyboard */,
 				A76BA9E81ECC67ED00443947 /* Info.plist */,
@@ -386,6 +395,8 @@
 				22F43F431ECD661200791D55 /* ViewPointAndPathStoraged.swift in Sources */,
 				A76BAA121ECC697000443947 /* SetStartPointViewController.swift in Sources */,
 				22CF17051ECDD2EA00B3F20E /* FinalScheduleVC.swift in Sources */,
+				A7929A461ED574520024B4D7 /* LoginViewController.swift in Sources */,
+				A7929A401ED56A2C0024B4D7 /* ServerConnector.swift in Sources */,
 				22AF44E01ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift in Sources */,
 				22F43F441ECD661200791D55 /* ErrorCatch.swift in Sources */,
 				22F43F421ECD661200791D55 /* ProduceScrollViewWithVCArray.swift in Sources */,
@@ -403,6 +414,7 @@
 				A76BAA0B1ECC697000443947 /* CountrySelectTableViewCell.swift in Sources */,
 				22F43F531ECD667900791D55 /* RearrangeScheduleVC.swift in Sources */,
 				A76BAA091ECC697000443947 /* Country.swift in Sources */,
+				A7929A441ED573F00024B4D7 /* RegisterViewController.swift in Sources */,
 				A76BAA111ECC697000443947 /* SectionInfo.swift in Sources */,
 				A76BAA0D1ECC697000443947 /* DataManager.swift in Sources */,
 				A76BAA141ECC697000443947 /* ViewPointListCell.swift in Sources */,
@@ -472,7 +484,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -516,7 +528,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";

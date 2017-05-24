@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import ObjectMapper
+//import ObjectMapper
 
 class ServerConnector: NSObject {
     
@@ -240,42 +240,38 @@ class ServerConnector: NSObject {
         }
     }
     
-    private func uploadTripSpotToServer(tripData:tripData) {
-        
-        uploadIndex -= 1
-        
-        guard uploadIndex >= 0 else {
-            
-            uploadIndex = 0
-            return
-        }
-        
-        // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
-        let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,
-                                     TRIPNAME_KEY: tripData.spots[uploadIndex].belongTripName as Any,
-                                     SPOTNAME_KEY: tripData.spots[uploadIndex].spotName as Any,
-                                     NDAY_KEY: tripData.spots[uploadIndex].nDays as Any,
-                                     NTH_KEY: tripData.spots[uploadIndex].nTh as Any,
-                                     TRAFFIC_KEY: tripData.spots[uploadIndex].trafficToNextSpot as Any,
-                                     REQUEST_KEY: UPLOAD_TRIPSPOT_REQ]
-        
-        Alamofire.request(baseURLStr + dataUploadURLstr, method: .post, parameters: parameters).responseString { response in
-            
-            debugPrint(response)
-            print("Is upload trip spot post success: \(response.result.isSuccess)")
-            print("Total count in spot array: \(String(tripData.spots.count))")
-            print("Upload index in spot array: \(String(self.uploadIndex))")
-            print("Response: \(String(describing: response.result.value))")
-            
-            if(self.uploadIndex > 0){
-                self.uploadTripSpotToServer(tripData: tripData)
-            }
-        }
-    }
-    
-    
-    
-    
+//    private func uploadTripSpotToServer(tripData:tripData) {
+//        
+//        uploadIndex -= 1
+//        
+//        guard uploadIndex >= 0 else {
+//            
+//            uploadIndex = 0
+//            return
+//        }
+//        
+//        // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
+//        let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,
+////                                     TRIPNAME_KEY: tripData.spots[uploadIndex].belongTripName as Any,
+//                                     SPOTNAME_KEY: tripData.spots[uploadIndex].spotName as Any,
+//                                     NDAY_KEY: tripData.spots[uploadIndex].nDays as Any,
+//                                     NTH_KEY: tripData.spots[uploadIndex].nTh as Any,
+//                                     TRAFFIC_KEY: tripData.spots[uploadIndex].trafficToNextSpot as Any,
+//                                     REQUEST_KEY: UPLOAD_TRIPSPOT_REQ]
+//        
+//        Alamofire.request(baseURLStr + dataUploadURLstr, method: .post, parameters: parameters).responseString { response in
+//            
+//            debugPrint(response)
+//            print("Is upload trip spot post success: \(response.result.isSuccess)")
+//            print("Total count in spot array: \(String(tripData.spots.count))")
+//            print("Upload index in spot array: \(String(self.uploadIndex))")
+//            print("Response: \(String(describing: response.result.value))")
+//            
+//            if(self.uploadIndex > 0){
+//                self.uploadTripSpotToServer(tripData: tripData)
+//            }
+//        }
+//    }
     
     
     func getMemberInfo(){
