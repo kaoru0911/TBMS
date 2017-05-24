@@ -300,37 +300,63 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+<<<<<<< HEAD
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8s-J1-wki">
                                 <rect key="frame" x="168" y="418" width="131" height="30"/>
+=======
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8s-J1-wki">
+                                <rect key="frame" x="195" y="397.5" width="104" height="50.5"/>
+>>>>>>> d8cb9c196c980847b63722bc8739d53f0ff3e790
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="g8s-J1-wki" secondAttribute="height" multiplier="31:15" id="W2K-wV-0x9"/>
                                 </constraints>
                                 <state key="normal" title="確定行程, 開始規劃"/>
                                 <connections>
+                                    <action selector="goToNextPage:" destination="I8i-xe-uxU" eventType="touchUpInside" id="0f3-7d-cCW"/>
                                     <segue destination="DLZ-YW-dcw" kind="show" id="40q-PI-g0s"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="你要從哪裏出發？" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndp-oQ-P5L">
+<<<<<<< HEAD
                                 <rect key="frame" x="76" y="210" width="139" height="30"/>
+=======
+                                <rect key="frame" x="76" y="219" width="139" height="50.5"/>
+>>>>>>> d8cb9c196c980847b63722bc8739d53f0ff3e790
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tKf-sc-OLb">
+<<<<<<< HEAD
                                 <rect key="frame" x="257" y="219" width="42" height="21"/>
+=======
+                                <rect key="frame" x="257" y="219" width="42" height="50.5"/>
+>>>>>>> d8cb9c196c980847b63722bc8739d53f0ff3e790
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+<<<<<<< HEAD
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j57-iU-Tjy">
                                 <rect key="frame" x="76" y="418" width="77" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="titleShadowOffset" width="1" height="1"/>
                                 <state key="normal" title="選擇出發地"/>
+=======
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j57-iU-Tjy">
+                                <rect key="frame" x="76" y="397.5" width="77" height="50.5"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="titleShadowOffset" width="1" height="1"/>
+                                <state key="normal" title="選擇出發地"/>
+                                <connections>
+                                    <action selector="chooseStartingPoint:" destination="I8i-xe-uxU" eventType="touchUpInside" id="Qor-f4-xFp"/>
+                                </connections>
+>>>>>>> d8cb9c196c980847b63722bc8739d53f0ff3e790
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+<<<<<<< HEAD
                             <constraint firstItem="oTd-aA-irk" firstAttribute="centerX" secondItem="g5a-IB-ptC" secondAttribute="centerX" id="9zJ-FJ-ReK"/>
                             <constraint firstItem="tKf-sc-OLb" firstAttribute="bottom" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" id="EmS-M2-biU"/>
                             <constraint firstItem="g8s-J1-wki" firstAttribute="trailing" secondItem="oTd-aA-irk" secondAttribute="trailing" id="QSP-Zw-4fY"/>
@@ -338,10 +364,35 @@
                             <constraint firstItem="oTd-aA-irk" firstAttribute="centerY" secondItem="g5a-IB-ptC" secondAttribute="centerY" id="XbN-hq-gZN"/>
                             <constraint firstItem="tKf-sc-OLb" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="top" id="c5V-QC-uHl"/>
                             <constraint firstItem="Ndp-oQ-P5L" firstAttribute="leading" secondItem="oTd-aA-irk" secondAttribute="leading" id="gDt-Ej-lRe"/>
+=======
+                            <constraint firstAttribute="trailingMargin" secondItem="g8s-J1-wki" secondAttribute="trailing" constant="60" id="16b-En-rze"/>
+                            <constraint firstItem="oTd-aA-irk" firstAttribute="centerX" secondItem="g5a-IB-ptC" secondAttribute="centerX" id="9zJ-FJ-ReK"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="bottom" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" id="EmS-M2-biU"/>
+                            <constraint firstItem="oMx-kf-DU7" firstAttribute="top" secondItem="j57-iU-Tjy" secondAttribute="bottom" constant="175" id="FNG-vm-9V6"/>
+                            <constraint firstItem="oTd-aA-irk" firstAttribute="top" secondItem="tKf-sc-OLb" secondAttribute="bottom" id="GyI-Rg-ezp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tKf-sc-OLb" secondAttribute="trailing" constant="60" id="OK7-AP-2ov"/>
+                            <constraint firstItem="Ndp-oQ-P5L" firstAttribute="leading" secondItem="g5a-IB-ptC" secondAttribute="leadingMargin" constant="60" id="PO1-0a-V2c"/>
+                            <constraint firstItem="g8s-J1-wki" firstAttribute="trailing" secondItem="oTd-aA-irk" secondAttribute="trailing" id="QSP-Zw-4fY"/>
+                            <constraint firstItem="g8s-J1-wki" firstAttribute="top" secondItem="oTd-aA-irk" secondAttribute="bottom" id="VtU-dd-B0e"/>
+                            <constraint firstItem="j57-iU-Tjy" firstAttribute="leading" secondItem="oTd-aA-irk" secondAttribute="leading" id="XBX-HS-Zsg"/>
+                            <constraint firstItem="oTd-aA-irk" firstAttribute="centerY" secondItem="g5a-IB-ptC" secondAttribute="centerY" id="XbN-hq-gZN"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="top" id="c5V-QC-uHl"/>
+                            <constraint firstItem="g8s-J1-wki" firstAttribute="bottom" secondItem="j57-iU-Tjy" secondAttribute="bottom" id="eqo-RE-3ux"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="trailing" constant="5" id="fCN-Yy-ziV"/>
+                            <constraint firstItem="Ndp-oQ-P5L" firstAttribute="leading" secondItem="oTd-aA-irk" secondAttribute="leading" id="gDt-Ej-lRe"/>
+                            <constraint firstItem="j57-iU-Tjy" firstAttribute="leading" secondItem="g5a-IB-ptC" secondAttribute="leadingMargin" constant="60" id="gPw-Ka-uvw"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="top" secondItem="HJu-WO-Wk1" secondAttribute="bottom" constant="155" id="kXa-qW-nvB"/>
+                            <constraint firstItem="j57-iU-Tjy" firstAttribute="top" secondItem="oTd-aA-irk" secondAttribute="bottom" id="kmE-Em-1yD"/>
+>>>>>>> d8cb9c196c980847b63722bc8739d53f0ff3e790
                             <constraint firstItem="tKf-sc-OLb" firstAttribute="trailing" secondItem="oTd-aA-irk" secondAttribute="trailing" id="oGK-PS-wQ0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="wld-mh-Prh"/>
+                    <connections>
+                        <outlet property="chooseStartingPtBtn" destination="j57-iU-Tjy" id="I5b-A1-evN"/>
+                        <outlet property="chosenStartingPoint" destination="tKf-sc-OLb" id="w4T-Ht-nfQ"/>
+                        <outlet property="goToNextPage" destination="g8s-J1-wki" id="9Mb-ai-mSc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MQY-eO-kCj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -13,7 +13,6 @@ import GooglePlacePicker
 
 class AddViewPointViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
     
-    
     @IBOutlet weak var spotTextView: UITextView!
     @IBOutlet weak var imageView: UIImageView!
     
@@ -21,6 +20,8 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     
     var placeIdStorage:String!
     
+    var tmpPlaceData : GMSPlace!
+    var tmpPlaceDataStorage : [GMSPlace]!
     
     // 用placeID取得google第一張地點照片，並呼叫loadImageForMetadata
     func loadFirstPhotoForPlace(placeID: String) {
@@ -61,8 +62,6 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         placesClient = GMSPlacesClient.shared()
         
         //self.navigationController?.navigationBar.isTranslucent = false
-
-        
     }
     
     func goSetStartPointPage() {
@@ -70,8 +69,11 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let setStartPointViewController = storyboard.instantiateViewController(withIdentifier :"SetStartPointViewController") as! SetStartPointViewController
         
+        let attractionsList = setValueToAttractionsList()
+        setStartPointViewController.attractionsList = attractionsList
+        
         self.navigationController?.pushViewController(setStartPointViewController, animated: true)
-           }
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -81,6 +83,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ListArray.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: viewPointTableViewCell = tableView.dequeueReusableCell(withIdentifier: "viewPointTableViewCell") as! viewPointTableViewCell
         
@@ -124,12 +127,14 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         if spotExistedChecking == false {
             ListArray.add(spotTextView.text)
             self.spotTableView.reloadData();
+            
+            tmpPlaceDataStorage.append(tmpPlaceData)
         }
     }
     
     
     @IBAction func searchBtn(_ sender: Any) {
-    
+        
         
         let config = GMSPlacePickerConfig(viewport: nil)
         let placePicker = GMSPlacePicker(config: config)
@@ -158,13 +163,19 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             print("Place address \(place.formattedAddress)")
             print("Place attributions \(place.attributions)")
             
-            print("Place PlaceID \(place.placeID)")
-            print("Coordinate:\(place.coordinate)")
-            print("Phone:\(place.phoneNumber)")
-            print("\(place.viewport)")
-            
-            
+            self.tmpPlaceData = place
         })
+    }
+    
+    func setValueToAttractionsList() -> [Attraction] {
         
+        var attractionsList = [Attraction]()
+        
+        for place in tmpPlaceDataStorage {
+            var tmpAttraction = Attraction()
+            tmpAttraction.setValueToAttractionObject(place: place)
+            attractionsList.append(tmpAttraction)
+        }
+        return attractionsList
     }
 }
