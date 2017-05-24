@@ -9,7 +9,13 @@
 import UIKit
 
 class EmailRegisterViewController: UIViewController {
+    @IBOutlet weak var inputPassword: UITextField!
 
+    @IBOutlet weak var inputAccount: UITextField!
+    
+    var serverCommunicate: ServerConnector = ServerConnector()
+    
+    var sharedData = DataManager.shareDataManager
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,5 +37,20 @@ class EmailRegisterViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
+
+    @IBAction func emailRegisterBtn(_ sender: Any) {
+        
+        guard inputAccount.text != nil && inputAccount.text != "" && inputPassword.text != nil && inputPassword.text != "" else {
+            return
+        }
+        sharedData.memberData?.account = inputAccount.text
+        
+        sharedData.memberData?.password = inputPassword.text
+                
+        serverCommunicate.createAccount()
+                
+//                return
+        
+    }
 
 }

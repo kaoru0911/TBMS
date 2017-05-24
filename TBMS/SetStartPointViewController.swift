@@ -7,55 +7,44 @@
 //
 
 import UIKit
+//import GooglePlaces
+import GooglePlacePicker
 
 class SetStartPointViewController: UIViewController {
-
+    
+    @IBOutlet weak var startingPointText: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
         
-        
-//        let goBackButton = UIBarButtonItem(title: "back", style: .plain, target: self, action: #selector(goBackAddPointPage))
-//        
-//        self.navigationItem.leftBarButtonItem = goBackButton
-        
-        self.navigationController?.navigationBar.isHidden=false
-
-
-    }
-    
-    func goBackAddPointPage() {
-        /*
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let addViewPointViewController = storyboard.instantiateViewController(withIdentifier :"AddViewPointViewController") as! AddViewPointViewController
-        self.present(addViewPointViewController, animated: true)
-        */
-        
-        
-        
-        
-        //his mom
-//        let vc : AddViewPointViewController = storyboard.instantiateViewController(withIdentifier: "AddViewPointViewController") as! AddViewPointViewController
-//        
-//        let navigationController = UINavigationController(rootViewController: vc)
-//        
-//        self.present(navigationController, animated: true)
-        
-        //hello world
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let addViewPointViewController = storyboard.instantiateViewController(withIdentifier :"AddViewPointViewController") as! AddViewPointViewController
-
-        self.navigationController?.pushViewController(addViewPointViewController, animated: true)
         
     }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    @IBAction func btn(_ sender: Any) {
+        let config = GMSPlacePickerConfig(viewport: nil)
+        let placePicker = GMSPlacePicker(config: config)
+        
+        placePicker.pickPlace(callback: { (place, error) -> Void in
+            if let error = error {
+                print("Pick Place error: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let place = place else {
+                print("No place selected")
+                return
+            }
+            
+            self.startingPointText.text = place.name
+        })
+
+    }
     
-
-
+    @IBAction func inputStartPoint(_ sender: Any) {
+        
+            }
 }

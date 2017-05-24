@@ -11,6 +11,7 @@ import UIKit
 class MenuTableViewController: UITableViewController {
 
     @IBOutlet weak var menuTableView: UITableView!
+    var choosen = ""
     
     var cellData = [(String , UIImage)]()
     var selectedPage : Int!
@@ -80,13 +81,16 @@ class MenuTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        choosen = cellData[indexPath.row].0
         performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
         
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+            let nextPage = segue.destination as! CountrySelectTableViewController
+        nextPage.selectedProcess = choosen
     }
  
 
