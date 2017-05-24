@@ -74,7 +74,7 @@ class tripData: NSObject {
     var country:String?
     var days:Int?
     var coverImg:UIImage?
-    var spots:Array<spotData> = []
+    var spots=[spotData]()
 }
 
 class sharedTripData: tripData {

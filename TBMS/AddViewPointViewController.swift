@@ -60,16 +60,42 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         // Do any additional setup after loading the view, typically from a nib.
         placesClient = GMSPlacesClient.shared()
         
-        let startPlanButton = UIBarButtonItem(title: "開始規劃", style: .plain, target: self, action: #selector(goSetStartPointPage))
+//        let startPlanButton = UIBarButtonItem(title: "開始規劃", style: .plain, target: self, action: #selector(goSetStartPointPage))
+//        
+//        self.navigationItem.rightBarButtonItem = startPlanButton
         
-        self.navigationItem.rightBarButtonItem = startPlanButton
+        
+//        self.navigationController?.navigationBar.isHidden=true
+        
+        self.navigationController?.navigationBar.isTranslucent = false
+
         
     }
     
     func goSetStartPointPage() {
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let SetStartPointViewController = storyboard.instantiateViewController(withIdentifier :"SetStartPointViewController") as! SetStartPointViewController
-        self.present(SetStartPointViewController, animated: true)
+        let setStartPointViewController = storyboard.instantiateViewController(withIdentifier :"SetStartPointViewController") as! SetStartPointViewController
+        
+        self.navigationController?.pushViewController(setStartPointViewController, animated: true)
+        
+        /* Super//
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+
+        
+        //
+        let vc : SetStartPointViewController = storyboard.instantiateViewController(withIdentifier: "SetStartPointViewController") as! SetStartPointViewController
+        
+        let navigationController = UINavigationController(rootViewController: vc)
+        
+        self.present(navigationController, animated: true)
+        //
+//        let setStartPointViewController = storyboard.instantiateViewController(withIdentifier :"SetStartPointViewController") as! SetStartPointViewController
+//        self.present(setStartPointViewController, animated: true)
+ 
+ 
+ */
     }
     
     override func didReceiveMemoryWarning() {
