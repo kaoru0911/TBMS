@@ -292,6 +292,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="inputStartPoint:forEvent:" destination="I8i-xe-uxU" eventType="touchUpInside" id="Sg9-Uo-ajN"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8s-J1-wki">
                                 <rect key="frame" x="237" y="236" width="62" height="30"/>
@@ -337,6 +340,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="wld-mh-Prh"/>
+                    <connections>
+                        <outlet property="startingPointText" destination="ns0-dR-3rM" id="4wq-vk-tNt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MQY-eO-kCj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
