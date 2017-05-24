@@ -46,6 +46,7 @@
 		A7929A401ED56A2C0024B4D7 /* ServerConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A3F1ED56A2C0024B4D7 /* ServerConnector.swift */; };
 		A7929A441ED573F00024B4D7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A431ED573F00024B4D7 /* RegisterViewController.swift */; };
 		A7929A461ED574520024B4D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A451ED574520024B4D7 /* LoginViewController.swift */; };
+		A7929A481ED586FB0024B4D7 /* EmailRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A471ED586FB0024B4D7 /* EmailRegisterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +93,7 @@
 		A7929A3F1ED56A2C0024B4D7 /* ServerConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerConnector.swift; sourceTree = "<group>"; };
 		A7929A431ED573F00024B4D7 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		A7929A451ED574520024B4D7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A7929A471ED586FB0024B4D7 /* EmailRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailRegisterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +212,7 @@
 				A76BAA001ECC697000443947 /* ViewPointListCell.swift */,
 				A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */,
 				A76BA9E01ECC67ED00443947 /* Main.storyboard */,
+				A7929A471ED586FB0024B4D7 /* EmailRegisterViewController.swift */,
 				A7929A431ED573F00024B4D7 /* RegisterViewController.swift */,
 				A7929A451ED574520024B4D7 /* LoginViewController.swift */,
 				A76BA9E31ECC67ED00443947 /* Assets.xcassets */,
@@ -418,6 +421,7 @@
 				A76BAA111ECC697000443947 /* SectionInfo.swift in Sources */,
 				A76BAA0D1ECC697000443947 /* DataManager.swift in Sources */,
 				A76BAA141ECC697000443947 /* ViewPointListCell.swift in Sources */,
+				A7929A481ED586FB0024B4D7 /* EmailRegisterViewController.swift in Sources */,
 				A76BAA151ECC697000443947 /* viewPointTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
