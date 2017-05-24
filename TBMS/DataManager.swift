@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import ObjectMapper
+//import ObjectMapper
 
 class DataManager: NSObject {
     
@@ -64,7 +64,6 @@ class DataManager: NSObject {
         
         pocketTrips?.append(trip)
         // ======================
-        
     }
 }
 

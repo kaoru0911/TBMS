@@ -103,8 +103,8 @@
 		22F43F3E1ECD660000791D55 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				22F43F561ECD6AE600791D55 /* RequestURLGenerator.swift */,
 				22FCB46A1ED2CB6200F6F54E /* BestPathCalculator.swift */,
+				22F43F561ECD6AE600791D55 /* RequestURLGenerator.swift */,
 				22AF44DF1ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift */,
 				22F43F4C1ECD662900791D55 /* FindTrafficTimeAndWay.swift */,
 				22F43F451ECD662000791D55 /* CallGooglePlaceAPI.swift */,
@@ -118,6 +118,7 @@
 		22F43F4F1ECD664D00791D55 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A76BA9FE1ECC697000443947 /* SetStartPointViewController.swift */,
 				22CF17041ECDD2EA00B3F20E /* FinalScheduleVC.swift */,
 				22F43F551ECD669800791D55 /* AddViewPoint */,
 				22F43F501ECD666900791D55 /* RearrangeSchedule */,
@@ -196,7 +197,6 @@
 				A76BA9FB1ECC697000443947 /* MenuTableViewCell.swift */,
 				A76BA9FC1ECC697000443947 /* MenuTableViewController.swift */,
 				A76BA9FD1ECC697000443947 /* SectionInfo.swift */,
-				A76BA9FE1ECC697000443947 /* SetStartPointViewController.swift */,
 				22F43F4F1ECD664D00791D55 /* Controller */,
 				22F43F3E1ECD660000791D55 /* Model */,
 				A76BA9FF1ECC697000443947 /* ViewPointDetailViewController.swift */,

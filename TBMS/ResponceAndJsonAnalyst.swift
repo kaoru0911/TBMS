@@ -17,6 +17,7 @@ import SwiftyJSON
  1. 各物件/屬性註解
  */
 
+/// To transfer JSON type file to object, you can do this by the func trasferJSONToObject.
 class DirectionJsonAnalyst: NSObject {
     
     // Dictionary key words setting : Legs
@@ -57,7 +58,12 @@ class DirectionJsonAnalyst: NSObject {
     //    let keyTravelMode = "travel_mode"
     
     
-    // transfer JSON content to Objct
+    /// To transfer JSON type file to object
+    ///
+    /// - Parameters:
+    ///   - responseJSON: JSON file make by swiftyJSON
+    ///   - travelMode: The travel mode in the request you send to google direction
+    /// - Returns: Legs datas object
     func trasferJSONToObject(responseJSON:JSON, travelMode:String) -> LegsData? {
         
         // Setting main chain of the Dictionary whitch is transfered from responseJSON
@@ -113,12 +119,12 @@ class DirectionJsonAnalyst: NSObject {
                 
                 if step[keySteps].array != nil {
                     self.analyteBusModeResponseJSON(stepDetail: &stepDetail, steps:step[keySteps].arrayValue )
-         
+                    
                 } else if step[keyTransitDetails].dictionary != nil {
                     self.analyteSubwayModeResponseJSON(stepDetail: &stepDetail, step: step)
                     
                 } else {
-                    self.analyteWalkingModeResponseJSON()
+                    self.analyteWalkingModeResponseJSON(stepDetail: &stepDetail)
                 }
             }
             legs.steps.append(stepDetail)
@@ -126,11 +132,14 @@ class DirectionJsonAnalyst: NSObject {
         return legs
     }
     
-    func analyteWalkingModeResponseJSON () {
-        //只是做個註解, 沒什麼事好做唷
+    
+    // Mark: These 3 methods is for handling 4 different travel type response JSONs
+    
+    private func analyteWalkingModeResponseJSON (stepDetail:inout StepsData) {
+        stepDetail.trafficType = TrafficType.walking
     }
     
-    func analyteBusModeResponseJSON (stepDetail:inout StepsData ,steps:[JSON]) {
+    private func analyteBusModeResponseJSON (stepDetail:inout StepsData ,steps:[JSON]) {
         
         stepDetail.steps = [StepsData]()
         for step in steps {
@@ -153,11 +162,12 @@ class DirectionJsonAnalyst: NSObject {
             // another step-parameters setting
             stepsData.travelMode = step[keyTravelMode].string
             stepsData.htmlInstructions = step[keyInstructions].string ?? ""
-            stepDetail.steps.append(stepsData)
+            stepDetail.steps!.append(stepsData)
         }
+        stepDetail.trafficType = TrafficType.bus
     }
     
-    func analyteSubwayModeResponseJSON (stepDetail:inout StepsData ,step:JSON) {
+    private func analyteSubwayModeResponseJSON (stepDetail:inout StepsData ,step:JSON) {
         
         // setting each step's detail
         let transitDetailsData = step[keyTransitDetails]
@@ -194,26 +204,29 @@ class DirectionJsonAnalyst: NSObject {
         
         stepDetail.lineAgencies = [String]()
         for agency in agenciesData {
-            stepDetail.lineAgencies.append(agency[keyName].stringValue)
+            stepDetail.lineAgencies?.append(agency[keyName].stringValue)
         }
-        stepDetail.lineColor = tmpLineDetail[keyColor]!.string
-        stepDetail.lineShortame = tmpLineDetail[keyShortName]!.string
-        stepDetail.lineIcon = tmpLineDetail[keyVehicle]![keyIcon].string ?? ""
-        stepDetail.lineLocalIcon = tmpLineDetail[keyVehicle]![keyLocalIcon].string ?? ""
+        stepDetail.lineColor = tmpLineDetail[keyColor]?.string ?? "#000000"
+        stepDetail.lineShortame = tmpLineDetail[keyShortName]?.string ?? tmpLineDetail[keyName]?.string ?? ""
+        stepDetail.lineIcon = "http:" + (tmpLineDetail[keyVehicle]?[keyIcon].string)!
+        stepDetail.lineLocalIcon = tmpLineDetail[keyVehicle]?[keyLocalIcon].string ?? ""
+        
+        stepDetail.trafficType = TrafficType.subwayOrBoat
     }
     
-    //    // 測試用func : 測試物件屬性的值有被正確帶入
-    //    private func testPrint(array:[Any?]){
-    //        var i = 0
-    //        for obj in array {
-    //            i += 1
-    //            if obj == nil {
-    //                print("\(i):    ")
-    //            } else {
-    //                print("\(i): \(obj!)")
-    //            }
-    //        }
-    //    }
+    
+    // Mark: It's for testing the trasfer result is correct or not, can't be delete if you're sure this .swift file you are finish.
+    private func testPrint(array:[Any?]){
+        var i = 0
+        for obj in array {
+            i += 1
+            if obj == nil {
+                print("\(i):    ")
+            } else {
+                print("\(i): \(obj!)")
+            }
+        }
+    }
     
 }
 
@@ -224,11 +237,11 @@ class responceError : Error {
 
 
 
+// Mark: The classes for saving JSON datas
 
-// 物件結構
 class ReponseRoute {
-    var fare : Fare!
-    var summary : String!
+    var fare : Fare?
+    var summary : String?
     var legs : LegsData!
 }
 
@@ -268,6 +281,13 @@ class GeneralDirectionData {
     }
 }
 
+enum TrafficType : String {
+    case walking = "walking"
+    case subwayOrBoat = "subwayOrBoat"
+    case bus = "bus"
+}
+
+
 // legs
 class LegsData: GeneralDirectionData {
     var steps : [StepsData]!
@@ -284,51 +304,49 @@ class SecondOrderStepsData: GeneralDirectionData {
 // steps
 class StepsData: SecondOrderStepsData {
     
-    var maneuver : String!
-    var polyline : [String:String]!
+    var trafficType : TrafficType!
     
-    var steps : [SecondOrderStepsData]!
+    var maneuver : String?
+    var polyline : [String:String]?
+    
+    var steps : [SecondOrderStepsData]?
     
     //大眾運輸時路程細節
     //    var transitDetail : TransitDetails!
-    var arrivalStop : StopInformation!
-    var arrivalTime : String!
-    var departureStop : StopInformation!
-    var departureTime : String!
-    var headsign : String!
-    var headway : Int!
-    var numbersOfStops : Int!
+    var arrivalStop : StopInformation?
+    var arrivalTime : String?
+    var departureStop : StopInformation?
+    var departureTime : String?
+    var headsign : String?
+    var headway : Int?
+    var numbersOfStops : Int?
     
     // Line Information
-    var lineAgencies : [String]!
-    var lineColor : String!
-    var lineShortame : String!
-    var lineIcon = "" {
-        willSet{ self.lineIcon = "http:" + newValue }
-    }
-    var lineLocalIcon = "" {
-        willSet{ self.lineLocalIcon = "http:" + newValue }
-    }
+    var lineAgencies : [String]?
+    var lineColor : String?
+    var lineShortame : String?
+    var lineIcon : String?
+    var lineLocalIcon : String?
     
 }
 
+
 class TimeInformation {
-    var text : String!
-    var timeZone : String!
-    var value : Int!
+    var text : String?
+    var timeZone : String?
+    var value : Int?
 }
 
 class LocationInformation {
     var latitude : Double!
     var longitude : Double!
-    var address : String!
+    var address : String?
 }
 
 class StopInformation {
     var location : LocationInformation!
-    var name : String!
+    var name : String?
 }
-
 
 
 

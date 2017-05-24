@@ -158,7 +158,9 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             print("Place attributions \(place.attributions)")
             
             print("Place PlaceID \(place.placeID)")
-            print("\(place.coordinate)")
+            print("Coordinate:\(place.coordinate)")
+            print("Phone:\(place.phoneNumber)")
+            print("\(place.viewport)")
             
             
         })
