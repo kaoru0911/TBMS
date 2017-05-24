@@ -90,11 +90,8 @@ class tripData: NSObject {
     var country:String?
     var days:Int?
     var coverImg:UIImage?
-<<<<<<< HEAD
-    var spots=[spotData]()
-=======
-    var spots:Array<tripSpotData> = []
->>>>>>> 87a52371e87d381509ec4b7112c9cd2ce44df450
+
+    var spots = [spotData]()
 }
 
 class sharedTripData: tripData {

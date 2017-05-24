@@ -19,14 +19,6 @@
 		22F43F581ECD6AE600791D55 /* RequestURLGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F43F561ECD6AE600791D55 /* RequestURLGenerator.swift */; };
 		22FCB46B1ED2CB6200F6F54E /* BestPathCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FCB46A1ED2CB6200F6F54E /* BestPathCalculator.swift */; };
 		417F7970D1EED0E3404633E6 /* Pods_TBMS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A47D2D8565775007FF8F6F4 /* Pods_TBMS.framework */; };
-		A72954C81ED30666000D55F5 /* ScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72954C61ED30666000D55F5 /* ScheduleTableViewCell.swift */; };
-		A72954C91ED30666000D55F5 /* ScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72954C71ED30666000D55F5 /* ScheduleTableViewController.swift */; };
-		A72954CE1ED306DF000D55F5 /* TripListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72954CB1ED306DF000D55F5 /* TripListViewController.swift */; };
-		A72954CF1ED306DF000D55F5 /* TripListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72954CC1ED306DF000D55F5 /* TripListTableViewCell.swift */; };
-		A72954D01ED306DF000D55F5 /* TripListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A72954CD1ED306DF000D55F5 /* TripListCell.xib */; };
-		A72954D41ED306F1000D55F5 /* PocketSpotTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72954D21ED306F1000D55F5 /* PocketSpotTVC.swift */; };
-		A72954D51ED306F1000D55F5 /* PocketSpotTVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72954D31ED306F1000D55F5 /* PocketSpotTVCell.swift */; };
-		A72954D81ED307F3000D55F5 /* addSpot.png in Resources */ = {isa = PBXBuildFile; fileRef = A72954D71ED307F3000D55F5 /* addSpot.png */; };
 		A76BA9E21ECC67ED00443947 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9E01ECC67ED00443947 /* Main.storyboard */; };
 		A76BA9E41ECC67ED00443947 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9E31ECC67ED00443947 /* Assets.xcassets */; };
 		A76BA9E71ECC67ED00443947 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9E51ECC67ED00443947 /* LaunchScreen.storyboard */; };
@@ -68,14 +60,6 @@
 		3FBF8B759B0AEF6C32784BD2 /* Pods-TBMS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TBMS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TBMS/Pods-TBMS.debug.xcconfig"; sourceTree = "<group>"; };
 		4A47D2D8565775007FF8F6F4 /* Pods_TBMS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TBMS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		752395F9B48095F5C174C1E8 /* Pods-TBMS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TBMS.release.xcconfig"; path = "Pods/Target Support Files/Pods-TBMS/Pods-TBMS.release.xcconfig"; sourceTree = "<group>"; };
-		A72954C61ED30666000D55F5 /* ScheduleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewCell.swift; sourceTree = "<group>"; };
-		A72954C71ED30666000D55F5 /* ScheduleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewController.swift; sourceTree = "<group>"; };
-		A72954CB1ED306DF000D55F5 /* TripListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripListViewController.swift; sourceTree = "<group>"; };
-		A72954CC1ED306DF000D55F5 /* TripListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripListTableViewCell.swift; sourceTree = "<group>"; };
-		A72954CD1ED306DF000D55F5 /* TripListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TripListCell.xib; sourceTree = "<group>"; };
-		A72954D21ED306F1000D55F5 /* PocketSpotTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PocketSpotTVC.swift; sourceTree = "<group>"; };
-		A72954D31ED306F1000D55F5 /* PocketSpotTVCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PocketSpotTVCell.swift; sourceTree = "<group>"; };
-		A72954D71ED307F3000D55F5 /* addSpot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addSpot.png; sourceTree = "<group>"; };
 		A76BA9D91ECC67ED00443947 /* TBMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TBMS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76BA9E11ECC67ED00443947 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A76BA9E31ECC67ED00443947 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -120,11 +104,8 @@
 			isa = PBXGroup;
 			children = (
 				22FCB46A1ED2CB6200F6F54E /* BestPathCalculator.swift */,
-<<<<<<< HEAD
-=======
 				22F43F561ECD6AE600791D55 /* RequestURLGenerator.swift */,
 				22AF44DF1ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift */,
->>>>>>> 87a52371e87d381509ec4b7112c9cd2ce44df450
 				22F43F4C1ECD662900791D55 /* FindTrafficTimeAndWay.swift */,
 				22F43F451ECD662000791D55 /* CallGooglePlaceAPI.swift */,
 				22F43F3F1ECD661200791D55 /* ProduceScrollViewWithVCArray.swift */,
@@ -132,7 +113,6 @@
 				22F43F411ECD661200791D55 /* ErrorCatch.swift */,
 			);
 			name = Model;
-			path = TBMS;
 			sourceTree = "<group>";
 		};
 		22F43F4F1ECD664D00791D55 /* Controller */ = {
@@ -140,9 +120,10 @@
 			children = (
 				A76BA9FE1ECC697000443947 /* SetStartPointViewController.swift */,
 				22CF17041ECDD2EA00B3F20E /* FinalScheduleVC.swift */,
+				22F43F551ECD669800791D55 /* AddViewPoint */,
+				22F43F501ECD666900791D55 /* RearrangeSchedule */,
 			);
 			name = Controller;
-			path = TBMS;
 			sourceTree = "<group>";
 		};
 		22F43F501ECD666900791D55 /* RearrangeSchedule */ = {
@@ -152,19 +133,14 @@
 				22F43F521ECD667900791D55 /* RearrangeScheduleCell.swift */,
 			);
 			name = RearrangeSchedule;
-			path = TBMS;
 			sourceTree = "<group>";
 		};
 		22F43F551ECD669800791D55 /* AddViewPoint */ = {
 			isa = PBXGroup;
 			children = (
-				A76BA9FF1ECC697000443947 /* ViewPointDetailViewController.swift */,
-				A76BAA001ECC697000443947 /* ViewPointListCell.swift */,
-				A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */,
 				A76BA9EE1ECC697000443947 /* AddViewPointViewController.swift */,
 			);
 			name = AddViewPoint;
-			path = TBMS;
 			sourceTree = "<group>";
 		};
 		2B615B41E93ABD5803CF7AE8 /* Frameworks */ = {
@@ -184,88 +160,10 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		A72954C31ED2E68F000D55F5 /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-				A76BA9FA1ECC697000443947 /* MenuCell.xib */,
-				A76BA9FB1ECC697000443947 /* MenuTableViewCell.swift */,
-				A76BA9FC1ECC697000443947 /* MenuTableViewController.swift */,
-			);
-			name = Menu;
-			path = TBMS;
-			sourceTree = "<group>";
-		};
-		A72954C41ED2E6B8000D55F5 /* CountrySelect */ = {
-			isa = PBXGroup;
-			children = (
-				A76BA9EF1ECC697000443947 /* arrowClose.png */,
-				A76BA9F01ECC697000443947 /* arrowOpen.png */,
-				A76BA9F21ECC697000443947 /* ContinentalGroup.swift */,
-				A76BA9F31ECC697000443947 /* ContinentalView.swift */,
-				A76BA9F41ECC697000443947 /* ContinentalView.xib */,
-				A76BA9F51ECC697000443947 /* Country.swift */,
-				A76BA9F61ECC697000443947 /* CountryInfo.plist */,
-				A76BA9F71ECC697000443947 /* CountrySelectTableViewCell.swift */,
-				A76BA9F81ECC697000443947 /* CountrySelectTableViewController.swift */,
-			);
-			name = CountrySelect;
-			path = TBMS;
-			sourceTree = "<group>";
-		};
-		A72954C51ED2E718000D55F5 /* SetStartPoint */ = {
-			isa = PBXGroup;
-			children = (
-				A76BA9FE1ECC697000443947 /* SetStartPointViewController.swift */,
-			);
-			name = SetStartPoint;
-			path = TBMS;
-			sourceTree = "<group>";
-		};
-		A72954CA1ED30677000D55F5 /* Schedule */ = {
-			isa = PBXGroup;
-			children = (
-				A72954C61ED30666000D55F5 /* ScheduleTableViewCell.swift */,
-				A72954C71ED30666000D55F5 /* ScheduleTableViewController.swift */,
-			);
-			name = Schedule;
-			path = TBMS;
-			sourceTree = "<group>";
-		};
-		A72954D11ED306E5000D55F5 /* TripList */ = {
-			isa = PBXGroup;
-			children = (
-				A72954CB1ED306DF000D55F5 /* TripListViewController.swift */,
-				A72954CC1ED306DF000D55F5 /* TripListTableViewCell.swift */,
-				A72954CD1ED306DF000D55F5 /* TripListCell.xib */,
-			);
-			name = TripList;
-			path = TBMS;
-			sourceTree = "<group>";
-		};
-		A72954D61ED306F5000D55F5 /* PocketSpot */ = {
-			isa = PBXGroup;
-			children = (
-				A72954D21ED306F1000D55F5 /* PocketSpotTVC.swift */,
-				A72954D31ED306F1000D55F5 /* PocketSpotTVCell.swift */,
-			);
-			name = PocketSpot;
-			path = TBMS;
-			sourceTree = "<group>";
-		};
 		A76BA9D01ECC67ED00443947 = {
 			isa = PBXGroup;
 			children = (
 				A76BA9DB1ECC67ED00443947 /* TBMS */,
-				A72954D11ED306E5000D55F5 /* TripList */,
-				A72954D61ED306F5000D55F5 /* PocketSpot */,
-				A72954CA1ED30677000D55F5 /* Schedule */,
-				A72954C51ED2E718000D55F5 /* SetStartPoint */,
-				A72954C31ED2E68F000D55F5 /* Menu */,
-				A72954C41ED2E6B8000D55F5 /* CountrySelect */,
-				22F43F4F1ECD664D00791D55 /* Controller */,
-				22F43F3E1ECD660000791D55 /* Model */,
-				22F43F551ECD669800791D55 /* AddViewPoint */,
-				22F43F501ECD666900791D55 /* RearrangeSchedule */,
 				A76BA9DA1ECC67ED00443947 /* Products */,
 				6F3EAFAD4A8E0D6851AE6818 /* Pods */,
 				2B615B41E93ABD5803CF7AE8 /* Frameworks */,
@@ -283,19 +181,27 @@
 		A76BA9DB1ECC67ED00443947 /* TBMS */ = {
 			isa = PBXGroup;
 			children = (
-				A72954D71ED307F3000D55F5 /* addSpot.png */,
 				A76BAC3F1ECC6B4000443947 /* AppDelegate.swift */,
+				A76BA9EF1ECC697000443947 /* arrowClose.png */,
+				A76BA9F01ECC697000443947 /* arrowOpen.png */,
 				A76BA9F11ECC697000443947 /* CertificateSigningRequest.certSigningRequest */,
+				A76BA9F21ECC697000443947 /* ContinentalGroup.swift */,
+				A76BA9F31ECC697000443947 /* ContinentalView.swift */,
+				A76BA9F41ECC697000443947 /* ContinentalView.xib */,
+				A76BA9F51ECC697000443947 /* Country.swift */,
+				A76BA9F61ECC697000443947 /* CountryInfo.plist */,
+				A76BA9F71ECC697000443947 /* CountrySelectTableViewCell.swift */,
+				A76BA9F81ECC697000443947 /* CountrySelectTableViewController.swift */,
 				A76BA9F91ECC697000443947 /* DataManager.swift */,
+				A76BA9FA1ECC697000443947 /* MenuCell.xib */,
+				A76BA9FB1ECC697000443947 /* MenuTableViewCell.swift */,
+				A76BA9FC1ECC697000443947 /* MenuTableViewController.swift */,
 				A76BA9FD1ECC697000443947 /* SectionInfo.swift */,
-<<<<<<< HEAD
-=======
 				22F43F4F1ECD664D00791D55 /* Controller */,
 				22F43F3E1ECD660000791D55 /* Model */,
 				A76BA9FF1ECC697000443947 /* ViewPointDetailViewController.swift */,
 				A76BAA001ECC697000443947 /* ViewPointListCell.swift */,
 				A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */,
->>>>>>> 87a52371e87d381509ec4b7112c9cd2ce44df450
 				A76BA9E01ECC67ED00443947 /* Main.storyboard */,
 				A76BA9E31ECC67ED00443947 /* Assets.xcassets */,
 				A76BA9E51ECC67ED00443947 /* LaunchScreen.storyboard */,
@@ -413,11 +319,9 @@
 				A76BAA041ECC697000443947 /* arrowOpen.png in Resources */,
 				A76BAA0E1ECC697000443947 /* MenuCell.xib in Resources */,
 				A76BAA0A1ECC697000443947 /* CountryInfo.plist in Resources */,
-				A72954D81ED307F3000D55F5 /* addSpot.png in Resources */,
 				A76BAA051ECC697000443947 /* CertificateSigningRequest.certSigningRequest in Resources */,
 				A76BAA031ECC697000443947 /* arrowClose.png in Resources */,
 				A76BAA081ECC697000443947 /* ContinentalView.xib in Resources */,
-				A72954D01ED306DF000D55F5 /* TripListCell.xib in Resources */,
 				A76BA9E21ECC67ED00443947 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -479,16 +383,8 @@
 			files = (
 				22F43F4E1ECD662900791D55 /* FindTrafficTimeAndWay.swift in Sources */,
 				22FCB46B1ED2CB6200F6F54E /* BestPathCalculator.swift in Sources */,
-				A72954D41ED306F1000D55F5 /* PocketSpotTVC.swift in Sources */,
 				22F43F431ECD661200791D55 /* ViewPointAndPathStoraged.swift in Sources */,
 				A76BAA121ECC697000443947 /* SetStartPointViewController.swift in Sources */,
-<<<<<<< HEAD
-				A72954CF1ED306DF000D55F5 /* TripListTableViewCell.swift in Sources */,
-				A72954C91ED30666000D55F5 /* ScheduleTableViewController.swift in Sources */,
-				A72954D51ED306F1000D55F5 /* PocketSpotTVCell.swift in Sources */,
-				22F43F591ECD6AE600791D55 /* ResponceAndJsonAnalyst.swift in Sources */,
-=======
->>>>>>> 87a52371e87d381509ec4b7112c9cd2ce44df450
 				22CF17051ECDD2EA00B3F20E /* FinalScheduleVC.swift in Sources */,
 				22AF44E01ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift in Sources */,
 				22F43F441ECD661200791D55 /* ErrorCatch.swift in Sources */,
@@ -507,15 +403,10 @@
 				A76BAA0B1ECC697000443947 /* CountrySelectTableViewCell.swift in Sources */,
 				22F43F531ECD667900791D55 /* RearrangeScheduleVC.swift in Sources */,
 				A76BAA091ECC697000443947 /* Country.swift in Sources */,
-<<<<<<< HEAD
-				A72954CE1ED306DF000D55F5 /* TripListViewController.swift in Sources */,
-=======
->>>>>>> 87a52371e87d381509ec4b7112c9cd2ce44df450
 				A76BAA111ECC697000443947 /* SectionInfo.swift in Sources */,
 				A76BAA0D1ECC697000443947 /* DataManager.swift in Sources */,
 				A76BAA141ECC697000443947 /* ViewPointListCell.swift in Sources */,
 				A76BAA151ECC697000443947 /* viewPointTableViewCell.swift in Sources */,
-				A72954C81ED30666000D55F5 /* ScheduleTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
