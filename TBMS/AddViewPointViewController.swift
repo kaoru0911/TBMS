@@ -63,6 +63,8 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         placesClient = GMSPlacesClient.shared()
         
         //self.navigationController?.navigationBar.isTranslucent = false
+        //button.layer.cornerRadius = 5.0
+        //button.layer.masksToBounds = true
         print(self.selectedCountry)
     }
     

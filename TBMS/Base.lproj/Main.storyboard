@@ -11,7 +11,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Menu Table View Controller-->
+        <!--Travel By MySelf-->
         <scene sceneID="eZZ-zj-nx8">
             <objects>
                 <tableViewController id="BRu-d4-rjK" customClass="MenuTableViewController" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
@@ -39,7 +39,7 @@
                             <outlet property="delegate" destination="BRu-d4-rjK" id="Vv3-vr-qPM"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="sk0-wQ-k6O"/>
+                    <navigationItem key="navigationItem" title="Travel By MySelf" id="sk0-wQ-k6O"/>
                     <connections>
                         <outlet property="menuTableView" destination="kOd-kv-rhX" id="zq2-j4-paS"/>
                     </connections>
@@ -180,13 +180,24 @@
                                     <outlet property="delegate" destination="EhH-8Q-d51" id="mFX-gS-bsP"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xiM-k6-ciN">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" hasAttributedTitle="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xiM-k6-ciN">
                                 <rect key="frame" x="83" y="279" width="70" height="40"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="70" id="7xl-3q-VKO"/>
                                     <constraint firstAttribute="height" constant="40" id="9e0-h6-wzI"/>
                                 </constraints>
-                                <state key="normal" title="庫存景點"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal">
+                                    <attributedString key="attributedTitle">
+                                        <fragment content="庫存景點">
+                                            <attributes>
+                                                <font key="NSFont" size="15" name=".PingFangTC-Regular"/>
+                                                <font key="NSOriginalFont" metaFont="system" size="15"/>
+                                            </attributes>
+                                        </fragment>
+                                    </attributedString>
+                                </state>
                                 <connections>
                                     <segue destination="voi-0M-CfP" kind="show" id="AE5-G1-K7s"/>
                                 </connections>
@@ -211,7 +222,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J03-IL-xNB">
-                                <rect key="frame" x="230" y="279" width="70" height="40"/>
+                                <rect key="frame" x="230.5" y="279" width="70" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="tHg-LV-raU"/>
                                 </constraints>

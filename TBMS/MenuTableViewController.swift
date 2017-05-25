@@ -41,11 +41,11 @@ class MenuTableViewController: UITableViewController {
         
         cellData.append(("開始規劃" , UIImage(named: "kyoto2")!))
         
-        cellData.append(("推薦行程" , UIImage(named: "Paris")!))
+        cellData.append(("推薦行程" , UIImage(named: "paris3")!))
         
-        cellData.append(("庫存行程" , UIImage(named: "Swizerland")!))
+        cellData.append(("庫存行程" , UIImage(named: "Swizerland7")!))
         
-        cellData.append(("庫存景點" , UIImage(named: "Taipei")!))
+        cellData.append(("庫存景點" , UIImage(named: "Swizerland8")!))
         
 //        cellData.append("開始規劃")
 //        
