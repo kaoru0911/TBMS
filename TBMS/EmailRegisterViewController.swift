@@ -13,6 +13,7 @@ class EmailRegisterViewController: UIViewController {
 
     @IBOutlet weak var inputAccount: UITextField!
     
+    @IBOutlet weak var registerBtn: UIButton!
     var serverCommunicate: ServerConnector = ServerConnector()
     
     var sharedData = DataManager.shareDataManager
@@ -20,6 +21,7 @@ class EmailRegisterViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        registerBtn.layer.cornerRadius = 5.0
     }
 
     override func didReceiveMemoryWarning() {

@@ -26,8 +26,6 @@
 		A74BDDD91ED5B6A100987446 /* TripListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74BDDD61ED5B6A100987446 /* TripListTableViewCell.swift */; };
 		A74BDDDA1ED5B6A100987446 /* TripListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74BDDD71ED5B6A100987446 /* TripListViewController.swift */; };
 		A74BDDE11ED6F10B00987446 /* addSpot.png in Resources */ = {isa = PBXBuildFile; fileRef = A74BDDE01ED6F10B00987446 /* addSpot.png */; };
-		A74BDDE31ED6FD3E00987446 /* travel.png in Resources */ = {isa = PBXBuildFile; fileRef = A74BDDE21ED6FD3E00987446 /* travel.png */; };
-		A74BDDE51ED6FD4300987446 /* member.png in Resources */ = {isa = PBXBuildFile; fileRef = A74BDDE41ED6FD4300987446 /* member.png */; };
 		A74BDDE71ED6FE0B00987446 /* airplane-symbol-7.png in Resources */ = {isa = PBXBuildFile; fileRef = A74BDDE61ED6FE0B00987446 /* airplane-symbol-7.png */; };
 		A74BDDE91ED6FE1C00987446 /* circle-user-7.png in Resources */ = {isa = PBXBuildFile; fileRef = A74BDDE81ED6FE1C00987446 /* circle-user-7.png */; };
 		A76BA9E21ECC67ED00443947 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9E01ECC67ED00443947 /* Main.storyboard */; };
@@ -82,8 +80,6 @@
 		A74BDDD61ED5B6A100987446 /* TripListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripListTableViewCell.swift; sourceTree = "<group>"; };
 		A74BDDD71ED5B6A100987446 /* TripListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripListViewController.swift; sourceTree = "<group>"; };
 		A74BDDE01ED6F10B00987446 /* addSpot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addSpot.png; sourceTree = "<group>"; };
-		A74BDDE21ED6FD3E00987446 /* travel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = travel.png; sourceTree = "<group>"; };
-		A74BDDE41ED6FD4300987446 /* member.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = member.png; sourceTree = "<group>"; };
 		A74BDDE61ED6FE0B00987446 /* airplane-symbol-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "airplane-symbol-7.png"; sourceTree = "<group>"; };
 		A74BDDE81ED6FE1C00987446 /* circle-user-7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle-user-7.png"; sourceTree = "<group>"; };
 		A76BA9D91ECC67ED00443947 /* TBMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TBMS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -274,8 +270,6 @@
 			children = (
 				A74BDDE61ED6FE0B00987446 /* airplane-symbol-7.png */,
 				A74BDDE81ED6FE1C00987446 /* circle-user-7.png */,
-				A74BDDE41ED6FD4300987446 /* member.png */,
-				A74BDDE21ED6FD3E00987446 /* travel.png */,
 				22FAC4651ED5812200C402D8 /* testStoryboard.storyboard */,
 				A76BAC3F1ECC6B4000443947 /* AppDelegate.swift */,
 				A76BA9F11ECC697000443947 /* CertificateSigningRequest.certSigningRequest */,
@@ -404,7 +398,6 @@
 				A76BA9E41ECC67ED00443947 /* Assets.xcassets in Resources */,
 				A76BAA041ECC697000443947 /* arrowOpen.png in Resources */,
 				A76BAA0E1ECC697000443947 /* MenuCell.xib in Resources */,
-				A74BDDE51ED6FD4300987446 /* member.png in Resources */,
 				A74BDDE91ED6FE1C00987446 /* circle-user-7.png in Resources */,
 				A74BDDE11ED6F10B00987446 /* addSpot.png in Resources */,
 				A76BAA0A1ECC697000443947 /* CountryInfo.plist in Resources */,
@@ -414,7 +407,6 @@
 				A76BAA031ECC697000443947 /* arrowClose.png in Resources */,
 				A76BAA081ECC697000443947 /* ContinentalView.xib in Resources */,
 				A76BA9E21ECC67ED00443947 /* Main.storyboard in Resources */,
-				A74BDDE31ED6FD3E00987446 /* travel.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
