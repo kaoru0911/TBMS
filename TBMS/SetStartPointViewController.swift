@@ -19,6 +19,7 @@ class SetStartPointViewController: UIViewController {
     var startPoint : Attraction!
     var attractionsList : [Attraction]!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         goToNextPage.isHidden = true

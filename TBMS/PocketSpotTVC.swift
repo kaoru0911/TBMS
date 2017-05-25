@@ -10,14 +10,14 @@ import UIKit
 
 
 class PocketSpotTVC: UITableViewController {
-
+    
+    var selectedCountry : String!
     var spotList = ["Tokyo", "Osaka", "London"]
 
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("第二面唷")
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 

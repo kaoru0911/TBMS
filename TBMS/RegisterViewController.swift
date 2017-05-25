@@ -16,7 +16,6 @@ class RegisterViewController: UIViewController, FBSDKLoginButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         FBLoginBtn.readPermissions = ["public_profile", "email", "user_friends"]
         FBLoginBtn.delegate = self
         

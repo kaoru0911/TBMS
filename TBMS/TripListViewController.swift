@@ -10,12 +10,13 @@ import UIKit
 
 class TripListViewController: UIViewController , UITableViewDataSource , UITableViewDelegate{
 
+    var selectedCountry : String!
     var tripData = [(String , String, UIImage)]()
     
     @IBOutlet weak var tripListTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print("第三面囉")
         // Do any additional setup after loading the view.
         
         //xib的名稱

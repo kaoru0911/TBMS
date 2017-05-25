@@ -18,8 +18,9 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBOutlet weak var spotTableView: UITableView!
     
-    var placeIdStorage:String!
+    var selectedCountry : String!
     
+    var placeIdStorage:String!
     var tmpPlaceData : GMSPlace!
     var tmpPlaceDataStorage : [GMSPlace]!
     
@@ -62,6 +63,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         placesClient = GMSPlacesClient.shared()
         
         //self.navigationController?.navigationBar.isTranslucent = false
+        print(self.selectedCountry)
     }
     
     func goSetStartPointPage() {

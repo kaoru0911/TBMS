@@ -20,7 +20,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="menuCell" rowHeight="185" id="S0d-qd-USG" customClass="MenuTableViewCell" customModule="TBMS" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="menuCell" rowHeight="185" id="S0d-qd-USG" customClass="MenuTableViewCell" customModule="TBMS" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="185"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="S0d-qd-USG" id="qwc-7c-LyM">
@@ -101,8 +101,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="選擇國家" id="VEH-kf-azk"/>
                     <connections>
-                        <segue destination="EhH-8Q-d51" kind="show" id="zY2-7p-mng"/>
-                        <segue destination="voi-0M-CfP" kind="show" id="2jg-Hf-yJs"/>
+                        <segue destination="EhH-8Q-d51" kind="show" identifier="goAddPointVC" id="zY2-7p-mng"/>
+                        <segue destination="voi-0M-CfP" kind="show" identifier="goPocketSpotTVC" id="2jg-Hf-yJs"/>
                         <segue destination="0yY-iG-o2q" kind="show" identifier="goTripListViewController" id="iPq-SU-yMw"/>
                     </connections>
                 </tableViewController>
@@ -110,7 +110,7 @@
             </objects>
             <point key="canvasLocation" x="962" y="-268"/>
         </scene>
-        <!--Title-->
+        <!--加入行程-->
         <scene sceneID="Ihn-7W-cV4">
             <objects>
                 <viewController storyboardIdentifier="AddViewPointViewController" id="EhH-8Q-d51" customClass="AddViewPointViewController" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
@@ -188,7 +188,7 @@
                                 </constraints>
                                 <state key="normal" title="庫存景點"/>
                                 <connections>
-                                    <segue destination="ZTa-Xd-KQ1" kind="show" id="Ufm-fR-CGc"/>
+                                    <segue destination="voi-0M-CfP" kind="show" id="AE5-G1-K7s"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xVd-rj-Txe">
@@ -259,7 +259,7 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Title" id="Tnw-nd-jC3">
+                    <navigationItem key="navigationItem" title="加入行程" id="Tnw-nd-jC3">
                         <barButtonItem key="rightBarButtonItem" title="開始規劃" id="ERH-H9-ZTO">
                             <connections>
                                 <segue destination="I8i-xe-uxU" kind="show" id="YfR-ug-hd9"/>
@@ -277,7 +277,7 @@
             </objects>
             <point key="canvasLocation" x="2353" y="-889"/>
         </scene>
-        <!--Title-->
+        <!--起點設定-->
         <scene sceneID="Tc0-dc-k89">
             <objects>
                 <viewController storyboardIdentifier="SetStartPointViewController" id="I8i-xe-uxU" customClass="SetStartPointViewController" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
@@ -342,7 +342,7 @@
                             <constraint firstItem="tKf-sc-OLb" firstAttribute="trailing" secondItem="oTd-aA-irk" secondAttribute="trailing" id="oGK-PS-wQ0"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="wld-mh-Prh"/>
+                    <navigationItem key="navigationItem" title="起點設定" id="wld-mh-Prh"/>
                     <connections>
                         <outlet property="chooseStartingPtBtn" destination="j57-iU-Tjy" id="I5b-A1-evN"/>
                         <outlet property="chosenStartingPoint" destination="tKf-sc-OLb" id="w4T-Ht-nfQ"/>
@@ -505,7 +505,7 @@
         <scene sceneID="yHp-h9-rRp">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="旅遊選單" id="8os-eW-EHn"/>
+                    <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -692,7 +692,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0JA-rm-I5x" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1172" y="-1675"/>
+            <point key="canvasLocation" x="-172" y="-1116"/>
         </scene>
         <!--新會員註冊-->
         <scene sceneID="1et-Y5-peW">
@@ -743,7 +743,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tad-xm-NtG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1993" y="-1675"/>
+            <point key="canvasLocation" x="649" y="-1116"/>
         </scene>
         <!--Title-->
         <scene sceneID="Wmm-hS-5rZ">
@@ -959,7 +959,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQO-cw-Otz">
-                                <rect key="frame" x="277" y="337" width="31" height="30"/>
+                                <rect key="frame" x="277" y="332" width="31" height="30"/>
                                 <state key="normal" title="註冊"/>
                                 <connections>
                                     <action selector="emailRegisterBtn:" destination="aUJ-hQ-jFs" eventType="touchUpInside" id="LYx-LO-waj"/>
@@ -998,7 +998,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dd6-Bj-QcZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2852" y="-1675"/>
+            <point key="canvasLocation" x="1508" y="-1116"/>
         </scene>
         <!--會員專區-->
         <scene sceneID="QJg-UC-lzv">
@@ -1031,33 +1031,14 @@
                     </tabBar>
                     <connections>
                         <segue destination="Jr2-OO-ePz" kind="relationship" relationship="viewControllers" id="PWT-Pe-60b"/>
-                        <segue destination="ZTa-Xd-KQ1" kind="relationship" relationship="viewControllers" id="zyb-MZ-kBi"/>
+                        <segue destination="GFc-sQ-9Ib" kind="relationship" relationship="viewControllers" id="6DS-bX-tjO"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XMY-dl-1vn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1871.2" y="-254.12293853073464"/>
+            <point key="canvasLocation" x="-1900" y="-254"/>
         </scene>
-        <!--會員專區-->
-        <scene sceneID="pk7-XA-mj0">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZTa-Xd-KQ1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="會員專區" id="HPF-si-X4Z"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="V5Z-jM-U0R">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Cmr-dz-vU3" kind="relationship" relationship="rootViewController" id="PDF-Lb-saF"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uf8-Gg-rEN" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-876" y="-1076"/>
-        </scene>
-        <!--Root View Controller-->
+        <!--庫存景點-->
         <scene sceneID="N8C-1s-OOv">
             <objects>
                 <tableViewController id="voi-0M-CfP" customClass="PocketSpotTVC" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
@@ -1120,13 +1101,13 @@
                             <outlet property="delegate" destination="voi-0M-CfP" id="Ji1-FU-n7g"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="z0q-Zu-2Bd"/>
+                    <navigationItem key="navigationItem" title="庫存景點" id="z0q-Zu-2Bd"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kn0-vc-FQD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2353" y="-57"/>
         </scene>
-        <!--Trip List View Controller-->
+        <!--行程-->
         <scene sceneID="WCw-jv-rMi">
             <objects>
                 <viewController id="0yY-iG-o2q" customClass="TripListViewController" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
@@ -1139,7 +1120,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="120" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="DxA-5x-bHn">
-                                <rect key="frame" x="0.0" y="184" width="375" height="434"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="tripListCell" rowHeight="150" id="aFy-bu-0p0">
@@ -1159,12 +1140,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="DxA-5x-bHn" firstAttribute="top" secondItem="8s8-Ey-Fce" secondAttribute="bottom" constant="120" id="Jen-Ct-Hqu"/>
+                            <constraint firstItem="DxA-5x-bHn" firstAttribute="top" secondItem="8s8-Ey-Fce" secondAttribute="bottom" id="Jen-Ct-Hqu"/>
                             <constraint firstItem="aD8-uq-usi" firstAttribute="top" secondItem="DxA-5x-bHn" secondAttribute="bottom" id="KZP-9C-nbG"/>
                             <constraint firstItem="DxA-5x-bHn" firstAttribute="leading" secondItem="Efb-Kx-7I0" secondAttribute="leadingMargin" constant="-16" id="Omz-C8-j8X"/>
                             <constraint firstAttribute="trailingMargin" secondItem="DxA-5x-bHn" secondAttribute="trailing" constant="-16" id="r2J-vE-UaA"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="行程" id="cSU-FB-nZO"/>
                     <connections>
                         <outlet property="tripListTableView" destination="DxA-5x-bHn" id="5eJ-Xp-FrZ"/>
                     </connections>
@@ -1173,8 +1155,31 @@
             </objects>
             <point key="canvasLocation" x="2353" y="815"/>
         </scene>
+        <!--會員專區-->
+        <scene sceneID="t8u-it-OyA">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Cmr-dz-vU3" kind="relationship" relationship="rootViewController" id="frQ-MS-mvQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2A4-jW-rbY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1111" y="-1116"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="airplane-symbol-7.png" width="30" height="30"/>
+        <image name="circle-user-7.png" width="30" height="30"/>
+    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Ufm-fR-CGc"/>
+        <segue reference="AE5-G1-K7s"/>
     </inferredMetricsTieBreakers>
 </document>

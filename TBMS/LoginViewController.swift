@@ -40,7 +40,6 @@ class LoginViewController: UIViewController {
     }
     */
     
-   
     
     @IBAction func loginBtn(_ sender: Any) {
         
