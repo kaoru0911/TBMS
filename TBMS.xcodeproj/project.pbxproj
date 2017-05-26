@@ -18,6 +18,7 @@
 		22F43F541ECD667900791D55 /* RearrangeScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F43F521ECD667900791D55 /* RearrangeScheduleCell.swift */; };
 		22F43F581ECD6AE600791D55 /* RequestURLGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F43F561ECD6AE600791D55 /* RequestURLGenerator.swift */; };
 		22FAC4661ED5812200C402D8 /* testStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22FAC4651ED5812200C402D8 /* testStoryboard.storyboard */; };
+		22FAC4681ED67E4E00C402D8 /* StorageProtocolAndClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FAC4671ED67E4E00C402D8 /* StorageProtocolAndClass.swift */; };
 		22FCB46B1ED2CB6200F6F54E /* BestPathCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FCB46A1ED2CB6200F6F54E /* BestPathCalculator.swift */; };
 		417F7970D1EED0E3404633E6 /* Pods_TBMS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A47D2D8565775007FF8F6F4 /* Pods_TBMS.framework */; };
 		A76BA9E21ECC67ED00443947 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9E01ECC67ED00443947 /* Main.storyboard */; };
@@ -62,6 +63,7 @@
 		22F43F521ECD667900791D55 /* RearrangeScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RearrangeScheduleCell.swift; sourceTree = "<group>"; };
 		22F43F561ECD6AE600791D55 /* RequestURLGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestURLGenerator.swift; sourceTree = "<group>"; };
 		22FAC4651ED5812200C402D8 /* testStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = testStoryboard.storyboard; sourceTree = "<group>"; };
+		22FAC4671ED67E4E00C402D8 /* StorageProtocolAndClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageProtocolAndClass.swift; sourceTree = "<group>"; };
 		22FCB46A1ED2CB6200F6F54E /* BestPathCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BestPathCalculator.swift; sourceTree = "<group>"; };
 		3FBF8B759B0AEF6C32784BD2 /* Pods-TBMS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TBMS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TBMS/Pods-TBMS.debug.xcconfig"; sourceTree = "<group>"; };
 		4A47D2D8565775007FF8F6F4 /* Pods_TBMS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TBMS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +123,7 @@
 				22F43F3F1ECD661200791D55 /* ProduceScrollViewWithVCArray.swift */,
 				22F43F401ECD661200791D55 /* ViewPointAndPathStoraged.swift */,
 				22F43F411ECD661200791D55 /* ErrorCatch.swift */,
+				22FAC4671ED67E4E00C402D8 /* StorageProtocolAndClass.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -401,6 +404,7 @@
 				22FCB46B1ED2CB6200F6F54E /* BestPathCalculator.swift in Sources */,
 				22F43F431ECD661200791D55 /* ViewPointAndPathStoraged.swift in Sources */,
 				A76BAA121ECC697000443947 /* SetStartPointViewController.swift in Sources */,
+				22FAC4681ED67E4E00C402D8 /* StorageProtocolAndClass.swift in Sources */,
 				22CF17051ECDD2EA00B3F20E /* FinalScheduleVC.swift in Sources */,
 				A7929A461ED574520024B4D7 /* LoginViewController.swift in Sources */,
 				A7929A401ED56A2C0024B4D7 /* ServerConnector.swift in Sources */,
