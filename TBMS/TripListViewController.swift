@@ -16,7 +16,7 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
     @IBOutlet weak var tripListTableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("第三面囉")
+        //print("第三面囉")
         // Do any additional setup after loading the view.
         
         //xib的名稱
@@ -29,15 +29,15 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
 //        
 //        tripListTableView.dataSource = self
         
-        tripData.append(("東京遊", "四天三夜" , UIImage(named: "Kyoto")!))
+        tripData.append(("東京遊", "四天三夜" , UIImage(named: "tokyo2")!))
         
-        tripData.append(("巴黎遊", "七天六夜", UIImage(named: "Paris")!))
+        tripData.append(("巴黎遊", "七天六夜", UIImage(named: "paris4")!))
         
-        tripData.append(("瑞士遊", "八天七夜", UIImage(named: "Swizerland")!))
+        tripData.append(("瑞士遊", "八天七夜", UIImage(named: "Swizerland3")!))
         
-        tripData.append(("台北遊", "兩天一夜", UIImage(named: "Taipei")!))
+        tripData.append(("台北遊", "兩天一夜", UIImage(named: "taipei2")!))
         
-        tripData.append(("東京遊", "四天三夜" , UIImage(named: "Kyoto")!))
+        tripData.append(("東京遊", "四天三夜" , UIImage(named: "tokyo4")!))
         
         tripData.append(("巴黎遊", "七天六夜", UIImage(named: "Paris")!))
         
@@ -78,6 +78,9 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
         cell.tripTitle.text = tripData[indexPath.row].0
         cell.tripSubTitle.text = tripData[indexPath.row].1
         cell.tripCoverImg.image = tripData[indexPath.row].2
+        
+        cell.tripTitle.shadowColor = UIColor.white
+        cell.tripSubTitle.shadowColor = UIColor.white
         
         return cell
         

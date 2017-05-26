@@ -80,8 +80,7 @@ class MenuTableViewController: UITableViewController {
 
         let cell = menuTableView.dequeueReusableCell(withIdentifier: "menuCell", for: indexPath) as! MenuTableViewCell;
         
-        //cell.menuCellName.text = cellData
-        cell.menuCellName.text = cellData[indexPath.row].0
+                cell.menuCellName.text = cellData[indexPath.row].0
         
         cell.menuCellImage.image = cellData[indexPath.row].1
         
