@@ -289,7 +289,7 @@ enum TrafficType : String {
 
 
 // legs
-class LegsData: GeneralDirectionData {
+class LegsData: GeneralDirectionData, ResponceRouteType {
     var steps : [StepsData]!
     //大眾運輸模式下參數
     var arrivalTime : TimeInformation!
@@ -349,5 +349,6 @@ class StopInformation {
 }
 
 
+protocol ResponceRouteType { }
 
 

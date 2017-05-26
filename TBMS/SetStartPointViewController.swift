@@ -10,15 +10,17 @@ import UIKit
 import GooglePlacePicker
 
 class SetStartPointViewController: UIViewController {
-
+    
     @IBOutlet weak var chosenStartingPoint: UILabel!
     @IBOutlet weak var startingPointText: UITextField!
     @IBOutlet weak var chooseStartingPtBtn: UIButton!
     @IBOutlet weak var goToNextPage: UIButton!
     
+    let keyNextPageSegID = "goToRearrangeScheduleVC"
+    
     var startPoint : Attraction!
     var attractionsList : [Attraction]!
-    
+    var totalTrafficDetail : [LegsData]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,6 +60,36 @@ class SetStartPointViewController: UIViewController {
     }
     @IBAction func goToNextPage(_ sender: Any) {
         
+    }
+    
+    func getTotalRouteInformation() {
+        
+        var origin : Attraction!
+        var attractionNumber = attractionsList.count
+        
+        for place in attractionsList {
+            
+            guard origin != nil else {
+                origin = place
+                return
+            }
+            
+            let routeGenerator = GoogleDirectionCaller()
+            totalTrafficDetail = [LegsData]()
+            routeGenerator.getRouteInformation(origin: origin.placeID, destination: place.placeID, completion: { (route) in
+                
+                self.totalTrafficDetail.append(routeGenerator.route)
+                attractionNumber -= 1
+                if attractionNumber == 0 {
+                    self.performSegue(withIdentifier: self.keyNextPageSegID, sender: nil)
+                }
+            })
+        }
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc : RearrangeScheduleVC = segue.destination as! RearrangeScheduleVC
+        vc.totalTrafficDetail = totalTrafficDetail
+        vc.attractions = attractionsList
     }
 }
 

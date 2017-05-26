@@ -10,6 +10,6 @@ import Foundation
 
 protocol CommentValue {
     
-    var countrySelected
+//    var countrySelected
     func setValueToCountrySelected(country:String)
 }

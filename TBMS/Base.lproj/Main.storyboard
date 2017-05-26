@@ -330,7 +330,7 @@
                                 <state key="normal" title="確定行程, 開始規劃"/>
                                 <connections>
                                     <action selector="goToNextPage:" destination="I8i-xe-uxU" eventType="touchUpInside" id="0f3-7d-cCW"/>
-                                    <segue destination="DLZ-YW-dcw" kind="show" id="40q-PI-g0s"/>
+                                    <segue destination="DLZ-YW-dcw" kind="show" identifier="goToRearrangeScheduleVC" id="40q-PI-g0s"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="你要從哪裏出發？" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndp-oQ-P5L">

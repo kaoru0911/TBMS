@@ -32,9 +32,11 @@ class DateCell: UICollectionViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
 
+//class CellContent : NSObject {
+//    var type:CustomerCellType!
+//}
 
 class CellContent : NSObject {
     var type:CustomerCellType!
@@ -42,39 +44,46 @@ class CellContent : NSObject {
 
 /// For Storing the cell content about the DateType cell.
 class DateCellContent : CellContent {
-    var date : Int
-    var dateStringForLabel : String
+    var date : Int!
+    var dateStringForLabel : String!
     var colorTypeForScheduleOutoutPage : ColorSetting!
     required init(dateValue:Int) {
-        date = dateValue
-        dateStringForLabel = "第\(date)天"
+        super.init()
+        self.date = dateValue
+        self.dateStringForLabel = "第\(dateValue)天"
+        self.type = CustomerCellType.dateCellType
     }
 }
-
 
 /// For Storing the cell content about the ScheduleAndTrafficType cell.
 class ScheduleAndTrafficCellContent : CellContent {
-    var transportationMode : String!
+    var travelMode : String!
     var trafficTime : String!
     var viewPointName : String!
-    var viewPointInformation : String!
+    var attraction : Attraction!
+    var trafficInformation : LegsData!
     
-    required init(nameOfViewPoint:String, transportationMode:String, trafficTime:String) {
-        self.viewPointName = nameOfViewPoint
-        self.transportationMode = transportationMode
-        self.trafficTime = trafficTime
+    
+    required init(attraction:Attraction) {
+        super.init()
+        self.viewPointName = attraction.attrctionName
+        self.type = CustomerCellType.scheduleAndTrafficCellType
+    }
+    
+    convenience init(attraction:Attraction, trafficInformation:LegsData) {
+        self.init(attraction: attraction)
+        self.trafficTime = trafficInformation.duration
     }
 }
-
 
 /// For checking the cell content's type.
 ///
 /// - dateCellType: Contents for DateType cell.
 /// - scheduleAndTrafficCellType: Contents for ScheduleAndTrafficCellContent cell
-enum CustomerCellType {
-    case dateCellType, scheduleAndTrafficCellType
+enum CustomerCellType : String{
+    case dateCellType = "dateCell"
+    case scheduleAndTrafficCellType = "scheduleAndTrafficCell"
 }
-
 
 /// For define the color type of the view.
 class ColorSetting {
