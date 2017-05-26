@@ -91,7 +91,7 @@ class tripData: NSObject {
     var days:Int?
     var coverImg:UIImage?
 
-    var spots = [spotData]()
+    var spots = [tripSpotData]()
 }
 
 class sharedTripData: tripData {

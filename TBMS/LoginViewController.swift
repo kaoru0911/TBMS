@@ -43,17 +43,22 @@ class LoginViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let nextPage = segue.destination as! MemberViewController
+    }
     
     @IBAction func loginBtn(_ sender: Any) {
         
-    if (inputAccountName.text! == (sharedData.memberData?.account)! && inputPassword.text == (sharedData.memberData?.password)!){
-    serverCommunicate.userLogin()
+    guard (inputAccountName.text! == (sharedData.memberData?.account)! && inputPassword.text == (sharedData.memberData?.password)!) else {
+            return
+        }
+        serverCommunicate.userLogin()
+        performSegue(withIdentifier:"goMemberVC", sender: nil)
         print("登入成功")
-                }
-    
+        
         
     }
 
     }
+
 

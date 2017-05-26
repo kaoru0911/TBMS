@@ -64,7 +64,7 @@ class ScheduleTableViewController: UITableViewController {
         cell.spotItemLabel.layer.masksToBounds = true
 
         // auto line break
-        cell.describeLabel.text = data.pocketTrips?[0].spots[indexPath.row].trafficToNextSpot?[0]
+        cell.describeLabel.text = data.pocketTrips?[0].spots[indexPath.row].trafficToNextSpot
 
         // 自動調整高度
         cell.describeLabel.numberOfLines = 0
@@ -77,7 +77,7 @@ class ScheduleTableViewController: UITableViewController {
         if cell.describeLabel.frame.height > labelHeight{
             
             if selectCellRow[indexPath.row] {
-                cell.describeLabel.text = data.pocketTrips?[0].spots[indexPath.row].trafficToNextSpot?[0]
+                cell.describeLabel.text = data.pocketTrips?[0].spots[indexPath.row].trafficToNextSpot
             } else{
                 cell.describeLabel.text = "檢視詳細交通資訊"
             }
