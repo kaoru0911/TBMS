@@ -17,11 +17,29 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var spotTableView: UITableView!
+    @IBOutlet weak var addSpotBtn: UIButton!
+    @IBOutlet weak var saveSpotBtn: UIButton!
+    
+    @IBOutlet weak var spotSearchBtn: UIButton!
+    var selectedCountry : String!
     
     var placeIdStorage:String!
-    
     var tmpPlaceData : GMSPlace!
     var tmpPlaceDataStorage : [GMSPlace]!
+    
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        placesClient = GMSPlacesClient.shared()
+        
+        addSpotBtn.layer.cornerRadius = 5.0
+        saveSpotBtn.layer.cornerRadius = 5.0
+        spotSearchBtn.layer.cornerRadius = 5.0
+        imageView.image = UIImage(named: "bestTaipei")
+        
+    }
     
     // 用placeID取得google第一張地點照片，並呼叫loadImageForMetadata
     func loadFirstPhotoForPlace(placeID: String) {
@@ -54,16 +72,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     // TableView陣列
     var ListArray: NSMutableArray = []
     var placesClient: GMSPlacesClient!
-    
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        placesClient = GMSPlacesClient.shared()
-        
-        //self.navigationController?.navigationBar.isTranslucent = false
-    }
-    
+
     func goSetStartPointPage() {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

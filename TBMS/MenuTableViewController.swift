@@ -10,10 +10,12 @@ import UIKit
 
 class MenuTableViewController: UITableViewController {
 
+    
     @IBOutlet weak var menuTableView: UITableView!
     var choosen = ""
     
     var cellData = [(String , UIImage)]()
+    //var cellData = String()
     var selectedPage : Int!
     
     override func viewDidLoad() {
@@ -35,13 +37,24 @@ class MenuTableViewController: UITableViewController {
         
         //menuTableView.dataSource = self
         
-        cellData.append(("開始規劃" , UIImage(named: "Kyoto")!))
         
-        cellData.append(("推薦行程" , UIImage(named: "Paris")!))
         
-        cellData.append(("庫存行程" , UIImage(named: "Swizerland")!))
+        cellData.append(("開始規劃" , UIImage(named: "kyoto2")!))
         
-        cellData.append(("庫存景點" , UIImage(named: "Taipei")!))
+        cellData.append(("推薦行程" , UIImage(named: "paris3")!))
+        
+        cellData.append(("庫存行程" , UIImage(named: "Swizerland7")!))
+        
+        cellData.append(("庫存景點" , UIImage(named: "Swizerland8")!))
+        
+//        cellData.append("開始規劃")
+//        
+//        cellData.append("推薦行程")
+//        
+//        cellData.append("庫存行程")
+//        
+//        cellData.append("庫存景點")
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -67,11 +80,12 @@ class MenuTableViewController: UITableViewController {
 
         let cell = menuTableView.dequeueReusableCell(withIdentifier: "menuCell", for: indexPath) as! MenuTableViewCell;
         
+        //cell.menuCellName.text = cellData
         cell.menuCellName.text = cellData[indexPath.row].0
         
         cell.menuCellImage.image = cellData[indexPath.row].1
         
-//        cell.menuCellName.textColor = UIColor.white
+        //cell.menuCellName.textColor = UIColor.white
         
         cell.menuCellName.shadowOffset = CGSize(width: 2, height: 2)
         
@@ -82,6 +96,7 @@ class MenuTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+//        choosen = cellData
         choosen = cellData[indexPath.row].0
         performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
         

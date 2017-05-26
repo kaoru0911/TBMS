@@ -13,9 +13,10 @@ class RegisterViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     @IBOutlet weak var FBLoginBtn: FBSDKLoginButton!
 
+    @IBOutlet weak var emailRegisterBtn: UIButton!
+    @IBOutlet weak var gmailLoginBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         FBLoginBtn.readPermissions = ["public_profile", "email", "user_friends"]
         FBLoginBtn.delegate = self
@@ -25,7 +26,8 @@ class RegisterViewController: UIViewController, FBSDKLoginButtonDelegate {
             //            fetchProfile()
         }
         // Do any additional setup after loading the view.
-        
+        gmailLoginBtn.layer.cornerRadius = 5.0
+        emailRegisterBtn.layer.cornerRadius = 5.0
     }
 
     override func didReceiveMemoryWarning() {

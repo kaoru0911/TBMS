@@ -14,6 +14,8 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var inputPassword: UITextField!
     @IBOutlet weak var inputAccountName: UITextField!
     
+    @IBOutlet weak var loginBtn: UIButton!
+    @IBOutlet weak var newMemberRegisterBtn: UIButton!
     var serverCommunicate: ServerConnector = ServerConnector()
     
     var sharedData = DataManager.shareDataManager
@@ -22,6 +24,8 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        loginBtn.layer.cornerRadius = 5.0
+        newMemberRegisterBtn.layer.cornerRadius = 5.0
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,7 +44,6 @@ class LoginViewController: UIViewController {
     }
     */
     
-   
     
     @IBAction func loginBtn(_ sender: Any) {
         

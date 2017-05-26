@@ -15,10 +15,13 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
     var sectionInfoArray: NSMutableArray!
     var openSectionIndex = NSNotFound
     
+    var choosen = ""
+    var segueID : String!
+    var nextViewController: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(selectedProcess)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -235,73 +238,87 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
         openSectionIndex = NSNotFound
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "AddViewPointViewController", sender: nil)
         
-        let segueId : String!
         switch selectedProcess {
         case "開始規劃":
-            segueId = ""
-            
-        case "開始規劃":
-            segueId = ""
-        case "開始規劃":
-            segueId = ""
-        case "開始規劃":
-            segueId = ""
+            self.segueID = "goAddPointVC"
+        case "推薦行程":
+            self.segueID = "goTripListViewController"
+        case "庫存行程":
+            self.segueID = "goTripListViewController"
+        case "庫存景點":
+            self.segueID = "goPocketSpotTVC"
         default:
-            segueId = ""
+            self.segueID = "goAddPointVC"
         }
-        performSegue(withIdentifier: segueId, sender: nil)
+        print(self.segueID)
+        performSegue(withIdentifier: segueID, sender: nil)
     }
+    
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        //...
+        
+        // print("進入segue囉")
+        
+        if(segue.identifier == "goAddPointVC") {
+            let nextPage = segue.destination as! AddViewPointViewController
+            nextPage.selectedCountry = choosen
+        } else if (segue.identifier == "goPocketSpotVC") {
+            let nextPage = segue.destination as! PocketSpotTVC
+            nextPage.selectedCountry = choosen
+        } else if (segue.identifier == "goTripListViewController") {
+            let nextPage = segue.destination as! TripListViewController
+            nextPage.selectedCountry = choosen
+        }
     }
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
+
+
+
+/*
+ // Override to support conditional editing of the table view.
+ override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+ // Return false if you do not want the specified item to be editable.
+ return true
+ }
+ */
+
+/*
+ // Override to support editing the table view.
+ override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+ if editingStyle == .delete {
+ // Delete the row from the data source
+ tableView.deleteRows(at: [indexPath], with: .fade)
+ } else if editingStyle == .insert {
+ // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+ }
+ }
+ */
+
+/*
+ // Override to support rearranging the table view.
+ override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+ 
+ }
+ */
+
+/*
+ // Override to support conditional rearranging of the table view.
+ override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+ // Return false if you do not want the item to be re-orderable.
+ return true
+ }
+ */
+
+/*
+ // MARK: - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+ // Get the new view controller using segue.destinationViewController.
+ // Pass the selected object to the new view controller.
+ }
+ */
+
+
