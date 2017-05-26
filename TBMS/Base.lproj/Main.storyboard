@@ -664,6 +664,7 @@
                                 </state>
                                 <connections>
                                     <action selector="loginBtn:" destination="Cmr-dz-vU3" eventType="touchUpInside" id="H9f-1P-WPE"/>
+                                    <segue destination="lHG-gy-5i2" kind="show" id="w5t-RR-oWR"/>
                                 </connections>
                             </button>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Cga-3s-CXc">
@@ -686,7 +687,7 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="lHG-gy-5i2" kind="show" identifier="goMemberVC" id="xpT-P3-Q8z"/>
+                                    <segue destination="Il7-uK-xc9" kind="show" id="Otp-3a-bfn"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -785,7 +786,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tad-xm-NtG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="649" y="-1116"/>
+            <point key="canvasLocation" x="676" y="-1101"/>
         </scene>
         <!--Title-->
         <scene sceneID="Wmm-hS-5rZ">
@@ -1097,7 +1098,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dd6-Bj-QcZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1508" y="-1116.7916041979011"/>
+            <point key="canvasLocation" x="1503" y="-1101"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="4nq-Rs-Raq">
