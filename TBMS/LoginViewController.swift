@@ -16,9 +16,10 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var loginBtn: UIButton!
     @IBOutlet weak var newMemberRegisterBtn: UIButton!
-    var serverCommunicate: ServerConnector = ServerConnector()
     
+    var serverCommunicate: ServerConnector = ServerConnector()
     var sharedData = DataManager.shareDataManager
+    var loginResponse = Bool()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,22 +44,37 @@ class LoginViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let nextPage = segue.destination as! MemberViewController
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        let nextPage = segue.destination as! MemberViewController
+//    }
     
     @IBAction func loginBtn(_ sender: Any) {
+    
+//        serverCommunicate.userLogin()
+//        
+//        NotificationCenter.default.addObserver(self, selector: #selector(getUpdateNoti), name: NSNotification.Name(rawValue: "loginResponse"), object: nil)
+//        //print(loginResponse)
+        if (loginResponse == true){
+            let alert = UIAlertController(title: "Success", message:"登入成功", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
+            alert.addAction(ok)
         
-    guard (inputAccountName.text! == (sharedData.memberData?.account)! && inputPassword.text == (sharedData.memberData?.password)!) else {
-            return
-        }
-        serverCommunicate.userLogin()
-        performSegue(withIdentifier:"goMemberVC", sender: nil)
-        print("登入成功")
-        
-        
-    }
+        self.present(alert,animated: true,completion: nil)
+//            //performSegue(withIdentifier:"goMemberVC", sender: nil)
+        } else if (loginResponse == false) {
+            let alert = UIAlertController(title: "失敗", message:"登入失敗", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
+            alert.addAction(ok)
+            self.present(alert,animated: true,completion: nil)
 
+        }
+        
+        
+        }
+    
+    func getUpdateNoti(noti:Notification) {
+        loginResponse = noti.userInfo!["PASS"] as! Bool
+        }
     }
 
 

@@ -50,6 +50,7 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
         
         alert.addAction(UIAlertAction(title: "使用相機", style: .default, handler: { _ in
             self.openCamera()
+            
         }))
         
         alert.addAction(UIAlertAction(title: "存取相簿", style: .default, handler: { _ in

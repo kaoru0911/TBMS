@@ -14,7 +14,9 @@ class ServerConnector: NSObject {
     
     // URL
     let baseURLStr: String = "http://localhost/TravelByMyself/"
+    
     let memberURLstr: String = "member.php"
+    //let memberURLstr: String = "login.php"
     let dataDownloadURLstr: String = "dataDownload.php"
     let dataUploadURLstr: String = "dataUpload.php"
     
@@ -54,7 +56,9 @@ class ServerConnector: NSObject {
     var uploadIndex:Int = 0
     
     
+    
     func userLogin() {
+        
         
         guard ((sharedData.memberData?.account) != nil) ||
             ((sharedData.memberData?.password) != nil) else {
@@ -73,16 +77,26 @@ class ServerConnector: NSObject {
         
         Alamofire.request(baseURLStr + memberURLstr, method: .post, parameters: parameters).responseString { response in
             
-            debugPrint(response)
-            print("Is login post success: \(response.result.isSuccess)")
-            print("Response: \(String(describing: response.result.value))")
+            //debugPrint(response)
+            //print("Is login post success: \(response)")
+            //print("Is login post success: \(response.result.isSuccess)")
+            //print("Response: \(String(describing: response.result.value))")
+           
             
             if response.result.isSuccess == true {
                 self.sharedData.isLogin = true
-            } else{
+            } else {
                 self.sharedData.isLogin = false
             }
+            
+            let notificationName = Notification.Name("loginResponse")
+            NotificationCenter.default.post(name: notificationName, object: nil, userInfo: ["PASS":response.result.isSuccess])
         }
+    }
+    
+    func theMethodWhereYouGo(notification: NSNotification) {
+        
+        /* 從叫notifiName的本地通知傳送 notification參數過來 */
     }
     
     func createAccount() {
