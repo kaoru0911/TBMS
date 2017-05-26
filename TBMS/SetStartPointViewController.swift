@@ -12,7 +12,8 @@ import GooglePlacePicker
 class SetStartPointViewController: UIViewController {
     
     @IBOutlet weak var chosenStartingPoint: UILabel!
-    @IBOutlet weak var startingPointText: UITextField!
+//    @IBOutlet weak var startingPointText: UITextField!
+    
     @IBOutlet weak var chooseStartingPtBtn: UIButton!
     @IBOutlet weak var goToNextPage: UIButton!
     
@@ -33,29 +34,38 @@ class SetStartPointViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func chooseStartingPoint(_ sender: UIButton) {
+    @IBAction func chooseStartingBtnPressed(_ sender: UIButton) {
         
         let config = GMSPlacePickerConfig(viewport: nil)
         let placePicker = GMSPlacePicker(config: config)
         
+        print("選起始點囉")
+        
         placePicker.pickPlace(callback: { (place, error) -> Void in
+            
+            print("進入閉包囉")
             
             if let error = error {
                 print("Pick Place error: \(error.localizedDescription)")
                 return
             }
+            
             guard let place = place else {
                 print("No place selected")
                 return
             }
             
-            self.chosenStartingPoint.text = place.name
-            self.chooseStartingPtBtn.titleLabel?.text = "重新選擇"
-            
             self.chosenStartingPoint.isHidden = false
+            
             self.goToNextPage.isHidden = false
             
+            self.chosenStartingPoint.text = place.name
+            
+            self.chooseStartingPtBtn.titleLabel?.text = "重新選擇"
+            
+            self.startPoint = Attraction()
             self.startPoint.setValueToAttractionObject(place: place)
+            
         })
     }
     @IBAction func goToNextPage(_ sender: Any) {

@@ -136,11 +136,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         if spotExistedChecking == false {
             ListArray.add(spotTextView.text)
             self.spotTableView.reloadData();
-            
-            print("place資料唷 ： \(tmpPlaceData.name), \(tmpPlaceData.placeID)")
-            
             tmpPlaceDataStorage.append(tmpPlaceData!)
-            
         }
     }
     
