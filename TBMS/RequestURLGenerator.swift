@@ -17,21 +17,21 @@
 import UIKit
 
 /// To Produce a parameter dictionary & urlString to Alamofire, you can change the parameters by change the value in this class
-class DirectionParameterSettingAndRequestURLGenerator: NSObject {
+class DirectParametersAndRequestURLGenerator: NSObject {
     
     // String setting.
     private let departureTimeKeyWords = "departure_time"
     
     // Parameters with defaultValue.
-    var outputFormat : respondsDataType = .json
-    var language : languageSetting = .chinese
-    var distanceUnit : distanceUnit = .metric
-    var travelMod : travelMod = .transit
+    var outputFormat : RespondsDataType = .json
+    var language : LanguageSetting = .chinese
+    var distanceUnit : DistanceUnit = .metric
+    var travelMod : TravelMod = .transit
     
     // Parameters with transit travelMod.
     var departureTime = "1495004263"
-    var transitModePreference = transitPreferences(bus: true, subway: true, train: true, tram: true, rail: true).modeSetting
-    var trafficModel : responceTrafficModel = .pessimistic
+    var transitModePreference = TransitPreferences(bus: true, subway: true, train: true, tram: true, rail: true).modeSetting
+    var trafficModel : ResponceTrafficModel = .pessimistic
     
     
     // Setting requestUrl & GoldKey
@@ -81,18 +81,18 @@ class DirectionParameterSettingAndRequestURLGenerator: NSObject {
 
 
 //設定回傳資料方式
-enum respondsDataType : String{ //直接寫
+enum RespondsDataType : String{ //直接寫
     case json = "json"
     case xml = "xml"
 }
 //設定回傳語言
-enum languageSetting : String { //&language=
+enum LanguageSetting : String { //&language=
     case chinese = "zh-TW"
     case english = "en"
     case defaultValue = ""
 }
 //設定旅遊型態
-enum travelMod : String {  //&mod=
+enum TravelMod : String {  //&mod=
     //&traffic_model= 指定偏好方式
     case driving = "driving"
     case walking = "walking"
@@ -101,20 +101,20 @@ enum travelMod : String {  //&mod=
     case defaultValue = ""
 }
 //設定距離單位
-enum distanceUnit : String { //&units=
+enum DistanceUnit : String { //&units=
     case metric = "metric"
     case imperial = "imperial"
     case defaultValue = ""
 }
 //設定路線回傳模式
-enum responceTrafficModel : String {
+enum ResponceTrafficModel : String {
     case bestGuess = "best_guess"   //指出傳回的 duration_in_traffic 應該是考量歷史路況與即時路況下的最佳預估旅行時間。departure_time 越接近現在，即時路況就越重要。
     case pessimistic = "pessimistic" //指出傳回的 duration_in_traffic 應該比過去大部分的實際旅行時間更久，雖然偶有路況特別壅塞而超過此值的日子。
     case optimistic = "optimistic"   //指出傳回的 duration_in_traffic 應該比過去大部分的實際旅行時間更短，雖然偶有路況特別順暢而比此值更快的日子。
     case defaultValue = ""
 }
 //設定要避開的
-enum avoidPathType : String {   //avoid=
+enum AvoidPathType : String {   //avoid=
     case tolls = "tolls"    //指出計算的路線應該避開收費道路/橋樑。
     case highways = "highways"  //指出計算的路線應該避開高速公路。
     case ferries = "ferries"    //指出計算的路線應該避開渡輪。
@@ -123,7 +123,7 @@ enum avoidPathType : String {   //avoid=
 }
 
 //設定偏好大眾運輸模式
-class transitPreferences {
+class TransitPreferences {
     
     //optional setting
     private var bus = (false,"bus")

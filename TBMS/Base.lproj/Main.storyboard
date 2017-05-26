@@ -312,68 +312,72 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="請輸入旅遊國家的地點, 以日本旅遊為例：                                                 成田機場, 羽田機場, ＸＸ飯店, ＸＸ車站" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oTd-aA-irk">
-                                <rect key="frame" x="76" y="269.5" width="223" height="128"/>
+                                <rect key="frame" x="76" y="240" width="223" height="187"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="223" id="IcQ-mT-Q1b"/>
-                                    <constraint firstAttribute="height" constant="128" id="Twn-R3-u6H"/>
-                                </constraints>
                                 <color key="textColor" red="0.33100015859999998" green="0.33100015859999998" blue="0.33100015859999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8s-J1-wki">
-                                <rect key="frame" x="168" y="418" width="131" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="g8s-J1-wki" secondAttribute="height" multiplier="31:15" id="W2K-wV-0x9"/>
-                                </constraints>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8s-J1-wki">
+                                <rect key="frame" x="168" y="432" width="131" height="30"/>
                                 <state key="normal" title="確定行程, 開始規劃"/>
                                 <connections>
                                     <action selector="goToNextPage:" destination="I8i-xe-uxU" eventType="touchUpInside" id="0f3-7d-cCW"/>
-                                    <segue destination="DLZ-YW-dcw" kind="show" id="40q-PI-g0s"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="你要從哪裏出發？" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndp-oQ-P5L">
-                                <rect key="frame" x="76" y="210" width="139" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你要從哪裏出發？" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndp-oQ-P5L">
+                                <rect key="frame" x="76" y="214" width="139" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tKf-sc-OLb">
-                                <rect key="frame" x="257" y="219" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tKf-sc-OLb">
+                                <rect key="frame" x="220" y="214" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j57-iU-Tjy">
-                                <rect key="frame" x="76" y="418" width="77" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j57-iU-Tjy">
+                                <rect key="frame" x="76" y="432" width="77" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="titleShadowOffset" width="1" height="1"/>
                                 <state key="normal" title="選擇出發地"/>
+                                <connections>
+                                    <action selector="chooseStartingBtnPressed:" destination="I8i-xe-uxU" eventType="touchUpInside" id="xb7-1a-J7j"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="oTd-aA-irk" firstAttribute="centerX" secondItem="g5a-IB-ptC" secondAttribute="centerX" id="9zJ-FJ-ReK"/>
-                            <constraint firstItem="tKf-sc-OLb" firstAttribute="bottom" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" id="EmS-M2-biU"/>
-                            <constraint firstItem="g8s-J1-wki" firstAttribute="trailing" secondItem="oTd-aA-irk" secondAttribute="trailing" id="QSP-Zw-4fY"/>
-                            <constraint firstItem="j57-iU-Tjy" firstAttribute="leading" secondItem="oTd-aA-irk" secondAttribute="leading" id="XBX-HS-Zsg"/>
-                            <constraint firstItem="oTd-aA-irk" firstAttribute="centerY" secondItem="g5a-IB-ptC" secondAttribute="centerY" id="XbN-hq-gZN"/>
-                            <constraint firstItem="tKf-sc-OLb" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="top" id="c5V-QC-uHl"/>
-                            <constraint firstItem="Ndp-oQ-P5L" firstAttribute="leading" secondItem="oTd-aA-irk" secondAttribute="leading" id="gDt-Ej-lRe"/>
-                            <constraint firstItem="tKf-sc-OLb" firstAttribute="trailing" secondItem="oTd-aA-irk" secondAttribute="trailing" id="oGK-PS-wQ0"/>
+                            <constraint firstItem="oTd-aA-irk" firstAttribute="centerX" secondItem="g5a-IB-ptC" secondAttribute="centerX" id="1BL-2z-cmk"/>
+                            <constraint firstItem="g8s-J1-wki" firstAttribute="bottom" secondItem="j57-iU-Tjy" secondAttribute="bottom" id="2Ip-MK-zyn"/>
+                            <constraint firstItem="oTd-aA-irk" firstAttribute="leading" secondItem="g5a-IB-ptC" secondAttribute="leadingMargin" constant="60" id="3S3-tc-T7K"/>
+                            <constraint firstItem="oTd-aA-irk" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" constant="5" id="7bW-VF-KOQ"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="top" id="7lW-3A-I6b"/>
+                            <constraint firstItem="g8s-J1-wki" firstAttribute="trailing" secondItem="oTd-aA-irk" secondAttribute="trailing" id="Crz-ud-i4d"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="bottom" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" id="IDV-oy-PKw"/>
+                            <constraint firstItem="oTd-aA-irk" firstAttribute="centerX" secondItem="g5a-IB-ptC" secondAttribute="centerX" id="TTu-Du-HJ7"/>
+                            <constraint firstItem="j57-iU-Tjy" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="WtH-Do-yXb"/>
+                            <constraint firstItem="j57-iU-Tjy" firstAttribute="top" secondItem="oTd-aA-irk" secondAttribute="bottom" constant="5" id="Ywb-gG-qba"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="trailing" constant="5" id="dTT-9L-Yip"/>
+                            <constraint firstItem="oTd-aA-irk" firstAttribute="centerY" secondItem="g5a-IB-ptC" secondAttribute="centerY" id="kls-bQ-nvf"/>
+                            <constraint firstItem="g8s-J1-wki" firstAttribute="top" secondItem="j57-iU-Tjy" secondAttribute="top" id="oKi-93-G7B"/>
+                            <constraint firstItem="oTd-aA-irk" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="oTN-71-AwL"/>
+                            <constraint firstItem="oTd-aA-irk" firstAttribute="centerY" secondItem="g5a-IB-ptC" secondAttribute="centerY" id="sdY-bU-ZcO"/>
+                            <constraint firstItem="Ndp-oQ-P5L" firstAttribute="top" secondItem="HJu-WO-Wk1" secondAttribute="bottom" constant="150" id="zq2-K2-CC3"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="起點設定" id="wld-mh-Prh"/>
                     <connections>
-                        <outlet property="chooseStartingPtBtn" destination="j57-iU-Tjy" id="I5b-A1-evN"/>
+                        <outlet property="chooseStartingPtBtn" destination="j57-iU-Tjy" id="vCK-Ua-4IN"/>
                         <outlet property="chosenStartingPoint" destination="tKf-sc-OLb" id="w4T-Ht-nfQ"/>
                         <outlet property="goToNextPage" destination="g8s-J1-wki" id="9Mb-ai-mSc"/>
+                        <segue destination="DLZ-YW-dcw" kind="show" id="oUH-uQ-r3c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MQY-eO-kCj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3201" y="-890"/>
+            <point key="canvasLocation" x="3200.8000000000002" y="-890.10494752623697"/>
         </scene>
         <!--建議規劃-->
         <scene sceneID="X85-vd-uqG">
@@ -387,14 +391,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mWY-Ji-JSd">
-                                <rect key="frame" x="0.0" y="72" width="414" height="247"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <webView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mWY-Ji-JSd">
+                                <rect key="frame" x="0.0" y="72" width="375" height="247"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HWz-5r-StC">
-                                <rect key="frame" x="0.0" y="327" width="414" height="409"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HWz-5r-StC">
+                                <rect key="frame" x="0.0" y="327" width="375" height="296"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Gke-bT-Sr7">
                                     <size key="itemSize" width="414" height="42"/>
@@ -404,7 +406,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DateCell" id="bwU-tL-24C" customClass="DateCell" customModule="TBMS" customModuleProvider="target">
-                                        <rect key="frame" x="24.5" y="0.0" width="365" height="42"/>
+                                        <rect key="frame" x="5" y="0.0" width="365" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="366" height="42"/>
@@ -438,7 +440,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ScheduleAndTrafficCell" id="dwf-lD-3Z3" customClass="ScheduleAndTrafficCell" customModule="TBMS" customModuleProvider="target">
-                                        <rect key="frame" x="20.5" y="52" width="373" height="119"/>
+                                        <rect key="frame" x="1" y="52" width="373" height="119"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="119"/>
@@ -507,6 +509,14 @@
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="HWz-5r-StC" firstAttribute="leading" secondItem="TM7-eO-Qq1" secondAttribute="leading" id="2qV-H8-KLV"/>
+                            <constraint firstItem="HWz-5r-StC" firstAttribute="top" secondItem="mWY-Ji-JSd" secondAttribute="bottom" id="McU-gL-EHC"/>
+                            <constraint firstItem="mWY-Ji-JSd" firstAttribute="top" secondItem="kx3-XI-tKf" secondAttribute="bottom" id="XdB-UB-Mf6"/>
+                            <constraint firstAttribute="trailing" secondItem="mWY-Ji-JSd" secondAttribute="trailing" id="oEt-cC-JaU"/>
+                            <constraint firstAttribute="trailing" secondItem="HWz-5r-StC" secondAttribute="trailing" id="pdu-NU-YPj"/>
+                            <constraint firstItem="mWY-Ji-JSd" firstAttribute="leading" secondItem="TM7-eO-Qq1" secondAttribute="leading" id="xzz-c0-9Qz"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="建議規劃" id="JQh-TR-34R">
                         <barButtonItem key="rightBarButtonItem" title="規劃完成" id="aLl-47-5N8">
@@ -521,7 +531,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gSK-db-lrl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4241" y="-889"/>
+            <point key="canvasLocation" x="4240.8000000000002" y="-889.20539730134942"/>
         </scene>
         <!--旅遊選單-->
         <scene sceneID="yHp-h9-rRp">
@@ -529,7 +539,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1232,7 +1242,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

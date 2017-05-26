@@ -10,7 +10,6 @@ import UIKit
 
 class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
-    
     // key setting
     let keyOfDateCell = "dailyScheduleSetting"
     let keyOfScheduleAndTrafficCell = "scheduleArray"
@@ -21,14 +20,22 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     let currentPageDotTintColor = UIColor.black
     let otherPageDotTintColor = UIColor.lightGray
     
-    
+    var attractions : [Attraction]!
+    var totalTrafficDetail : [LegsData]!
     var cellContentArray = [CellContent]()
+    
+    var expectedTravelMode = TravelMod.transit
+    
     @IBOutlet weak var travelPathWebView: UIWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        cellContentArray = prepareCellsContents(attractions: attractions, totalTrafficDetail: totalTrafficDetail)
     }
     
     override func didReceiveMemoryWarning() {
@@ -36,12 +43,44 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    func prepareCellsContents (attractions:[Attraction], totalTrafficDetail:[LegsData]) -> [CellContent] {
+        
+        var cellsContents = [CellContent]()
+        
+        for i in 0...attractions.count {
+            
+            if i == 0 {
+                let cellContent = DateCellContent(dateValue: 1)
+                cellsContents.append(cellContent)
+                
+            } else if i == attractions.count {
+                let cellContent = ScheduleAndTrafficCellContent(attraction: attractions[i])
+                cellsContents.append(cellContent)
+                
+            } else {
+                let cellContent = ScheduleAndTrafficCellContent(attraction: attractions[i], trafficInformation: totalTrafficDetail[i])
+                
+                if expectedTravelMode == .transit {
+                    
+                    cellContent.travelMode = TravelMod.walking.rawValue
+                    for step in cellContent.trafficInformation.steps {
+                        if step.travelMode == "TRANSIT" {
+                            cellContent.travelMode = TravelMod.transit.rawValue
+                            break
+                        }
+                    }
+                } else {
+                    cellContent.travelMode = expectedTravelMode.rawValue
+                }
+                cellsContents.append(cellContent)
+                
+            }
+        }
+        return cellsContents
+    }
     
     @IBAction func finishAndNextPage(_ sender: UIBarButtonItem) {
         var tmpVCArray = [UIViewController]()
-        
-        //        // 先抓出總共有幾天
-        //        let daysCounting = countTripDays(inputArray: cellContentArray)
         
         //在尋訪Array的物件並切割天數func的次數
         let nextPageCellContentArray = seperateArrayByDate(intputArray: cellContentArray)
@@ -136,6 +175,8 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     }
 }
 
+
+
 extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -146,7 +187,6 @@ extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSo
         
         //Check the cell is for prsenting Date or viewPoint and traffic information, then built it.
         switch cellContentArray[indexPath.item].type! {
-            
         //for presenting Date
         case .dateCellType:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForDateTypeCell, for: indexPath) as! DateCell
@@ -165,16 +205,16 @@ extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSo
             // setting the label text
             let cellContent = cellContentArray[indexPath.item] as! ScheduleAndTrafficCellContent
             cell.viewPointName.text = cellContent.viewPointName
-            cell.trafficInf.text = "\(cellContent.transportationMode), \(cellContent.trafficTime)"
-            if let viewPointDetail = cellContent.viewPointInformation {
-                cell.viewPointDetail.text = viewPointDetail
-            }
+            cell.trafficInf.text = "\(cellContent.travelMode), \(cellContent.trafficTime)"
+            //            if let viewPointDetail = cellContent. {
+            //                cell.viewPointDetail.text = viewPointDetail
+            //            }
             return cell
             
         //CellType unknown or Type wrong
-        default:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForDateTypeCell, for: indexPath)
-            return cell
+//        default:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForDateTypeCell, for: indexPath)
+//            return cell
         }
     }
     

@@ -25,7 +25,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     
     var placeIdStorage:String!
     var tmpPlaceData : GMSPlace!
-    var tmpPlaceDataStorage : [GMSPlace]!
+    var tmpPlaceDataStorage = [GMSPlace]()
     
     
     
@@ -136,8 +136,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         if spotExistedChecking == false {
             ListArray.add(spotTextView.text)
             self.spotTableView.reloadData();
-            
-            tmpPlaceDataStorage.append(tmpPlaceData)
+            tmpPlaceDataStorage.append(tmpPlaceData!)
         }
     }
     
@@ -173,6 +172,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             print("Place attributions \(place.attributions)")
             
             self.tmpPlaceData = place
+            print(self.tmpPlaceData.name)
         })
     }
     

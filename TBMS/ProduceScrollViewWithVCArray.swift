@@ -20,7 +20,6 @@ class ProduceScrollViewWithVCArray: NSObject {
             fullSize = pagingScrollingVC.fullSize
             myScrollView = pagingScrollingVC.myScrollView
             addPageControl()
-        
         }
     }
     var vcInput: [UIViewController?]! = []
