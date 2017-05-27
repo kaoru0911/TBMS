@@ -227,7 +227,6 @@ class DirectionJsonAnalyst: NSObject {
             }
         }
     }
-    
 }
 
 // 撰寫Error情況

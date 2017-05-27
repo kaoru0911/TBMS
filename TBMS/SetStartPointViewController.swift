@@ -12,7 +12,7 @@ import GooglePlacePicker
 class SetStartPointViewController: UIViewController {
     
     @IBOutlet weak var chosenStartingPoint: UILabel!
-//    @IBOutlet weak var startingPointText: UITextField!
+    //    @IBOutlet weak var startingPointText: UITextField!
     
     @IBOutlet weak var chooseStartingPtBtn: UIButton!
     @IBOutlet weak var goToNextPage: UIButton!
@@ -21,46 +21,42 @@ class SetStartPointViewController: UIViewController {
     
     var startPoint : Attraction!
     var attractionsList : [Attraction]!
-    var totalTrafficDetail : [LegsData]!
+    var routesDetails : [LegsData]!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         goToNextPage.isHidden = true
         chosenStartingPoint.isHidden = true
+        print(attractionsList.first!.attrctionName!)
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    
     @IBAction func chooseStartingBtnPressed(_ sender: UIButton) {
         
         let config = GMSPlacePickerConfig(viewport: nil)
         let placePicker = GMSPlacePicker(config: config)
         
-        print("選起始點囉")
-        
         placePicker.pickPlace(callback: { (place, error) -> Void in
-            
-            print("進入閉包囉")
-            
             if let error = error {
                 print("Pick Place error: \(error.localizedDescription)")
                 return
             }
-            
             guard let place = place else {
                 print("No place selected")
                 return
             }
             
             self.chosenStartingPoint.isHidden = false
-            
             self.goToNextPage.isHidden = false
             
             self.chosenStartingPoint.text = place.name
-            
             self.chooseStartingPtBtn.titleLabel?.text = "重新選擇"
             
             self.startPoint = Attraction()
@@ -68,38 +64,49 @@ class SetStartPointViewController: UIViewController {
             
         })
     }
+    
+    
     @IBAction func goToNextPage(_ sender: Any) {
-        
+        attractionsList.insert(startPoint, at: 0)
+        getTotalRouteInformation(completion: { _ in
+            self.performSegue(withIdentifier: self.keyNextPageSegID, sender: nil)
+        })
     }
     
-    func getTotalRouteInformation() {
+    
+    func getTotalRouteInformation(completion: @escaping ()->Void ) {
+//        print("近來囉")
+        var origin = attractionsList.first!
+        var attractionsNumber = attractionsList.count
         
-        var origin : Attraction!
-        var attractionNumber = attractionsList.count
-        
-        for place in attractionsList {
-            
-            guard origin != nil else {
-                origin = place
-                return
-            }
-            
+        for i in 1...attractionsList.count-1 {
+//            print("i=\(i)唷")
+            let destination = attractionsList[i]
+            routesDetails = [LegsData]()
             let routeGenerator = GoogleDirectionCaller()
-            totalTrafficDetail = [LegsData]()
-            routeGenerator.getRouteInformation(origin: origin.placeID, destination: place.placeID, completion: { (route) in
-                
-                self.totalTrafficDetail.append(routeGenerator.route)
-                attractionNumber -= 1
-                if attractionNumber == 0 {
-                    self.performSegue(withIdentifier: self.keyNextPageSegID, sender: nil)
+            //            let route = LegsData()
+            routeGenerator.getRouteInformation(origin: origin.placeID,
+                                               destination: destination.placeID,
+                                               completion: { (route) in
+//                print("跑\(i)的畢包囉")
+                self.routesDetails.append(route)
+                attractionsNumber -= 1
+//                print(route.steps[1].htmlInstructions)
+                print(attractionsNumber)
+                if attractionsNumber == 1 {
+//                    print("全部都傳完囉")
+                    completion()
                 }
             })
+            origin = destination
         }
     }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc : RearrangeScheduleVC = segue.destination as! RearrangeScheduleVC
-        vc.totalTrafficDetail = totalTrafficDetail
-        vc.attractions = attractionsList
+        vc.routesDetails = routesDetails
+        vc.attractions = attractionsList   
     }
 }
 

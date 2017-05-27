@@ -63,16 +63,14 @@ class ScheduleAndTrafficCellContent : CellContent {
     var attraction : Attraction!
     var trafficInformation : LegsData!
     
-    
-    required init(attraction:Attraction) {
+    required init(attraction:Attraction, trafficInformation:LegsData!) {
         super.init()
         self.viewPointName = attraction.attrctionName
         self.type = CustomerCellType.scheduleAndTrafficCellType
-    }
-    
-    convenience init(attraction:Attraction, trafficInformation:LegsData) {
-        self.init(attraction: attraction)
-        self.trafficTime = trafficInformation.duration
+        
+        if trafficInformation != nil {
+            self.trafficInformation = trafficInformation
+        }
     }
 }
 

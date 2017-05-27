@@ -21,7 +21,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     let otherPageDotTintColor = UIColor.lightGray
     
     var attractions : [Attraction]!
-    var totalTrafficDetail : [LegsData]!
+    var routesDetails : [LegsData]!
     var cellContentArray = [CellContent]()
     
     var expectedTravelMode = TravelMod.transit
@@ -31,11 +31,13 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        cellContentArray = prepareCellsContents(attractions: attractions, routesDetails: routesDetails)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        cellContentArray = prepareCellsContents(attractions: attractions, totalTrafficDetail: totalTrafficDetail)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -43,25 +45,26 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func prepareCellsContents (attractions:[Attraction], totalTrafficDetail:[LegsData]) -> [CellContent] {
+    func prepareCellsContents (attractions:[Attraction], routesDetails:[LegsData]) -> [CellContent] {
         
         var cellsContents = [CellContent]()
         
         for i in 0...attractions.count {
             
             if i == 0 {
+                print("第一項唷")
                 let cellContent = DateCellContent(dateValue: 1)
+                
                 cellsContents.append(cellContent)
                 
             } else if i == attractions.count {
-                let cellContent = ScheduleAndTrafficCellContent(attraction: attractions[i])
+                let cellContent = ScheduleAndTrafficCellContent(attraction: attractions[i-1], trafficInformation: nil)
                 cellsContents.append(cellContent)
                 
             } else {
-                let cellContent = ScheduleAndTrafficCellContent(attraction: attractions[i], trafficInformation: totalTrafficDetail[i])
+                let cellContent = ScheduleAndTrafficCellContent(attraction: attractions[i-1], trafficInformation: routesDetails[i-1])
                 
                 if expectedTravelMode == .transit {
-                    
                     cellContent.travelMode = TravelMod.walking.rawValue
                     for step in cellContent.trafficInformation.steps {
                         if step.travelMode == "TRANSIT" {
@@ -69,11 +72,12 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
                             break
                         }
                     }
+                    
                 } else {
                     cellContent.travelMode = expectedTravelMode.rawValue
+                    
                 }
                 cellsContents.append(cellContent)
-                
             }
         }
         return cellsContents
@@ -98,7 +102,6 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         //輸出scrollView
         let scrollView = scrollVCProductor.pagingScrollingVC
         present(scrollView!, animated: true, completion: nil)
-        
     }
     
     //    //確認天數
@@ -180,6 +183,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
 extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSource{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(cellContentArray.count)
         return cellContentArray.count
     }
     
@@ -206,9 +210,6 @@ extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSo
             let cellContent = cellContentArray[indexPath.item] as! ScheduleAndTrafficCellContent
             cell.viewPointName.text = cellContent.viewPointName
             cell.trafficInf.text = "\(cellContent.travelMode), \(cellContent.trafficTime)"
-            //            if let viewPointDetail = cellContent. {
-            //                cell.viewPointDetail.text = viewPointDetail
-            //            }
             return cell
             
         //CellType unknown or Type wrong
