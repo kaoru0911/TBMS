@@ -253,6 +253,9 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
         }
         print(self.segueID)
         performSegue(withIdentifier: segueID, sender: nil)
+        
+        //畫面精進，讓點選後的灰色不會卡在選擇列上，灰色會閃一下就消失
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     
