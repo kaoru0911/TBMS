@@ -37,7 +37,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         addSpotBtn.layer.cornerRadius = 5.0
         saveSpotBtn.layer.cornerRadius = 5.0
         spotSearchBtn.layer.cornerRadius = 5.0
-        imageView.image = UIImage(named: "bestTaipei")
+        imageView.image = UIImage(named: "GoogleMapLogo")
         
     }
     
@@ -111,6 +111,11 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         
         self.spotTableView.reloadData()
         
+    }
+    
+    // 畫面精進，讓點選後的灰色不會卡在選擇列上，灰色會閃一下就消失
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     @IBAction func addSpotBtn(_ sender: Any) {
