@@ -9,6 +9,7 @@
 import UIKit
 
 class ScheduleAndTrafficCell: UICollectionViewCell {
+    
     @IBOutlet weak var viewPointBGBlock: UIImageView!
     @IBOutlet weak var viewPointName: UILabel!
     @IBOutlet weak var viewPointDetail: UILabel!
@@ -30,7 +31,7 @@ class DateCell: UICollectionViewCell {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
 }
 

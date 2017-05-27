@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="lHG-gy-5i2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Apw-6b-Oxl">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -390,13 +390,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mWY-Ji-JSd">
-                                <rect key="frame" x="0.0" y="72" width="375" height="247"/>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mWY-Ji-JSd">
+                                <rect key="frame" x="0.0" y="64" width="375" height="263"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HWz-5r-StC">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HWz-5r-StC">
                                 <rect key="frame" x="0.0" y="327" width="375" height="296"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="296" id="GdE-Md-F4s"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Gke-bT-Sr7">
                                     <size key="itemSize" width="414" height="42"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -463,9 +466,11 @@
                                                         <constraint firstAttribute="width" secondItem="JM7-vt-lDb" secondAttribute="height" multiplier="4:7" id="fIn-DT-fOa"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="細節" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5J-Fv-0fV">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="細節" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5J-Fv-0fV">
                                                     <rect key="frame" x="111" y="20" width="52" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="52" id="fto-jN-iVW"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -481,8 +486,10 @@
                                         <constraints>
                                             <constraint firstItem="dDJ-SF-K3G" firstAttribute="top" secondItem="dwf-lD-3Z3" secondAttribute="topMargin" id="0Zr-D1-Mud"/>
                                             <constraint firstItem="ZDd-Em-wTH" firstAttribute="leading" secondItem="dwf-lD-3Z3" secondAttribute="leading" constant="80" id="Cwy-x2-4fB"/>
+                                            <constraint firstItem="ZDd-Em-wTH" firstAttribute="top" secondItem="q5J-Fv-0fV" secondAttribute="bottom" constant="46" id="GYU-Oj-WKh"/>
                                             <constraint firstItem="JM7-vt-lDb" firstAttribute="top" secondItem="dDJ-SF-K3G" secondAttribute="bottom" constant="5" id="NaP-bM-rqm"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="JM7-vt-lDb" secondAttribute="bottom" constant="-7" id="Pfe-PJ-x2Y"/>
+                                            <constraint firstItem="q5J-Fv-0fV" firstAttribute="leading" secondItem="K7Y-go-fwA" secondAttribute="trailing" constant="21" id="RDp-z5-LmF"/>
                                             <constraint firstItem="JM7-vt-lDb" firstAttribute="leading" secondItem="K7Y-go-fwA" secondAttribute="leading" id="RdR-dx-oCe"/>
                                             <constraint firstItem="ZDd-Em-wTH" firstAttribute="top" secondItem="dDJ-SF-K3G" secondAttribute="bottom" constant="25" id="SgH-4p-vXV"/>
                                             <constraint firstItem="dDJ-SF-K3G" firstAttribute="leading" secondItem="dwf-lD-3Z3" secondAttribute="leadingMargin" constant="10" id="YB9-DC-fLM"/>
@@ -512,6 +519,7 @@
                             <constraint firstItem="HWz-5r-StC" firstAttribute="leading" secondItem="TM7-eO-Qq1" secondAttribute="leading" id="2qV-H8-KLV"/>
                             <constraint firstItem="HWz-5r-StC" firstAttribute="top" secondItem="mWY-Ji-JSd" secondAttribute="bottom" id="McU-gL-EHC"/>
                             <constraint firstItem="mWY-Ji-JSd" firstAttribute="top" secondItem="kx3-XI-tKf" secondAttribute="bottom" id="XdB-UB-Mf6"/>
+                            <constraint firstItem="HWz-5r-StC" firstAttribute="bottom" secondItem="TnU-kb-V8Y" secondAttribute="top" id="krv-E6-PRm"/>
                             <constraint firstAttribute="trailing" secondItem="mWY-Ji-JSd" secondAttribute="trailing" id="oEt-cC-JaU"/>
                             <constraint firstAttribute="trailing" secondItem="HWz-5r-StC" secondAttribute="trailing" id="pdu-NU-YPj"/>
                             <constraint firstItem="mWY-Ji-JSd" firstAttribute="leading" secondItem="TM7-eO-Qq1" secondAttribute="leading" id="xzz-c0-9Qz"/>
@@ -538,7 +546,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1254,7 +1262,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

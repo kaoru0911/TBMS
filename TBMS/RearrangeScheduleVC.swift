@@ -134,7 +134,6 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         //outputArray
         var seperateFinishArray = [[String:[AnyObject]]]()
         
-        
         for obj in intputArray {
             if obj is DateCellContent && isFirstObj {
                 //如果是第一次, 將day的資訊丟到tmpdic
@@ -184,15 +183,19 @@ extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(cellContentArray.count)
+        print("numberOfItemsInSection唷！！！！")
         return cellContentArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
+        print("cellForItemAt唷！！！！")
         //Check the cell is for prsenting Date or viewPoint and traffic information, then built it.
         switch cellContentArray[indexPath.item].type! {
         //for presenting Date
         case .dateCellType:
+            print("dateCellType！！！！！！")
+            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForDateTypeCell, for: indexPath) as! DateCell
             // if is the 1st day cell, show the adding days button
             if indexPath.item == 0{
@@ -205,6 +208,7 @@ extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSo
             
         //for presenting viewPoint and traffic information
         case .scheduleAndTrafficCellType:
+            print("scheduleAndTrafficCellType")
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForscheduleAndTrafficCell, for: indexPath) as! ScheduleAndTrafficCell
             // setting the label text
             let cellContent = cellContentArray[indexPath.item] as! ScheduleAndTrafficCellContent
