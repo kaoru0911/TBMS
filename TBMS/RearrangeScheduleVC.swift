@@ -10,6 +10,8 @@ import UIKit
 
 class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
+    @IBOutlet weak var travelPathWebView: UIWebView!
+    @IBOutlet weak var collectionView: UICollectionView!
     // key setting
     let keyOfDateCell = "dailyScheduleSetting"
     let keyOfScheduleAndTrafficCell = "scheduleArray"
@@ -17,26 +19,30 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     let nameOfFinalScheduleVC = "FinalScheduleVC"
     let reuseIdForDateTypeCell = "dateCell"
     let reuseIdForscheduleAndTrafficCell = "scheduleAndTrafficCell"
+    let reuseIdForLastAttractionCell = "lastAttractionCell"
     let currentPageDotTintColor = UIColor.black
     let otherPageDotTintColor = UIColor.lightGray
+    
+    let strTransitTravelMode = "TRANSIT"
+    let strWalkingTravelMode = "WALKING"
+    let strDrivingTravelMode = "DRIVING"
     
     var attractions : [Attraction]!
     var routesDetails : [LegsData]!
     var cellContentArray = [CellContent]()
+    fileprivate var longPressGesture: UILongPressGestureRecognizer!
     
     var expectedTravelMode = TravelMod.transit
-    
-    @IBOutlet weak var travelPathWebView: UIWebView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         cellContentArray = prepareCellsContents(attractions: attractions, routesDetails: routesDetails)
+        //實體化一個長壓的手勢物件, 當啟動時呼叫handleLongGesture這個func
+        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(_:)))
+        self.collectionView.addGestureRecognizer(longPressGesture)
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
         
     }
     
@@ -52,13 +58,12 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         for i in 0...attractions.count {
             
             if i == 0 {
-                print("第一項唷")
                 let cellContent = DateCellContent(dateValue: 1)
-                
                 cellsContents.append(cellContent)
                 
             } else if i == attractions.count {
                 let cellContent = ScheduleAndTrafficCellContent(attraction: attractions[i-1], trafficInformation: nil)
+                cellContent.type = CustomerCellType.lastAttactionCellType
                 cellsContents.append(cellContent)
                 
             } else {
@@ -66,16 +71,23 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
                 
                 if expectedTravelMode == .transit {
                     cellContent.travelMode = TravelMod.walking.rawValue
+                    var i = 0
                     for step in cellContent.trafficInformation.steps {
-                        if step.travelMode == "TRANSIT" {
+                        //--------測試用--------
+                        i += 1
+                        print("i=\(i)")
+                        //---------------------
+                        if step.travelMode == strTransitTravelMode {
                             cellContent.travelMode = TravelMod.transit.rawValue
+                            break
+                            
+                        } else if step.travelMode == strDrivingTravelMode {
+                            cellContent.travelMode = TravelMod.driving.rawValue
                             break
                         }
                     }
-                    
                 } else {
                     cellContent.travelMode = expectedTravelMode.rawValue
-                    
                 }
                 cellsContents.append(cellContent)
             }
@@ -103,6 +115,24 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         let scrollView = scrollVCProductor.pagingScrollingVC
         present(scrollView!, animated: true, completion: nil)
     }
+    
+    func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
+        
+        switch(gesture.state) {
+        case UIGestureRecognizerState.began:
+            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else {
+                break
+            }
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case UIGestureRecognizerState.changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+        case UIGestureRecognizerState.ended:
+            collectionView.endInteractiveMovement()
+        default:
+            collectionView.cancelInteractiveMovement()
+        }
+    }
+    
     
     //    //確認天數
     //    private func countTripDays(inputArray:[CellContent]) -> Int{
@@ -179,7 +209,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
 
 
 
-extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSource{
+extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(cellContentArray.count)
@@ -187,14 +217,29 @@ extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSo
         return cellContentArray.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        print("sizeForItemAt唷＠＠＠＠＠")
+        
+        let dayCellSize = CGSize(width: UIScreen.main.bounds.width, height: 50)
+        let attractionsCellSize = CGSize(width: UIScreen.main.bounds.width, height: 120)
+        let lastAttractionsCellSize = CGSize(width: UIScreen.main.bounds.width, height: 60)
+        
+        switch cellContentArray[indexPath.item].type! {
+        case .dateCellType:
+            return dayCellSize
+        case .scheduleAndTrafficCellType:
+            return attractionsCellSize
+        case .lastAttactionCellType:
+            return lastAttractionsCellSize
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        print("cellForItemAt唷！！！！")
         //Check the cell is for prsenting Date or viewPoint and traffic information, then built it.
         switch cellContentArray[indexPath.item].type! {
         //for presenting Date
         case .dateCellType:
-            print("dateCellType！！！！！！")
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForDateTypeCell, for: indexPath) as! DateCell
             // if is the 1st day cell, show the adding days button
@@ -208,19 +253,25 @@ extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSo
             
         //for presenting viewPoint and traffic information
         case .scheduleAndTrafficCellType:
-            print("scheduleAndTrafficCellType")
+            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForscheduleAndTrafficCell, for: indexPath) as! ScheduleAndTrafficCell
             // setting the label text
             let cellContent = cellContentArray[indexPath.item] as! ScheduleAndTrafficCellContent
             cell.viewPointName.text = cellContent.viewPointName
-            cell.trafficInf.text = "\(cellContent.travelMode), \(cellContent.trafficTime)"
+            cell.trafficInf.text = "\(cellContent.travelMode ?? ""), \(cellContent.trafficTime ?? "")"
             return cell
             
-        //CellType unknown or Type wrong
-//        default:
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForDateTypeCell, for: indexPath)
-//            return cell
+        case .lastAttactionCellType:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForLastAttractionCell, for: indexPath) as! LastAttractionCell
+            let cellCotent = cellContentArray[indexPath.item] as! ScheduleAndTrafficCellContent
+            cell.viewPointName.text = cellCotent.viewPointName
+            return cell
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
+        let movedCellContent = cellContentArray.remove(at: sourceIndexPath.item)
+        cellContentArray.insert(movedCellContent, at: destinationIndexPath.item)
+    }
 }

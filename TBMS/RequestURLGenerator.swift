@@ -94,10 +94,10 @@ enum LanguageSetting : String { //&language=
 //設定旅遊型態
 enum TravelMod : String {  //&mod=
     //&traffic_model= 指定偏好方式
-    case driving = "driving"
-    case walking = "walking"
-    case bike = "bicycling"
-    case transit = "transit"
+    case driving = "DRIVING"
+    case walking = "WALKING"
+    case bike = "BICYCLING"
+    case transit = "TRANSIT"
     case defaultValue = ""
 }
 //設定距離單位

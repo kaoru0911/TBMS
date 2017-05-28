@@ -12,10 +12,15 @@ class ScheduleAndTrafficCell: UICollectionViewCell {
     
     @IBOutlet weak var viewPointBGBlock: UIImageView!
     @IBOutlet weak var viewPointName: UILabel!
-    @IBOutlet weak var viewPointDetail: UILabel!
     @IBOutlet weak var arrow: UIImageView!
     @IBOutlet weak var trafficInf: UILabel!
     
+}
+
+class LastAttractionCell: UICollectionViewCell {
+    
+    @IBOutlet weak var viewPointBGBlock: UIImageView!
+    @IBOutlet weak var viewPointName: UILabel!
 }
 
 class DateCell: UICollectionViewCell {
@@ -34,6 +39,8 @@ class DateCell: UICollectionViewCell {
         super.init(coder: aDecoder)
     }
 }
+
+
 
 //class CellContent : NSObject {
 //    var type:CustomerCellType!
@@ -82,6 +89,7 @@ class ScheduleAndTrafficCellContent : CellContent {
 enum CustomerCellType : String{
     case dateCellType = "dateCell"
     case scheduleAndTrafficCellType = "scheduleAndTrafficCell"
+    case lastAttactionCellType = "lastAttactionCellType"
 }
 
 /// For define the color type of the view.

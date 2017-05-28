@@ -326,7 +326,6 @@ class StepsData: SecondOrderStepsData {
     var lineShortame : String?
     var lineIcon : String?
     var lineLocalIcon : String?
-    
 }
 
 
