@@ -15,7 +15,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     let keyOfScheduleAndTrafficCell = "scheduleArray"
     let nameOfFinalScheduleStoryBoard = "FinalSchedule"
     let nameOfFinalScheduleVC = "FinalScheduleVC"
-    let reuseIdForDateTypeCell = "DateCell"
+    let reuseIdForDateTypeCell = "dateCell"
     let reuseIdForscheduleAndTrafficCell = "scheduleAndTrafficCell"
     let currentPageDotTintColor = UIColor.black
     let otherPageDotTintColor = UIColor.lightGray

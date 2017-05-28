@@ -67,10 +67,16 @@ class SetStartPointViewController: UIViewController {
     
     
     @IBAction func goToNextPage(_ sender: Any) {
-        attractionsList.insert(startPoint, at: 0)
-        getTotalRouteInformation(completion: { _ in
-            self.performSegue(withIdentifier: self.keyNextPageSegID, sender: nil)
-        })
+        
+//        attractionsList.insert(startPoint, at: 0)
+        let bestRoutePoductor = BestRouteCalculator(startingPoint: startPoint, attractionsList: attractionsList)
+        bestRoutePoductor.getBestRoute { (bestRouteAttrList) in
+            
+            self.attractionsList = bestRouteAttrList
+            self.getTotalRouteInformation( completion: { _ in
+                self.performSegue(withIdentifier: self.keyNextPageSegID, sender: nil)
+            })
+        }
     }
     
     
@@ -110,6 +116,12 @@ class SetStartPointViewController: UIViewController {
     }
 }
 
+class PlaceObject : NSObject{
+    var name : String!
+    var location:CLLocationCoordinate2D!
+    var trafficTime : Double!
+}
+
 struct Attraction {
     
     var attrctionName : String!
@@ -117,6 +129,8 @@ struct Attraction {
     var coordinate : CLLocationCoordinate2D!
     var address : String?
     var phoneNumber : String?
+    
+    var trafficTime : Double!
     
     mutating func setValueToAttractionObject (place:GMSPlace) {
         
