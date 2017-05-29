@@ -29,15 +29,6 @@ class DateCell: UICollectionViewCell {
     @IBOutlet weak var addNewTripDayButton: UIButton!
     @IBAction func addNewTripDay(_ sender: Any) {
     }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.addNewTripDayButton.isHidden = true
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
 }
 
 

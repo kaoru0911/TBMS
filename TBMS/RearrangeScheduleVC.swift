@@ -13,23 +13,23 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var travelPathWebView: UIWebView!
     @IBOutlet weak var collectionView: UICollectionView!
     // key setting
-    let keyOfDateCell = "dailyScheduleSetting"
-    let keyOfScheduleAndTrafficCell = "scheduleArray"
-    let nameOfFinalScheduleStoryBoard = "FinalSchedule"
-    let nameOfFinalScheduleVC = "FinalScheduleVC"
+    private let keyOfDateCell = "dailyScheduleSetting"
+    private let keyOfScheduleAndTrafficCell = "scheduleArray"
+    private let nameOfFinalScheduleStoryBoard = "FinalSchedule"
+    private let nameOfFinalScheduleVC = "FinalScheduleVC"
     let reuseIdForDateTypeCell = "dateCell"
     let reuseIdForscheduleAndTrafficCell = "scheduleAndTrafficCell"
     let reuseIdForLastAttractionCell = "lastAttractionCell"
-    let currentPageDotTintColor = UIColor.black
-    let otherPageDotTintColor = UIColor.lightGray
+    private let currentPageDotTintColor = UIColor.black
+    private let otherPageDotTintColor = UIColor.lightGray
     
-    let strTransitTravelMode = "TRANSIT"
-    let strWalkingTravelMode = "WALKING"
-    let strDrivingTravelMode = "DRIVING"
+    private let strTransitTravelMode = "TRANSIT"
+    private let strWalkingTravelMode = "WALKING"
+    private let strDrivingTravelMode = "DRIVING"
     
     var attractions : [Attraction]!
     var routesDetails : [LegsData]!
-    var cellContentArray = [CellContent]()
+    var cellContentsArray = [CellContent]()
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
     
     var expectedTravelMode = TravelMod.transit
@@ -38,12 +38,10 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        cellContentArray = prepareCellsContents(attractions: attractions, routesDetails: routesDetails)
+        cellContentsArray = prepareCellsContents(attractions: attractions, routesDetails: routesDetails)
         //實體化一個長壓的手勢物件, 當啟動時呼叫handleLongGesture這個func
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(_:)))
         self.collectionView.addGestureRecognizer(longPressGesture)
-        
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -51,7 +49,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func prepareCellsContents (attractions:[Attraction], routesDetails:[LegsData]) -> [CellContent] {
+    private func prepareCellsContents (attractions:[Attraction], routesDetails:[LegsData]) -> [CellContent] {
         
         var cellsContents = [CellContent]()
         
@@ -95,45 +93,6 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         return cellsContents
     }
     
-    @IBAction func finishAndNextPage(_ sender: UIBarButtonItem) {
-        var tmpVCArray = [UIViewController]()
-        
-        //在尋訪Array的物件並切割天數func的次數
-        let nextPageCellContentArray = seperateArrayByDate(intputArray: cellContentArray)
-        
-        //在於同圈迴圈中將ＶＣ作出來
-        let sb = UIStoryboard(name: nameOfFinalScheduleStoryBoard, bundle: nil)
-        let vcArray = produceVCArray(myStoryBoard: sb, dataArray: nextPageCellContentArray)
-        
-        //設定scrollView
-        let scrollVCProductor = ProduceScrollViewWithVCArray(vcArrayInput: vcArray)
-        scrollVCProductor.pageControlDotExist = true
-        scrollVCProductor.currentPageIndicatorTintColorSetting = currentPageDotTintColor
-        scrollVCProductor.otherPageIndicatorTintColorSetting = otherPageDotTintColor
-        
-        //輸出scrollView
-        let scrollView = scrollVCProductor.pagingScrollingVC
-        present(scrollView!, animated: true, completion: nil)
-    }
-    
-    func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
-        
-        switch(gesture.state) {
-        case UIGestureRecognizerState.began:
-            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else {
-                break
-            }
-            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
-        case UIGestureRecognizerState.changed:
-            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
-        case UIGestureRecognizerState.ended:
-            collectionView.endInteractiveMovement()
-        default:
-            collectionView.cancelInteractiveMovement()
-        }
-    }
-    
-    
     //    //確認天數
     //    private func countTripDays(inputArray:[CellContent]) -> Int{
     //        var daysCounting = 0
@@ -144,8 +103,6 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     //        }
     //        return daysCounting
     //    }
-    
-    
     
     /// Produce the cellContent for next Page
     ///
@@ -185,25 +142,92 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         return seperateFinishArray
     }
     
-    
     /// To produce ViewController array that will put into the ScrollView
     ///
     /// - Parameters:
     ///   - myStoryBoard: The StoryBoard where the VC you wanna instantiating is
     ///   - dataArray: The datas to setting the VC's content
     /// - Returns: An array containing all VC you want to instantiate
-    func produceVCArray (myStoryBoard: UIStoryboard,dataArray:[[String:[AnyObject]]]) -> [UIViewController] {
+    private func produceVCArray (myStoryBoard: UIStoryboard,dataArray:[[String:[AnyObject]]]) -> [UIViewController] {
         //將Array內資料套出, 將date用於設定相關資料, 將array用於匯入下一面
         var tmpVCArray = [UIViewController]()
         for vcContent in dataArray {
-            // 實體化ＶＣ
+            
             let tmpVC = myStoryBoard.instantiateViewController(withIdentifier: nameOfFinalScheduleVC) as! FinalScheduleVC
-            // 將資料喂給ＶＣ
             tmpVC.contantDataStorage = vcContent
-            // 將ＶＣ帶入array
             tmpVCArray += [tmpVC]
         }
         return tmpVCArray
+    }
+    
+    func replaceCellContent () { // 當移動時觸發
+
+        /* 情況：
+            1. 移動天數cell :
+                移動前 - 如果下一個cell 是traffic的 ：
+                    Ｙ. 計算前一個與下一個的交通, 並變更前一個cellType
+                    N. 不做動作
+                移動後 - 如果前一個cell是traffic的:
+                            Y.變更前一個CellType為Last
+                            N.沒差
+            2. 移動景點cell :
+                移動前 - 前一個cell是Traffic:
+                            Y. 如果下一個cell不是date, 重新計算前一個cell交通
+                                如果下一個cell是Date, 將前一個cell設為last
+                移動後 - 如果前一個cell不是date：
+                            Y. 將cellType改為traffic並計算交通
+                            N. 沒事
+                        如果後一個cell不是date：
+                            Y. 將自己cellType改為traffic並計算交通
+                            N. 沒事
+        */
+    }
+    
+    func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
+        
+        switch(gesture.state) {
+        case UIGestureRecognizerState.began:
+            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else {
+                break
+            }
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+        case UIGestureRecognizerState.changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+        case UIGestureRecognizerState.ended:
+            collectionView.endInteractiveMovement()
+        default:
+            collectionView.cancelInteractiveMovement()
+        }
+    }
+    
+    // Mark: IBAction func
+    @IBAction func addDateCellBtnPressed(_ sender: UIButton) {
+        
+        let totalDays = cellContentsArray.filter({$0.type == CustomerCellType.dateCellType}).count
+        let newDateCellContent = DateCellContent(dateValue: totalDays + 1)
+        cellContentsArray.append(newDateCellContent)
+        self.collectionView.reloadData()
+    }
+    
+    @IBAction func finishAndNextPage(_ sender: UIBarButtonItem) {
+        var tmpVCArray = [UIViewController]()
+        
+        //在尋訪Array的物件並切割天數func的次數
+        let nextPagecellContentsArray = seperateArrayByDate(intputArray: cellContentsArray)
+        
+        //在於同圈迴圈中將ＶＣ作出來
+        let sb = UIStoryboard(name: nameOfFinalScheduleStoryBoard, bundle: nil)
+        let vcArray = produceVCArray(myStoryBoard: sb, dataArray: nextPagecellContentsArray)
+        
+        //設定scrollView
+        let scrollVCProductor = ProduceScrollViewWithVCArray(vcArrayInput: vcArray)
+        scrollVCProductor.pageControlDotExist = true
+        scrollVCProductor.currentPageIndicatorTintColorSetting = currentPageDotTintColor
+        scrollVCProductor.otherPageIndicatorTintColorSetting = otherPageDotTintColor
+        
+        //輸出scrollView
+        let scrollView = scrollVCProductor.pagingScrollingVC
+        present(scrollView!, animated: true, completion: nil)
     }
 }
 
@@ -212,9 +236,9 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
 extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(cellContentArray.count)
+        print(cellContentsArray.count)
         print("numberOfItemsInSection唷！！！！")
-        return cellContentArray.count
+        return cellContentsArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -224,7 +248,7 @@ extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSo
         let attractionsCellSize = CGSize(width: UIScreen.main.bounds.width, height: 120)
         let lastAttractionsCellSize = CGSize(width: UIScreen.main.bounds.width, height: 60)
         
-        switch cellContentArray[indexPath.item].type! {
+        switch cellContentsArray[indexPath.item].type! {
         case .dateCellType:
             return dayCellSize
         case .scheduleAndTrafficCellType:
@@ -237,7 +261,7 @@ extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         //Check the cell is for prsenting Date or viewPoint and traffic information, then built it.
-        switch cellContentArray[indexPath.item].type! {
+        switch cellContentsArray[indexPath.item].type! {
         //for presenting Date
         case .dateCellType:
             
@@ -245,9 +269,11 @@ extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSo
             // if is the 1st day cell, show the adding days button
             if indexPath.item == 0{
                 cell.addNewTripDayButton.isHidden = false
+            } else {
+                cell.addNewTripDayButton.isHidden = true
             }
             // setting the label text
-            let cellContent = cellContentArray[indexPath.item] as! DateCellContent
+            let cellContent = cellContentsArray[indexPath.item] as! DateCellContent
             cell.dateLabel.text = cellContent.dateStringForLabel
             return cell
             
@@ -256,14 +282,14 @@ extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSo
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForscheduleAndTrafficCell, for: indexPath) as! ScheduleAndTrafficCell
             // setting the label text
-            let cellContent = cellContentArray[indexPath.item] as! ScheduleAndTrafficCellContent
+            let cellContent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
             cell.viewPointName.text = cellContent.viewPointName
             cell.trafficInf.text = "\(cellContent.travelMode ?? ""), \(cellContent.trafficTime ?? "")"
             return cell
             
         case .lastAttactionCellType:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForLastAttractionCell, for: indexPath) as! LastAttractionCell
-            let cellCotent = cellContentArray[indexPath.item] as! ScheduleAndTrafficCellContent
+            let cellCotent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
             cell.viewPointName.text = cellCotent.viewPointName
             return cell
         }
@@ -271,7 +297,7 @@ extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
-        let movedCellContent = cellContentArray.remove(at: sourceIndexPath.item)
-        cellContentArray.insert(movedCellContent, at: destinationIndexPath.item)
+        let movedCellContent = cellContentsArray.remove(at: sourceIndexPath.item)
+        cellContentsArray.insert(movedCellContent, at: destinationIndexPath.item)
     }
 }

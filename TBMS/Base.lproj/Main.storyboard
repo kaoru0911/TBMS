@@ -415,14 +415,15 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hP4-LW-2ag">
-                                                    <rect key="frame" x="301" y="6" width="30" height="30"/>
+                                                    <rect key="frame" x="305" y="6" width="30" height="30"/>
                                                     <state key="normal" title="add"/>
                                                     <connections>
+                                                        <action selector="addDateCellBtnPressed:" destination="DLZ-YW-dcw" eventType="touchUpInside" id="l8F-Mc-IqD"/>
                                                         <action selector="addNewTripDay:" destination="bwU-tL-24C" eventType="touchUpInside" id="fwW-ab-hbO"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第一天" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rZq-bA-8K2">
-                                                    <rect key="frame" x="182" y="11" width="52" height="21"/>
+                                                    <rect key="frame" x="156.5" y="11" width="52" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -430,10 +431,10 @@
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="hP4-LW-2ag" firstAttribute="centerY" secondItem="rZq-bA-8K2" secondAttribute="centerY" id="Qxe-IB-UiF"/>
-                                            <constraint firstItem="rZq-bA-8K2" firstAttribute="leading" secondItem="bwU-tL-24C" secondAttribute="leading" constant="182" id="a85-UX-FfO"/>
-                                            <constraint firstItem="rZq-bA-8K2" firstAttribute="centerY" secondItem="bwU-tL-24C" secondAttribute="centerY" id="bMd-CR-2vg"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="hP4-LW-2ag" secondAttribute="trailing" constant="26" id="dhC-qx-CgH"/>
+                                            <constraint firstItem="rZq-bA-8K2" firstAttribute="centerX" secondItem="bwU-tL-24C" secondAttribute="centerX" id="0Wi-Go-bOo"/>
+                                            <constraint firstItem="hP4-LW-2ag" firstAttribute="centerY" secondItem="rZq-bA-8K2" secondAttribute="centerY" id="7oo-oc-kRg"/>
+                                            <constraint firstAttribute="trailing" secondItem="hP4-LW-2ag" secondAttribute="trailing" constant="30" id="EG5-M1-Coc"/>
+                                            <constraint firstItem="rZq-bA-8K2" firstAttribute="centerY" secondItem="bwU-tL-24C" secondAttribute="centerY" id="gI0-Pi-QIb"/>
                                         </constraints>
                                         <size key="customSize" width="365" height="42"/>
                                         <connections>
@@ -570,7 +571,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1286,7 +1287,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
