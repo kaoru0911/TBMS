@@ -14,4 +14,8 @@ target 'TBMS' do
   pod'Alamofire', '~> 4.4.0'
   pod 'AlamofireImage'
   pod 'SwiftyJSON'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'FacebookShare'
+  
 end

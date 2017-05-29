@@ -10,9 +10,12 @@ import UIKit
 
 class MenuTableViewController: UITableViewController {
 
+    
     @IBOutlet weak var menuTableView: UITableView!
+    var choosen = ""
     
     var cellData = [(String , UIImage)]()
+    //var cellData = String()
     var selectedPage : Int!
     var sharedData:DataManager = DataManager.shareDataManager
     var serverCommunicate:ServerConnector = ServerConnector()
@@ -36,19 +39,29 @@ class MenuTableViewController: UITableViewController {
         
         //menuTableView.dataSource = self
         
-        cellData.append(("開始規劃" , UIImage(named: "Kyoto")!))
         
-        cellData.append(("推薦行程" , UIImage(named: "Paris")!))
         
-        cellData.append(("庫存行程" , UIImage(named: "Swizerland")!))
+        cellData.append(("開始規劃" , UIImage(named: "kyoto2")!))
         
-        cellData.append(("庫存景點" , UIImage(named: "Taipei")!))
+        cellData.append(("推薦行程" , UIImage(named: "paris3")!))
+        
+        cellData.append(("庫存行程" , UIImage(named: "Swizerland7")!))
+        
+        cellData.append(("庫存景點" , UIImage(named: "Swizerland8")!))
+        
+//        cellData.append("開始規劃")
+//        
+//        cellData.append("推薦行程")
+//        
+//        cellData.append("庫存行程")
+//        
+//        cellData.append("庫存景點")
         
 //        serverCommunicate.uploadPocketSpotToServer(spotName: "清水寺")
 //        serverCommunicate.uploadPocketTripToServer(tripData: (sharedData.pocketTrips?[0])!)
 //        serverCommunicate.uploadSharedTripToServer(tripData: (sharedData.sharedTrips?[0])!)
 //        serverCommunicate.deletePocketSpotFromServer(spotName: "清水寺")
-        serverCommunicate.deletePocketTripFromServer(tripName: "香港三日遊")
+//        serverCommunicate.deletePocketTripFromServer(tripName: "香港三日遊")
 //        serverCommunicate.createAccount()
 //        serverCommunicate.userLogin()
 //        serverCommunicate.getPocketSpotFromServer()
@@ -83,11 +96,11 @@ class MenuTableViewController: UITableViewController {
 
         let cell = menuTableView.dequeueReusableCell(withIdentifier: "menuCell", for: indexPath) as! MenuTableViewCell;
         
-        cell.menuCellName.text = cellData[indexPath.row].0
+                cell.menuCellName.text = cellData[indexPath.row].0
         
         cell.menuCellImage.image = cellData[indexPath.row].1
         
-//        cell.menuCellName.textColor = UIColor.white
+        //cell.menuCellName.textColor = UIColor.white
         
         cell.menuCellName.shadowOffset = CGSize(width: 2, height: 2)
         
@@ -97,13 +110,17 @@ class MenuTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+//        choosen = cellData
+        choosen = cellData[indexPath.row].0
         performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
         
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+            let nextPage = segue.destination as! CountrySelectTableViewController
+        nextPage.selectedProcess = choosen
     }
  
 

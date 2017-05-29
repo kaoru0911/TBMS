@@ -13,6 +13,8 @@ protocol ContinentalViewDelegate: NSObjectProtocol {
     func ContinentalView(ContinentalView: ContinentalView, sectionClosed: Int)
 }
 
+
+
 class ContinentalView: UITableViewHeaderFooterView {
     @IBOutlet weak var continentalName: UILabel!
     

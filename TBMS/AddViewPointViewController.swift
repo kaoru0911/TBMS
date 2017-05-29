@@ -13,14 +13,33 @@ import GooglePlacePicker
 
 class AddViewPointViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
     
-    
     @IBOutlet weak var spotTextView: UITextView!
     @IBOutlet weak var imageView: UIImageView!
     
     @IBOutlet weak var spotTableView: UITableView!
+    @IBOutlet weak var addSpotBtn: UIButton!
+    @IBOutlet weak var saveSpotBtn: UIButton!
+    
+    @IBOutlet weak var spotSearchBtn: UIButton!
+    var selectedCountry : String!
     
     var placeIdStorage:String!
+    var tmpPlaceData : GMSPlace!
+    var tmpPlaceDataStorage = [GMSPlace]()
     
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view, typically from a nib.
+        placesClient = GMSPlacesClient.shared()
+        
+        addSpotBtn.layer.cornerRadius = 5.0
+        saveSpotBtn.layer.cornerRadius = 5.0
+        spotSearchBtn.layer.cornerRadius = 5.0
+        imageView.image = UIImage(named: "GoogleMapLogo")
+        
+    }
     
     // 用placeID取得google第一張地點照片，並呼叫loadImageForMetadata
     func loadFirstPhotoForPlace(placeID: String) {
@@ -54,23 +73,13 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     var ListArray: NSMutableArray = []
     var placesClient: GMSPlacesClient!
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-        placesClient = GMSPlacesClient.shared()
-        
-        let startPlanButton = UIBarButtonItem(title: "開始規劃", style: .plain, target: self, action: #selector(goSetStartPointPage))
-        
-        self.navigationItem.rightBarButtonItem = startPlanButton
-        
-    }
-    
-    func goSetStartPointPage() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let SetStartPointViewController = storyboard.instantiateViewController(withIdentifier :"SetStartPointViewController") as! SetStartPointViewController
-        self.present(SetStartPointViewController, animated: true)
-    }
+//    func goSetStartPointPage() {
+//        
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let setStartPointViewController = storyboard.instantiateViewController(withIdentifier :"SetStartPointViewController") as! SetStartPointViewController
+//        
+//        self.navigationController?.pushViewController(setStartPointViewController, animated: true)
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -80,6 +89,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ListArray.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: viewPointTableViewCell = tableView.dequeueReusableCell(withIdentifier: "viewPointTableViewCell") as! viewPointTableViewCell
         
@@ -98,6 +108,11 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         
         self.spotTableView.reloadData()
         
+    }
+    
+    // 畫面精進，讓點選後的灰色不會卡在選擇列上，灰色會閃一下就消失
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     @IBAction func addSpotBtn(_ sender: Any) {
@@ -123,12 +138,13 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         if spotExistedChecking == false {
             ListArray.add(spotTextView.text)
             self.spotTableView.reloadData();
+            tmpPlaceDataStorage.append(tmpPlaceData!)
         }
     }
     
     
     @IBAction func searchBtn(_ sender: Any) {
-    
+        
         
         let config = GMSPlacePickerConfig(viewport: nil)
         let placePicker = GMSPlacePicker(config: config)
@@ -157,11 +173,27 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             print("Place address \(place.formattedAddress)")
             print("Place attributions \(place.attributions)")
             
-            print("Place PlaceID \(place.placeID)")
-            print("\(place.coordinate)")
-            
-            
+            self.tmpPlaceData = place
+            print(self.tmpPlaceData.name)
         })
+    }
+    
+    private func setValueToAttractionsList(placeList:[GMSPlace]) -> [Attraction] {
         
+        var attractionsList = [Attraction]()
+        
+        for place in placeList {
+            var tmpAttraction = Attraction()
+            tmpAttraction.setValueToAttractionObject(place: place)
+            attractionsList.append(tmpAttraction)
+        }
+        return attractionsList
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let vc = segue.destination as! SetStartPointViewController
+        let attractions = setValueToAttractionsList(placeList: tmpPlaceDataStorage)
+        vc.attractionsList = attractions
     }
 }
