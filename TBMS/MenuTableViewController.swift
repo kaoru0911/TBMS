@@ -68,7 +68,7 @@ class MenuTableViewController: UITableViewController {
 //                serverCommunicate.getPocketSpotFromServer()
         //        serverCommunicate.getPocketTripFromServer()
         //        serverCommunicate.userInfoUpdate()
-                serverCommunicate.getSharedTripFromServer()
+//                serverCommunicate.getSharedTripFromServer()
         //        serverCommunicate.uploadTripCoverImgToServer(tripData: (sharedData.pocketTrips?[0])!, Req: "uploadPocketTripCover")
         //        serverCommunicate.uploadTripCoverImgToServer(tripData: (sharedData.pocketTrips?[0])!, Req: "uploadSharedTripCover")
 
