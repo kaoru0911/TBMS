@@ -297,7 +297,39 @@ extension RearrangeScheduleVC : UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
+        let googleDirectCaller = GoogleDirectionCaller()
+        
         let movedCellContent = cellContentsArray.remove(at: sourceIndexPath.item)
         cellContentsArray.insert(movedCellContent, at: destinationIndexPath.item)
+        
+        
+        if cellContentsArray[sourceIndexPath.item + 1].type != CustomerCellType.dateCellType {
+            
+            let newCellContent = cellContentsArray[sourceIndexPath.item - 1] as! ScheduleAndTrafficCellContent
+            newCellContent.type = CustomerCellType.scheduleAndTrafficCellType
+            //計算前一個與下一個的交通
+//            newCellContent.trafficInformation = googleDirectCaller.getRouteInformation(origin: newCellContent.attraction.placeID, destination: (cellContentsArray[sourceIndexPath.item + 1] as! ScheduleAndTrafficCellContent).attraction.placeID, completion: { (legsData) in
+//                newCellContent.trafficInformation = legsData
+//            })
+        }
+        /* 情況：
+         1. 移動天數cell :
+            移動前 - 如果下一個cell 是traffic的 ：
+                Ｙ. 計算前一個與下一個的交通, 並變更前一個cellType
+                N. 不做動作
+            移動後 - 如果前一個cell是traffic的:
+                Y.變更前一個CellType為Last
+                N.沒差
+         2. 移動景點cell :
+            移動前 - 前一個cell是Traffic:
+                Y. 如果下一個cell不是date, 重新計算前一個cell交通
+                如果下一個cell是Date, 將前一個cell設為last
+            移動後 - 如果前一個cell不是date：
+                Y. 將cellType改為traffic並計算交通
+                N. 沒事
+            如果後一個cell不是date：
+                Y. 將自己cellType改為traffic並計算交通
+                N. 沒事
+         */
     }
 }
