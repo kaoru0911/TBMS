@@ -47,6 +47,7 @@
 		A76BAA0A1ECC697000443947 /* CountryInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9F61ECC697000443947 /* CountryInfo.plist */; };
 		A76BAA0B1ECC697000443947 /* CountrySelectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BA9F71ECC697000443947 /* CountrySelectTableViewCell.swift */; };
 		A76BAA0C1ECC697000443947 /* CountrySelectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BA9F81ECC697000443947 /* CountrySelectTableViewController.swift */; };
+		A76BAA0D1ECC697000443947 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BA9F91ECC697000443947 /* DataManager.swift */; };
 		A76BAA0E1ECC697000443947 /* MenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9FA1ECC697000443947 /* MenuCell.xib */; };
 		A76BAA0F1ECC697000443947 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BA9FB1ECC697000443947 /* MenuTableViewCell.swift */; };
 		A76BAA101ECC697000443947 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BA9FC1ECC697000443947 /* MenuTableViewController.swift */; };
@@ -56,15 +57,10 @@
 		A76BAA141ECC697000443947 /* ViewPointListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BAA001ECC697000443947 /* ViewPointListCell.swift */; };
 		A76BAA151ECC697000443947 /* viewPointTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */; };
 		A76BAC401ECC6B4000443947 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BAC3F1ECC6B4000443947 /* AppDelegate.swift */; };
-<<<<<<< HEAD
-		CDE5ACA41ED2F50C003596BB /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE5ACA31ED2F50C003596BB /* DataManager.swift */; };
-		CDE5ACA61ED2F548003596BB /* ServerConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE5ACA51ED2F548003596BB /* ServerConnector.swift */; };
-=======
 		A7929A401ED56A2C0024B4D7 /* ServerConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A3F1ED56A2C0024B4D7 /* ServerConnector.swift */; };
 		A7929A441ED573F00024B4D7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A431ED573F00024B4D7 /* RegisterViewController.swift */; };
 		A7929A461ED574520024B4D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A451ED574520024B4D7 /* LoginViewController.swift */; };
 		A7929A481ED586FB0024B4D7 /* EmailRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A471ED586FB0024B4D7 /* EmailRegisterViewController.swift */; };
->>>>>>> e802f6f52f5dcbce237e86e12c1909b0dfb83999
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -112,6 +108,7 @@
 		A76BA9F61ECC697000443947 /* CountryInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CountryInfo.plist; sourceTree = "<group>"; };
 		A76BA9F71ECC697000443947 /* CountrySelectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountrySelectTableViewCell.swift; sourceTree = "<group>"; };
 		A76BA9F81ECC697000443947 /* CountrySelectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountrySelectTableViewController.swift; sourceTree = "<group>"; };
+		A76BA9F91ECC697000443947 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		A76BA9FA1ECC697000443947 /* MenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuCell.xib; sourceTree = "<group>"; };
 		A76BA9FB1ECC697000443947 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 		A76BA9FC1ECC697000443947 /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
@@ -121,15 +118,10 @@
 		A76BAA001ECC697000443947 /* ViewPointListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPointListCell.swift; sourceTree = "<group>"; };
 		A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = viewPointTableViewCell.swift; sourceTree = "<group>"; };
 		A76BAC3F1ECC6B4000443947 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-<<<<<<< HEAD
-		CDE5ACA31ED2F50C003596BB /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		CDE5ACA51ED2F548003596BB /* ServerConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerConnector.swift; sourceTree = "<group>"; };
-=======
 		A7929A3F1ED56A2C0024B4D7 /* ServerConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerConnector.swift; sourceTree = "<group>"; };
 		A7929A431ED573F00024B4D7 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		A7929A451ED574520024B4D7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A7929A471ED586FB0024B4D7 /* EmailRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailRegisterViewController.swift; sourceTree = "<group>"; };
->>>>>>> e802f6f52f5dcbce237e86e12c1909b0dfb83999
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,8 +246,6 @@
 				A76BA9F61ECC697000443947 /* CountryInfo.plist */,
 				A76BA9F71ECC697000443947 /* CountrySelectTableViewCell.swift */,
 				A76BA9F81ECC697000443947 /* CountrySelectTableViewController.swift */,
-<<<<<<< HEAD
-=======
 			);
 			name = CountrySelect;
 			sourceTree = "<group>";
@@ -263,7 +253,6 @@
 		A74BDDDE1ED5B78B00987446 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
->>>>>>> e802f6f52f5dcbce237e86e12c1909b0dfb83999
 				A76BA9FA1ECC697000443947 /* MenuCell.xib */,
 				A76BA9FB1ECC697000443947 /* MenuTableViewCell.swift */,
 				A76BA9FC1ECC697000443947 /* MenuTableViewController.swift */,
@@ -310,14 +299,8 @@
 				A76BA9F11ECC697000443947 /* CertificateSigningRequest.certSigningRequest */,
 				A76BA9F91ECC697000443947 /* DataManager.swift */,
 				A76BA9FD1ECC697000443947 /* SectionInfo.swift */,
-<<<<<<< HEAD
-				A76BA9FE1ECC697000443947 /* SetStartPointViewController.swift */,
-				CDE5ACA31ED2F50C003596BB /* DataManager.swift */,
-				CDE5ACA51ED2F548003596BB /* ServerConnector.swift */,
-=======
 				A7929A3F1ED56A2C0024B4D7 /* ServerConnector.swift */,
 				A76BA9E01ECC67ED00443947 /* Main.storyboard */,
->>>>>>> e802f6f52f5dcbce237e86e12c1909b0dfb83999
 				22F43F4F1ECD664D00791D55 /* Controller */,
 				22F43F3E1ECD660000791D55 /* Model */,
 				A76BA9FF1ECC697000443947 /* ViewPointDetailViewController.swift */,
@@ -506,12 +489,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-<<<<<<< HEAD
-				22F43F4E1ECD662900791D55 /* FindTrafficTimeAndWay.swift in Sources */,
-				CDE5ACA61ED2F548003596BB /* ServerConnector.swift in Sources */,
-=======
 				22F43F4E1ECD662900791D55 /* CallGoogleDirection.swift in Sources */,
->>>>>>> e802f6f52f5dcbce237e86e12c1909b0dfb83999
 				22FCB46B1ED2CB6200F6F54E /* BestPathCalculator.swift in Sources */,
 				A74BDDD31ED5B69000987446 /* PocketSpotTVC.swift in Sources */,
 				22F43F431ECD661200791D55 /* ViewPointAndPathStoraged.swift in Sources */,
@@ -529,7 +507,6 @@
 				A76BAA061ECC697000443947 /* ContinentalGroup.swift in Sources */,
 				A76BAA131ECC697000443947 /* ViewPointDetailViewController.swift in Sources */,
 				A76BAA101ECC697000443947 /* MenuTableViewController.swift in Sources */,
-				CDE5ACA41ED2F50C003596BB /* DataManager.swift in Sources */,
 				A76BAA021ECC697000443947 /* AddViewPointViewController.swift in Sources */,
 				A74BDDDA1ED5B6A100987446 /* TripListViewController.swift in Sources */,
 				A74764631ED83F000059D586 /* ScheduleTableViewController.swift in Sources */,
@@ -546,6 +523,7 @@
 				A76BAA091ECC697000443947 /* Country.swift in Sources */,
 				A7929A441ED573F00024B4D7 /* RegisterViewController.swift in Sources */,
 				A76BAA111ECC697000443947 /* SectionInfo.swift in Sources */,
+				A76BAA0D1ECC697000443947 /* DataManager.swift in Sources */,
 				A76BAA141ECC697000443947 /* ViewPointListCell.swift in Sources */,
 				A7929A481ED586FB0024B4D7 /* EmailRegisterViewController.swift in Sources */,
 				A76BAA151ECC697000443947 /* viewPointTableViewCell.swift in Sources */,
