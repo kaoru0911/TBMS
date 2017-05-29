@@ -14,6 +14,8 @@ class MenuTableViewController: UITableViewController {
     
     var cellData = [(String , UIImage)]()
     var selectedPage : Int!
+    var sharedData:DataManager = DataManager.shareDataManager
+    var serverCommunicate:ServerConnector = ServerConnector()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +43,21 @@ class MenuTableViewController: UITableViewController {
         cellData.append(("庫存行程" , UIImage(named: "Swizerland")!))
         
         cellData.append(("庫存景點" , UIImage(named: "Taipei")!))
+        
+//        serverCommunicate.uploadPocketSpotToServer(spotName: "清水寺")
+//        serverCommunicate.uploadPocketTripToServer(tripData: (sharedData.pocketTrips?[0])!)
+//        serverCommunicate.uploadSharedTripToServer(tripData: (sharedData.sharedTrips?[0])!)
+//        serverCommunicate.deletePocketSpotFromServer(spotName: "清水寺")
+        serverCommunicate.deletePocketTripFromServer(tripName: "香港三日遊")
+//        serverCommunicate.createAccount()
+//        serverCommunicate.userLogin()
+//        serverCommunicate.getPocketSpotFromServer()
+//        serverCommunicate.getPocketTripFromServer()
+//        serverCommunicate.userInfoUpdate()
+//        serverCommunicate.getSharedTripFromServer()
+//        serverCommunicate.uploadTripCoverImgToServer(tripData: (sharedData.pocketTrips?[0])!, Req: "uploadPocketTripCover")
+//        serverCommunicate.uploadTripCoverImgToServer(tripData: (sharedData.pocketTrips?[0])!, Req: "uploadSharedTripCover")
+        
     }
 
     override func didReceiveMemoryWarning() {

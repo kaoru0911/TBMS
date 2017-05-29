@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ObjectMapper
 
 class DataManager: NSObject {
     
@@ -15,9 +14,10 @@ class DataManager: NSObject {
     
     var memberData:MemberData?
     var pocketTrips:Array<tripData>?
-    var sharedTrips:Array<sharedTripData>?
+    var sharedTrips:Array<tripData>?
     var menuCountries:Array<countryData> = []
     var chooseCountry:String = ""
+    var pocketSpot:Array<spotData>?
     var isLogin:Bool!
     
     // 將init設為private，以免外部去調用到
@@ -27,22 +27,34 @@ class DataManager: NSObject {
         
         // test===================
         let trip:tripData = tripData()
-        let spot_1:spotData = spotData()
-        let spot_2:spotData = spotData()
-        let spot_3:spotData = spotData()
-        let spot_4:spotData = spotData()
+        let spot_1:tripSpotData = tripSpotData()
+        let spot_2:tripSpotData = tripSpotData()
+        let spot_3:tripSpotData = tripSpotData()
+        let spot_4:tripSpotData = tripSpotData()
         
-//        spot_1.spotName = "清水寺"
-//        spot_1.trafficToNextSpot = "十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉"
-//        
-//        spot_2.spotName = "平等院"
-//        spot_2.trafficToNextSpot = "十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換五號公車乘坐到金閣寺站，下車向東行三十公尺"
-//        
-//        spot_3.spotName = "金閣寺"
-//        spot_3.trafficToNextSpot = "十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換地鐵三號線至天龍人站，向東行五十公尺後右轉，直行二十公尺"
-//        
-//        spot_4.spotName = "天龍寺"
-//        spot_4.trafficToNextSpot = ""
+        spot_1.spotName = "清水寺"
+        spot_1.trafficToNextSpot = "十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉"
+        spot_1.belongTripName = "日本五日遊"
+        spot_1.nDays = 1
+        spot_1.nTh = 1
+        
+        spot_2.spotName = "平等院"
+        spot_2.trafficToNextSpot = "十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換五號公車乘坐到金閣寺站，下車向東行三十公尺"
+        spot_2.belongTripName = "日本五日遊"
+        spot_2.nDays = 2
+        spot_2.nTh = 2
+        
+        spot_3.spotName = "金閣寺"
+        spot_3.trafficToNextSpot = "十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換地鐵三號線至天龍人站，向東行五十公尺後右轉，直行二十公尺"
+        spot_3.belongTripName = "日本五日遊"
+        spot_3.nDays = 3
+        spot_3.nTh = 3
+        
+        spot_4.spotName = "天龍寺"
+        spot_4.trafficToNextSpot = ""
+        spot_4.belongTripName = "日本五日遊"
+        spot_4.nDays = 4
+        spot_4.nTh = 4
         //=====================
         
         
@@ -50,19 +62,25 @@ class DataManager: NSObject {
         pocketTrips = []
         sharedTrips = []
         menuCountries = []
+        pocketSpot = []
         isLogin = false
         
         // test==================
-//        trip.spots.append(spot_1)
-//        trip.spots.append(spot_2)
-//        trip.spots.append(spot_3)
-//        trip.spots.append(spot_4)
+        trip.spots.append(spot_1)
+        trip.spots.append(spot_2)
+        trip.spots.append(spot_3)
+        trip.spots.append(spot_4)
+        trip.tripName = "日本五日遊"
+        trip.days = 5
+        trip.country = "日本"
+        trip.coverImg = UIImage(named: "Kyoto")!
         
         memberData?.account = "create"
         memberData?.password = "ddd"
-        memberData?.email = "ddd.gmail.com"
+        memberData?.email = "ppp.gmail.com"
         
-        pocketTrips?.append(trip)
+//        pocketTrips?.append(trip)
+//        sharedTrips?.append(trip)
         // ======================
         
     }
@@ -79,10 +97,10 @@ class spotData: NSObject {
 class tripSpotData: spotData {
     
     var trafficImage:[UIImage]?
-    var trafficToNextSpot:String?
-    var belongTripName:String?
-    var nDays:Int?
-    var nTh:Int?
+    var trafficToNextSpot:String = ""
+    var belongTripName:String = ""
+    var nDays:Int = 1
+    var nTh:Int = 0
 }
 
 class tripData: NSObject {
@@ -91,7 +109,7 @@ class tripData: NSObject {
     var country:String?
     var days:Int?
     var coverImg:UIImage?
-    var spots:Array<tripSpotData> = []
+    var spots = [tripSpotData]()
 }
 
 class sharedTripData: tripData {
