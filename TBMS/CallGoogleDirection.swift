@@ -24,7 +24,7 @@ class GoogleDirectionCaller: NSObject {
           language : LanguageSetting = .chinese,
           travelMod : TravelMod = .driving,
           distanceUnit : DistanceUnit = .metric,
-          departureTime : String = "1495004263" ) {
+          departureTime : String = "1526540263" ) {
         
         super.init()
         // Setting parameters
@@ -37,28 +37,44 @@ class GoogleDirectionCaller: NSObject {
         self.requestURL = parametersSetting.urlStringWithRespondType()
     }
     
-    func getRouteInformation (origin : String, destination : String, completion: @escaping (_ route:ResponceRouteType)->Void ) {
+    func getRouteInformation (origin : String, destination : String, completion: @escaping ( _ routeInformation:LegsData) -> Void ) {
         
         // Generate parameters dictionary & url
         var originString : String
         var destinationString : String
         originString = "place_id:" + origin
         destinationString = "place_id:" + destination
-        let parameters = parametersSetting.produceParameterDictionary(origin: originString, destination: destinationString)
         
+        let parameters = parametersSetting.produceParameterDictionary(origin: originString, destination: destinationString)
+        //----測試用-----
+        let testURL = produceRequestURLForTest(urlString: requestURL, parameters: parameters)
+        print(testURL)
+        //--------------
         Alamofire.request(requestURL, method: .get, parameters: parameters).responseJSON{ response in
+            
             // Check the response status
             if let result = response.result.value {
                 let responseJSON = JSON(result)
                 guard responseJSON["status"] == "OK" else{
-                    completion(self.route)
+                    let route = LegsData()
+                    completion(route)
                     return
                 }
                 let parser = DirectionJsonAnalyst()
-                self.route = parser.trasferJSONToObject(responseJSON: responseJSON,travelMode:self.parametersSetting.travelMod.rawValue)
-                completion(self.route)
+                let route = parser.trasferJSONToObject(responseJSON: responseJSON,travelMode:self.parametersSetting.travelMod.rawValue)!
+                completion(route)
             }
         }
+    }
+    
+    func produceRequestURLForTest (urlString:String, parameters:[String:String]) -> String {
+        var string = urlString
+        for obj in parameters {
+            let tmpString = "\(obj.key)=\(obj.value)&"
+            string += tmpString
+        }
+        string.characters.removeLast()
+        return string
     }
 }
 

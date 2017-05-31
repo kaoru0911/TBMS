@@ -371,7 +371,7 @@
                         <outlet property="chooseStartingPtBtn" destination="j57-iU-Tjy" id="vCK-Ua-4IN"/>
                         <outlet property="chosenStartingPoint" destination="tKf-sc-OLb" id="w4T-Ht-nfQ"/>
                         <outlet property="goToNextPage" destination="g8s-J1-wki" id="9Mb-ai-mSc"/>
-                        <segue destination="DLZ-YW-dcw" kind="show" id="oUH-uQ-r3c"/>
+                        <segue destination="DLZ-YW-dcw" kind="show" identifier="goToRearrangeScheduleVC" id="oUH-uQ-r3c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MQY-eO-kCj" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -390,13 +390,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mWY-Ji-JSd">
-                                <rect key="frame" x="0.0" y="72" width="375" height="247"/>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mWY-Ji-JSd">
+                                <rect key="frame" x="0.0" y="64" width="375" height="263"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HWz-5r-StC">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HWz-5r-StC">
                                 <rect key="frame" x="0.0" y="327" width="375" height="296"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="296" id="GdE-Md-F4s"/>
+                                </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Gke-bT-Sr7">
                                     <size key="itemSize" width="414" height="42"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -404,7 +407,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DateCell" id="bwU-tL-24C" customClass="DateCell" customModule="TBMS" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="dateCell" id="bwU-tL-24C" customClass="DateCell" customModule="TBMS" customModuleProvider="target">
                                         <rect key="frame" x="5" y="0.0" width="365" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -412,14 +415,15 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hP4-LW-2ag">
-                                                    <rect key="frame" x="301" y="6" width="30" height="30"/>
+                                                    <rect key="frame" x="305" y="6" width="30" height="30"/>
                                                     <state key="normal" title="add"/>
                                                     <connections>
+                                                        <action selector="addDateCellBtnPressed:" destination="DLZ-YW-dcw" eventType="touchUpInside" id="l8F-Mc-IqD"/>
                                                         <action selector="addNewTripDay:" destination="bwU-tL-24C" eventType="touchUpInside" id="fwW-ab-hbO"/>
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第一天" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rZq-bA-8K2">
-                                                    <rect key="frame" x="182" y="11" width="52" height="21"/>
+                                                    <rect key="frame" x="156.5" y="11" width="52" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -427,10 +431,10 @@
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="hP4-LW-2ag" firstAttribute="centerY" secondItem="rZq-bA-8K2" secondAttribute="centerY" id="Qxe-IB-UiF"/>
-                                            <constraint firstItem="rZq-bA-8K2" firstAttribute="leading" secondItem="bwU-tL-24C" secondAttribute="leading" constant="182" id="a85-UX-FfO"/>
-                                            <constraint firstItem="rZq-bA-8K2" firstAttribute="centerY" secondItem="bwU-tL-24C" secondAttribute="centerY" id="bMd-CR-2vg"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="hP4-LW-2ag" secondAttribute="trailing" constant="26" id="dhC-qx-CgH"/>
+                                            <constraint firstItem="rZq-bA-8K2" firstAttribute="centerX" secondItem="bwU-tL-24C" secondAttribute="centerX" id="0Wi-Go-bOo"/>
+                                            <constraint firstItem="hP4-LW-2ag" firstAttribute="centerY" secondItem="rZq-bA-8K2" secondAttribute="centerY" id="7oo-oc-kRg"/>
+                                            <constraint firstAttribute="trailing" secondItem="hP4-LW-2ag" secondAttribute="trailing" constant="30" id="EG5-M1-Coc"/>
+                                            <constraint firstItem="rZq-bA-8K2" firstAttribute="centerY" secondItem="bwU-tL-24C" secondAttribute="centerY" id="gI0-Pi-QIb"/>
                                         </constraints>
                                         <size key="customSize" width="365" height="42"/>
                                         <connections>
@@ -438,42 +442,37 @@
                                             <outlet property="dateLabel" destination="rZq-bA-8K2" id="0jO-Bt-0JJ"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ScheduleAndTrafficCell" id="dwf-lD-3Z3" customClass="ScheduleAndTrafficCell" customModule="TBMS" customModuleProvider="target">
-                                        <rect key="frame" x="1" y="52" width="373" height="119"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="scheduleAndTrafficCell" id="dwf-lD-3Z3" customClass="ScheduleAndTrafficCell" customModule="TBMS" customModuleProvider="target">
+                                        <rect key="frame" x="1" y="52" width="373" height="120"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="373" height="119"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="373" height="120"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="交通方式, 交通時間" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDd-Em-wTH">
-                                                    <rect key="frame" x="80" y="87" width="97" height="13"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dDJ-SF-K3G">
+                                                    <rect key="frame" x="18" y="8" width="314" height="53"/>
+                                                    <color key="backgroundColor" red="0.32451941543339502" green="1" blue="0.94327918014213197" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="53" id="RVz-DU-sPu"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="交通方式, 交通時間" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDd-Em-wTH">
+                                                    <rect key="frame" x="80" y="86" width="97" height="13"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="景點一" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K7Y-go-fwA">
-                                                    <rect key="frame" x="38" y="25" width="52" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="景點一" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K7Y-go-fwA">
+                                                    <rect key="frame" x="40" y="24" width="52" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JM7-vt-lDb">
-                                                    <rect key="frame" x="37" y="62" width="32" height="56"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JM7-vt-lDb">
+                                                    <rect key="frame" x="40" y="66" width="30" height="53"/>
+                                                    <color key="backgroundColor" red="0.049140577759909987" green="1" blue="0.7610422169149621" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="JM7-vt-lDb" secondAttribute="height" multiplier="4:7" id="fIn-DT-fOa"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="細節" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q5J-Fv-0fV">
-                                                    <rect key="frame" x="111" y="20" width="52" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dDJ-SF-K3G">
-                                                    <rect key="frame" x="20" y="8" width="355" height="53"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="53" id="RVz-DU-sPu"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
@@ -491,13 +490,45 @@
                                             <constraint firstItem="JM7-vt-lDb" firstAttribute="width" secondItem="JM7-vt-lDb" secondAttribute="height" multiplier="4:7" id="wVR-au-2XA"/>
                                             <constraint firstItem="K7Y-go-fwA" firstAttribute="centerY" secondItem="dDJ-SF-K3G" secondAttribute="centerY" id="x0L-on-RwL"/>
                                         </constraints>
-                                        <size key="customSize" width="373" height="119"/>
+                                        <size key="customSize" width="373" height="120"/>
                                         <connections>
                                             <outlet property="arrow" destination="JM7-vt-lDb" id="3ui-9P-tcB"/>
                                             <outlet property="trafficInf" destination="ZDd-Em-wTH" id="EXu-ef-FVv"/>
                                             <outlet property="viewPointBGBlock" destination="dDJ-SF-K3G" id="gev-Fh-B2w"/>
-                                            <outlet property="viewPointDetail" destination="q5J-Fv-0fV" id="yOK-Fp-18F"/>
                                             <outlet property="viewPointName" destination="K7Y-go-fwA" id="T2T-7Z-UfH"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="lastAttractionCell" id="ntT-ea-DJQ" customClass="LastAttractionCell" customModule="TBMS" customModuleProvider="target">
+                                        <rect key="frame" x="1" y="182" width="373" height="70"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="373" height="70"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jko-b1-7Xd">
+                                                    <rect key="frame" x="18" y="8" width="337" height="53"/>
+                                                    <color key="backgroundColor" red="0.32451941540000001" green="1" blue="0.9432791801" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="景點一" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wzm-PE-t9y">
+                                                    <rect key="frame" x="40" y="24" width="52" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="jko-b1-7Xd" firstAttribute="centerY" secondItem="ntT-ea-DJQ" secondAttribute="centerY" id="CI5-NL-7nL"/>
+                                            <constraint firstItem="jko-b1-7Xd" firstAttribute="leading" secondItem="ntT-ea-DJQ" secondAttribute="leadingMargin" constant="10" id="Clp-xV-97O"/>
+                                            <constraint firstItem="Wzm-PE-t9y" firstAttribute="leading" secondItem="ntT-ea-DJQ" secondAttribute="leadingMargin" constant="32" id="Ocu-RN-DTR"/>
+                                            <constraint firstItem="jko-b1-7Xd" firstAttribute="centerY" secondItem="Wzm-PE-t9y" secondAttribute="centerY" id="eBU-FZ-jmB"/>
+                                            <constraint firstItem="jko-b1-7Xd" firstAttribute="centerX" secondItem="ntT-ea-DJQ" secondAttribute="centerX" id="hdc-4w-Thl"/>
+                                            <constraint firstItem="jko-b1-7Xd" firstAttribute="top" secondItem="ntT-ea-DJQ" secondAttribute="topMargin" id="tcP-3I-YCv"/>
+                                        </constraints>
+                                        <size key="customSize" width="373" height="70"/>
+                                        <connections>
+                                            <outlet property="viewPointBGBlock" destination="jko-b1-7Xd" id="1Qu-Yi-yvJ"/>
+                                            <outlet property="viewPointName" destination="Wzm-PE-t9y" id="xmM-JS-30a"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -512,6 +543,7 @@
                             <constraint firstItem="HWz-5r-StC" firstAttribute="leading" secondItem="TM7-eO-Qq1" secondAttribute="leading" id="2qV-H8-KLV"/>
                             <constraint firstItem="HWz-5r-StC" firstAttribute="top" secondItem="mWY-Ji-JSd" secondAttribute="bottom" id="McU-gL-EHC"/>
                             <constraint firstItem="mWY-Ji-JSd" firstAttribute="top" secondItem="kx3-XI-tKf" secondAttribute="bottom" id="XdB-UB-Mf6"/>
+                            <constraint firstItem="HWz-5r-StC" firstAttribute="bottom" secondItem="TnU-kb-V8Y" secondAttribute="top" id="krv-E6-PRm"/>
                             <constraint firstAttribute="trailing" secondItem="mWY-Ji-JSd" secondAttribute="trailing" id="oEt-cC-JaU"/>
                             <constraint firstAttribute="trailing" secondItem="HWz-5r-StC" secondAttribute="trailing" id="pdu-NU-YPj"/>
                             <constraint firstItem="mWY-Ji-JSd" firstAttribute="leading" secondItem="TM7-eO-Qq1" secondAttribute="leading" id="xzz-c0-9Qz"/>
@@ -525,6 +557,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="collectionView" destination="HWz-5r-StC" id="iLV-zj-1br"/>
                         <outlet property="travelPathWebView" destination="mWY-Ji-JSd" id="17T-Ae-mzH"/>
                     </connections>
                 </viewController>

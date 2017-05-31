@@ -9,12 +9,18 @@
 import UIKit
 
 class ScheduleAndTrafficCell: UICollectionViewCell {
+    
     @IBOutlet weak var viewPointBGBlock: UIImageView!
     @IBOutlet weak var viewPointName: UILabel!
-    @IBOutlet weak var viewPointDetail: UILabel!
     @IBOutlet weak var arrow: UIImageView!
     @IBOutlet weak var trafficInf: UILabel!
     
+}
+
+class LastAttractionCell: UICollectionViewCell {
+    
+    @IBOutlet weak var viewPointBGBlock: UIImageView!
+    @IBOutlet weak var viewPointName: UILabel!
 }
 
 class DateCell: UICollectionViewCell {
@@ -23,16 +29,9 @@ class DateCell: UICollectionViewCell {
     @IBOutlet weak var addNewTripDayButton: UIButton!
     @IBAction func addNewTripDay(_ sender: Any) {
     }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.addNewTripDayButton.isHidden = true
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
+
+
 
 //class CellContent : NSObject {
 //    var type:CustomerCellType!
@@ -63,16 +62,14 @@ class ScheduleAndTrafficCellContent : CellContent {
     var attraction : Attraction!
     var trafficInformation : LegsData!
     
-    
-    required init(attraction:Attraction) {
+    required init(attraction:Attraction, trafficInformation:LegsData!) {
         super.init()
         self.viewPointName = attraction.attrctionName
         self.type = CustomerCellType.scheduleAndTrafficCellType
-    }
-    
-    convenience init(attraction:Attraction, trafficInformation:LegsData) {
-        self.init(attraction: attraction)
-        self.trafficTime = trafficInformation.duration
+        
+        if trafficInformation != nil {
+            self.trafficInformation = trafficInformation
+        }
     }
 }
 
@@ -83,6 +80,7 @@ class ScheduleAndTrafficCellContent : CellContent {
 enum CustomerCellType : String{
     case dateCellType = "dateCell"
     case scheduleAndTrafficCellType = "scheduleAndTrafficCell"
+    case lastAttactionCellType = "lastAttactionCellType"
 }
 
 /// For define the color type of the view.

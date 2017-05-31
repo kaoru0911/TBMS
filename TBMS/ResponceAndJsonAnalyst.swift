@@ -227,7 +227,6 @@ class DirectionJsonAnalyst: NSObject {
             }
         }
     }
-    
 }
 
 // 撰寫Error情況
@@ -327,7 +326,6 @@ class StepsData: SecondOrderStepsData {
     var lineShortame : String?
     var lineIcon : String?
     var lineLocalIcon : String?
-    
 }
 
 

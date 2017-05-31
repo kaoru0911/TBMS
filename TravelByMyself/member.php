@@ -4,11 +4,13 @@ include 'db_config.php';
 
 
 $getAccount = $_POST['username'];
-$getPassword = $_POST['password'];
+
 $getRequest = $_POST['request'];
-$getEmail = $_POST['email'];
+
 
 if($getRequest == "login"){
+
+	$getPassword = $_POST['password'];
 
 	if($getAccount != ""){
 
@@ -20,10 +22,14 @@ if($getRequest == "login"){
 
 	} else{
 
-		echo '{"result":false, "errorCode":"Login fail"}';
+		echo '{"result":"false", "errorCode":"Login fail"}';
 
 	}
 } else if($getRequest == "create"){
+
+	$getEmail = $_POST['email'];
+
+	$getPassword = $_POST['password'];
 
 	if($getAccount != ""){
 
@@ -35,6 +41,9 @@ if($getRequest == "login"){
 
 	}
 } else if($getRequest == "updateUserInfo"){
+
+	$getEmail = $_POST['email'];
+	$getPassword = $_POST['password'];
 
 	if($getAccount != ""){
 
@@ -58,9 +67,9 @@ function login($db, $account, $password){
 		`password`='$password'")->fetch();
 
 	if($adminData!=""){
-		echo '{"result":true, "errorCode":"none"}';
+		echo '{"result":true, "errorCode":"none, login success"}';
 	}else{
-		echo '{"result":fail, "errorCode":"login fail"}';
+		echo '{"result":false, "errorCode":"login fail"}';
 	}
 }
 
@@ -72,7 +81,7 @@ function create($db, $account, $password, $email){
 		")->fetch();
 
 	if($isExist!=""){
-		echo '{"result":fail, "errorCode":"account is already exist"}';
+		echo '{"result":false, "errorCode":"account is already exist"}';
 	}else{
 		$db->prepare("
 			insert into `member`
@@ -80,6 +89,8 @@ function create($db, $account, $password, $email){
 			values
 			('$account','$password','$email')
 			")->execute();
+
+		echo '{"result":true, "errorCode":"none, create account success"}';
 	}	
 }
 
@@ -91,6 +102,8 @@ function update($db, $account, $password, $email){
 			`password`='$password'
 			where `username`='$account'			
 			")->execute();
+
+	echo '{"result":true, "errorCode":"none, update user file success"}';
 
 }
 

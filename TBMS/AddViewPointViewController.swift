@@ -72,17 +72,14 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     // TableView陣列
     var ListArray: NSMutableArray = []
     var placesClient: GMSPlacesClient!
-
-    func goSetStartPointPage() {
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let setStartPointViewController = storyboard.instantiateViewController(withIdentifier :"SetStartPointViewController") as! SetStartPointViewController
-        
-        let attractionsList = setValueToAttractionsList()
-        setStartPointViewController.attractionsList = attractionsList
-        
-        self.navigationController?.pushViewController(setStartPointViewController, animated: true)
-    }
+    
+//    func goSetStartPointPage() {
+//        
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let setStartPointViewController = storyboard.instantiateViewController(withIdentifier :"SetStartPointViewController") as! SetStartPointViewController
+//        
+//        self.navigationController?.pushViewController(setStartPointViewController, animated: true)
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -181,15 +178,22 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         })
     }
     
-    func setValueToAttractionsList() -> [Attraction] {
+    private func setValueToAttractionsList(placeList:[GMSPlace]) -> [Attraction] {
         
         var attractionsList = [Attraction]()
         
-        for place in tmpPlaceDataStorage {
+        for place in placeList {
             var tmpAttraction = Attraction()
             tmpAttraction.setValueToAttractionObject(place: place)
             attractionsList.append(tmpAttraction)
         }
         return attractionsList
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let vc = segue.destination as! SetStartPointViewController
+        let attractions = setValueToAttractionsList(placeList: tmpPlaceDataStorage)
+        vc.attractionsList = attractions
     }
 }

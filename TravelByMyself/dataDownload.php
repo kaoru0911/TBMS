@@ -47,7 +47,7 @@ if($getRequest == "downloadPocketTrip"){
 function downloadPocketTrip($db, $account){
 
 	$getTrips = $db->query("
-		select * from `pocketTrip` where 
+		select * from `pockettrip` where 
 		`owneruser`='$account'
 		")->fetchAll();
 
@@ -65,6 +65,7 @@ function downloadPocketTrip($db, $account){
 						 "tripDays"=>$v['tripDays'],
 						 "tripCountry"=>$v['tripCountry'],						 					 						 							 					 
 						 "ownerUser"=>$v['ownerUser'],
+						 "coverImg"=>$v['coverImg'],
 						 );
 
 			array_push($rtnTrips, $item);
@@ -83,8 +84,7 @@ function downloadPocketTrip($db, $account){
 function downloadSharedTrip($db){
 
 	$getTrips = $db->query("
-		select * from `sharedTrip` where 
-		`isShared`='1'
+		select * from `sharedtrip`
 		")->fetchAll();
 
 	if(count($getTrips) > 0){
@@ -99,6 +99,7 @@ function downloadSharedTrip($db){
 						 "tripDays"=>$v['tripDays'],
 						 "tripCountry"=>$v['tripCountry'],						 					 						 							 					 
 						 "ownerUser"=>$v['ownerUser'],
+						 "coverImg"=>$v['coverImg'],
 						 );
 
 			array_push($rtnTrips, $item);
@@ -116,7 +117,7 @@ function downloadSharedTrip($db){
 function downloadPocketSpot($db, $account){
 
 	$getTrips = $db->query("
-		select * from `pocketSpot` where 
+		select * from `pocketspot` where 
 		`ownerUser`='$account'
 		")->fetchAll();
 
