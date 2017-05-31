@@ -17,7 +17,7 @@ class ServerConnector: NSObject {
 
     
     //let memberURLstr: String = "member.php"
-    let memberURLstr: String = "login.php"
+    //let memberURLstr: String = "login.php"
 
     let memberURLstr: String = "member.php"
     let dataDownloadURLstr: String = "dataDownload.php"
