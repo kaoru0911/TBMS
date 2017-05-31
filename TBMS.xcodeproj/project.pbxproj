@@ -22,6 +22,8 @@
 		22FAC4681ED67E4E00C402D8 /* StorageProtocolAndClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FAC4671ED67E4E00C402D8 /* StorageProtocolAndClass.swift */; };
 		22FCB46B1ED2CB6200F6F54E /* BestPathCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22FCB46A1ED2CB6200F6F54E /* BestPathCalculator.swift */; };
 		417F7970D1EED0E3404633E6 /* Pods_TBMS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A47D2D8565775007FF8F6F4 /* Pods_TBMS.framework */; };
+		A742B1461EDEBA4E00C7EA36 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A742B1451EDEBA4E00C7EA36 /* GoogleService-Info.plist */; };
+		A742B14B1EDEC55000C7EA36 /* CertificateSigningRequest.certSigningRequest in Resources */ = {isa = PBXBuildFile; fileRef = A742B14A1EDEC55000C7EA36 /* CertificateSigningRequest.certSigningRequest */; };
 		A747645F1ED8111F0059D586 /* MemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A747645E1ED8111F0059D586 /* MemberViewController.swift */; };
 		A74764621ED83F000059D586 /* ScheduleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74764601ED83F000059D586 /* ScheduleTableViewCell.swift */; };
 		A74764631ED83F000059D586 /* ScheduleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74764611ED83F000059D586 /* ScheduleTableViewController.swift */; };
@@ -39,7 +41,6 @@
 		A76BAA021ECC697000443947 /* AddViewPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BA9EE1ECC697000443947 /* AddViewPointViewController.swift */; };
 		A76BAA031ECC697000443947 /* arrowClose.png in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9EF1ECC697000443947 /* arrowClose.png */; };
 		A76BAA041ECC697000443947 /* arrowOpen.png in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9F01ECC697000443947 /* arrowOpen.png */; };
-		A76BAA051ECC697000443947 /* CertificateSigningRequest.certSigningRequest in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9F11ECC697000443947 /* CertificateSigningRequest.certSigningRequest */; };
 		A76BAA061ECC697000443947 /* ContinentalGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BA9F21ECC697000443947 /* ContinentalGroup.swift */; };
 		A76BAA071ECC697000443947 /* ContinentalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BA9F31ECC697000443947 /* ContinentalView.swift */; };
 		A76BAA081ECC697000443947 /* ContinentalView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9F41ECC697000443947 /* ContinentalView.xib */; };
@@ -81,6 +82,10 @@
 		3FBF8B759B0AEF6C32784BD2 /* Pods-TBMS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TBMS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TBMS/Pods-TBMS.debug.xcconfig"; sourceTree = "<group>"; };
 		4A47D2D8565775007FF8F6F4 /* Pods_TBMS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TBMS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		752395F9B48095F5C174C1E8 /* Pods-TBMS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TBMS.release.xcconfig"; path = "Pods/Target Support Files/Pods-TBMS/Pods-TBMS.release.xcconfig"; sourceTree = "<group>"; };
+		A742B1451EDEBA4E00C7EA36 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A742B1471EDEBA9300C7EA36 /* TBMS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TBMS.entitlements; sourceTree = "<group>"; };
+		A742B1491EDEC34300C7EA36 /* TBMS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TBMS-Bridging-Header.h"; sourceTree = "<group>"; };
+		A742B14A1EDEC55000C7EA36 /* CertificateSigningRequest.certSigningRequest */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = CertificateSigningRequest.certSigningRequest; path = ../CertificateSigningRequest.certSigningRequest; sourceTree = "<group>"; };
 		A747645E1ED8111F0059D586 /* MemberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemberViewController.swift; sourceTree = "<group>"; };
 		A74764601ED83F000059D586 /* ScheduleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewCell.swift; sourceTree = "<group>"; };
 		A74764611ED83F000059D586 /* ScheduleTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleTableViewController.swift; sourceTree = "<group>"; };
@@ -100,7 +105,6 @@
 		A76BA9EE1ECC697000443947 /* AddViewPointViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewPointViewController.swift; sourceTree = "<group>"; };
 		A76BA9EF1ECC697000443947 /* arrowClose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowClose.png; sourceTree = "<group>"; };
 		A76BA9F01ECC697000443947 /* arrowOpen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowOpen.png; sourceTree = "<group>"; };
-		A76BA9F11ECC697000443947 /* CertificateSigningRequest.certSigningRequest */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CertificateSigningRequest.certSigningRequest; sourceTree = "<group>"; };
 		A76BA9F21ECC697000443947 /* ContinentalGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinentalGroup.swift; sourceTree = "<group>"; };
 		A76BA9F31ECC697000443947 /* ContinentalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinentalView.swift; sourceTree = "<group>"; };
 		A76BA9F41ECC697000443947 /* ContinentalView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContinentalView.xib; sourceTree = "<group>"; };
@@ -292,14 +296,16 @@
 		A76BA9DB1ECC67ED00443947 /* TBMS */ = {
 			isa = PBXGroup;
 			children = (
+				A742B1471EDEBA9300C7EA36 /* TBMS.entitlements */,
+				A742B14A1EDEC55000C7EA36 /* CertificateSigningRequest.certSigningRequest */,
 				A74BDDE61ED6FE0B00987446 /* airplane-symbol-7.png */,
 				A74BDDE81ED6FE1C00987446 /* circle-user-7.png */,
 				22FAC4651ED5812200C402D8 /* testStoryboard.storyboard */,
 				A76BAC3F1ECC6B4000443947 /* AppDelegate.swift */,
-				A76BA9F11ECC697000443947 /* CertificateSigningRequest.certSigningRequest */,
 				A76BA9F91ECC697000443947 /* DataManager.swift */,
 				A76BA9FD1ECC697000443947 /* SectionInfo.swift */,
 				A7929A3F1ED56A2C0024B4D7 /* ServerConnector.swift */,
+				A742B1491EDEC34300C7EA36 /* TBMS-Bridging-Header.h */,
 				A76BA9E01ECC67ED00443947 /* Main.storyboard */,
 				22F43F4F1ECD664D00791D55 /* Controller */,
 				22F43F3E1ECD660000791D55 /* Model */,
@@ -308,6 +314,7 @@
 				A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */,
 				A76BA9E31ECC67ED00443947 /* Assets.xcassets */,
 				A76BA9E51ECC67ED00443947 /* LaunchScreen.storyboard */,
+				A742B1451EDEBA4E00C7EA36 /* GoogleService-Info.plist */,
 				A76BA9E81ECC67ED00443947 /* Info.plist */,
 			);
 			path = TBMS;
@@ -349,7 +356,13 @@
 					A76BA9D81ECC67ED00443947 = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = 5S8ZM6F4LE;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -423,14 +436,15 @@
 				A76BAA041ECC697000443947 /* arrowOpen.png in Resources */,
 				A76BAA0E1ECC697000443947 /* MenuCell.xib in Resources */,
 				A74BDDE91ED6FE1C00987446 /* circle-user-7.png in Resources */,
+				A742B14B1EDEC55000C7EA36 /* CertificateSigningRequest.certSigningRequest in Resources */,
 				A74BDDE11ED6F10B00987446 /* addSpot.png in Resources */,
 				A76BAA0A1ECC697000443947 /* CountryInfo.plist in Resources */,
 				A74BDDE71ED6FE0B00987446 /* airplane-symbol-7.png in Resources */,
 				22FAC4661ED5812200C402D8 /* testStoryboard.storyboard in Resources */,
-				A76BAA051ECC697000443947 /* CertificateSigningRequest.certSigningRequest in Resources */,
 				A76BAA031ECC697000443947 /* arrowClose.png in Resources */,
 				A76BAA081ECC697000443947 /* ContinentalView.xib in Resources */,
 				A76BA9E21ECC67ED00443947 /* Main.storyboard in Resources */,
+				A742B1461EDEBA4E00C7EA36 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,6 +586,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -597,6 +612,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -622,6 +638,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
@@ -639,6 +656,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -650,6 +668,9 @@
 			baseConfigurationReference = 3FBF8B759B0AEF6C32784BD2 /* Pods-TBMS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = YES;
+				CODE_SIGN_ENTITLEMENTS = TBMS/TBMS.entitlements;
 				DEVELOPMENT_TEAM = 5S8ZM6F4LE;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -662,6 +683,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rydertsai.TBMS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "TBMS/TBMS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -671,6 +695,9 @@
 			baseConfigurationReference = 752395F9B48095F5C174C1E8 /* Pods-TBMS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = YES;
+				CODE_SIGN_ENTITLEMENTS = TBMS/TBMS.entitlements;
 				DEVELOPMENT_TEAM = 5S8ZM6F4LE;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -683,6 +710,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.rydertsai.TBMS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "TBMS/TBMS-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
