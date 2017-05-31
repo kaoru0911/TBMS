@@ -15,8 +15,8 @@ class ServerConnector: NSObject {
     // URL
     let baseURLStr: String = "http://localhost/TravelByMyself/"
     
-    let memberURLstr: String = "member.php"
-    //let memberURLstr: String = "login.php"
+    //let memberURLstr: String = "member.php"
+    let memberURLstr: String = "login.php"
     let dataDownloadURLstr: String = "dataDownload.php"
     let dataUploadURLstr: String = "dataUpload.php"
     
@@ -89,6 +89,7 @@ class ServerConnector: NSObject {
                 self.sharedData.isLogin = false
             }
             
+            // 通知中心
             let notificationName = Notification.Name("loginResponse")
             NotificationCenter.default.post(name: notificationName, object: nil, userInfo: ["PASS":response.result.isSuccess])
         }
