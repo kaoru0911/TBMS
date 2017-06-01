@@ -155,22 +155,20 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     ///   - myStoryBoard: The StoryBoard where the VC you wanna instantiating is
     ///   - dataArray: The datas to setting the VC's content
     /// - Returns: An array containing all VC you want to instantiate
-    func produceVCArray (myStoryBoard: UIStoryboard) -> [UIViewController] {
-        //將Array內資料套出, 將date用於設定相關資料, 將array用於匯入下一面
-        print("produceVCArray唷")
+    func produceVCArray (myStoryBoard: UIStoryboard, cellContents:tripData!) -> [UIViewController] {
         
-        var tmpVCArray = [UIViewController]()
-        guard let spots = shareData.pocketTrips?[0].spots else {
+        var tmpVCArray = [ScheduleTableViewController]()
+        guard let cellContents = cellContents else {
             print("沒有spot唷")
             return tmpVCArray
         }
-        let days = countTotalTripDays(spot: spots)
+        let days = countTotalTripDays(spot: cellContents.spots)
         
-        print("days=\(days)")
-        
-        for _ in 0...5 - 1 {
-            
+        for i in 0...days - 1 {
+
             let tmpVC = myStoryBoard.instantiateViewController(withIdentifier: nameOfFinalScheduleVC) as! ScheduleTableViewController
+            tmpVC.data = cellContents
+            tmpVC.nDaySchedule = i + 1
             
             tmpVCArray += [tmpVC]
             print("tmpVCArray=\(tmpVCArray.count)")
@@ -179,15 +177,12 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     private func countTotalTripDays (spot:[tripSpotData]) -> Int {
-        print("countTotalTripDays唷")
-        let days = (spot.max { (obj1, obj2) -> Bool in
-            obj1.nDays > obj2.nDays
-        })?.nDays
         
-        guard let tripDays = days else {
-            return 0
-        }
-        return tripDays
+        let days = (spot.max{$0.0.nDays < $0.1.nDays})?.nDays
+        
+        guard let travelDays = days else { return 0 }
+        
+        return travelDays
     }
     
     func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
@@ -218,13 +213,9 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
     @IBAction func finishAndNextPage(_ sender: UIBarButtonItem) {
         
-        updateToSingleTon(cellContent: cellContentsArray)
-        
-        //在於同圈迴圈中將ＶＣ作出來
         let sb = UIStoryboard(name: nameOfFinalScheduleStoryBoard, bundle: nil)
-        //        print("要創ＶＣ囉")
-        let vcArray = produceVCArray(myStoryBoard: sb)
-//        self.navigationController.
+        let trip = transferCellsContentToTripSpotDataType(cellContent: cellContentsArray)
+        let vcArray = produceVCArray(myStoryBoard: sb, cellContents: trip)
         //設定scrollView
         let scrollVCProductor = ProduceScrollViewWithVCArray(vcArrayInput: vcArray)
         scrollVCProductor.pageControlDotExist = true
@@ -233,13 +224,11 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         //輸出scrollView
         let scrollView = scrollVCProductor.pagingScrollingVC
         scrollView?.automaticallyAdjustsScrollViewInsets = false
-//        present(scrollView!, animated: true, completion: nil)
+        self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.pushViewController(scrollView!, animated: true)
     }
     
-    func updateToSingleTon( cellContent: [CellContent] ) {
-        
-        print("updateToSingleTon唷")
+    func transferCellsContentToTripSpotDataType(cellContent: [CellContent]) -> tripData {
         
         var spots = [tripSpotData]()
         
@@ -279,12 +268,9 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
                 
             }
         }
-        
-        //        print("跑完囉")
         let trip = tripData()
         trip.spots = spots
-        shareData.pocketTrips = [trip]
-        //        print("shareData上傳囉")
+        return trip
     }
     
     private func generateDetailRouteString (route:LegsData) -> String {
@@ -493,9 +479,8 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
 }
 
-extension MenuTableViewController {
-//    override func view() {
-//        super.viewDidLoad()
-//        
-//    }
+extension ScheduleTableViewController {
+    override func viewDidAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
 }

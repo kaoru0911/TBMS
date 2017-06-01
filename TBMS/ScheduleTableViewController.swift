@@ -20,7 +20,7 @@ class ScheduleTableViewController: UITableViewController {
     var nDaySchedule: Int!
     
     //====test===
-    var sharedData = DataManager.shareDataManager
+//    var sharedData = DataManager.shareDataManager
     //=======
     
     override func viewDidLoad() {
@@ -28,9 +28,9 @@ class ScheduleTableViewController: UITableViewController {
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         
-        data = (sharedData.pocketTrips?[0])!
+//        data = (sharedData.pocketTrips?[0])!
         
-        nDaySchedule = 2
+//        nDaySchedule = 2
         
         spotData = filter.filtBySpotNDays(nDays: nDaySchedule, trip: data)
         
