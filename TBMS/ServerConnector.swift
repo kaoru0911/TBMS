@@ -65,6 +65,7 @@ class ServerConnector: NSObject {
     var sharedData = DataManager.shareDataManager
     var uploadIndex: Int = 0
     var downloadImgIndex: Int = 0
+    var threadKey = NSLock.init()
     
     
     /**
@@ -339,21 +340,33 @@ class ServerConnector: NSObject {
      */
     private func downloadCoverImg(filePath: String, type: String, imgName: Array<String>) {
         
-        guard self.downloadImgIndex <= imgName.count - 1 else {
-            return
-        }
         
-        guard let fullImgName = (filePath + imgName[downloadImgIndex]).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else{
-            return
-        }
+        // thread locked
+        threadKey.lock()
         
-        Alamofire.request(fullImgName).responseData { response in
-            debugPrint(response)
-            print("Is download cover image post success: \(response.result.isSuccess)")
-            print("Response: \(String(describing: response.result.value))")
+//        guard self.downloadImgIndex <= imgName.count - 1 else {
+//            
+//            // thread unlocked
+//            threadKey.unlock()
+//            return
+//        }
+        
+        for i in 0...imgName.count-1 {
             
-            switch(response.result) {
+            guard let fullImgName = (filePath + imgName[i]).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else{
                 
+                // thread unlocked
+                threadKey.unlock()
+                return
+            }
+            
+            Alamofire.request(fullImgName).responseData { response in
+                debugPrint(response)
+                print("Is download cover image post success: \(response.result.isSuccess)")
+                print("Response: \(String(describing: response.result.value))")
+                
+                switch(response.result) {
+                    
                 case .success(_):
                     
                     guard let getImg = response.data else {
@@ -362,22 +375,23 @@ class ServerConnector: NSObject {
                     
                     if type == self.POCKETTRIP {
                         
-                        self.sharedData.pocketTrips?[self.downloadImgIndex].coverImg = UIImage(data:getImg)
+                        self.sharedData.pocketTrips?[i].coverImg = UIImage(data:getImg)
                         
                     } else if type == self.SHAREDTRIP {
                         
-                        self.sharedData.sharedTrips?[self.downloadImgIndex].coverImg = UIImage(data:getImg)
+                        self.sharedData.sharedTrips?[i].coverImg = UIImage(data:getImg)
                         
                     }
                     
                 case .failure(_):
                     print("Server feedback fail")
+                }
+//                self.downloadCoverImg(filePath: filePath, type: type, imgName: imgName)
             }
-            
-            self.downloadImgIndex += 1
-            
-            self.downloadCoverImg(filePath: filePath, type: type, imgName: imgName)
         }
+        
+        // thread unlocked
+        self.threadKey.unlock()
     }
     
     /**
@@ -591,34 +605,44 @@ class ServerConnector: NSObject {
      */
     private func uploadTripSpotToServer(tripData:tripData, request:String) {
         
-        uploadIndex -= 1
+        // thread locked
+        threadKey.lock()
         
-        guard uploadIndex >= 0 else {
+//        uploadIndex -= 1
+//        
+//        guard uploadIndex >= 0 else {
+//            
+//            // thread unlocked
+//            threadKey.unlock()
+//            
+//            uploadIndex = 0
+//            return
+//        }
+        
+        for i in 0...tripData.spots.count {
             
-            uploadIndex = 0
-            return
+            // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
+            let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,
+                                         TRIPNAME_KEY: tripData.spots[i].belongTripName as Any,
+                                         SPOTNAME_KEY: tripData.spots[i].spotName! as Any,
+                                         NDAY_KEY: tripData.spots[i].nDays as Any,
+                                         NTH_KEY: tripData.spots[i].nTh as Any,
+                                         TRAFFIC_KEY: tripData.spots[i].trafficToNextSpot as Any,
+                                         REQUEST_KEY: request]
+            
+            Alamofire.request(baseURLStr + dataUploadURLstr, method: .post, parameters: parameters).responseJSON { response in
+                
+                debugPrint(response)
+                print("Upload request: \(request)")
+                print("Is upload trip spot post success: \(response.result.isSuccess)")
+                print("Total count in spot array: \(String(tripData.spots.count))")
+                print("Upload index in spot array: \(String(self.uploadIndex))")
+                print("Response: \(String(describing: response.result.value))")
+            }
         }
         
-        // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
-        let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,
-                                     TRIPNAME_KEY: tripData.spots[uploadIndex].belongTripName as Any,
-                                     SPOTNAME_KEY: tripData.spots[uploadIndex].spotName! as Any,
-                                     NDAY_KEY: tripData.spots[uploadIndex].nDays as Any,
-                                     NTH_KEY: tripData.spots[uploadIndex].nTh as Any,
-                                     TRAFFIC_KEY: tripData.spots[uploadIndex].trafficToNextSpot as Any,
-                                     REQUEST_KEY: request]
-        
-        Alamofire.request(baseURLStr + dataUploadURLstr, method: .post, parameters: parameters).responseJSON { response in
-            
-            debugPrint(response)
-            print("Upload request: \(request)")
-            print("Is upload trip spot post success: \(response.result.isSuccess)")
-            print("Total count in spot array: \(String(tripData.spots.count))")
-            print("Upload index in spot array: \(String(self.uploadIndex))")
-            print("Response: \(String(describing: response.result.value))")
-            
-            self.uploadTripSpotToServer(tripData: tripData, request: request)
-        }
+        // thread unlocked
+        self.threadKey.unlock()
     }
     
     /**

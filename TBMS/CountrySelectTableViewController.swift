@@ -10,12 +10,13 @@ import UIKit
 
 class CountrySelectTableViewController: UITableViewController, ContinentalViewDelegate {
     
-    var selectedProcess : String!
+    var selectedProcess: String!
+    var selectedCountry: String!
     var continentalGroups: NSArray!
     var sectionInfoArray: NSMutableArray!
     var openSectionIndex = NSNotFound
     
-    var choosen = ""
+//    var choosen: String!
     var segueID : String!
     var nextViewController: String!
     
@@ -29,6 +30,8 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         self.tableView.sectionHeaderHeight = 60
+        
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         
         continentalGroups = loadCountryInfo()
         
@@ -134,6 +137,8 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
         let continentalGroup = (sectionInfoArray[indexPath.section] as! SectionInfo).continentalGroup
         
         cell.countryName.text = continentalGroup.countries[indexPath.row] as? String
+        
+        cell.countryImg.image = UIImage(named: (continentalGroup.countries[indexPath.row] as? String)! + ".png")
         
         return cell
     }
@@ -254,6 +259,11 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
             self.segueID = "goAddPointVC"
         }
         print(self.segueID)
+        
+        let selectCell = tableView.cellForRow(at: indexPath) as! CountrySelectTableViewCell
+        
+        selectedCountry = selectCell.countryName.text
+        
         performSegue(withIdentifier: segueID, sender: nil)
         
         //畫面精進，讓點選後的灰色不會卡在選擇列上，灰色會閃一下就消失
@@ -268,13 +278,17 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
         
         if(segue.identifier == "goAddPointVC") {
             let nextPage = segue.destination as! AddViewPointViewController
-            nextPage.selectedCountry = choosen
+            nextPage.selectedCountry = selectedProcess
         } else if (segue.identifier == "goPocketSpotVC") {
             let nextPage = segue.destination as! PocketSpotTVC
-            nextPage.selectedCountry = choosen
+            nextPage.selectedCountry = selectedProcess
         } else if (segue.identifier == "goTripListViewController") {
+            
             let nextPage = segue.destination as! TripListViewController
-            nextPage.selectedCountry = choosen
+            
+            nextPage.selectedProcess = selectedProcess
+            
+            nextPage.selectedCountry = selectedCountry
         }
     }
 }
