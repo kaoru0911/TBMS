@@ -8,16 +8,13 @@
 
 import UIKit
 import FBSDKLoginKit
-import GoogleSignIn
 
-
-class RegisterViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDelegate {
+class RegisterViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     @IBOutlet weak var FBLoginBtn: FBSDKLoginButton!
 
-    @IBOutlet weak var gmailLoginBtn: GIDSignInButton!
     @IBOutlet weak var emailRegisterBtn: UIButton!
-    
+    @IBOutlet weak var gmailLoginBtn: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,11 +25,7 @@ class RegisterViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSig
         if (FBSDKAccessToken.current()) != nil{
             //            fetchProfile()
         }
-        
-        GIDSignIn.sharedInstance().uiDelegate = self
-        //GIDSignIn.sharedInstance().delegate = self
-        
-     
+        // Do any additional setup after loading the view.
         gmailLoginBtn.layer.cornerRadius = 5.0
         emailRegisterBtn.layer.cornerRadius = 5.0
     }
@@ -90,13 +83,6 @@ class RegisterViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSig
             }
         })
     }
-    
-    
-    @IBAction func gmailLogoutBtn(_ sender: Any) {
-        GIDSignIn.sharedInstance().signOut()
-    }
-
-
     /*
     // MARK: - Navigation
 

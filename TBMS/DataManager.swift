@@ -41,20 +41,20 @@ class DataManager: NSObject {
         spot_2.spotName = "平等院"
         spot_2.trafficToNextSpot = "十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換五號公車乘坐到金閣寺站，下車向東行三十公尺"
         spot_2.belongTripName = "日本五日遊"
-        spot_2.nDays = 2
+        spot_2.nDays = 1
         spot_2.nTh = 2
         
         spot_3.spotName = "金閣寺"
         spot_3.trafficToNextSpot = "十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換地鐵三號線至天龍人站，向東行五十公尺後右轉，直行二十公尺"
         spot_3.belongTripName = "日本五日遊"
-        spot_3.nDays = 3
-        spot_3.nTh = 3
+        spot_3.nDays = 2
+        spot_3.nTh = 1
         
         spot_4.spotName = "天龍寺"
         spot_4.trafficToNextSpot = ""
         spot_4.belongTripName = "日本五日遊"
-        spot_4.nDays = 4
-        spot_4.nTh = 4
+        spot_4.nDays = 2
+        spot_4.nTh = 2
         //=====================
         
         
@@ -79,8 +79,8 @@ class DataManager: NSObject {
         memberData?.password = "ddd"
         memberData?.email = "ppp.gmail.com"
         
-//        pocketTrips?.append(trip)
-//        sharedTrips?.append(trip)
+        pocketTrips?.append(trip)
+        sharedTrips?.append(trip)
         // ======================
         
     }
