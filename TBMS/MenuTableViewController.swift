@@ -19,8 +19,6 @@ class MenuTableViewController: UITableViewController {
     var selectedPage : Int!
     var sharedData:DataManager = DataManager.shareDataManager
     var serverCommunicate:ServerConnector = ServerConnector()
-    var filter:TripFilter = TripFilter()
-    var filtArray = [tripData]()
 
     
     override func viewDidLoad() {
@@ -67,10 +65,10 @@ class MenuTableViewController: UITableViewController {
 //        serverCommunicate.deletePocketTripFromServer(tripName: "香港三日遊")
         //        serverCommunicate.createAccount()
         //        serverCommunicate.userLogin()
-                serverCommunicate.getPocketSpotFromServer()
-                serverCommunicate.getPocketTripFromServer()
+//                serverCommunicate.getPocketSpotFromServer()
+        //        serverCommunicate.getPocketTripFromServer()
         //        serverCommunicate.userInfoUpdate()
-                serverCommunicate.getSharedTripFromServer()
+//                serverCommunicate.getSharedTripFromServer()
         //        serverCommunicate.uploadTripCoverImgToServer(tripData: (sharedData.pocketTrips?[0])!, Req: "uploadPocketTripCover")
         //        serverCommunicate.uploadTripCoverImgToServer(tripData: (sharedData.pocketTrips?[0])!, Req: "uploadSharedTripCover")
 
@@ -115,6 +113,7 @@ class MenuTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+//        choosen = cellData
         choosen = cellData[indexPath.row].0
         performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
         

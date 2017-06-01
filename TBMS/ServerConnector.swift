@@ -14,6 +14,11 @@ class ServerConnector: NSObject {
     
     // URL
     let baseURLStr: String = "http://localhost/TravelByMyself/"
+
+    
+    //let memberURLstr: String = "member.php"
+    //let memberURLstr: String = "login.php"
+
     let memberURLstr: String = "member.php"
     let dataDownloadURLstr: String = "dataDownload.php"
     let dataUploadURLstr: String = "dataUpload.php"
@@ -65,7 +70,6 @@ class ServerConnector: NSObject {
     var sharedData = DataManager.shareDataManager
     var uploadIndex: Int = 0
     var downloadImgIndex: Int = 0
-    var threadKey = NSLock.init()
     
     
     /**
@@ -95,6 +99,11 @@ class ServerConnector: NSObject {
             print("Response: \(String(describing: response.result.value))")
             
             
+
+//            // 通知中心
+//            let notificationName = Notification.Name("loginResponse")
+//            NotificationCenter.default.post(name: notificationName, object: nil, userInfo: ["PASS":response.result.isSuccess])
+
             switch(response.result) {
                 
                 case .success(let json):
@@ -114,6 +123,7 @@ class ServerConnector: NSObject {
                 case .failure(_):
                     print("Server feedback fail")
             }
+
         }
     }
     
@@ -340,33 +350,21 @@ class ServerConnector: NSObject {
      */
     private func downloadCoverImg(filePath: String, type: String, imgName: Array<String>) {
         
+        guard self.downloadImgIndex <= imgName.count - 1 else {
+            return
+        }
         
-        // thread locked
-        threadKey.lock()
+        guard let fullImgName = (filePath + imgName[downloadImgIndex]).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else{
+            return
+        }
         
-//        guard self.downloadImgIndex <= imgName.count - 1 else {
-//            
-//            // thread unlocked
-//            threadKey.unlock()
-//            return
-//        }
-        
-        for i in 0...imgName.count-1 {
+        Alamofire.request(fullImgName).responseData { response in
+            debugPrint(response)
+            print("Is download cover image post success: \(response.result.isSuccess)")
+            print("Response: \(String(describing: response.result.value))")
             
-            guard let fullImgName = (filePath + imgName[i]).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else{
+            switch(response.result) {
                 
-                // thread unlocked
-                threadKey.unlock()
-                return
-            }
-            
-            Alamofire.request(fullImgName).responseData { response in
-                debugPrint(response)
-                print("Is download cover image post success: \(response.result.isSuccess)")
-                print("Response: \(String(describing: response.result.value))")
-                
-                switch(response.result) {
-                    
                 case .success(_):
                     
                     guard let getImg = response.data else {
@@ -375,23 +373,22 @@ class ServerConnector: NSObject {
                     
                     if type == self.POCKETTRIP {
                         
-                        self.sharedData.pocketTrips?[i].coverImg = UIImage(data:getImg)
+                        self.sharedData.pocketTrips?[self.downloadImgIndex].coverImg = UIImage(data:getImg)
                         
                     } else if type == self.SHAREDTRIP {
                         
-                        self.sharedData.sharedTrips?[i].coverImg = UIImage(data:getImg)
+                        self.sharedData.sharedTrips?[self.downloadImgIndex].coverImg = UIImage(data:getImg)
                         
                     }
                     
                 case .failure(_):
                     print("Server feedback fail")
-                }
-//                self.downloadCoverImg(filePath: filePath, type: type, imgName: imgName)
             }
+            
+            self.downloadImgIndex += 1
+            
+            self.downloadCoverImg(filePath: filePath, type: type, imgName: imgName)
         }
-        
-        // thread unlocked
-        self.threadKey.unlock()
     }
     
     /**
@@ -605,44 +602,34 @@ class ServerConnector: NSObject {
      */
     private func uploadTripSpotToServer(tripData:tripData, request:String) {
         
-        // thread locked
-        threadKey.lock()
+        uploadIndex -= 1
         
-//        uploadIndex -= 1
-//        
-//        guard uploadIndex >= 0 else {
-//            
-//            // thread unlocked
-//            threadKey.unlock()
-//            
-//            uploadIndex = 0
-//            return
-//        }
-        
-        for i in 0...tripData.spots.count {
+        guard uploadIndex >= 0 else {
             
-            // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
-            let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,
-                                         TRIPNAME_KEY: tripData.spots[i].belongTripName as Any,
-                                         SPOTNAME_KEY: tripData.spots[i].spotName! as Any,
-                                         NDAY_KEY: tripData.spots[i].nDays as Any,
-                                         NTH_KEY: tripData.spots[i].nTh as Any,
-                                         TRAFFIC_KEY: tripData.spots[i].trafficToNextSpot as Any,
-                                         REQUEST_KEY: request]
-            
-            Alamofire.request(baseURLStr + dataUploadURLstr, method: .post, parameters: parameters).responseJSON { response in
-                
-                debugPrint(response)
-                print("Upload request: \(request)")
-                print("Is upload trip spot post success: \(response.result.isSuccess)")
-                print("Total count in spot array: \(String(tripData.spots.count))")
-                print("Upload index in spot array: \(String(self.uploadIndex))")
-                print("Response: \(String(describing: response.result.value))")
-            }
+            uploadIndex = 0
+            return
         }
         
-        // thread unlocked
-        self.threadKey.unlock()
+        // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
+        let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,
+                                     TRIPNAME_KEY: tripData.spots[uploadIndex].belongTripName as Any,
+                                     SPOTNAME_KEY: tripData.spots[uploadIndex].spotName! as Any,
+                                     NDAY_KEY: tripData.spots[uploadIndex].nDays as Any,
+                                     NTH_KEY: tripData.spots[uploadIndex].nTh as Any,
+                                     TRAFFIC_KEY: tripData.spots[uploadIndex].trafficToNextSpot as Any,
+                                     REQUEST_KEY: request]
+        
+        Alamofire.request(baseURLStr + dataUploadURLstr, method: .post, parameters: parameters).responseJSON { response in
+            
+            debugPrint(response)
+            print("Upload request: \(request)")
+            print("Is upload trip spot post success: \(response.result.isSuccess)")
+            print("Total count in spot array: \(String(tripData.spots.count))")
+            print("Upload index in spot array: \(String(self.uploadIndex))")
+            print("Response: \(String(describing: response.result.value))")
+            
+            self.uploadTripSpotToServer(tripData: tripData, request: request)
+        }
     }
     
     /**
