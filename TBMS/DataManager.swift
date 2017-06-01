@@ -79,8 +79,8 @@ class DataManager: NSObject {
         memberData?.password = "ddd"
         memberData?.email = "ppp.gmail.com"
         
-//        pocketTrips?.append(trip)
-//        sharedTrips?.append(trip)
+        pocketTrips?.append(trip)
+        sharedTrips?.append(trip)
         // ======================
         
     }
@@ -96,6 +96,7 @@ class spotData: NSObject {
 
 class tripSpotData: spotData {
     
+    var trafficTitle:String = ""
     var trafficImage:[UIImage]?
     var trafficToNextSpot:String = ""
     var belongTripName:String = ""

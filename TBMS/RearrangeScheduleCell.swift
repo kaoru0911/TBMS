@@ -46,6 +46,7 @@ class DateCellContent : CellContent {
     var date : Int!
     var dateStringForLabel : String!
     var colorTypeForScheduleOutoutPage : ColorSetting!
+    
     required init(dateValue:Int) {
         super.init()
         self.date = dateValue
@@ -62,14 +63,53 @@ class ScheduleAndTrafficCellContent : CellContent {
     var attraction : Attraction!
     var trafficInformation : LegsData!
     
+    private let strTransitTravelMode = "TRANSIT"
+    private let strWalkingTravelMode = "WALKING"
+    private let strDrivingTravelMode = "DRIVING"
+    
+    private let strDisplayTransitMode = TravelMod.transit.rawValue
+    private let strDisplayDrivingMode = TravelMod.driving.rawValue
+    private let strDisplayWalkingMode = TravelMod.walking.rawValue
+    
     required init(attraction:Attraction, trafficInformation:LegsData!) {
         super.init()
         self.viewPointName = attraction.attrctionName
+        self.attraction = attraction
         self.type = CustomerCellType.scheduleAndTrafficCellType
         
-        if trafficInformation != nil {
-            self.trafficInformation = trafficInformation
+        self.setTrafficValue(legsData: trafficInformation)
+    }
+    
+    func setTrafficValue(legsData:LegsData!) {
+        
+        guard let trafficInformation = legsData else {
+            print("沒有資料唷")
+            self.trafficInformation = nil
+            self.trafficTime = "routeCalculate error"
+            return
         }
+        self.trafficInformation = trafficInformation
+        self.trafficTime = self.trafficInformation.duration
+        
+            self.travelMode = strDisplayWalkingMode
+            var i = 0
+            
+            for step in self.trafficInformation.steps {
+                guard step != nil else{
+                    print("這是走路模式, 沒有step唷")
+                    return
+                }
+                
+                if step.travelMode == strTransitTravelMode {
+                    self.travelMode = strDisplayTransitMode
+                    
+                    break
+                    
+                } else if step.travelMode == strDrivingTravelMode {
+                    self.travelMode = strDisplayDrivingMode
+                    break
+                }
+            }
     }
 }
 

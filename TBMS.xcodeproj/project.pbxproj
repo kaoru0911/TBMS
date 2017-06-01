@@ -141,9 +141,9 @@
 			isa = PBXGroup;
 			children = (
 				22FCB46A1ED2CB6200F6F54E /* BestPathCalculator.swift */,
+				22F43F4C1ECD662900791D55 /* CallGoogleDirection.swift */,
 				22F43F561ECD6AE600791D55 /* RequestURLGenerator.swift */,
 				22AF44DF1ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift */,
-				22F43F4C1ECD662900791D55 /* CallGoogleDirection.swift */,
 				22F43F451ECD662000791D55 /* CallGooglePlaceAPI.swift */,
 				22F43F3F1ECD661200791D55 /* ProduceScrollViewWithVCArray.swift */,
 				22F43F401ECD661200791D55 /* ViewPointAndPathStoraged.swift */,
@@ -158,7 +158,6 @@
 			children = (
 				A74764641ED83F050059D586 /* Schedule */,
 				A76BA9FE1ECC697000443947 /* SetStartPointViewController.swift */,
-				22CF17041ECDD2EA00B3F20E /* FinalScheduleVC.swift */,
 				A74BDDDF1ED5B7A700987446 /* Login&Register */,
 				A74BDDDE1ED5B78B00987446 /* Menu */,
 				A74BDDDD1ED5B76E00987446 /* CountrySelect */,
@@ -254,6 +253,7 @@
 			isa = PBXGroup;
 			children = (
 				A76BA9FA1ECC697000443947 /* MenuCell.xib */,
+				22CF17041ECDD2EA00B3F20E /* FinalScheduleVC.swift */,
 				A76BA9FB1ECC697000443947 /* MenuTableViewCell.swift */,
 				A76BA9FC1ECC697000443947 /* MenuTableViewController.swift */,
 			);
