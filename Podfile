@@ -17,5 +17,7 @@ target 'TBMS' do
   pod 'FacebookCore'
   pod 'FacebookLogin'
   pod 'FacebookShare'
+  pod 'Google/SignIn'
+ 
   
 end
