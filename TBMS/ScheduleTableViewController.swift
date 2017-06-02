@@ -11,24 +11,37 @@ import UIKit
 class ScheduleTableViewController: UITableViewController {
     
     let defaultCellHeight:CGFloat = 60
-    
     var selectCellRow:Array<Bool> = []
     var cellHeightArray:Array<CGFloat> = []
     
-    var data = DataManager.shareDataManager
-   
+    var data = tripData()
+    var spotData = [tripSpotData]()
+    var filter = TripFilter()
+    var nDaySchedule: Int!
+    
+    //====test===
+//    var sharedData = DataManager.shareDataManager
+    //=======
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         
+//        data = (sharedData.pocketTrips?[0])!
+        
+//        nDaySchedule = 2
+        
+        spotData = filter.filtBySpotNDays(nDays: nDaySchedule, trip: data)
+        
+        checkSpotPosition(spotArray: &spotData)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 80
         
-        for _ in 0..<(data.pocketTrips?[0].spots.count)! {
+        for _ in 0..<data.spots.count {
             
             selectCellRow.append(false)
         }
@@ -47,7 +60,7 @@ class ScheduleTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return (data.pocketTrips?[0].spots.count)!//spotArray.count
+        return spotData.count//spotArray.count
     }
 
     
@@ -56,7 +69,7 @@ class ScheduleTableViewController: UITableViewController {
         
         cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
 
-        cell.spotItemLabel.text = data.pocketTrips?[0].spots[indexPath.row].spotName  //spotArray[indexPath.row]
+        cell.spotItemLabel.text = spotData[indexPath.row].spotName  //spotArray[indexPath.row]
 
         cell.spotItemLabel.backgroundColor = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
         
@@ -64,7 +77,7 @@ class ScheduleTableViewController: UITableViewController {
         cell.spotItemLabel.layer.masksToBounds = true
 
         // auto line break
-        cell.describeLabel.text = data.pocketTrips?[0].spots[indexPath.row].trafficToNextSpot
+        cell.describeLabel.text = spotData[indexPath.row].trafficToNextSpot
 
         // 自動調整高度
         cell.describeLabel.numberOfLines = 0
@@ -77,7 +90,7 @@ class ScheduleTableViewController: UITableViewController {
         if cell.describeLabel.frame.height > labelHeight{
             
             if selectCellRow[indexPath.row] {
-                cell.describeLabel.text = data.pocketTrips?[0].spots[indexPath.row].trafficToNextSpot
+                cell.describeLabel.text = spotData[indexPath.row].trafficToNextSpot
             } else{
                 cell.describeLabel.text = "檢視詳細交通資訊"
             }
@@ -120,6 +133,27 @@ class ScheduleTableViewController: UITableViewController {
         selectCellRow[indexPath.row] = !selectCellRow[indexPath.row]
         
         tableView.reloadData()
+    }
+    
+    func checkSpotPosition( spotArray:inout Array<tripSpotData>) {
+        
+        var tmp = tripSpotData()
+        
+        // bubble sortting
+        for i in 0...spotArray.count - 1 {
+            
+            for j in i...spotArray.count - 1 {
+                
+                if spotArray[i].nTh > spotArray[j].nTh {
+                    
+                    tmp = spotArray[j]
+                    
+                    spotArray[j] = spotArray[i]
+                    
+                    spotArray[i] = tmp
+                }
+            }
+        }
     }
 
 }

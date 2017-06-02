@@ -11,7 +11,7 @@ import UIKit
 class FinalScheduleVC: UIViewController {
 
     
-    var contantDataStorage = [String:[AnyObject]]()
+    var contantDataStorage = [String:AnyObject]()
     override func viewDidLoad() {
         super.viewDidLoad()
 

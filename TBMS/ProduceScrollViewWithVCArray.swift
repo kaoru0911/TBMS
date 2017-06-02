@@ -38,12 +38,14 @@ class ProduceScrollViewWithVCArray: NSObject {
             print("vcArrayInput == nil")
             return
         }
-        for i in 0...vcArrayInput.count-1{
-            guard vcArrayInput[i] != nil else {
-                print("vc\(i) doesn't exist!")
-                return
-            }
-        }
+        
+        print("vcArrayInput=\(vcArrayInput.count)")
+//        for i in 0...vcArrayInput.count-1{
+//            guard vcArrayInput[i] != nil else {
+//                print("vc\(i) doesn't exist!")
+//                return
+//            }
+//        }
         pagingScrollingVC = ScrollVC()
         pagingScrollingVC.vcInput = vcArrayInput
     }
