@@ -42,6 +42,8 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
     
     override func viewWillAppear(_ animated: Bool) {
         
+        self.tabBarController?.tabBar.isHidden = true
+        
         // 檢查sectionInfoArray是否已被建立，或數量是否正確
         if sectionInfoArray == nil || sectionInfoArray.count != self.numberOfSections(in: self.tableView){
             

@@ -142,3 +142,19 @@ struct Attraction {
         if let address = place.formattedAddress { self.address = address }
     }
 }
+
+extension CountrySelectTableViewController {
+    
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(true)
+//        self.tabBarController?.tabBar.isHidden = true
+//    }
+}
+
+extension MenuTableViewController {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.tabBarController?.tabBar.isHidden = false
+    }
+}

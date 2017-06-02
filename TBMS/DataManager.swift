@@ -96,6 +96,7 @@ class spotData: NSObject {
 
 class tripSpotData: spotData {
     
+    var trafficTitle:String = ""
     var trafficImage:[UIImage]?
     var trafficToNextSpot:String = ""
     var belongTripName:String = ""

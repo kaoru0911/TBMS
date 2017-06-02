@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		22A6D96A1ED81AA600934AA6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22A6D9691ED81AA600934AA6 /* CoreLocation.framework */; };
 		22AF44E01ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AF44DF1ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift */; };
+		22BBB6D21EE0551000F3D0FD /* UploadTravelScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BBB6D11EE0551000F3D0FD /* UploadTravelScheduleViewController.swift */; };
 		22CF17051ECDD2EA00B3F20E /* FinalScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CF17041ECDD2EA00B3F20E /* FinalScheduleVC.swift */; };
 		22F43F421ECD661200791D55 /* ProduceScrollViewWithVCArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F43F3F1ECD661200791D55 /* ProduceScrollViewWithVCArray.swift */; };
 		22F43F431ECD661200791D55 /* ViewPointAndPathStoraged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F43F401ECD661200791D55 /* ViewPointAndPathStoraged.swift */; };
@@ -91,6 +92,7 @@
 /* Begin PBXFileReference section */
 		22A6D9691ED81AA600934AA6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		22AF44DF1ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponceAndJsonAnalyst.swift; sourceTree = "<group>"; };
+		22BBB6D11EE0551000F3D0FD /* UploadTravelScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadTravelScheduleViewController.swift; sourceTree = "<group>"; };
 		22CF17041ECDD2EA00B3F20E /* FinalScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinalScheduleVC.swift; sourceTree = "<group>"; };
 		22F43F3F1ECD661200791D55 /* ProduceScrollViewWithVCArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProduceScrollViewWithVCArray.swift; sourceTree = "<group>"; };
 		22F43F401ECD661200791D55 /* ViewPointAndPathStoraged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPointAndPathStoraged.swift; sourceTree = "<group>"; };
@@ -193,9 +195,9 @@
 			isa = PBXGroup;
 			children = (
 				22FCB46A1ED2CB6200F6F54E /* BestPathCalculator.swift */,
+				22F43F4C1ECD662900791D55 /* CallGoogleDirection.swift */,
 				22F43F561ECD6AE600791D55 /* RequestURLGenerator.swift */,
 				22AF44DF1ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift */,
-				22F43F4C1ECD662900791D55 /* CallGoogleDirection.swift */,
 				22F43F451ECD662000791D55 /* CallGooglePlaceAPI.swift */,
 				22F43F3F1ECD661200791D55 /* ProduceScrollViewWithVCArray.swift */,
 				22F43F401ECD661200791D55 /* ViewPointAndPathStoraged.swift */,
@@ -208,9 +210,9 @@
 		22F43F4F1ECD664D00791D55 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				22BBB6D11EE0551000F3D0FD /* UploadTravelScheduleViewController.swift */,
 				A74764641ED83F050059D586 /* Schedule */,
 				A76BA9FE1ECC697000443947 /* SetStartPointViewController.swift */,
-				22CF17041ECDD2EA00B3F20E /* FinalScheduleVC.swift */,
 				A74BDDDF1ED5B7A700987446 /* Login&Register */,
 				A74BDDDE1ED5B78B00987446 /* Menu */,
 				A74BDDDD1ED5B76E00987446 /* CountrySelect */,
@@ -308,6 +310,7 @@
 			isa = PBXGroup;
 			children = (
 				A76BA9FA1ECC697000443947 /* MenuCell.xib */,
+				22CF17041ECDD2EA00B3F20E /* FinalScheduleVC.swift */,
 				A76BA9FB1ECC697000443947 /* MenuTableViewCell.swift */,
 				A76BA9FC1ECC697000443947 /* MenuTableViewController.swift */,
 			);
@@ -317,7 +320,6 @@
 		A74BDDDF1ED5B7A700987446 /* Login&Register */ = {
 			isa = PBXGroup;
 			children = (
-				A7929A471ED586FB0024B4D7 /* EmailRegisterViewController.swift */,
 				A7929A431ED573F00024B4D7 /* RegisterViewController.swift */,
 				A7929A451ED574520024B4D7 /* LoginViewController.swift */,
 				A747645E1ED8111F0059D586 /* MemberViewController.swift */,
@@ -356,6 +358,7 @@
 				A76BA9FD1ECC697000443947 /* SectionInfo.swift */,
 				A7929A3F1ED56A2C0024B4D7 /* ServerConnector.swift */,
 				A742B1491EDEC34300C7EA36 /* TBMS-Bridging-Header.h */,
+				A7929A471ED586FB0024B4D7 /* EmailRegisterViewController.swift */,
 				A76BA9E01ECC67ED00443947 /* Main.storyboard */,
 				22F43F4F1ECD664D00791D55 /* Controller */,
 				22F43F3E1ECD660000791D55 /* Model */,
@@ -624,6 +627,7 @@
 				22F43F421ECD661200791D55 /* ProduceScrollViewWithVCArray.swift in Sources */,
 				A76BAA061ECC697000443947 /* ContinentalGroup.swift in Sources */,
 				A76BAA131ECC697000443947 /* ViewPointDetailViewController.swift in Sources */,
+				22BBB6D21EE0551000F3D0FD /* UploadTravelScheduleViewController.swift in Sources */,
 				A76BAA101ECC697000443947 /* MenuTableViewController.swift in Sources */,
 				A76BAA021ECC697000443947 /* AddViewPointViewController.swift in Sources */,
 				A74BDDDA1ED5B6A100987446 /* TripListViewController.swift in Sources */,

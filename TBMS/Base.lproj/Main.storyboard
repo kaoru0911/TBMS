@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Apw-6b-Oxl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Apw-6b-Oxl">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -565,10 +565,28 @@
             </objects>
             <point key="canvasLocation" x="4240.8000000000002" y="-889.20539730134942"/>
         </scene>
+        <!--Upload Trip Schedule View Controller-->
+        <scene sceneID="AjR-Kp-HxD">
+            <objects>
+                <viewController storyboardIdentifier="UploadTripScheduleVC" id="6GZ-KH-w72" customClass="UploadTripScheduleViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HXh-kb-jtU"/>
+                        <viewControllerLayoutGuide type="bottom" id="XVt-uc-YYI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kIC-Hr-THu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KIJ-1Q-wol" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5265" y="-890"/>
+        </scene>
         <!--旅遊選單-->
         <scene sceneID="yHp-h9-rRp">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
@@ -587,7 +605,7 @@
         <!--Root View Controller-->
         <scene sceneID="0Tj-Bo-GVy">
             <objects>
-                <tableViewController id="QhJ-bN-7Yv" customClass="ScheduleTableViewController" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="dailyRouteVC" id="QhJ-bN-7Yv" customClass="ScheduleTableViewController" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="P9y-wl-7nG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

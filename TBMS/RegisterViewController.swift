@@ -14,7 +14,6 @@ import GoogleSignIn
 class RegisterViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDelegate {
     
     @IBOutlet weak var FBLoginBtn: FBSDKLoginButton!
-
     @IBOutlet weak var gmailLoginBtn: GIDSignInButton!
     @IBOutlet weak var emailRegisterBtn: UIButton!
     
@@ -24,15 +23,15 @@ class RegisterViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSig
         FBLoginBtn.readPermissions = ["public_profile", "email", "user_friends"]
         FBLoginBtn.delegate = self
         
-        //        第一次登入後可取得使用者token，後續即可直接登入
+        //  FB第一次登入後可取得使用者token，後續即可直接登入
         if (FBSDKAccessToken.current()) != nil{
             //            fetchProfile()
         }
         
         GIDSignIn.sharedInstance().uiDelegate = self
-        //GIDSignIn.sharedInstance().delegate = self
         
-     
+    
+        
         gmailLoginBtn.layer.cornerRadius = 5.0
         emailRegisterBtn.layer.cornerRadius = 5.0
     }
@@ -94,6 +93,7 @@ class RegisterViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSig
     
     @IBAction func gmailLogoutBtn(_ sender: Any) {
         GIDSignIn.sharedInstance().signOut()
+        print("gmail log out")
     }
 
 
