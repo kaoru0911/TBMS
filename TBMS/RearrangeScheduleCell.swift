@@ -31,12 +31,6 @@ class DateCell: UICollectionViewCell {
     }
 }
 
-
-
-//class CellContent : NSObject {
-//    var type:CustomerCellType!
-//}
-
 class CellContent : NSObject {
     var type:CustomerCellType!
 }

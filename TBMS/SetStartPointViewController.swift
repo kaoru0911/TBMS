@@ -143,14 +143,6 @@ struct Attraction {
     }
 }
 
-extension CountrySelectTableViewController {
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(true)
-//        self.tabBarController?.tabBar.isHidden = true
-//    }
-}
-
 extension MenuTableViewController {
     
     override func viewWillAppear(_ animated: Bool) {

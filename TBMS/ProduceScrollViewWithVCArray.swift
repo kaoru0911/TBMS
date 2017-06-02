@@ -31,30 +31,19 @@ class ProduceScrollViewWithVCArray: NSObject {
     //初始化時建立好scrollView並匯入VC
     init(vcArrayInput:[UIViewController?]!) {
         super.init()
-        print("initializer with vcArrayInput is running!!")
         
-        //確認Input的VC array與ＶＣ都無異常
         guard vcArrayInput != nil else {
             print("vcArrayInput == nil")
             return
         }
         
-        print("vcArrayInput=\(vcArrayInput.count)")
-//        for i in 0...vcArrayInput.count-1{
-//            guard vcArrayInput[i] != nil else {
-//                print("vc\(i) doesn't exist!")
-//                return
-//            }
-//        }
         pagingScrollingVC = ScrollVC()
         pagingScrollingVC.vcInput = vcArrayInput
     }
     
-    
-    
     //-------建立UIPageControl-------------
     func addPageControl(){
-        print("addPageControl is running")
+        
         pagingScrollingVC.pageControllCheckPoint = true
         //建立UIPageControl的位置＆尺寸
         //1. 實體化UIPageControl並指定UIPageControl感應範圍
@@ -84,11 +73,11 @@ class ProduceScrollViewWithVCArray: NSObject {
         pagingScrollingVC.pageChanged.addTarget(pagingScrollingVC, action: #selector(pagingScrollingVC.pageChanged(_:)), for: .valueChanged)
         //2. 將UIPageControll加到底部畫面上
         pagingScrollingVC.view.addSubview(pagingScrollingVC.pageChanged)
-        
     }
 }
 
 class ScrollVC: UIViewController, UIScrollViewDelegate{
+    
     //宣告scrollView/pageControll/CGSize
     var myScrollView : UIScrollView!
     var pageChanged : UIPageControl!
@@ -150,7 +139,7 @@ class ScrollVC: UIViewController, UIScrollViewDelegate{
     }
     
     func addVCToScrollVC(VCs:[UIViewController]!) {
-        print("func addVCToScrollVC is running now")
+        
         guard VCs != nil else {
             print("Func addVCToScrollVC has no vcArray input")
             return
@@ -165,28 +154,30 @@ class ScrollVC: UIViewController, UIScrollViewDelegate{
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
         guard pageControllCheckPoint else {
             print("pageControll not exist")
             return
         }
-        print("func scrollViewDidEndDecelerating is running!")
+        
         var page = Int(scrollView.contentOffset.x/scrollView.frame.width)
-//        print(page)
+        
         if page <= 0 {
             page = 0
         } else if page > totalVCNumbers{
             page = totalVCNumbers
         }
+        
         guard pageChanged != nil else {
             print("pageChanged is nil")
             return
         }
-//        print(page)
+        
         pageChanged.currentPage = page
     }
     
     func pageChanged(_ sender:UIPageControl){
-        print("func pageChanged is running")
+        
         // 依照目前圓點在的頁數算出位置
         var frame = myScrollView.frame
         frame.origin.x = frame.size.width * CGFloat(sender.currentPage)
