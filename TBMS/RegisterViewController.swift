@@ -67,7 +67,7 @@ class RegisterViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSig
             connection, result, error -> Void in
             
             if error != nil {
-                print("longinerror =\(error)")
+                print("longinerror =\(String(describing: error))")
             } else {
                 
                 if let resultNew = result as? [String:Any]{

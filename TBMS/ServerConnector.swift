@@ -63,10 +63,14 @@ class ServerConnector: NSObject {
     
     
     var sharedData = DataManager.shareDataManager
-    var uploadIndex: Int = 0
+//    var uploadIndex: Int = 0
     var downloadImgIndex: Int = 0
     var threadKey = NSLock.init()
     
+    let loginNotifier = Notification.Name("loginNotifier")
+    let getPocketTripNotifier = Notification.Name("getPocketTripNotifier")
+    let getSharedTripNotifier = Notification.Name("getSharedTripNotifier")
+    let downloadCoverImgNotifier = Notification.Name("downloadCoverImgNotifier")
     
     /**
      user login to server, this function would callsingleton sharedData to use account and password
@@ -112,8 +116,11 @@ class ServerConnector: NSObject {
                     print("Result: \(result), Error code:", error)
                 
                 case .failure(_):
+                    self.sharedData.isLogin = false
                     print("Server feedback fail")
             }
+            
+            NotificationCenter.default.post(name: self.loginNotifier, object: nil)
         }
     }
     
@@ -240,7 +247,7 @@ class ServerConnector: NSObject {
                         return
                     }
                     
-                    self.downloadImgIndex = 0
+//                    self.downloadImgIndex = 0
                     
                     let ImgPathURL = self.baseURLStr + "pocketTripCoverImg/"
                     
@@ -269,10 +276,12 @@ class ServerConnector: NSObject {
                     }
                 
                     self.downloadCoverImg(filePath: ImgPathURL, type: self.POCKETTRIP, imgName: downloadImgName)
-                    
+                
                 case .failure(_):
                     print("Server feedback fail")
             }
+            
+            NotificationCenter.default.post(name: self.getPocketTripNotifier, object: nil)
         }
     }
     
@@ -329,9 +338,12 @@ class ServerConnector: NSObject {
                 
                     self.downloadCoverImg(filePath: ImgPathURL, type: self.SHAREDTRIP, imgName: downloadImgName)
                 
+                
                 case .failure(_):
                     print("Server feedback fail")
             }
+            
+            NotificationCenter.default.post(name: self.getSharedTripNotifier, object: nil)
         }
     }
     
@@ -386,9 +398,10 @@ class ServerConnector: NSObject {
                 case .failure(_):
                     print("Server feedback fail")
                 }
-//                self.downloadCoverImg(filePath: filePath, type: type, imgName: imgName)
             }
         }
+        
+        NotificationCenter.default.post(name: self.downloadCoverImgNotifier, object: nil)
         
         // thread unlocked
         self.threadKey.unlock()
@@ -509,7 +522,7 @@ class ServerConnector: NSObject {
                         
                         self.uploadTripCoverImgToServer(tripData: tripData, Req: self.UPLOAD_SHAREDTRIPCOVER_REQ)
                         
-                        self.uploadIndex = tripData.spots.count
+//                        self.uploadIndex = tripData.spots.count
                         
                         self.uploadTripSpotToServer(tripData: tripData, request: self.UPLOAD_SHAREDTRIPSPOT_REQ)
                     }                    
@@ -556,7 +569,7 @@ class ServerConnector: NSObject {
                         
                         self.uploadTripCoverImgToServer(tripData: tripData, Req: self.UPLOAD_POCKETTRIPCOVER_REQ)
                         
-                        self.uploadIndex = tripData.spots.count
+//                        self.uploadIndex = tripData.spots.count
                         
                         self.uploadTripSpotToServer(tripData: tripData, request: self.UPLOAD_POCKETTRIPSPOT_REQ)
                     }
@@ -636,7 +649,7 @@ class ServerConnector: NSObject {
                 print("Upload request: \(request)")
                 print("Is upload trip spot post success: \(response.result.isSuccess)")
                 print("Total count in spot array: \(String(tripData.spots.count))")
-                print("Upload index in spot array: \(String(self.uploadIndex))")
+//                print("Upload index in spot array: \(String(self.uploadIndex))")
                 print("Response: \(String(describing: response.result.value))")
             }
         }
