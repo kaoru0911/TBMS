@@ -192,7 +192,12 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
+        
         if segue.identifier == "GoToSetStartPoint" {
+            guard tmpPlaceDataStorage.isEmpty != true else {
+                print("沒有資料唷")
+                return
+            }
             let vc = segue.destination as! SetStartPointViewController
             let attractions = setValueToAttractionsList(placeList: tmpPlaceDataStorage)
             vc.attractionsList = attractions

@@ -228,12 +228,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         self.navigationController?.navigationBar.isTranslucent = false
 
         let nextPageBtn = UIBarButtonItem(title: goNextPageBtnTitle, style: .plain, target: self, action: #selector(finishScheduleScrollViewAndGoNextPage))
-        nextPageBtn.tintColor = UIColor.black
-        nextPageBtn.width = 100
-        self.navigationItem.rightBarButtonItem = nextPageBtn
-
-        
-//        print(self.navigationItem.)
+        scrollView?.navigationItem.rightBarButtonItem = nextPageBtn
         
         self.navigationController?.pushViewController(scrollView!, animated: true)
     }
