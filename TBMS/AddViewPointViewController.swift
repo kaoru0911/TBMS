@@ -26,6 +26,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     var placeIdStorage:String!
     var tmpPlaceData : GMSPlace!
     var tmpPlaceDataStorage = [GMSPlace]()
+    var sharedData = DataManager.shareDataManager
     
     
     
@@ -170,8 +171,8 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             }
             
             print("Place name \(place.name)")
-            print("Place address \(place.formattedAddress)")
-            print("Place attributions \(place.attributions)")
+            print("Place address \(String(describing: place.formattedAddress))")
+            print("Place attributions \(String(describing: place.attributions))")
             
             self.tmpPlaceData = place
             print(self.tmpPlaceData.name)
@@ -203,6 +204,10 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             vc.attractionsList = attractions
         } else if segue.identifier == "ShowStorageAttration" {
             
+            let nextPage = segue.destination as! PocketSpotTVC
+            
+            nextPage.selectedCountry = sharedData.chooseCountry
+            nextPage.selectedProcess = "開始規劃"
         }
     }
 }

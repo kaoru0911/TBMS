@@ -122,46 +122,46 @@ class MenuTableViewController: UITableViewController {
         choosen = cellData[indexPath.row].0
         
         switch choosen {
-        case "開始規劃":
-            if sharedData.sharedTrips?.count == 0 {
-                serverCommunicate.getSharedTripFromServer()
-            } else{
-                performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
-            }
-            
-        case "推薦行程":
-            if sharedData.sharedTrips?.count == 0 {
-                serverCommunicate.getSharedTripFromServer()
-            } else{
-                performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
-            }
-            
-        case "庫存行程":
-            if !sharedData.isLogin {
-                showAlertMessage(title: "", message: "請先登入會員")
-                return
-            }
-            
-            if sharedData.pocketTrips?.count == 0 {
-                serverCommunicate.getPocketTripFromServer()
-            } else{
-                performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
-            }
-            
-        case "庫存景點":
-            if !sharedData.isLogin {
-                showAlertMessage(title: "", message: "請先登入會員")
-                return
-            }
-            
-            if sharedData.pocketSpot?.count == 0 {
-                serverCommunicate.getPocketSpotFromServer()
-            } else{
-                performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
-            }
-            
-        default:
-            break
+            case "開始規劃":
+                if sharedData.pocketSpot?.count == 0 {
+                    serverCommunicate.getPocketSpotFromServer()
+                } else{
+                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+                }
+                
+            case "推薦行程":
+                if sharedData.sharedTrips?.count == 0 {
+                    serverCommunicate.getSharedTripFromServer()
+                } else{
+                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+                }
+                
+            case "庫存行程":
+                if !sharedData.isLogin {
+                    showAlertMessage(title: "", message: "請先登入會員")
+                    return
+                }
+                
+                if sharedData.pocketTrips?.count == 0 {
+                    serverCommunicate.getPocketTripFromServer()
+                } else{
+                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+                }
+                
+            case "庫存景點":
+                if !sharedData.isLogin {
+                    showAlertMessage(title: "", message: "請先登入會員")
+                    return
+                }
+                
+                if sharedData.pocketSpot?.count == 0 {
+                    serverCommunicate.getPocketSpotFromServer()
+                } else{
+                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+                }
+                
+            default:
+                break
         }
     }
     
