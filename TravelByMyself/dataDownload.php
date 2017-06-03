@@ -40,6 +40,28 @@ if($getRequest == "downloadPocketTrip"){
 		echo '{"result":false, "errorCode":"Download pocket spot fail, user name error"}';
 
 	}
+} else if($getRequest == "downloadSharedTripSpot"){
+
+	if($getAccount != ""){
+
+		downloadSharedTripSpot($db, $getAccount);
+
+	} else{
+
+		echo '{"result":false, "errorCode":"Download shared trip spot fail, user name error"}';
+
+	}
+} else if($getRequest == "downloadPocketTripSpot"){
+
+	if($getAccount != ""){
+
+		downloadPocketTripSpot($db, $getAccount);
+
+	} else{
+
+		echo '{"result":false, "errorCode":"Download shared trip spot fail, user name error"}';
+
+	}
 }
 
 
@@ -130,7 +152,8 @@ function downloadPocketSpot($db, $account){
 			$item = array(
 						 "id"=>$v['id'],
 						 "spotName"=>$v['spotName'],							 							 					 
-						 "ownerUser"=>$v['ownerUser']
+						 "ownerUser"=>$v['ownerUser'],
+						 "spotCountry"=>$v['spotCountry']
 						 );
 
 			array_push($rtnTrips, $item);
@@ -142,6 +165,82 @@ function downloadPocketSpot($db, $account){
 
 	} else{
 		echo '{"result":false, "errorCode":"There are no pocket spot"}';
+	}
+}
+
+function downloadSharedTripSpot($db, $account){
+
+	$tripName = $_POST['tripName'];
+
+	$getTrips = $db->query("
+		select * from `sharedtripspot` where 
+		`ownerUser`='$account' and 
+		`tripName`='$tripName'
+		")->fetchAll();
+
+	if(count($getTrips) > 0){
+
+		$rtnTrips = array();
+
+		foreach ($getTrips as $k => $v){
+
+			$item = array(
+						 "id"=>$v['id'],
+						 "tripName"=>$v['tripName'],
+						 "spotName"=>$v['spotName'],	
+						 "nDay"=>$v['nDay'],
+						 "nth"=>$v['nth'],	
+						 "trafficToNext"=>$v['trafficToNext'],
+						 "placeID"=>$v['placeID'],					 
+						 );
+
+			array_push($rtnTrips, $item);
+		}
+
+		$rtnResult = json_encode($rtnTrips, JSON_NUMERIC_CHECK);
+
+		echo $rtnResult;
+
+	} else{
+		echo '{"result":false, "errorCode":"There are no shared trip spot"}';
+	}
+}
+
+function downloadPocketTripSpot($db, $account){
+
+	$tripName = $_POST['tripName'];
+
+	$getTrips = $db->query("
+		select * from `pockettripspot` where 
+		`ownerUser`='$account' and 
+		`tripName`='$tripName'
+		")->fetchAll();
+
+	if(count($getTrips) > 0){
+
+		$rtnTrips = array();
+
+		foreach ($getTrips as $k => $v){
+
+			$item = array(
+						 "id"=>$v['id'],
+						 "tripName"=>$v['tripName'],
+						 "spotName"=>$v['spotName'],	
+						 "nDay"=>$v['nDay'],
+						 "nth"=>$v['nth'],	
+						 "trafficToNext"=>$v['trafficToNext'],
+						 "placeID"=>$v['placeID'],					 
+						 );
+
+			array_push($rtnTrips, $item);
+		}
+
+		$rtnResult = json_encode($rtnTrips, JSON_NUMERIC_CHECK);
+
+		echo $rtnResult;
+
+	} else{
+		echo '{"result":false, "errorCode":"There are no pocket trip spot"}';
 	}
 }
 
