@@ -12,7 +12,7 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
 
     var selectedCountry: String!
     var selectedProcess: String!
-    var tripArray = [(String , String, UIImage)]()
+    var tripArray = [tripData]()
     var sharedData = DataManager.shareDataManager
     var tripFilter: TripFilter!
     
@@ -74,9 +74,11 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
         
         let cell = tripListTableView.dequeueReusableCell(withIdentifier: "tripListCell", for: indexPath) as! TripListTableViewCell;
         
-        cell.tripTitle.text = tripArray[indexPath.row].0
-        cell.tripSubTitle.text = "旅行天數：" + tripArray[indexPath.row].1 + "天"
-        cell.tripCoverImg.image = tripArray[indexPath.row].2
+        cell.tripTitle.text = tripArray[indexPath.row].tripName
+        cell.tripSubTitle.text = "旅行天數：" + String(describing: tripArray[indexPath.row].days!) + "天"
+        cell.tripCoverImg.image = tripArray[indexPath.row].coverImg
+        
+        cell.cellTripData = tripArray[indexPath.row]
         
         cell.tripTitle.shadowColor = UIColor.white
         cell.tripSubTitle.shadowColor = UIColor.white
@@ -84,10 +86,10 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
         return cell
     }
     
-    func prepareTripArray(country:String, rootSelect:String) -> [(String , String, UIImage)] {
+    func prepareTripArray(country:String, rootSelect:String) -> [tripData] {
         
         var filtData = [tripData]()
-        var returnData = [(String , String, UIImage)]()
+//        var returnData = [(String , String, UIImage)]()
         
         switch rootSelect {
             case "推薦行程":
@@ -98,14 +100,14 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
                 break
         }
         
-        if filtData.count > 0 {
-            
-            for i in 0...filtData.count-1 {
-                returnData.append((filtData[i].tripName!, String(describing: filtData[i].days!), filtData[i].coverImg!))
-            }
-        }        
+//        if filtData.count > 0 {
+//            
+//            for i in 0...filtData.count-1 {
+//                returnData.append((filtData[i].tripName!, String(describing: filtData[i].days!), filtData[i].coverImg!))
+//            }
+//        }        
         
-        return returnData
+        return filtData
     }
 
 }

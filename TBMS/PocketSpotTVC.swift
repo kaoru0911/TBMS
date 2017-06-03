@@ -11,18 +11,27 @@ import UIKit
 
 class PocketSpotTVC: UITableViewController {
     
-    var selectedCountry : String!
-    var spotList = ["Tokyo", "Osaka", "London"]
+    var selectedCountry: String!
+    var selectedProcess: String!
+    var sharedData = DataManager.shareDataManager
+    var tripFilter: TripFilter!
+    var spotList: [spotData]!
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("第二面唷")
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
+        tripFilter = TripFilter()
+        
+        spotList = [spotData]()
+        
+        spotList = tripFilter.filtBySpotCountry(country: selectedCountry, spotArray: sharedData.pocketSpot!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,16 +57,37 @@ class PocketSpotTVC: UITableViewController {
         
         let image = UIImage(named:"addSpot.png")
         
-        cell.spotName.text = spotList[indexPath.row]
+        cell.spotName.text = spotList[indexPath.row].spotName
         
-        cell.addSpotBtn.setBackgroundImage(image, for: .normal)        
+        switch selectedProcess {
+            case "庫存景點":
+                cell.addSpotBtn.isHidden = true
+            default:
+                cell.addSpotBtn.isHidden = false
+                cell.addSpotBtn.setBackgroundImage(image, for: .normal)
+        }        
         
         return cell
     }
     
     @IBAction func addSpotPress(_ sender: UIButton) {
         
+        let a = 0
         
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //畫面精進，讓點選後的灰色不會卡在選擇列上，灰色會閃一下就消失
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func prepareSpotList(pocketSpot:[spotData]) -> [spotData] {
+        
+        let spotList: [spotData]
+        
+        spotList = tripFilter.filtBySpotCountry(country: selectedCountry, spotArray: pocketSpot)
+        
+        return spotList
     }
     
 

@@ -51,30 +51,44 @@ class LoginViewController: UIViewController {
 //    }
     
     @IBAction func loginBtn(_ sender: Any) {
+        
+        if (inputAccountName.text?.isEmpty)! || (inputPassword.text?.isEmpty)! {
+            showAlertMessage(title: "Fail", message: "請輸入帳號與密碼")
+            return
+        }
+            
+        sharedData.memberData?.account = inputAccountName.text
+        
+        sharedData.memberData?.password = inputPassword.text
     
         serverCommunicate.userLogin()
 
     }
     
-    func getUpdateNoti(noti:Notification) {
-        loginResponse = noti.userInfo!["PASS"] as! Bool
-    }
+//    func getUpdateNoti(noti:Notification) {
+//        loginResponse = noti.userInfo!["PASS"] as! Bool
+//    }
     
     func NotificationDidGet() {
         
         if self.sharedData.isLogin == true {
-            let alert = UIAlertController(title: "Success", message:"登入成功", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
-            alert.addAction(ok)
             
-            self.present(alert,animated: true,completion: nil)
-            //            //performSegue(withIdentifier:"goMemberVC", sender: nil)
+            showAlertMessage(title: "Success", message: "登入成功")
         } else if self.sharedData.isLogin == false {
-            let alert = UIAlertController(title: "失敗", message:"登入失敗", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
-            alert.addAction(ok)
-            self.present(alert,animated: true,completion: nil)            
+            
+            showAlertMessage(title: "Fail", message: "登入失敗，請確認帳號或密碼是否正確")
         }
+    }
+    
+    func showAlertMessage(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
+        
+        alert.addAction(ok)
+        
+        self.present(alert,animated: true,completion: nil)
     }
 }
 

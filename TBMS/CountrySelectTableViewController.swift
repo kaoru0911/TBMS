@@ -15,6 +15,7 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
     var continentalGroups: NSArray!
     var sectionInfoArray: NSMutableArray!
     var openSectionIndex = NSNotFound
+    var sharedData = DataManager.shareDataManager
     
 //    var choosen: String!
     var segueID : String!
@@ -264,6 +265,8 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
         
         selectedCountry = selectCell.countryName.text
         
+        sharedData.chooseCountry = selectedCountry
+        
         performSegue(withIdentifier: segueID, sender: nil)
         
         //畫面精進，讓點選後的灰色不會卡在選擇列上，灰色會閃一下就消失
@@ -274,14 +277,19 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        // print("進入segue囉")
         
         if(segue.identifier == "goAddPointVC") {
+            
             let nextPage = segue.destination as! AddViewPointViewController
-            nextPage.selectedCountry = selectedProcess
-        } else if (segue.identifier == "goPocketSpotVC") {
+            nextPage.selectedCountry = selectedCountry
+        } else if (segue.identifier == "goPocketSpotTVC") {
+            
             let nextPage = segue.destination as! PocketSpotTVC
-            nextPage.selectedCountry = selectedProcess
+            
+            nextPage.selectedCountry = selectedCountry
+            
+            nextPage.selectedProcess = selectedProcess
+            
         } else if (segue.identifier == "goTripListViewController") {
             
             let nextPage = segue.destination as! TripListViewController
