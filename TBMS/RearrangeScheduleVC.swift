@@ -17,12 +17,14 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     private let keyOfScheduleAndTrafficCell = "scheduleArray"
     private let nameOfFinalScheduleStoryBoard = "Main"
     private let nameOfFinalScheduleVC = "dailyRouteVC"
+    private let nameOfUploadlScheduleVC = "UploadTripScheduleVC"
     let reuseIdForDateTypeCell = "dateCell"
     let reuseIdForscheduleAndTrafficCell = "scheduleAndTrafficCell"
     let reuseIdForLastAttractionCell = "lastAttractionCell"
     private let currentPageDotTintColor = UIColor.black
     private let otherPageDotTintColor = UIColor.lightGray
-    let goNextPageBtnTitle = "儲存行程"
+    let goSaveTripPageBtnTitle = "確認規劃"
+    let saveTripBtnTitle = "儲存行程"
     
     var attractions: [Attraction]!
     var routesDetails: [LegsData]!
@@ -227,7 +229,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         scrollView?.automaticallyAdjustsScrollViewInsets = false
         self.navigationController?.navigationBar.isTranslucent = false
 
-        let nextPageBtn = UIBarButtonItem(title: goNextPageBtnTitle, style: .plain, target: self, action: #selector(finishScheduleScrollViewAndGoNextPage))
+        let nextPageBtn = UIBarButtonItem(title: goSaveTripPageBtnTitle, style: .plain, target: self, action: #selector(finishScheduleScrollViewAndGoNextPage))
         scrollView?.navigationItem.rightBarButtonItem = nextPageBtn
         
         self.navigationController?.pushViewController(scrollView!, animated: true)
@@ -287,7 +289,9 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func finishScheduleScrollViewAndGoNextPage() {
-        print("下一頁唷")
+        let sb = UIStoryboard(name: nameOfFinalScheduleStoryBoard, bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: nameOfUploadlScheduleVC) as! UploadTravelScheduleViewController
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

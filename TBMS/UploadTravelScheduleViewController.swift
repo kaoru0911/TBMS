@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UploadTravelScheduleViewController: UIViewController, UIImagePickerControllerDelegate {
+class UploadTravelScheduleViewController: UIViewController,UINavigationControllerDelegate, UIImagePickerControllerDelegate {
 
     @IBOutlet weak var tripNameTextField: UITextField!
     @IBOutlet weak var tripCoverImage: UIImageView!
@@ -37,7 +37,7 @@ class UploadTravelScheduleViewController: UIViewController, UIImagePickerControl
         let imagePicker = UIImagePickerController()
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
-        imagePicker.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
         
         present(imagePicker, animated: true, completion: nil)
     }
