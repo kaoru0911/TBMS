@@ -501,7 +501,7 @@ extension ScheduleTableViewController {
     
     override func viewWillLayoutSubviews() {
         for _ in 0 ... spotData.count - 1 {
-            cellSelectList += [false]
+//            cellSelectList += [false]
         }
     }
     
