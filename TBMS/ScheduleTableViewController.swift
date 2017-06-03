@@ -16,6 +16,8 @@ class ScheduleTableViewController: UITableViewController {
     
     var data = tripData()
     var spotData = [tripSpotData]()
+    var addAttrIndexList = [Int]()
+    
     var filter = TripFilter()
     var nDaySchedule: Int!
     

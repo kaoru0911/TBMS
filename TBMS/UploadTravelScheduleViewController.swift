@@ -8,8 +8,19 @@
 
 import UIKit
 
-class UploadTravelScheduleViewController: UIViewController {
+class UploadTravelScheduleViewController: UIViewController, UIImagePickerControllerDelegate {
 
+    @IBOutlet weak var tripNameTextField: UITextField!
+    @IBOutlet weak var tripCoverImage: UIImageView!
+    @IBOutlet weak var shareTripOption: UISwitch!
+    
+    var trip = tripData()
+    var travelDays: Int!
+    var travelCountry: String!
+    var attractionsAndRoute: [tripSpotData]!
+    
+    var sharedData = DataManager.shareDataManager
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -21,7 +32,57 @@ class UploadTravelScheduleViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    @IBAction func changeCoverImgBtnPressed(_ sender: Any) {
+    
+        let imagePicker = UIImagePickerController()
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self as! UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    @IBAction func uploadTripDataBtnPressed(_ sender: Any) {
+        
+        guard let tripName = tripNameTextField.text else {
+            /// show alert
+            return
+        }
+        
+        guard let image = tripCoverImage.image else {
+            /// show alert
+            return
+        }
+        
+        trip.tripName = tripName
+        trip.coverImg = image
+        
+        trip.days = travelDays
+        trip.country = sharedData.chooseCountry
+        trip.spots = attractionsAndRoute
+        
+        let server = ServerConnector()
+        server.uploadPocketTripToServer(tripData: trip)
+        
+        if shareTripOption.isOn {
+            server.uploadSharedTripToServer(tripData: trip)
+        }
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        guard let image = info[UIImagePickerControllerOriginalImage] as! UIImage! else {
+            print("image = nil")
+            return
+        }
+        
+        tripCoverImage.image = image
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
     /*
     // MARK: - Navigation
 
@@ -31,5 +92,4 @@ class UploadTravelScheduleViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }

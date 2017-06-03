@@ -7,15 +7,19 @@
 //
 
 import UIKit
+import GooglePlaces
 
 
 class PocketSpotTVC: UITableViewController {
     
+
     var selectedCountry: String!
     var selectedProcess: String!
     var sharedData = DataManager.shareDataManager
     var tripFilter: TripFilter!
     var spotList: [spotData]!
+    var selectAttraction = [GMSPlace]()
+
 
 
     override func viewDidLoad() {
@@ -32,6 +36,8 @@ class PocketSpotTVC: UITableViewController {
         spotList = [spotData]()
         
         spotList = tripFilter.filtBySpotCountry(country: selectedCountry, spotArray: sharedData.pocketSpot!)
+
+        let spot = spotData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,8 +78,9 @@ class PocketSpotTVC: UITableViewController {
     
     @IBAction func addSpotPress(_ sender: UIButton) {
         
-        let a = 0
-        
+        if let cell = sender as? PocketSpotTVCell, let index = tableView.indexPath(for: cell) {
+        performSegue(withIdentifier: "ShowStorageAttration", sender: cell)
+        }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -90,5 +97,7 @@ class PocketSpotTVC: UITableViewController {
         return spotList
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       }
 
 }

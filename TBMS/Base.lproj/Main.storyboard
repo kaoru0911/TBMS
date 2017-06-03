@@ -209,7 +209,7 @@
                                     </attributedString>
                                 </state>
                                 <connections>
-                                    <segue destination="voi-0M-CfP" kind="show" id="AE5-G1-K7s"/>
+                                    <segue destination="voi-0M-CfP" kind="show" identifier="ShowStorageAttration" id="Zrj-EZ-HFr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J03-IL-xNB">
@@ -280,7 +280,7 @@
                     <navigationItem key="navigationItem" title="加入行程" id="Tnw-nd-jC3">
                         <barButtonItem key="rightBarButtonItem" title="開始規劃" id="ERH-H9-ZTO">
                             <connections>
-                                <segue destination="I8i-xe-uxU" kind="show" id="YfR-ug-hd9"/>
+                                <segue destination="I8i-xe-uxU" kind="show" identifier="GoToSetStartPoint" id="YfR-ug-hd9"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -565,10 +565,10 @@
             </objects>
             <point key="canvasLocation" x="4240.8000000000002" y="-889.20539730134942"/>
         </scene>
-        <!--Upload Trip Schedule View Controller-->
+        <!--Upload Travel Schedule View Controller-->
         <scene sceneID="AjR-Kp-HxD">
             <objects>
-                <viewController storyboardIdentifier="UploadTripScheduleVC" id="6GZ-KH-w72" customClass="UploadTripScheduleViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UploadTripScheduleVC" id="6GZ-KH-w72" customClass="UploadTravelScheduleViewController" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="HXh-kb-jtU"/>
                         <viewControllerLayoutGuide type="bottom" id="XVt-uc-YYI"/>
@@ -576,12 +576,74 @@
                     <view key="view" contentMode="scaleToFill" id="kIC-Hr-THu">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vbZ-h8-ePK">
+                                <rect key="frame" x="136" y="75" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="行程名稱 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPR-CM-BWx">
+                                <rect key="frame" x="44" y="84" width="79" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="行程封面 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fE-UE-0x3">
+                                <rect key="frame" x="44" y="120" width="79" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZX0-7v-j6O">
+                                <rect key="frame" x="240" y="527" width="62" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="庫存行程"/>
+                                <connections>
+                                    <action selector="uploadTripDataBtnPressed:" destination="6GZ-KH-w72" eventType="touchUpInside" id="DWZ-e9-uxD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pID-nw-onH">
+                                <rect key="frame" x="66" y="527" width="92" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="變更行程封面"/>
+                                <connections>
+                                    <action selector="changeCoverImgBtnPressed:" destination="6GZ-KH-w72" eventType="touchUpInside" id="oTc-33-Kqi"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IHI-SC-7Xr">
+                                <rect key="frame" x="40" y="150" width="298" height="162"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="是否分享" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hxz-ST-Hgm">
+                                <rect key="frame" x="59" y="340" width="70" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mh0-Bl-0ne">
+                                <rect key="frame" x="137" y="335" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="sharedTripOptionValueChanged:" destination="6GZ-KH-w72" eventType="valueChanged" id="xx2-01-v55"/>
+                                </connections>
+                            </switch>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="shareTripOption" destination="Mh0-Bl-0ne" id="nPj-sK-qQc"/>
+                        <outlet property="tripCoverImage" destination="IHI-SC-7Xr" id="wgQ-ky-7PW"/>
+                        <outlet property="tripNameTextField" destination="vbZ-h8-ePK" id="HZR-xa-ZC1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KIJ-1Q-wol" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5265" y="-890"/>
+            <point key="canvasLocation" x="5264.8000000000002" y="-890.10494752623697"/>
         </scene>
         <!--旅遊選單-->
         <scene sceneID="yHp-h9-rRp">
@@ -1227,6 +1289,13 @@
                                                 <action selector="addSpotPress:" destination="voi-0M-CfP" eventType="touchUpInside" id="3Qb-lk-lhD"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFg-ec-vCR">
+                                            <rect key="frame" x="252" y="30" width="42" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="yDG-5A-scl" secondAttribute="bottom" id="5aI-zc-ovM"/>
@@ -1330,6 +1399,6 @@
         <image name="circle-user-7.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AE5-G1-K7s"/>
+        <segue reference="Zrj-EZ-HFr"/>
     </inferredMetricsTieBreakers>
 </document>

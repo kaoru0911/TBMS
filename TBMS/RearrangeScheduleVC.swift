@@ -22,6 +22,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     let reuseIdForLastAttractionCell = "lastAttractionCell"
     private let currentPageDotTintColor = UIColor.black
     private let otherPageDotTintColor = UIColor.lightGray
+    let goNextPageBtnTitle = "儲存行程"
     
     var attractions: [Attraction]!
     var routesDetails: [LegsData]!
@@ -225,6 +226,15 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         let scrollView = scrollVCProductor.pagingScrollingVC
         scrollView?.automaticallyAdjustsScrollViewInsets = false
         self.navigationController?.navigationBar.isTranslucent = false
+
+        let nextPageBtn = UIBarButtonItem(title: goNextPageBtnTitle, style: .plain, target: self, action: #selector(finishScheduleScrollViewAndGoNextPage))
+        nextPageBtn.tintColor = UIColor.black
+        nextPageBtn.width = 100
+        self.navigationItem.rightBarButtonItem = nextPageBtn
+
+        
+//        print(self.navigationItem.)
+        
         self.navigationController?.pushViewController(scrollView!, animated: true)
     }
     
@@ -279,6 +289,10 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
     private func generateRouteTitleString (cellContent:ScheduleAndTrafficCellContent) -> String {
         return "\(cellContent.travelMode), \(cellContent.trafficTime)min"
+    }
+    
+    func finishScheduleScrollViewAndGoNextPage() {
+        print("下一頁唷")
     }
 }
 

@@ -73,13 +73,13 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     var ListArray: NSMutableArray = []
     var placesClient: GMSPlacesClient!
     
-//    func goSetStartPointPage() {
-//        
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let setStartPointViewController = storyboard.instantiateViewController(withIdentifier :"SetStartPointViewController") as! SetStartPointViewController
-//        
-//        self.navigationController?.pushViewController(setStartPointViewController, animated: true)
-//    }
+    //    func goSetStartPointPage() {
+    //
+    //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    //        let setStartPointViewController = storyboard.instantiateViewController(withIdentifier :"SetStartPointViewController") as! SetStartPointViewController
+    //
+    //        self.navigationController?.pushViewController(setStartPointViewController, animated: true)
+    //    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -192,8 +192,12 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        let vc = segue.destination as! SetStartPointViewController
-        let attractions = setValueToAttractionsList(placeList: tmpPlaceDataStorage)
-        vc.attractionsList = attractions
+        if segue.identifier == "GoToSetStartPoint" {
+            let vc = segue.destination as! SetStartPointViewController
+            let attractions = setValueToAttractionsList(placeList: tmpPlaceDataStorage)
+            vc.attractionsList = attractions
+        } else if segue.identifier == "ShowStorageAttration" {
+            
+        }
     }
 }

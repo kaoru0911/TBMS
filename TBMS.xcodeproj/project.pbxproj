@@ -211,8 +211,8 @@
 			isa = PBXGroup;
 			children = (
 				22BBB6D11EE0551000F3D0FD /* UploadTravelScheduleViewController.swift */,
-				A74764641ED83F050059D586 /* Schedule */,
 				A76BA9FE1ECC697000443947 /* SetStartPointViewController.swift */,
+				A74764641ED83F050059D586 /* Schedule */,
 				A74BDDDF1ED5B7A700987446 /* Login&Register */,
 				A74BDDDE1ED5B78B00987446 /* Menu */,
 				A74BDDDD1ED5B76E00987446 /* CountrySelect */,
