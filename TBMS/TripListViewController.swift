@@ -15,6 +15,8 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
     var tripArray = [tripData]()
     var sharedData = DataManager.shareDataManager
     var tripFilter: TripFilter!
+    var selectCell: TripListTableViewCell!
+    var serverCommunicate:ServerConnector = ServerConnector()
     
     @IBOutlet weak var tripListTableView: UITableView!
     override func viewDidLoad() {
@@ -31,6 +33,8 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
         tripFilter = TripFilter()
         
         tripArray = prepareTripArray(country: selectedCountry, rootSelect: selectedProcess)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getTripSpotNotifier"), object: nil)
         
 //        tripListTableView.delegate = self
 //        tripListTableView.dataSource = self
@@ -86,6 +90,76 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        selectCell = tableView.cellForRow(at: indexPath) as! TripListTableViewCell
+        
+        // 清空資料重新下載
+        sharedData.tempTripData = tripData()
+        
+        serverCommunicate.getTripSpotFromServer(selectTrip: selectCell.cellTripData, req: serverCommunicate.DOWNLOAD_POCKETTRIPSPOT_REQ)
+    }
+    
+    func NotificationDidGet() {
+        
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        
+        let vcArray = produceVCArray(myStoryBoard: sb, cellContents: sharedData.tempTripData)
+        //設定scrollView
+        let scrollVCProductor = ProduceScrollViewWithVCArray(vcArrayInput: vcArray)
+        scrollVCProductor.pageControlDotExist = true
+        scrollVCProductor.currentPageIndicatorTintColorSetting = UIColor.black
+        scrollVCProductor.otherPageIndicatorTintColorSetting = UIColor.lightGray
+        //輸出scrollView
+        let scrollView = scrollVCProductor.pagingScrollingVC
+        scrollView?.automaticallyAdjustsScrollViewInsets = false
+        self.navigationController?.navigationBar.isTranslucent = false
+        
+        //        let nextPageBtn = UIBarButtonItem(title: goSaveTripPageBtnTitle, style: .plain, target: self, action: #selector(finishScheduleScrollViewAndGoNextPage))
+        //        scrollView?.navigationItem.rightBarButtonItem = nextPageBtn
+        
+        self.navigationController?.pushViewController(scrollView!, animated: true)
+    }
+    
+    
+    func produceVCArray (myStoryBoard: UIStoryboard, cellContents:tripData!) -> [UIViewController] {
+        
+        var tmpVCArray = [ScheduleTableViewController]()
+        guard let cellContents = cellContents else {
+            print("沒有spot唷")
+            return tmpVCArray
+        }
+        let travelDays = countTotalTripDays(spot: cellContents.spots)
+        
+        
+        for i in 0...travelDays - 1 {
+            
+            let tmpVC = myStoryBoard.instantiateViewController(withIdentifier: "dailyRouteVC") as! ScheduleTableViewController
+            tmpVC.data = cellContents
+            tmpVC.nDaySchedule = i + 1
+            
+            tmpVCArray += [tmpVC]
+            print("tmpVCArray=\(tmpVCArray.count)")
+        }
+        return tmpVCArray
+    }
+    
+    func countTotalTripDays (spot:[tripSpotData]) -> Int {
+        
+        let days = (spot.max{$0.0.nDays < $0.1.nDays})?.nDays
+        
+        guard let travelDays = days else { return 0 }
+        
+        return travelDays
+    }
+    
+    func finishScheduleScrollViewAndGoNextPage(tripDays:Int) {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let vc = sb.instantiateViewController(withIdentifier: "UploadTripScheduleVC") as! UploadTravelScheduleViewController
+        vc.travelDays = tripDays
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     func prepareTripArray(country:String, rootSelect:String) -> [tripData] {
         
         var filtData = [tripData]()
@@ -99,13 +173,6 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
             default:
                 break
         }
-        
-//        if filtData.count > 0 {
-//            
-//            for i in 0...filtData.count-1 {
-//                returnData.append((filtData[i].tripName!, String(describing: filtData[i].days!), filtData[i].coverImg!))
-//            }
-//        }        
         
         return filtData
     }

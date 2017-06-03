@@ -271,8 +271,8 @@
 		A74BDDDB1ED5B70E00987446 /* TripList */ = {
 			isa = PBXGroup;
 			children = (
-				A74BDDD61ED5B6A100987446 /* TripListTableViewCell.swift */,
 				A74BDDD51ED5B6A100987446 /* TripListCell.xib */,
+				A74BDDD61ED5B6A100987446 /* TripListTableViewCell.swift */,
 				A74BDDD71ED5B6A100987446 /* TripListViewController.swift */,
 				CDEACC441EE039DE00280CEA /* TripFilter.swift */,
 			);

@@ -75,7 +75,9 @@ class ServerConnector: NSObject {
     let getPocketTripNotifier = Notification.Name("getPocketTripNotifier")
     let getSharedTripNotifier = Notification.Name("getSharedTripNotifier")
     let getPocketSpotNotifier = Notification.Name("getPocketSpotNotifier")
+    let getTripSpotNotifier = Notification.Name("getTripSpotNotifier")
     let downloadCoverImgNotifier = Notification.Name("downloadCoverImgNotifier")
+    
     
     /**
      user login to server, this function would callsingleton sharedData to use account and password
@@ -269,6 +271,8 @@ class ServerConnector: NSObject {
                         
                         pocketTrip.country = getFeedback[i]["tripCountry"] as? String
                         
+                        pocketTrip.ownerUser = getFeedback[i]["ownerUser"] as? String
+                        
                         guard let coverImgName = getFeedback[i]["coverImg"] as? String else {
                             
                             downloadImgName.append("noImg")
@@ -331,6 +335,8 @@ class ServerConnector: NSObject {
                         sharedTrip.days = getFeedback[i]["tripDays"] as? Int
                         
                         sharedTrip.country = getFeedback[i]["tripCountry"] as? String
+                        
+                        sharedTrip.ownerUser = getFeedback[i]["ownerUser"] as? String
                         
                         guard let coverImgName = getFeedback[i]["coverImg"] as? String else {
                             
@@ -482,6 +488,7 @@ class ServerConnector: NSObject {
             case .success(let json):
                 
                 guard let getFeedback = json as? [Dictionary<String,Any>] else {
+                    NotificationCenter.default.post(name: self.getTripSpotNotifier, object: nil)
                     return
                 }
                 
@@ -509,6 +516,8 @@ class ServerConnector: NSObject {
             case .failure(_):
                 print("Server feedback fail")
             }
+            
+            NotificationCenter.default.post(name: self.getTripSpotNotifier, object: nil)
         }
         
         
