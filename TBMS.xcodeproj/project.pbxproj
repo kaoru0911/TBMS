@@ -262,8 +262,8 @@
 		A74764641ED83F050059D586 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
-				A74764601ED83F000059D586 /* ScheduleTableViewCell.swift */,
 				A74764611ED83F000059D586 /* ScheduleTableViewController.swift */,
+				A74764601ED83F000059D586 /* ScheduleTableViewCell.swift */,
 			);
 			name = Schedule;
 			sourceTree = "<group>";
