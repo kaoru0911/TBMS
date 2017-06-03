@@ -92,6 +92,7 @@ class spotData: NSObject {
     var spotName:String?
     var spotImg:UIImage?
     var spotInfo:String?
+    var spotPlaceID:String?
 }
 
 class tripSpotData: spotData {

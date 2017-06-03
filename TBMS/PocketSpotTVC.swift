@@ -7,14 +7,16 @@
 //
 
 import UIKit
+import GooglePlaces
 
 
 class PocketSpotTVC: UITableViewController {
     
     var selectedCountry : String!
-    var spotList = ["Tokyo", "Osaka", "London"]
-
-
+    var spotList = ["清水寺","經閣寺","大阪"]
+//    var spotList = [spotData]()
+    var selectAttraction = [GMSPlace]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("第二面唷")
@@ -23,6 +25,9 @@ class PocketSpotTVC: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        let spot = spotData()
+//        spot.spotName = 測試國家
+//        spot.spotPlaceID =
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,15 +55,20 @@ class PocketSpotTVC: UITableViewController {
         
         cell.spotName.text = spotList[indexPath.row]
         
-        cell.addSpotBtn.setBackgroundImage(image, for: .normal)        
+        cell.addSpotBtn.setBackgroundImage(image, for: .normal)
         
         return cell
     }
     
     @IBAction func addSpotPress(_ sender: UIButton) {
         
+        if let cell = sender as? PocketSpotTVCell, let index = tableView.indexPath(for: cell) {
+            performSegue(withIdentifier: "ShowStorageAttration", sender: cell)
+        }
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+       }
 
 }

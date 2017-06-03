@@ -209,7 +209,7 @@
                                     </attributedString>
                                 </state>
                                 <connections>
-                                    <segue destination="voi-0M-CfP" kind="show" id="AE5-G1-K7s"/>
+                                    <segue destination="voi-0M-CfP" kind="show" identifier="ShowStorageAttration" id="Zrj-EZ-HFr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J03-IL-xNB">
@@ -280,7 +280,7 @@
                     <navigationItem key="navigationItem" title="加入行程" id="Tnw-nd-jC3">
                         <barButtonItem key="rightBarButtonItem" title="開始規劃" id="ERH-H9-ZTO">
                             <connections>
-                                <segue destination="I8i-xe-uxU" kind="show" id="YfR-ug-hd9"/>
+                                <segue destination="I8i-xe-uxU" kind="show" identifier="GoToSetStartPoint" id="YfR-ug-hd9"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -651,7 +651,7 @@
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1289,6 +1289,13 @@
                                                 <action selector="addSpotPress:" destination="voi-0M-CfP" eventType="touchUpInside" id="3Qb-lk-lhD"/>
                                             </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AFg-ec-vCR">
+                                            <rect key="frame" x="252" y="30" width="42" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="yDG-5A-scl" secondAttribute="bottom" id="5aI-zc-ovM"/>
@@ -1373,7 +1380,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1392,6 +1399,6 @@
         <image name="circle-user-7.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="2jg-Hf-yJs"/>
+        <segue reference="Zrj-EZ-HFr"/>
     </inferredMetricsTieBreakers>
 </document>
