@@ -21,6 +21,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     let reuseIdForDateTypeCell = "dateCell"
     let reuseIdForscheduleAndTrafficCell = "scheduleAndTrafficCell"
     let reuseIdForLastAttractionCell = "lastAttractionCell"
+
     fileprivate let currentPageDotTintColor = UIColor.black
     fileprivate let otherPageDotTintColor = UIColor.lightGray
     let goSaveTripPageBtnTitle = "確認規劃"
@@ -41,13 +42,13 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()//        let count = cellContentsArray.count - 1
-//        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).attraction)
-//        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficTime)
-//        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficInformation.duration)
-//        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficInformation.distance)
-//        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficInformation.steps[0].htmlInstructions)
-//        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficInformation.steps)
-
+        //        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).attraction)
+        //        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficTime)
+        //        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficInformation.duration)
+        //        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficInformation.distance)
+        //        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficInformation.steps[0].htmlInstructions)
+        //        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficInformation.steps)
+        
         // Do any additional setup after loading the view.
         
         cellContentsArray = prepareCellsContents(attractions: attractions!, routesDetails: routesDetails)
@@ -61,6 +62,15 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    @IBAction func addDateCellBtnPressed(_ sender: UIButton) {
+        
+        let totalDays = cellContentsArray.filter({$0.type == CustomerCellType.dateCellType}).count
+        let newDateCellContent = DateCellContent(dateValue: totalDays + 1)
+        cellContentsArray.append(newDateCellContent)
+        self.collectionView.reloadData()
     }
     
     fileprivate func prepareCellsContents (attractions:[Attraction], routesDetails:[LegsData]) -> [CellContent] {
@@ -169,10 +179,8 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
             return tmpVCArray
         }
         travelDays = countTotalTripDays(spot: cellContents.spots)
-
         
         for i in 0...travelDays - 1 {
-
             let tmpVC = myStoryBoard.instantiateViewController(withIdentifier: nameOfFinalScheduleVC) as! ScheduleTableViewController
             tmpVC.data = cellContents
             tmpVC.nDaySchedule = i + 1
@@ -209,22 +217,19 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    // Mark : IBAction func
-    @IBAction func addDateCellBtnPressed(_ sender: UIButton) {
+    fileprivate func generateDetailRouteString (route:LegsData!) -> String {
         
-        let totalDays = cellContentsArray.filter({$0.type == CustomerCellType.dateCellType}).count
-        let newDateCellContent = DateCellContent(dateValue: totalDays + 1)
-        cellContentsArray.append(newDateCellContent)
-        self.collectionView.reloadData()
+        guard let routeData = route else {
+            return "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        }
+        return "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
     }
     
-    
-    
-    fileprivate func generateDetailRouteString (route:LegsData) -> String {
-        return ""
-    }
-    
-    fileprivate func generateRouteTitleString (cellContent:ScheduleAndTrafficCellContent) -> String {
+    fileprivate func generateRouteTitleString (cellContent:ScheduleAndTrafficCellContent) -> String! {
+        
+//        guard let travelTime = cellContent.trafficTime else { return nil }
+//        guard travelTime != "routeCalculate error" else { return nil }
+//        return "\(cellContent.travelMode), \(travelTime)min"
         return "\(cellContent.travelMode), \(cellContent.trafficTime)min"
     }
 }
@@ -263,27 +268,20 @@ extension RearrangeScheduleVC {
         var tmpCellIndexCount = 0
         
         for cellContent in cellContentsArray {
-            //            print("for cellContent in cellContentsArray唷")
+            
             if cellContent is DateCellContent {
-                //                print("DateCellContent唷")
                 tmpDateStorage += 1
                 tmpCellIndexCount = 0
                 
             } else if cellContent is ScheduleAndTrafficCellContent {
-                
-                //                print("ScheduleAndTrafficCellContent唷")
-                
                 let cellContentData = cellContent as! ScheduleAndTrafficCellContent
                 
-                if let routeData = cellContentData.trafficInformation {
-                    //                    print("routeData近來囉")
-                    tmpAttractionData.trafficToNextSpot = generateDetailRouteString(route: routeData)
-                    tmpAttractionData.trafficTitle = generateRouteTitleString(cellContent: cellContentData)
-                }
+                tmpAttractionData.trafficTitle = generateDetailRouteString(route: cellContentData.trafficInformation)
                 
                 tmpAttractionData.spotName = cellContentData.viewPointName
                 tmpAttractionData.nDays = tmpDateStorage
                 tmpAttractionData.nTh = tmpCellIndexCount
+                tmpAttractionData.trafficTitle = cellContentData.trafficTime
                 
                 spots.append(tmpAttractionData)
                 tmpAttractionData = tripSpotData()
@@ -395,14 +393,10 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         // 關於移走的cell的變動
         if srcPreIndex > 0 {
             if cellContentsArray[srcPreIndex] is ScheduleAndTrafficCellContent {   //如果前一個是交通格式交通格式, 處理前一個屬性
-//                print("移動前第一個選項唷")
-                
                 var previousCellContent = cellContentsArray[srcPreIndex] as! ScheduleAndTrafficCellContent
                 
                 if srcNextIndex <= cellContentsArray.count - 1 {
                     if cellContentsArray[srcNextIndex] is ScheduleAndTrafficCellContent { //如果下一個不是是日期格式
-//                        print("移動前下一個不是日期唷")
-                        
                         previousCellContent.type = CustomerCellType.scheduleAndTrafficCellType
                         
                         let destination = (cellContentsArray[srcNextIndex] as! ScheduleAndTrafficCellContent).attraction.placeID
@@ -410,11 +404,9 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
                                             destinationPlaceID: destination!,
                                             completion: { (legsData) in previousCellContent.setTrafficValue(legsData: legsData) })
                     } else {    // 如果下一個是日期格式
-//                        print("移動前下一個是日期唷")
                         transferToLastAttrCellContent(targetCellContent: &previousCellContent)
                     }
                 } else {
-//                    print("移動前下一個是沒有唷")
                     transferToLastAttrCellContent(targetCellContent: &previousCellContent)
                 }
             }
@@ -431,7 +423,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             if dstPreIndex > 0 {
                 
                 if  cellContentsArray[dstPreIndex] is ScheduleAndTrafficCellContent {
-//                    print("移動後前一個是交通唷")
+                    //                    print("移動後前一個是交通唷")
                     var dstPreCellContent = cellContentsArray[dstPreIndex] as! ScheduleAndTrafficCellContent
                     dstPreCellContent.type = CustomerCellType.scheduleAndTrafficCellType
                     
@@ -448,7 +440,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             if dstNextIndex <= cellContentsArray.count - 1 {
                 if cellContentsArray[dstNextIndex] is ScheduleAndTrafficCellContent {
-//                    print("移動後本身是交通唷")
+                    //                    print("移動後本身是交通唷")
                     
                     let nextCellContent = cellContentsArray[dstNextIndex] as! ScheduleAndTrafficCellContent
                     getNewTrafficDetail(targetCellContent: &movedCellContent,
@@ -459,12 +451,10 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
                     })
                     
                 } else {
-                    print("移動後下一個是天數唷")
                     transferToLastAttrCellContent(targetCellContent: &movedCellContent)
                     self.collectionView.reloadData()
                 }
             } else {
-                print("移動後下一個是沒有唷")
                 transferToLastAttrCellContent(targetCellContent: &movedCellContent)
                 self.collectionView.reloadData()
             }
@@ -473,7 +463,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             if dstPreIndex >= 0 {
                 
                 if  cellContentsArray[dstPreIndex] is ScheduleAndTrafficCellContent {
-//                    print("移動後前一個是交通唷")
+                    //                    print("移動後前一個是交通唷")
                     var dstPreCellContent = cellContentsArray[dstPreIndex] as! ScheduleAndTrafficCellContent
                     transferToLastAttrCellContent(targetCellContent: &dstPreCellContent)
                 }
@@ -482,18 +472,15 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         self.collectionView.reloadData()
     }
     func transferToLastAttrCellContent (targetCellContent: inout ScheduleAndTrafficCellContent) {
-        print("transferToLastAttrCellContent")
-        
         targetCellContent.type = CustomerCellType.lastAttactionCellType
         targetCellContent.trafficInformation = nil
+        targetCellContent.trafficTime = nil
     }
     
     func getNewTrafficDetail (targetCellContent: inout ScheduleAndTrafficCellContent,
                               destinationPlaceID: String,
                               completion: @escaping ( _ routeInformation:LegsData) -> Void) {
-        
-        print("getNewTrafficDetail")
-        
+
         targetCellContent.type = CustomerCellType.scheduleAndTrafficCellType
         
         let googleDirectCaller = GoogleDirectionCaller()
@@ -504,8 +491,29 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
 }
 
+// MARK: - modify another one's class
 extension ScheduleTableViewController {
+    
     override func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
+        
     }
+    
+    override func viewWillLayoutSubviews() {
+        for _ in 0 ... spotData.count - 1 {
+            cellSelectList += [false]
+        }
+    }
+    
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        super.tableView(tableView, didSelectRowAt: indexPath)
+    
+//        var selectStatus = cellSelectList[indexPath.row]
+//        
+//        if selectStatus {
+//            selectStatus = false
+//        } else {
+//            selectStatus = true
+//        }
+//    }
 }

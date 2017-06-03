@@ -65,7 +65,6 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         server.uploadPocketTripToServer(tripData: trip)
         
         if shareTripOption.isOn {
-            print("isOn唷")
             server.uploadSharedTripToServer(tripData: trip)
         }
     }

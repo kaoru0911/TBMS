@@ -61,6 +61,8 @@ class ScheduleAndTrafficCellContent : CellContent {
     private let strWalkingTravelMode = "WALKING"
     private let strDrivingTravelMode = "DRIVING"
     
+    let calculateErrorWarnning: String! = "routeCalculate error"
+    
     private let strDisplayTransitMode = TravelMod.transit.rawValue
     private let strDisplayDrivingMode = TravelMod.driving.rawValue
     private let strDisplayWalkingMode = TravelMod.walking.rawValue
@@ -79,31 +81,31 @@ class ScheduleAndTrafficCellContent : CellContent {
         guard let trafficInformation = legsData else {
             print("沒有資料唷")
             self.trafficInformation = nil
-            self.trafficTime = "routeCalculate error"
+            self.trafficTime = calculateErrorWarnning
             return
         }
         self.trafficInformation = trafficInformation
         self.trafficTime = self.trafficInformation.duration
         
-            self.travelMode = strDisplayWalkingMode
-            var i = 0
-            
-            for step in self.trafficInformation.steps {
-                guard step != nil else{
-                    print("這是走路模式, 沒有step唷")
-                    return
-                }
-                
-                if step.travelMode == strTransitTravelMode {
-                    self.travelMode = strDisplayTransitMode
-                    
-                    break
-                    
-                } else if step.travelMode == strDrivingTravelMode {
-                    self.travelMode = strDisplayDrivingMode
-                    break
-                }
+        self.travelMode = strDisplayWalkingMode
+        var i = 0
+        
+        for step in self.trafficInformation.steps {
+            guard step != nil else{
+                print("這是走路模式, 沒有step唷")
+                return
             }
+            
+            if step.travelMode == strTransitTravelMode {
+                self.travelMode = strDisplayTransitMode
+                
+                break
+                
+            } else if step.travelMode == strDrivingTravelMode {
+                self.travelMode = strDisplayDrivingMode
+                break
+            }
+        }
     }
 }
 
