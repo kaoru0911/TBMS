@@ -28,6 +28,7 @@ class ServerConnector: NSObject {
     
     // Key-trip & spot
     let SPOTNAME_KEY: String = "spotName"
+    let SPOTCOUNTRY_KEY: String = "spotCountry"
     let TRIPNAME_KEY: String = "tripName"
     let TRIPDAYS_KEY: String = "tripDays"
     let TRIPCOUNTRY_KEY: String = "tripCountry"
@@ -35,6 +36,7 @@ class ServerConnector: NSObject {
     let NTH_KEY: String = "nth"
     let TRAFFIC_KEY: String = "traffic"
     let COVERIMG_KEY: String = "coverImg"
+    let PLACEID_KEY: String = "placeID"
     
     // tripTye
     let SHAREDTRIP: String = "sharedTrip"
@@ -48,6 +50,8 @@ class ServerConnector: NSObject {
     let DOWNLOAD_POCKETTRIP_REQ: String = "downloadPocketTrip"
     let DOWNLOAD_POCKETSPOT_REQ: String = "downloadPocketSpot"
     let DOWNLOAD_SHAREDTRIP_REQ: String = "downloadSharedTrip"
+    let DOWNLOAD_SHAREDTRIPSPOT_REQ: String = "downloadSharedTripSpot"
+    let DOWNLOAD_POCKETTRIPSPOT_REQ: String = "downloadPocketTripSpot"
     
     let UPLOAD_POCKETSPOT_REQ: String = "uploadPocketSpot"
     let UPLOAD_SHAREDTRIP_REQ: String = "uploadSharedTrip"
@@ -63,10 +67,15 @@ class ServerConnector: NSObject {
     
     
     var sharedData = DataManager.shareDataManager
-    var uploadIndex: Int = 0
+//    var uploadIndex: Int = 0
     var downloadImgIndex: Int = 0
     var threadKey = NSLock.init()
     
+    let loginNotifier = Notification.Name("loginNotifier")
+    let getPocketTripNotifier = Notification.Name("getPocketTripNotifier")
+    let getSharedTripNotifier = Notification.Name("getSharedTripNotifier")
+    let getPocketSpotNotifier = Notification.Name("getPocketSpotNotifier")
+    let downloadCoverImgNotifier = Notification.Name("downloadCoverImgNotifier")
     
     /**
      user login to server, this function would callsingleton sharedData to use account and password
@@ -112,8 +121,11 @@ class ServerConnector: NSObject {
                     print("Result: \(result), Error code:", error)
                 
                 case .failure(_):
+                    self.sharedData.isLogin = false
                     print("Server feedback fail")
             }
+            
+            NotificationCenter.default.post(name: self.loginNotifier, object: nil)
         }
     }
     
@@ -240,7 +252,7 @@ class ServerConnector: NSObject {
                         return
                     }
                     
-                    self.downloadImgIndex = 0
+//                    self.downloadImgIndex = 0
                     
                     let ImgPathURL = self.baseURLStr + "pocketTripCoverImg/"
                     
@@ -269,10 +281,12 @@ class ServerConnector: NSObject {
                     }
                 
                     self.downloadCoverImg(filePath: ImgPathURL, type: self.POCKETTRIP, imgName: downloadImgName)
-                    
+                
                 case .failure(_):
                     print("Server feedback fail")
             }
+            
+            NotificationCenter.default.post(name: self.getPocketTripNotifier, object: nil)
         }
     }
     
@@ -329,9 +343,12 @@ class ServerConnector: NSObject {
                 
                     self.downloadCoverImg(filePath: ImgPathURL, type: self.SHAREDTRIP, imgName: downloadImgName)
                 
+                
                 case .failure(_):
                     print("Server feedback fail")
             }
+            
+            NotificationCenter.default.post(name: self.getSharedTripNotifier, object: nil)
         }
     }
     
@@ -386,16 +403,17 @@ class ServerConnector: NSObject {
                 case .failure(_):
                     print("Server feedback fail")
                 }
-//                self.downloadCoverImg(filePath: filePath, type: type, imgName: imgName)
             }
         }
+        
+        NotificationCenter.default.post(name: self.downloadCoverImgNotifier, object: nil)
         
         // thread unlocked
         self.threadKey.unlock()
     }
     
     /**
-     Download user pocket trip from server
+     Download user pocket spot from server
      */
     func getPocketSpotFromServer() {
         
@@ -424,26 +442,85 @@ class ServerConnector: NSObject {
                         let spot:spotData = spotData()
                         
                         spot.spotName = getFeedback[i]["spotName"] as? String
+                        spot.spotCountry = getFeedback[i]["spotCountry"] as? String
+                        spot.placeID = getFeedback[i]["placeID"] as? String
                         
                         
                         self.sharedData.pocketSpot?.append(spot)
                     }
-                
                     
                 case .failure(_):
                     print("Server feedback fail")
             }
+            
+            NotificationCenter.default.post(name: self.getPocketSpotNotifier, object: nil)
         }
+    }
+    
+    /**
+     Download user shared trip spot from server
+     */
+    func getTripSpotFromServer(selectTrip:tripData, req:String) {
+        
+        // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
+        let parameters:Parameters = [USER_NAME_KEY: selectTrip.ownerUser! as Any,
+                                     TRIPNAME_KEY: selectTrip.tripName! as Any,
+                                     REQUEST_KEY: req]
+        
+        Alamofire.request(baseURLStr + dataDownloadURLstr, method: .post, parameters: parameters).responseJSON { response in
+            
+            debugPrint(response)
+            print("Is download shared trip spot post success: \(response.result.isSuccess)")
+            print("Response: \(String(describing: response.result.value))")
+            
+            
+            switch(response.result) {
+                
+            case .success(let json):
+                
+                guard let getFeedback = json as? [Dictionary<String,Any>] else {
+                    return
+                }
+                
+                self.sharedData.tempTripData?.country = selectTrip.country
+                self.sharedData.tempTripData?.ownerUser = selectTrip.ownerUser
+                self.sharedData.tempTripData?.coverImg = selectTrip.coverImg
+                self.sharedData.tempTripData?.days = selectTrip.days
+                self.sharedData.tempTripData?.tripName = selectTrip.tripName
+                
+                for i in 0...getFeedback.count-1 {
+                    
+                    let getSpot = tripSpotData()
+                    
+                    getSpot.belongTripName = (getFeedback[i]["tripName"] as? String)!
+                    getSpot.nDays = (getFeedback[i]["nDay"] as? Int)!
+                    getSpot.nTh = (getFeedback[i]["nth"] as? Int)!
+                    getSpot.trafficToNextSpot = (getFeedback[i]["trafficToNext"] as? String)!
+                    getSpot.spotName = (getFeedback[i]["spotName"] as? String)!
+                    getSpot.placeID = (getFeedback[i]["placeID"] as? String)!
+//                    getSpot.spotCountry = (getFeedback[i]["spotCountry"] as? String)!
+                    
+                    self.sharedData.tempTripData?.spots.append(getSpot)
+                }
+                
+            case .failure(_):
+                print("Server feedback fail")
+            }
+        }
+        
+        
     }
     
     /**
      Upload pocket spot to server
      */
-    func uploadPocketSpotToServer(spotName:String) {
+    func uploadPocketSpotToServer(spotData:spotData) {
         
         // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
         let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,
-                                     SPOTNAME_KEY: spotName,
+                                     SPOTNAME_KEY: spotData.spotName as Any,
+                                     SPOTCOUNTRY_KEY: spotData.spotCountry as Any,
+                                     PLACEID_KEY: spotData.placeID as Any,
                                      REQUEST_KEY: UPLOAD_POCKETSPOT_REQ]
         
         
@@ -509,7 +586,7 @@ class ServerConnector: NSObject {
                         
                         self.uploadTripCoverImgToServer(tripData: tripData, Req: self.UPLOAD_SHAREDTRIPCOVER_REQ)
                         
-                        self.uploadIndex = tripData.spots.count
+//                        self.uploadIndex = tripData.spots.count
                         
                         self.uploadTripSpotToServer(tripData: tripData, request: self.UPLOAD_SHAREDTRIPSPOT_REQ)
                     }                    
@@ -556,7 +633,7 @@ class ServerConnector: NSObject {
                         
                         self.uploadTripCoverImgToServer(tripData: tripData, Req: self.UPLOAD_POCKETTRIPCOVER_REQ)
                         
-                        self.uploadIndex = tripData.spots.count
+//                        self.uploadIndex = tripData.spots.count
                         
                         self.uploadTripSpotToServer(tripData: tripData, request: self.UPLOAD_POCKETTRIPSPOT_REQ)
                     }
@@ -628,6 +705,7 @@ class ServerConnector: NSObject {
                                          NDAY_KEY: tripData.spots[i].nDays as Any,
                                          NTH_KEY: tripData.spots[i].nTh as Any,
                                          TRAFFIC_KEY: tripData.spots[i].trafficToNextSpot as Any,
+                                         PLACEID_KEY: tripData.spots[i].placeID as Any,
                                          REQUEST_KEY: request]
             
             Alamofire.request(baseURLStr + dataUploadURLstr, method: .post, parameters: parameters).responseJSON { response in
@@ -636,7 +714,7 @@ class ServerConnector: NSObject {
                 print("Upload request: \(request)")
                 print("Is upload trip spot post success: \(response.result.isSuccess)")
                 print("Total count in spot array: \(String(tripData.spots.count))")
-                print("Upload index in spot array: \(String(self.uploadIndex))")
+//                print("Upload index in spot array: \(String(self.uploadIndex))")
                 print("Response: \(String(describing: response.result.value))")
             }
         }

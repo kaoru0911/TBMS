@@ -32,6 +32,17 @@ class TripFilter: NSObject {
         return resultArray
     }
     
+    func filtBySpotCountry(country:String, spotArray:Array<spotData>) -> Array<spotData> {
+        
+        var resultArray = [spotData]()
+        
+        resultArray = spotArray.filter { (spotData) -> Bool in
+            spotData.spotCountry == country
+        }
+        
+        return resultArray
+    }
+    
     func filtBySpotNDays(nDays:Int, trip:tripData) -> Array<tripSpotData> {
         
         var resultArray = [tripSpotData]()

@@ -42,8 +42,6 @@ class MenuTableViewController: UITableViewController {
         
         //menuTableView.dataSource = self
         
-        
-        
         cellData.append(("開始規劃" , UIImage(named: "kyoto2")!))
         
         cellData.append(("推薦行程" , UIImage(named: "paris3")!))
@@ -52,13 +50,12 @@ class MenuTableViewController: UITableViewController {
         
         cellData.append(("庫存景點" , UIImage(named: "Swizerland8")!))
         
-//        cellData.append("開始規劃")
-//        
-//        cellData.append("推薦行程")
-//        
-//        cellData.append("庫存行程")
-//        
-//        cellData.append("庫存景點")
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketTripNotifier"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getSharedTripNotifier"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketSpotNotifier"), object: nil)
+        
         
         //        serverCommunicate.uploadPocketSpotToServer(spotName: "清水寺")
         //        serverCommunicate.uploadPocketTripToServer(tripData: (sharedData.pocketTrips?[0])!)
@@ -67,13 +64,20 @@ class MenuTableViewController: UITableViewController {
 //        serverCommunicate.deletePocketTripFromServer(tripName: "香港三日遊")
         //        serverCommunicate.createAccount()
         //        serverCommunicate.userLogin()
-                serverCommunicate.getPocketSpotFromServer()
-                serverCommunicate.getPocketTripFromServer()
+//                serverCommunicate.getPocketSpotFromServer()
+//                serverCommunicate.getPocketTripFromServer()
         //        serverCommunicate.userInfoUpdate()
-                serverCommunicate.getSharedTripFromServer()
-        //        serverCommunicate.uploadTripCoverImgToServer(tripData: (sharedData.pocketTrips?[0])!, Req: "uploadPocketTripCover")
+//                serverCommunicate.getSharedTripFromServer()
+//                serverCommunicate.uploadTripCoverImgToServer(tripData: (sharedData.pocketTrips?[0])!, Req: "uploadPocketTripCover")
         //        serverCommunicate.uploadTripCoverImgToServer(tripData: (sharedData.pocketTrips?[0])!, Req: "uploadSharedTripCover")
-
+        
+        //===========================
+//        let testTripData = tripData()
+//        testTripData.ownerUser = "create"
+//        testTripData.tripName = "日本五日遊"
+//        
+//        serverCommunicate.getTripSpotFromServer(selectTrip: testTripData, req: serverCommunicate.DOWNLOAD_SHAREDTRIPSPOT_REQ)
+        //===========================
         
     }
 
@@ -116,15 +120,64 @@ class MenuTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         choosen = cellData[indexPath.row].0
-        performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
         
-        
+        switch choosen {
+            case "推薦行程":
+                if sharedData.sharedTrips?.count == 0 {
+                    serverCommunicate.getSharedTripFromServer()
+                } else{
+                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+                }
+            
+            case "庫存行程":
+                if !sharedData.isLogin {
+                    showAlertMessage(title: "", message: "請先登入會員")
+                    return
+                }
+                
+                if sharedData.pocketTrips?.count == 0 {
+                    serverCommunicate.getPocketTripFromServer()
+                } else{
+                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+                }
+            
+            case "庫存景點":
+                if !sharedData.isLogin {
+                    showAlertMessage(title: "", message: "請先登入會員")
+                    return
+                }
+            
+                if sharedData.pocketSpot?.count == 0 {
+                    serverCommunicate.getPocketSpotFromServer()
+                } else{
+                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+                }
+            
+            default:
+                break
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
             let nextPage = segue.destination as! CountrySelectTableViewController
         nextPage.selectedProcess = choosen
     }
+    
+    func showAlertMessage(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
+        
+        alert.addAction(ok)
+        
+        self.present(alert,animated: true,completion: nil)
+    }
+    
+    func NotificationDidGet() {
+        performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+    }
+
  
 
     /*

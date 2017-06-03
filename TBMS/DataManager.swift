@@ -18,6 +18,7 @@ class DataManager: NSObject {
     var menuCountries:Array<countryData> = []
     var chooseCountry:String = ""
     var pocketSpot:Array<spotData>?
+    var tempTripData:tripData?
     var isLogin:Bool!
     
     // 將init設為private，以免外部去調用到
@@ -59,6 +60,7 @@ class DataManager: NSObject {
         
         
         memberData = MemberData()
+        tempTripData = tripData()
         pocketTrips = []
         sharedTrips = []
         menuCountries = []
@@ -75,12 +77,14 @@ class DataManager: NSObject {
         trip.country = "日本"
         trip.coverImg = UIImage(named: "Kyoto")!
         
-        memberData?.account = "create"
-        memberData?.password = "ddd"
-        memberData?.email = "ppp.gmail.com"
+        memberData?.account = "guest"
         
-        pocketTrips?.append(trip)
-        sharedTrips?.append(trip)
+//        memberData?.account = "create"
+//        memberData?.password = "ddd"
+//        memberData?.email = "ppp.gmail.com"
+//        
+//        pocketTrips?.append(trip)
+//        sharedTrips?.append(trip)
         // ======================
         
     }
@@ -92,7 +96,8 @@ class spotData: NSObject {
     var spotName:String?
     var spotImg:UIImage?
     var spotInfo:String?
-    var spotPlaceID:String?
+    var spotCountry:String?
+    var placeID:String?
 }
 
 class tripSpotData: spotData {
@@ -112,6 +117,7 @@ class tripData: NSObject {
     var days:Int?
     var coverImg:UIImage?
     var spots = [tripSpotData]()
+    var ownerUser:String?
 }
 
 class sharedTripData: tripData {

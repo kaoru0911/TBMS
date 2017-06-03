@@ -84,7 +84,7 @@ function uploadPocketSpot($db){
 
 	$db->prepare("
 			insert into `pocketspot`
-			(`spotName`,`ownerUser`)
+			(`spotName`,`ownerUser`,`spotCountry`)
 			values
 			('$spotName','$ownerUser')
 			")->execute();

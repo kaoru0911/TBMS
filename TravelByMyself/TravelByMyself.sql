@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機: localhost
--- 產生時間： 2017 年 05 月 30 日 01:05
+-- 產生時間： 2017 年 06 月 03 日 12:28
 -- 伺服器版本: 10.1.21-MariaDB
 -- PHP 版本： 5.6.30
 
@@ -50,22 +50,22 @@ INSERT INTO `member` (`id`, `username`, `password`, `email`) VALUES
 CREATE TABLE `pocketspot` (
   `id` int(11) NOT NULL,
   `spotName` varchar(200) NOT NULL,
-  `ownerUser` varchar(200) NOT NULL
+  `ownerUser` varchar(200) NOT NULL,
+  `spotCountry` varchar(200) NOT NULL,
+  `placeID` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- 資料表的匯出資料 `pocketspot`
 --
 
-INSERT INTO `pocketspot` (`id`, `spotName`, `ownerUser`) VALUES
-(5, '羅浮宮', 'create'),
-(6, '羅浮宮', '123'),
-(7, '羅浮宮', '123'),
-(8, '羅浮宮', '123'),
-(9, '巴黎鐵塔', 'create'),
-(10, '巴黎鐵塔', '234'),
-(11, '巴黎鐵塔', '234'),
-(12, 'Tokyo', 'create');
+INSERT INTO `pocketspot` (`id`, `spotName`, `ownerUser`, `spotCountry`, `placeID`) VALUES
+(5, '羅浮宮', 'create', '法國', '1234'),
+(6, '羅浮宮', '123', '法國', ''),
+(9, '巴黎鐵塔', 'create', '法國', '5678'),
+(10, '巴黎鐵塔', '234', '法國', ''),
+(11, '巴黎鐵塔', '234', '法國', ''),
+(12, 'Tokyo', 'create', '日本', '9012');
 
 -- --------------------------------------------------------
 
@@ -102,18 +102,19 @@ CREATE TABLE `pockettripspot` (
   `nDay` int(11) NOT NULL,
   `nth` int(11) NOT NULL,
   `trafficToNext` varchar(300) NOT NULL,
-  `ownerUser` varchar(300) NOT NULL
+  `ownerUser` varchar(300) NOT NULL,
+  `placeID` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
 -- 資料表的匯出資料 `pockettripspot`
 --
 
-INSERT INTO `pockettripspot` (`id`, `tripName`, `spotName`, `nDay`, `nth`, `trafficToNext`, `ownerUser`) VALUES
-(9, '日本五日遊', '天龍寺', 4, 4, '', 'create'),
-(10, '日本五日遊', '金閣寺', 3, 3, '十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換地鐵三號線至天龍人站，向東行五十公尺後右轉，直行二十公尺', 'create'),
-(11, '日本五日遊', '平等院', 2, 2, '十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換五號公車乘坐到金閣寺站，下車向東行三十公尺', 'create'),
-(12, '日本五日遊', '清水寺', 1, 1, '十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉', 'create');
+INSERT INTO `pockettripspot` (`id`, `tripName`, `spotName`, `nDay`, `nth`, `trafficToNext`, `ownerUser`, `placeID`) VALUES
+(9, '日本五日遊', '天龍寺', 2, 2, '', 'create', ''),
+(10, '日本五日遊', '金閣寺', 2, 1, '十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換地鐵三號線至天龍人站，向東行五十公尺後右轉，直行二十公尺', 'create', ''),
+(11, '日本五日遊', '平等院', 1, 2, '十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換五號公車乘坐到金閣寺站，下車向東行三十公尺', 'create', ''),
+(12, '日本五日遊', '清水寺', 1, 1, '十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉', 'create', '');
 
 -- --------------------------------------------------------
 
@@ -136,7 +137,8 @@ CREATE TABLE `sharedtrip` (
 
 INSERT INTO `sharedtrip` (`id`, `tripName`, `tripDays`, `tripCountry`, `ownerUser`, `coverImg`) VALUES
 (10, '日本五日遊', 5, '日本', 'create', '日本遊.jpeg'),
-(11, '香港三日遊', 3, '香港', 'test', '香港.jpeg');
+(11, '香港三日遊', 3, '香港', 'test', '香港.jpeg'),
+(12, '峇里島五日遊', 5, '菲律賓', 'create', '峇里島.jpeg');
 
 -- --------------------------------------------------------
 
@@ -151,18 +153,19 @@ CREATE TABLE `sharedtripspot` (
   `nDay` int(11) NOT NULL,
   `nth` int(11) NOT NULL,
   `trafficToNext` varchar(300) NOT NULL,
-  `ownerUser` varchar(300) NOT NULL
+  `ownerUser` varchar(300) NOT NULL,
+  `placeID` varchar(300) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 資料表的匯出資料 `sharedtripspot`
 --
 
-INSERT INTO `sharedtripspot` (`id`, `tripName`, `spotName`, `nDay`, `nth`, `trafficToNext`, `ownerUser`) VALUES
-(5, '日本五日遊', '天龍寺', 4, 4, '', 'create'),
-(6, '日本五日遊', '金閣寺', 3, 3, '十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換地鐵三號線至天龍人站，向東行五十公尺後右轉，直行二十公尺', 'create'),
-(7, '日本五日遊', '平等院', 2, 2, '十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換五號公車乘坐到金閣寺站，下車向東行三十公尺', 'create'),
-(8, '日本五日遊', '清水寺', 1, 1, '十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉', 'create');
+INSERT INTO `sharedtripspot` (`id`, `tripName`, `spotName`, `nDay`, `nth`, `trafficToNext`, `ownerUser`, `placeID`) VALUES
+(5, '日本五日遊', '天龍寺', 4, 4, '', 'create', ''),
+(6, '日本五日遊', '金閣寺', 3, 3, '十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換地鐵三號線至天龍人站，向東行五十公尺後右轉，直行二十公尺', 'create', ''),
+(7, '日本五日遊', '平等院', 2, 2, '十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉，換五號公車乘坐到金閣寺站，下車向東行三十公尺', 'create', ''),
+(8, '日本五日遊', '清水寺', 1, 1, '十號公車轉三號公車，下車向西二十公尺後左轉，五十公尺後右轉', 'create', '');
 
 --
 -- 已匯出資料表的索引
@@ -217,7 +220,7 @@ ALTER TABLE `member`
 -- 使用資料表 AUTO_INCREMENT `pocketspot`
 --
 ALTER TABLE `pocketspot`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- 使用資料表 AUTO_INCREMENT `pockettrip`
 --
@@ -232,7 +235,7 @@ ALTER TABLE `pockettripspot`
 -- 使用資料表 AUTO_INCREMENT `sharedtrip`
 --
 ALTER TABLE `sharedtrip`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- 使用資料表 AUTO_INCREMENT `sharedtripspot`
 --
