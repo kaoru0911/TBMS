@@ -13,16 +13,16 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var travelPathWebView: UIWebView!
     @IBOutlet weak var collectionView: UICollectionView!
     // key setting
-    private let keyOfDateCell = "dailyScheduleSetting"
-    private let keyOfScheduleAndTrafficCell = "scheduleArray"
-    private let nameOfFinalScheduleStoryBoard = "Main"
-    private let nameOfFinalScheduleVC = "dailyRouteVC"
-    private let nameOfUploadlScheduleVC = "UploadTripScheduleVC"
+    fileprivate let keyOfDateCell = "dailyScheduleSetting"
+    fileprivate let keyOfScheduleAndTrafficCell = "scheduleArray"
+    fileprivate let nameOfFinalScheduleStoryBoard = "Main"
+    fileprivate let nameOfFinalScheduleVC = "dailyRouteVC"
+    fileprivate let nameOfUploadlScheduleVC = "UploadTripScheduleVC"
     let reuseIdForDateTypeCell = "dateCell"
     let reuseIdForscheduleAndTrafficCell = "scheduleAndTrafficCell"
     let reuseIdForLastAttractionCell = "lastAttractionCell"
-    private let currentPageDotTintColor = UIColor.black
-    private let otherPageDotTintColor = UIColor.lightGray
+    fileprivate let currentPageDotTintColor = UIColor.black
+    fileprivate let otherPageDotTintColor = UIColor.lightGray
     let goSaveTripPageBtnTitle = "確認規劃"
     let saveTripBtnTitle = "儲存行程"
     
@@ -31,6 +31,9 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     var cellContentsArray = [CellContent]()
     let shareData = DataManager.shareDataManager
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
+    var travelDays : Int!
+    var tmpTripData = [tripSpotData]()
+    
     
     var expectedTravelMode = TravelMod.transit
     
@@ -60,7 +63,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    private func prepareCellsContents (attractions:[Attraction], routesDetails:[LegsData]) -> [CellContent] {
+    fileprivate func prepareCellsContents (attractions:[Attraction], routesDetails:[LegsData]) -> [CellContent] {
         
         var cellsContents = [CellContent]()
         
@@ -86,7 +89,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     //    //確認天數
-    //    private func countTripDays(inputArray:[CellContent]) -> Int{
+    //    fileprivate func countTripDays(inputArray:[CellContent]) -> Int{
     //        var daysCounting = 0
     //        for obj in inputArray {
     //            if (obj is DateCellContent){
@@ -105,7 +108,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     ///         - The contens with key - "scheduleArray": CellContent with dateType.
     
     
-    private func seperateArrayByDate (intputArray:[CellContent]) -> [[String:Any]]
+    fileprivate func seperateArrayByDate (intputArray:[CellContent]) -> [[String:Any]]
     {
         //-------測試用-------
         //        print("intputArray(seperateArrayByDate)=\(intputArray.count)")
@@ -165,9 +168,10 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
             print("沒有spot唷")
             return tmpVCArray
         }
-        let days = countTotalTripDays(spot: cellContents.spots)
+        travelDays = countTotalTripDays(spot: cellContents.spots)
+
         
-        for i in 0...days - 1 {
+        for i in 0...travelDays - 1 {
 
             let tmpVC = myStoryBoard.instantiateViewController(withIdentifier: nameOfFinalScheduleVC) as! ScheduleTableViewController
             tmpVC.data = cellContents
@@ -179,7 +183,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         return tmpVCArray
     }
     
-    private func countTotalTripDays (spot:[tripSpotData]) -> Int {
+    fileprivate func countTotalTripDays (spot:[tripSpotData]) -> Int {
         
         let days = (spot.max{$0.0.nDays < $0.1.nDays})?.nDays
         
@@ -214,6 +218,21 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         self.collectionView.reloadData()
     }
     
+    
+    
+    fileprivate func generateDetailRouteString (route:LegsData) -> String {
+        return ""
+    }
+    
+    fileprivate func generateRouteTitleString (cellContent:ScheduleAndTrafficCellContent) -> String {
+        return "\(cellContent.travelMode), \(cellContent.trafficTime)min"
+    }
+}
+
+
+// MARK: - Methods about packaging routes data and taking to the next page.
+extension RearrangeScheduleVC {
+    
     @IBAction func finishAndNextPage(_ sender: UIBarButtonItem) {
         
         let sb = UIStoryboard(name: nameOfFinalScheduleStoryBoard, bundle: nil)
@@ -228,7 +247,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         let scrollView = scrollVCProductor.pagingScrollingVC
         scrollView?.automaticallyAdjustsScrollViewInsets = false
         self.navigationController?.navigationBar.isTranslucent = false
-
+        
         let nextPageBtn = UIBarButtonItem(title: goSaveTripPageBtnTitle, style: .plain, target: self, action: #selector(finishScheduleScrollViewAndGoNextPage))
         scrollView?.navigationItem.rightBarButtonItem = nextPageBtn
         
@@ -280,23 +299,16 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         return trip
     }
     
-    private func generateDetailRouteString (route:LegsData) -> String {
-        return ""
-    }
-    
-    private func generateRouteTitleString (cellContent:ScheduleAndTrafficCellContent) -> String {
-        return "\(cellContent.travelMode), \(cellContent.trafficTime)min"
-    }
-    
     func finishScheduleScrollViewAndGoNextPage() {
         let sb = UIStoryboard(name: nameOfFinalScheduleStoryBoard, bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: nameOfUploadlScheduleVC) as! UploadTravelScheduleViewController
+        vc.travelDays = travelDays
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
 
-
+// MARK: - CollectionViewController protocol method
 extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
