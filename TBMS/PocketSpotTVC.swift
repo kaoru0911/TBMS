@@ -37,7 +37,7 @@ class PocketSpotTVC: UITableViewController {
         
         spotList = tripFilter.filtBySpotCountry(country: selectedCountry, spotArray: sharedData.pocketSpot!)
 
-        let spot = spotData()
+//        let spot = spotData()
     }
 
     override func didReceiveMemoryWarning() {

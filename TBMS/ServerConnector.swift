@@ -249,6 +249,7 @@ class ServerConnector: NSObject {
                 case .success(let json):
                     
                     guard let getFeedback = json as? [Dictionary<String,Any>] else {
+                        NotificationCenter.default.post(name: self.getPocketTripNotifier, object: nil)
                         return
                     }
                     
@@ -311,6 +312,7 @@ class ServerConnector: NSObject {
                 case .success(let json):
                     
                     guard let getFeedback = json as? [Dictionary<String,Any>] else {
+                        NotificationCenter.default.post(name: self.getSharedTripNotifier, object: nil)
                         return
                     }
                     
@@ -434,6 +436,7 @@ class ServerConnector: NSObject {
                 case .success(let json):
                     
                     guard let getFeedback = json as? [Dictionary<String,Any>] else {
+                        NotificationCenter.default.post(name: self.getPocketSpotNotifier, object: nil)
                         return
                     }
                     
