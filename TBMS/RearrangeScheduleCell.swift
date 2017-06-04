@@ -107,12 +107,6 @@ class ScheduleAndTrafficCellContent : CellContent {
             }
         }
     }
-    
-//    func duringTimeTransformer (time:Int) -> String {
-//        
-//        returnString = ""
-//        
-//    }
 }
 
 /// For checking the cell content's type.

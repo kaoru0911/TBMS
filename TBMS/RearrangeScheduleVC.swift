@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import GooglePlaces
 
 class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
@@ -500,24 +501,69 @@ extension ScheduleTableViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         self.tableView.reloadData()
-        
     }
-    
-    override func viewWillLayoutSubviews() {
-        //        for _ in 0 ... spotData.count - 1 {
-        //            cellSelectList += [false]
-        //        }
-    }
-    
-    //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    //        super.tableView(tableView, didSelectRowAt: indexPath)
-    
-    //        var selectStatus = cellSelectList[indexPath.row]
-    //
-    //        if selectStatus {
-    //            selectStatus = false
-    //        } else {
-    //            selectStatus = true
-    //        }
-    //    }
 }
+
+// MARK: - 待建立.swift的model
+class DataTypeTransformer {
+    
+    func transferGMPlaceToSpotDataType(obj: GMSPlace) -> spotData {
+        let spotObj = spotData()
+        spotObj.spotName = obj.name
+        spotObj.placeID = obj.placeID
+        return spotObj
+    }
+    
+    func transferSpotDataToAttractionsType(obj: spotData) -> Attraction {
+        var attr = Attraction()
+        attr.attrctionName = obj.spotName
+        attr.placeID = obj.placeID
+        return attr
+    }
+    
+    func transferAttractionToSpotDataTypeType(obj: Attraction) -> spotData {
+        let spotObj = spotData()
+        spotObj.spotName = obj.attrctionName
+        spotObj.placeID = obj.placeID
+        return spotObj
+    }
+    
+    func setValueToAttractionsList(placeList: [GMSPlace]) -> [Attraction] {
+        
+        var attractionsList = [Attraction]()
+        
+        for place in placeList {
+            var tmpAttraction = Attraction()
+            tmpAttraction.setValueToAttractionObject(place: place)
+            attractionsList.append(tmpAttraction)
+        }
+        return attractionsList
+    }
+    
+    func setValueToAtrractionListFromSpotList(spotList: [spotData]) -> [Attraction] {
+        
+        var attractionsList = [Attraction]()
+        
+        for spot in spotList {
+            let attr = transferSpotDataToAttractionsType(obj: spot)
+            attractionsList.append(attr)
+        }
+        return attractionsList
+    }
+    
+    func setValueToSpotDataList(attractionList: [Attraction]!) -> [spotData]! {
+        
+        guard !attractionList.isEmpty else { return nil }
+        
+        var spotList = [spotData]()
+        for i in 0 ... attractionList.count - 1 {
+            let spot = transferAttractionToSpotDataTypeType(obj: attractionList[i])
+            spotList.append(spot)
+        }
+        return spotList
+    }
+}
+
+
+
+

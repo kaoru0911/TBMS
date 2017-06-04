@@ -12,51 +12,53 @@ import GooglePlaces
 
 class PocketSpotTVC: UITableViewController {
     
-
+    
     var selectedCountry: String!
     var selectedProcess: String!
     var sharedData = DataManager.shareDataManager
     var tripFilter: TripFilter!
     var spotList: [spotData]!
-    var selectAttraction = [GMSPlace]()
-
-
-
+    
+    var selectedSpots = [spotData]()
+    var selectedIndex = [Int]()
+    var scheduleAttractions = [Attraction]()
+    let typeTransformer = DataTypeTransformer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
+        
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         tripFilter = TripFilter()
         
-        spotList = [spotData]()
+        let inputSpotList = tripFilter.filtBySpotCountry(country: selectedCountry, spotArray: sharedData.pocketSpot!)
+        let existSpots = typeTransformer.setValueToSpotDataList(attractionList: scheduleAttractions)
         
-        spotList = tripFilter.filtBySpotCountry(country: selectedCountry, spotArray: sharedData.pocketSpot!)
-
-//        let spot = spotData()
+        spotList = existSpotsFilter(totalSpotDatas: inputSpotList, existSpotDatas: existSpots)
+        //        let spot = spotData()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return spotList.count
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "spotCell", for: indexPath) as! PocketSpotTVCell
@@ -64,23 +66,32 @@ class PocketSpotTVC: UITableViewController {
         let image = UIImage(named:"addSpot.png")
         
         cell.spotName.text = spotList[indexPath.row].spotName
+        cell.selectStatus.isHidden = true
+        cell.addSpotBtn.tag = indexPath.row
         
-        switch selectedProcess {
-            case "庫存景點":
-                cell.addSpotBtn.isHidden = true
-            default:
-                cell.addSpotBtn.isHidden = false
-                cell.addSpotBtn.setBackgroundImage(image, for: .normal)
-        }        
+        if selectedProcess == "庫存景點" || selectedIndex.contains(indexPath.row) {
+            cell.addSpotBtn.isHidden = true
+        } else {
+            cell.addSpotBtn.isHidden = false
+            cell.addSpotBtn.setBackgroundImage(image, for: .normal)
+        }
+        
+        if selectedIndex.contains(indexPath.row) {
+            cell.selectStatus.isHidden = false
+        }
         
         return cell
     }
     
     @IBAction func addSpotPress(_ sender: UIButton) {
         
-        if let cell = sender as? PocketSpotTVCell, let index = tableView.indexPath(for: cell) {
-        performSegue(withIdentifier: "ShowStorageAttration", sender: cell)
-        }
+        let index = sender.tag
+        
+        selectedSpots.append(spotList[index])
+        selectedIndex.append(index)
+        sender.isHidden = true
+        
+        self.tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -96,8 +107,30 @@ class PocketSpotTVC: UITableViewController {
         
         return spotList
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-       }
+}
 
+extension PocketSpotTVC {
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        let selectedAttractions = typeTransformer.setValueToAtrractionListFromSpotList(spotList: selectedSpots)
+        
+        NotificationCenter.default.post( name: NSNotification.Name(rawValue: "PocketSpotTVCDisappear"),
+                                         object: selectedAttractions )
+    }
+    
+    
+    func existSpotsFilter(totalSpotDatas: [spotData], existSpotDatas: [spotData]!) -> [spotData] {
+        
+        guard existSpotDatas != nil else { return totalSpotDatas }
+        
+        var tmpSpotsArray = totalSpotDatas
+        for spot in totalSpotDatas {
+            if existSpotDatas.contains(spot) {
+                let index = tmpSpotsArray.index(of: spot)
+                tmpSpotsArray.remove(at: index!)
+            }
+        }
+        return tmpSpotsArray
+    }
 }

@@ -54,12 +54,17 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
             return
         }
         
+        guard sharedData.memberData != nil else {
+            /// show alert
+                return
+        }
+        
         trip.tripName = tripName
         trip.coverImg = image
-        
+
         trip.days = travelDays
-        trip.country = sharedData.chooseCountry
         trip.spots = attractionsAndRoute
+        trip.country = sharedData.chooseCountry
         
         let server = ServerConnector()
         server.uploadPocketTripToServer(tripData: trip)
