@@ -57,15 +57,15 @@ class ScheduleAndTrafficCellContent : CellContent {
     var attraction : Attraction!
     var trafficInformation : LegsData!
     
-    private let strTransitTravelMode = "TRANSIT"
-    private let strWalkingTravelMode = "WALKING"
-    private let strDrivingTravelMode = "DRIVING"
+    private let strTransitTravelMode = TravelMod.transit.rawValue
+    private let strWalkingTravelMode = TravelMod.driving.rawValue
+    private let strDrivingTravelMode = TravelMod.walking.rawValue
     
     let calculateErrorWarnning: String! = "routeCalculate error"
     
-    private let strDisplayTransitMode = TravelMod.transit.rawValue
-    private let strDisplayDrivingMode = TravelMod.driving.rawValue
-    private let strDisplayWalkingMode = TravelMod.walking.rawValue
+    private let strDisplayTransitMode = "公車/捷運"
+    private let strDisplayDrivingMode = "開車"
+    private let strDisplayWalkingMode = "走路"
     
     required init(attraction:Attraction, trafficInformation:LegsData!) {
         super.init()
@@ -84,21 +84,21 @@ class ScheduleAndTrafficCellContent : CellContent {
             self.trafficTime = calculateErrorWarnning
             return
         }
+        
         self.trafficInformation = trafficInformation
         self.trafficTime = self.trafficInformation.duration
         
         self.travelMode = strDisplayWalkingMode
-        var i = 0
+
+        guard let routeDetail = self.trafficInformation.steps else{
+            print("這是走路模式, 沒有step唷")
+            return
+        }
         
-        for step in self.trafficInformation.steps {
-            guard step != nil else{
-                print("這是走路模式, 沒有step唷")
-                return
-            }
+        for step in routeDetail {
             
             if step.travelMode == strTransitTravelMode {
                 self.travelMode = strDisplayTransitMode
-                
                 break
                 
             } else if step.travelMode == strDrivingTravelMode {
@@ -107,6 +107,12 @@ class ScheduleAndTrafficCellContent : CellContent {
             }
         }
     }
+    
+//    func duringTimeTransformer (time:Int) -> String {
+//        
+//        returnString = ""
+//        
+//    }
 }
 
 /// For checking the cell content's type.

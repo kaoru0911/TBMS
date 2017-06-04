@@ -21,7 +21,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     let reuseIdForDateTypeCell = "dateCell"
     let reuseIdForscheduleAndTrafficCell = "scheduleAndTrafficCell"
     let reuseIdForLastAttractionCell = "lastAttractionCell"
-
+    
     fileprivate let currentPageDotTintColor = UIColor.black
     fileprivate let otherPageDotTintColor = UIColor.lightGray
     let goSaveTripPageBtnTitle = "確認規劃"
@@ -227,10 +227,9 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
     fileprivate func generateRouteTitleString (cellContent:ScheduleAndTrafficCellContent) -> String! {
         
-//        guard let travelTime = cellContent.trafficTime else { return nil }
-//        guard travelTime != "routeCalculate error" else { return nil }
-//        return "\(cellContent.travelMode), \(travelTime)min"
-        return "\(cellContent.travelMode), \(cellContent.trafficTime)min"
+        guard let travelTime = cellContent.trafficTime else { return "時間計算error唷" }
+        guard travelTime != "routeCalculate error" else { return "時間計算error唷" }
+        return "\(cellContent.travelMode!), \(travelTime)"
     }
 }
 
@@ -276,12 +275,17 @@ extension RearrangeScheduleVC {
             } else if cellContent is ScheduleAndTrafficCellContent {
                 let cellContentData = cellContent as! ScheduleAndTrafficCellContent
                 
-                tmpAttractionData.trafficTitle = generateDetailRouteString(route: cellContentData.trafficInformation)
+                tmpAttractionData.trafficTitle = generateRouteTitleString(cellContent: cellContentData)
                 
-                tmpAttractionData.spotName = cellContentData.viewPointName
+                tmpAttractionData.spotName = cellContentData.viewPointName!
                 tmpAttractionData.nDays = tmpDateStorage
                 tmpAttractionData.nTh = tmpCellIndexCount
-                tmpAttractionData.trafficTitle = cellContentData.trafficTime
+                tmpAttractionData.trafficToNextSpot = generateDetailRouteString(route: cellContentData.trafficInformation)
+                print("\(tmpAttractionData.spotName)")
+                print("\(tmpAttractionData.trafficTitle)")
+                print("\(tmpAttractionData.nDays)")
+                print("\(tmpAttractionData.nTh)")
+                print("\(tmpAttractionData.trafficToNextSpot)")
                 
                 spots.append(tmpAttractionData)
                 tmpAttractionData = tripSpotData()
@@ -289,9 +293,9 @@ extension RearrangeScheduleVC {
                 
             } else {
                 print("cellContent兩種type都不是唷")
-                
             }
         }
+        
         let trip = tripData()
         trip.spots = spots
         return trip
@@ -480,7 +484,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
     func getNewTrafficDetail (targetCellContent: inout ScheduleAndTrafficCellContent,
                               destinationPlaceID: String,
                               completion: @escaping ( _ routeInformation:LegsData) -> Void) {
-
+        
         targetCellContent.type = CustomerCellType.scheduleAndTrafficCellType
         
         let googleDirectCaller = GoogleDirectionCaller()
@@ -500,20 +504,20 @@ extension ScheduleTableViewController {
     }
     
     override func viewWillLayoutSubviews() {
-        for _ in 0 ... spotData.count - 1 {
-//            cellSelectList += [false]
-        }
+        //        for _ in 0 ... spotData.count - 1 {
+        //            cellSelectList += [false]
+        //        }
     }
     
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        super.tableView(tableView, didSelectRowAt: indexPath)
+    //    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        super.tableView(tableView, didSelectRowAt: indexPath)
     
-//        var selectStatus = cellSelectList[indexPath.row]
-//        
-//        if selectStatus {
-//            selectStatus = false
-//        } else {
-//            selectStatus = true
-//        }
-//    }
+    //        var selectStatus = cellSelectList[indexPath.row]
+    //
+    //        if selectStatus {
+    //            selectStatus = false
+    //        } else {
+    //            selectStatus = true
+    //        }
+    //    }
 }

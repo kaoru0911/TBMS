@@ -22,7 +22,7 @@ class ScheduleTableViewController: UITableViewController {
     var nDaySchedule: Int!
     
     //====test===
-//    var sharedData = DataManager.shareDataManager
+    //    var sharedData = DataManager.shareDataManager
     //=======
     
     override func viewDidLoad() {
@@ -30,9 +30,9 @@ class ScheduleTableViewController: UITableViewController {
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         
-//        data = (sharedData.pocketTrips?[0])!
+        //        data = (sharedData.pocketTrips?[0])!
         
-//        nDaySchedule = 2
+        //        nDaySchedule = 2
         
         spotData = filter.filtBySpotNDays(nDays: nDaySchedule, trip: data)
         
@@ -48,39 +48,39 @@ class ScheduleTableViewController: UITableViewController {
             selectCellRow.append(false)
         }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return spotData.count//spotArray.count
     }
-
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "scheduleCellID", for: indexPath) as! ScheduleTableViewCell
         
         cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
-
+        
         cell.spotItemLabel.text = spotData[indexPath.row].spotName  //spotArray[indexPath.row]
-
+        
         cell.spotItemLabel.backgroundColor = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
         
         cell.spotItemLabel.layer.cornerRadius = 10
         cell.spotItemLabel.layer.masksToBounds = true
-
+        
         // auto line break
         cell.describeLabel.text = spotData[indexPath.row].trafficToNextSpot
-
+        
         // 自動調整高度
         cell.describeLabel.numberOfLines = 0
         cell.describeLabel.sizeToFit()
@@ -94,7 +94,7 @@ class ScheduleTableViewController: UITableViewController {
             if selectCellRow[indexPath.row] {
                 cell.describeLabel.text = spotData[indexPath.row].trafficToNextSpot
             } else{
-                cell.describeLabel.text = "檢視詳細交通資訊"
+                cell.describeLabel.text = spotData[indexPath.row].trafficTitle
             }
             
             cellHeightArray.append(cell.describeLabel.frame.height + cell.spotItemLabel.frame.height + 10)
@@ -103,20 +103,22 @@ class ScheduleTableViewController: UITableViewController {
             cellHeightArray.append(defaultCellHeight)
         }
         
-        if cell.describeLabel.text == "" {
+        if cell.describeLabel.text == "" || cell.describeLabel.text == nil || indexPath.row == spotData.count - 1 {
+            
+            cell.describeLabel.text = ""
             
         } else{
             // 放入箭頭圖片
             cell.cellImage.image = UIImage(named: "downArrow2")
         }
-
+        
         return cell
     }
     
-//    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        
-//        return 80
-//    }
+    //    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    //
+    //        return 80
+    //    }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -157,5 +159,5 @@ class ScheduleTableViewController: UITableViewController {
             }
         }
     }
-
+    
 }
