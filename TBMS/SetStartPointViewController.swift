@@ -32,6 +32,10 @@ class SetStartPointViewController: UIViewController {
         goToNextPage.layer.cornerRadius = 5.0
         chooseStartingPtBtn.layer.cornerRadius = 5.0
         
+        // dismiss keyboard
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
         print(attractionsList.first!.attrctionName!)
     }
     
@@ -39,6 +43,18 @@ class SetStartPointViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    // For pressing return on the keyboard to dismiss keyboard
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        for textField in self.view.subviews where textField is UITextField {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func hideKeyboard() {
+        view.endEditing(true)
     }
     
     
