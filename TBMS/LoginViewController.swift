@@ -75,24 +75,22 @@ class LoginViewController: UIViewController {
             
             showAlertMessage(title: "Success", message: "登入成功")
             
-//            performSegue(withIdentifier: "goMemberVC" , sender: nil)
+            performSegue(withIdentifier: "goMemberVC" , sender: nil)
             
             
-//            // Dismiss the Old
-//            if let presented = self.presentedViewController {
-//                presented.removeFromParentViewController()
+////            // Dismiss the Old
+////            if let presented = self.presentedViewController {
+////                presented.removeFromParentViewController()
+////            }
+//            
+//            if presentedViewController != nil {
+//                removeFromParentViewController()
 //            }
-            
-            if presentedViewController != nil {
-                removeFromParentViewController()
-            }
-            
-            // Present the New
-            let main = UIStoryboard(name: "Main", bundle: nil)
-            let memberVC = main.instantiateViewController(withIdentifier: "MemberViewController") as! MemberViewController
-            self.present(memberVC, animated: true, completion: nil)
-            
-        
+//            
+//            // Present the New
+//            let main = UIStoryboard(name: "Main", bundle: nil)
+//            let memberVC = main.instantiateViewController(withIdentifier: "MemberViewController") as! MemberViewController
+//            self.present(memberVC, animated: true, completion: nil)
             
             
         } else if self.sharedData.isLogin == false {
