@@ -26,6 +26,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     var placeIdStorage:String!
     var tmpPlaceData : GMSPlace!
     var tmpPlaceDataStorage = [GMSPlace]()
+    var attractionStorage = [Attraction]()
     var sharedData = DataManager.shareDataManager
     
     
@@ -40,6 +41,10 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         spotSearchBtn.layer.cornerRadius = 5.0
         imageView.image = UIImage(named: "GoogleMapLogo")
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(addNewAttractionFromPocket(notification:)),
+                                               name: NSNotification.Name(rawValue: "PocketSpotTVCDisappear"),
+                                               object: nil)
     }
     
     // 用placeID取得google第一張地點照片，並呼叫loadImageForMetadata
@@ -71,7 +76,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     // TableView陣列
-    var ListArray: NSMutableArray = []
+    var listArray: NSMutableArray = []
     var placesClient: GMSPlacesClient!
     
     //    func goSetStartPointPage() {
@@ -88,15 +93,15 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ListArray.count
+        return listArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: viewPointTableViewCell = tableView.dequeueReusableCell(withIdentifier: "viewPointTableViewCell") as! viewPointTableViewCell
         
         cell.noCellLabel.text = "\(indexPath.row + 1 ). "
-        cell.spotCellLabel.text = "\(ListArray.object(at: indexPath.row))"
-        //        cell.textLabel?.text = "\(ListArray.object(at: indexPath.row))"
+        cell.spotCellLabel.text = "\(listArray.object(at: indexPath.row))"
+        //        cell.textLabel?.text = "\(listArray.object(at: indexPath.row))"
         return cell
     }
     
@@ -105,7 +110,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        self.ListArray.removeObject(at: indexPath.row)
+        self.listArray.removeObject(at: indexPath.row)
         
         self.spotTableView.reloadData()
         
@@ -127,8 +132,8 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         }
         
         // 尋訪若有相同景點字串，即跳出
-        for  i in 0..<ListArray.count {
-            let spotExisted:String = ListArray[i] as! String
+        for  i in 0..<listArray.count {
+            let spotExisted:String = listArray[i] as! String
             guard spotExisted != spotTextView.text else {
                 spotExistedChecking = true
                 return
@@ -137,15 +142,17 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         
         // 若沒有相同景點字串，可加入TableView陣列
         if spotExistedChecking == false {
-            ListArray.add(spotTextView.text)
+            listArray.add(spotTextView.text)
             self.spotTableView.reloadData();
-            tmpPlaceDataStorage.append(tmpPlaceData!)
+            
+            var attr = Attraction()
+            attr.setValueToAttractionObject(place: tmpPlaceData)
+            attractionStorage.append(attr)
         }
     }
     
     
     @IBAction func searchBtn(_ sender: Any) {
-        
         
         let config = GMSPlacePickerConfig(viewport: nil)
         let placePicker = GMSPlacePicker(config: config)
@@ -175,39 +182,50 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             print("Place attributions \(String(describing: place.attributions))")
             
             self.tmpPlaceData = place
-            print(self.tmpPlaceData.name)
         })
     }
     
-    private func setValueToAttractionsList(placeList:[GMSPlace]) -> [Attraction] {
-        
-        var attractionsList = [Attraction]()
-        
-        for place in placeList {
-            var tmpAttraction = Attraction()
-            tmpAttraction.setValueToAttractionObject(place: place)
-            attractionsList.append(tmpAttraction)
-        }
-        return attractionsList
-    }
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        
         if segue.identifier == "GoToSetStartPoint" {
-            guard tmpPlaceDataStorage.isEmpty != true else {
-                print("沒有資料唷")
-                return
-            }
+            
+            guard attractionStorage.isEmpty != true else { return }
+            
             let vc = segue.destination as! SetStartPointViewController
-            let attractions = setValueToAttractionsList(placeList: tmpPlaceDataStorage)
-            vc.attractionsList = attractions
+            //let attractions = setValueToAttractionsList(placeList: tmpPlaceDataStorage)
+            vc.attractionsList = attractionStorage
+            
         } else if segue.identifier == "ShowStorageAttration" {
             
             let nextPage = segue.destination as! PocketSpotTVC
             
             nextPage.selectedCountry = sharedData.chooseCountry
             nextPage.selectedProcess = "開始規劃"
+            nextPage.scheduleAttractions = attractionStorage
         }
+    }
+}
+
+extension AddViewPointViewController {
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        attractionStorage.remove(at: indexPath.row)
+    }
+    
+    func addNewAttractionFromPocket( notification:Notification ) {
+        
+        attractionStorage += ( notification.object as! [Attraction] )
+        
+        var cellTextArray = [String]()
+        for attr in attractionStorage {
+            let name = attr.attrctionName
+            cellTextArray.append(name ?? "")
+        }
+        listArray = cellTextArray as! NSMutableArray
+        
+        self.spotTableView.reloadData()
     }
 }
