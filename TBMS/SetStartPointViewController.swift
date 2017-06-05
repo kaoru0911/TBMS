@@ -72,19 +72,6 @@ class SetStartPointViewController: UIViewController {
         }
     }
     
-    func setTravelModType(routeDetail: inout [LegsData]) {
-        
-        for leg in routeDetail {
-            
-//            guard let step =  else {
-//                
-//            }
-            
-//            routeDetail[0].steps[0].travelMode;
-//            let setp = routeDetail[0].steps[0].steps?[0].travelMode
-        }
-    }
-    
     func getTotalRouteInformation(completion: @escaping ()->Void ) {
         
         var origin = attractionsList.first!
