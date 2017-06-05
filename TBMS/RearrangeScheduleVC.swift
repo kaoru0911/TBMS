@@ -59,6 +59,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(_:)))
         self.collectionView.addGestureRecognizer(longPressGesture)
         
+        //self.collectionView.layer.cornerRadius = 3.0
         
         
     
@@ -352,6 +353,8 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         let attractionsCellSize = CGSize(width: UIScreen.main.bounds.width, height: 120)
         let lastAttractionsCellSize = CGSize(width: UIScreen.main.bounds.width, height: 60)
         
+        
+        
         switch cellContentsArray[indexPath.item].type! {
         case .dateCellType:
             return dayCellSize
@@ -359,6 +362,8 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             return attractionsCellSize
         case .lastAttactionCellType:
             return lastAttractionsCellSize
+            
+            
         }
     }
     
@@ -371,7 +376,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForDateTypeCell, for: indexPath) as! DateCell
             // if is the 1st day cell, show the adding days button
-            if indexPath.item == 0{
+            if indexPath.item == 0 {
                 cell.addNewTripDayButton.isHidden = false
             } else {
                 cell.addNewTripDayButton.isHidden = true
@@ -389,6 +394,11 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             let cellContent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
             cell.viewPointName.text = cellContent.viewPointName
             cell.trafficInf.text = "\(cellContent.travelMode ?? ""), \(cellContent.trafficTime ?? "")"
+            
+            
+            cell.viewPointBGBlock.layer.cornerRadius = 4.0
+            cell.arrow.layer.cornerRadius = 4.0
+            
             return cell
             
         case .lastAttactionCellType:
