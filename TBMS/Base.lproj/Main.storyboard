@@ -577,40 +577,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vbZ-h8-ePK">
-                                <rect key="frame" x="136" y="75" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vbZ-h8-ePK">
+                                <rect key="frame" x="136" y="75" width="103" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="行程名稱 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPR-CM-BWx">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="行程名稱 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPR-CM-BWx">
                                 <rect key="frame" x="44" y="84" width="79" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="行程封面 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fE-UE-0x3">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="行程封面 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fE-UE-0x3">
                                 <rect key="frame" x="44" y="120" width="79" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZX0-7v-j6O">
-                                <rect key="frame" x="240" y="527" width="62" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="庫存行程"/>
-                                <connections>
-                                    <action selector="uploadTripDataBtnPressed:" destination="6GZ-KH-w72" eventType="touchUpInside" id="DWZ-e9-uxD"/>
-                                    <segue destination="hhN-hE-NTa" kind="unwind" identifier="unwindSegueToMenuVC" unwindAction="functionNameWith_segue:" id="DoX-8Q-59a"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pID-nw-onH">
-                                <rect key="frame" x="66" y="527" width="92" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.4338873028755188" green="0.73191207647323608" blue="0.78704851865768433" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pID-nw-onH">
+                                <rect key="frame" x="46.5" y="527" width="100" height="30"/>
+                                <color key="backgroundColor" red="0.43006226420402527" green="0.73552185297012329" blue="0.79083317518234253" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="7VK-Vl-Ru8"/>
+                                    <constraint firstAttribute="height" constant="30" id="fub-Zs-tae"/>
+                                </constraints>
                                 <state key="normal" title="變更行程封面">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -618,25 +609,62 @@
                                     <action selector="changeCoverImgBtnPressed:" destination="6GZ-KH-w72" eventType="touchUpInside" id="oTc-33-Kqi"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IHI-SC-7Xr">
-                                <rect key="frame" x="40" y="150" width="298" height="162"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IHI-SC-7Xr">
+                                <rect key="frame" x="46.5" y="150" width="282" height="162"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="162" id="PTX-Dy-Dxd"/>
+                                </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="是否分享" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hxz-ST-Hgm">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="是否分享" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hxz-ST-Hgm">
                                 <rect key="frame" x="59" y="340" width="70" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mh0-Bl-0ne">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mh0-Bl-0ne">
                                 <rect key="frame" x="137" y="335" width="51" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </switch>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZX0-7v-j6O">
+                                <rect key="frame" x="228.5" y="527" width="100" height="30"/>
+                                <color key="backgroundColor" red="0.44175875186920166" green="0.73191380500793457" blue="0.78333240747451782" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="62M-Sm-z12"/>
+                                    <constraint firstAttribute="height" constant="30" id="Rhk-n2-Dmh"/>
+                                </constraints>
+                                <state key="normal" title="庫存行程">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="uploadTripDataBtnPressed:" destination="6GZ-KH-w72" eventType="touchUpInside" id="DWZ-e9-uxD"/>
+                                    <segue destination="hhN-hE-NTa" kind="unwind" identifier="unwindSegueToMenuVC" unwindAction="functionNameWith_segue:" id="DoX-8Q-59a"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="0fE-UE-0x3" firstAttribute="leading" secondItem="kIC-Hr-THu" secondAttribute="leadingMargin" constant="28" id="3UV-yv-OCG"/>
+                            <constraint firstItem="IHI-SC-7Xr" firstAttribute="top" secondItem="0fE-UE-0x3" secondAttribute="bottom" constant="9" id="AtQ-zi-S3c"/>
+                            <constraint firstItem="ZX0-7v-j6O" firstAttribute="trailing" secondItem="IHI-SC-7Xr" secondAttribute="trailing" id="DbW-gs-UDi"/>
+                            <constraint firstItem="IHI-SC-7Xr" firstAttribute="centerX" secondItem="vbZ-h8-ePK" secondAttribute="centerX" id="EcE-oZ-oj2"/>
+                            <constraint firstItem="0fE-UE-0x3" firstAttribute="leading" secondItem="BPR-CM-BWx" secondAttribute="leading" id="FvL-MX-Xe0"/>
+                            <constraint firstItem="ZX0-7v-j6O" firstAttribute="leading" secondItem="pID-nw-onH" secondAttribute="trailing" constant="82" id="Lko-4s-JG1"/>
+                            <constraint firstItem="IHI-SC-7Xr" firstAttribute="centerX" secondItem="kIC-Hr-THu" secondAttribute="centerX" id="RZO-88-29r"/>
+                            <constraint firstItem="pID-nw-onH" firstAttribute="baseline" secondItem="ZX0-7v-j6O" secondAttribute="baseline" id="Uwn-cz-m97"/>
+                            <constraint firstItem="Mh0-Bl-0ne" firstAttribute="centerY" secondItem="Hxz-ST-Hgm" secondAttribute="centerY" id="W88-hy-p7F"/>
+                            <constraint firstItem="0fE-UE-0x3" firstAttribute="top" secondItem="BPR-CM-BWx" secondAttribute="bottom" constant="15" id="XkX-ep-joC"/>
+                            <constraint firstItem="vbZ-h8-ePK" firstAttribute="bottom" secondItem="BPR-CM-BWx" secondAttribute="bottom" id="a5v-8L-XIU"/>
+                            <constraint firstItem="Mh0-Bl-0ne" firstAttribute="leading" secondItem="kIC-Hr-THu" secondAttribute="leading" constant="137" id="c89-Hf-cQd"/>
+                            <constraint firstItem="vbZ-h8-ePK" firstAttribute="leading" secondItem="BPR-CM-BWx" secondAttribute="trailing" constant="13" id="ihn-7h-RbM"/>
+                            <constraint firstItem="Mh0-Bl-0ne" firstAttribute="top" secondItem="IHI-SC-7Xr" secondAttribute="bottom" constant="23" id="mnK-Xj-C9L"/>
+                            <constraint firstItem="Mh0-Bl-0ne" firstAttribute="leading" secondItem="Hxz-ST-Hgm" secondAttribute="trailing" constant="8" symbolic="YES" id="r8a-sW-9PP"/>
+                            <constraint firstItem="IHI-SC-7Xr" firstAttribute="top" secondItem="kIC-Hr-THu" secondAttribute="top" constant="150" id="vTL-2P-pFB"/>
+                            <constraint firstItem="pID-nw-onH" firstAttribute="leading" secondItem="IHI-SC-7Xr" secondAttribute="leading" id="wiC-j5-XDf"/>
+                            <constraint firstItem="XVt-uc-YYI" firstAttribute="top" secondItem="pID-nw-onH" secondAttribute="bottom" constant="110" id="z3c-aQ-FjQ"/>
+                        </constraints>
                     </view>
                     <connections>
+                        <outlet property="changeTripCoverBtn" destination="pID-nw-onH" id="jqT-9p-nss"/>
+                        <outlet property="saveTripBtn" destination="ZX0-7v-j6O" id="ktE-En-Wpj"/>
                         <outlet property="shareTripOption" destination="Mh0-Bl-0ne" id="nPj-sK-qQc"/>
                         <outlet property="tripCoverImage" destination="IHI-SC-7Xr" id="wgQ-ky-7PW"/>
                         <outlet property="tripNameTextField" destination="vbZ-h8-ePK" id="HZR-xa-ZC1"/>
@@ -653,7 +681,7 @@
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -999,8 +1027,10 @@
                     <connections>
                         <outlet property="changePersonalphotoBtn" destination="Ibp-qG-84V" id="i2L-NR-BqC"/>
                         <outlet property="emailTextField" destination="ZOm-JA-sQJ" id="cNg-it-vD2"/>
+                        <outlet property="logoutBtn" destination="05i-eT-rD9" id="U5G-3Q-R9M"/>
                         <outlet property="passwordTextField" destination="hRo-4p-Da7" id="hzj-vm-ZUY"/>
                         <outlet property="personalImage" destination="Arr-oi-WWl" id="Hxr-pN-N2Z"/>
+                        <outlet property="resetDataBtn" destination="T7L-eJ-gUN" id="mJN-E7-WKF"/>
                         <outlet property="usernameTextField" destination="hbN-Y4-gYv" id="P5F-Vm-07v"/>
                     </connections>
                 </viewController>
@@ -1258,7 +1288,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

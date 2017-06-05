@@ -14,6 +14,8 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
     @IBOutlet weak var tripCoverImage: UIImageView!
     @IBOutlet weak var shareTripOption: UISwitch!
     
+    @IBOutlet weak var saveTripBtn: UIButton!
+    @IBOutlet weak var changeTripCoverBtn: UIButton!
     var trip = tripData()
     var travelDays: Int!
     var travelCountry: String!
@@ -27,6 +29,9 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        changeTripCoverBtn.layer.cornerRadius = 5.0
+        saveTripBtn.layer.cornerRadius = 5.0
     }
 
     override func didReceiveMemoryWarning() {

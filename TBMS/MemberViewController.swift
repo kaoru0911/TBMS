@@ -18,6 +18,8 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var changePersonalphotoBtn: UIButton!
     @IBOutlet weak var personalImage: UIImageView!
     
+    @IBOutlet weak var logoutBtn: UIButton!
+    @IBOutlet weak var resetDataBtn: UIButton!
     var serverCommunicate: ServerConnector = ServerConnector()
     var sharedData = DataManager.shareDataManager
 
@@ -29,6 +31,8 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
         // Do any additional setup after loading the view.
             personalImage.image = UIImage(named: "UserPhotoDefault")
             changePersonalphotoBtn.layer.cornerRadius = 5.0
+            resetDataBtn.layer.cornerRadius = 5.0
+            logoutBtn.layer.cornerRadius = 5.0
         
         usernameTextField.text = sharedData.memberData?.account
         passwordTextField.text =  sharedData.memberData?.password
