@@ -16,7 +16,7 @@
         <!--Travel By MySelf-->
         <scene sceneID="eZZ-zj-nx8">
             <objects>
-                <tableViewController id="BRu-d4-rjK" customClass="MenuTableViewController" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="MenuTableViewController" id="BRu-d4-rjK" customClass="MenuTableViewController" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="185" sectionHeaderHeight="28" sectionFooterHeight="28" id="kOd-kv-rhX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
