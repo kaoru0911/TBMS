@@ -9,8 +9,9 @@
 import UIKit
 import Alamofire
 import FBSDKLoginKit
+import GoogleSignIn
 
-class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
+class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDelegate {
 
     @IBOutlet weak var inputPassword: UITextField!
     @IBOutlet weak var inputAccountName: UITextField!
@@ -18,6 +19,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     @IBOutlet weak var FBLoginBtn: FBSDKLoginButton!
    
     @IBOutlet weak var loginBtn: UIButton!
+    
+    @IBOutlet weak var gmailLoginBtn: GIDSignInButton!
     @IBOutlet weak var newMemberRegisterBtn: UIButton!
     
     var serverCommunicate: ServerConnector = ServerConnector()
@@ -169,6 +172,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         alert.addAction(ok)
         
         self.present(alert,animated: true,completion: nil)
+    }
+    @IBAction func gmailLogoutBtn(_ sender: Any) {
+        GIDSignIn.sharedInstance().signOut()
+        print("gmail log out")
+
     }
 }
 

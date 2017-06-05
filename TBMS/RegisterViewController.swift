@@ -37,9 +37,7 @@ class RegisterViewController: UIViewController, GIDSignInUIDelegate {
     
     
     @IBAction func gmailLogoutBtn(_ sender: Any) {
-        GIDSignIn.sharedInstance().signOut()
-        print("gmail log out")
-    }
+            }
 
 
     /*
