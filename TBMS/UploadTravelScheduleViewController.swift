@@ -32,12 +32,31 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         
         changeTripCoverBtn.layer.cornerRadius = 5.0
         saveTripBtn.layer.cornerRadius = 5.0
+        
+        
+        // dismiss keyboard
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    // For pressing return on the keyboard to dismiss keyboard
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        for textField in self.view.subviews where textField is UITextField {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func hideKeyboard() {
+        view.endEditing(true)
+    }
+
     
     @IBAction func changeCoverImgBtnPressed(_ sender: Any) {
     

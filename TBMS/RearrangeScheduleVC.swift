@@ -59,9 +59,9 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(_:)))
         self.collectionView.addGestureRecognizer(longPressGesture)
         
-        //self.collectionView.layer.cornerRadius = 3.0
-        
-        
+       
+       
+
     
     }
     
@@ -69,6 +69,9 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+ 
+    
     
     
     @IBAction func addDateCellBtnPressed(_ sender: UIButton) {

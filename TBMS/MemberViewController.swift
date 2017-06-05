@@ -38,6 +38,10 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
         passwordTextField.text =  sharedData.memberData?.password
         emailTextField.text = sharedData.memberData?.email
         
+        // dismiss keyboard
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
+
         
         }
 
@@ -57,6 +61,19 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     */
 
+    // For pressing return on the keyboard to dismiss keyboard
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        for textField in self.view.subviews where textField is UITextField {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func hideKeyboard() {
+        view.endEditing(true)
+    }
+
+    
     
     func launchImagePickerWithSourceType(type:UIImagePickerControllerSourceType) {
         // Check if source type is available first
