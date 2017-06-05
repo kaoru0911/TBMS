@@ -648,7 +648,7 @@
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -847,16 +847,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="aFa-uc-2gR">
-                                <rect key="frame" x="133" y="390" width="67" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s2G-Nj-ChO" customClass="FBSDKLoginButton">
-                                <rect key="frame" x="137" y="259" width="102" height="30"/>
+                                <rect key="frame" x="137" y="259" width="102" height="29"/>
                                 <state key="normal" title="Facebook 註冊"/>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="feL-MY-9nH" customClass="GIDSignInButton">
+                                <rect key="frame" x="137" y="318" width="102" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E72-Fh-Amr">
+                                <rect key="frame" x="136.5" y="348" width="102" height="30"/>
+                                <state key="normal" title="Gmail Log out"/>
+                                <connections>
+                                    <action selector="gmailLogoutBtn:" destination="Il7-uK-xc9" eventType="touchUpInside" id="Uzg-Oh-pd6"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zbw-7T-kq4">
-                                <rect key="frame" x="137" y="377" width="102" height="30"/>
+                                <rect key="frame" x="137" y="408" width="102" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="email註冊">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -865,30 +872,22 @@
                                     <segue destination="aUJ-hQ-jFs" kind="show" id="mc3-u6-H3O"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="feL-MY-9nH" customClass="GIDSignInButton">
-                                <rect key="frame" x="137" y="319" width="102" height="28"/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E72-Fh-Amr">
-                                <rect key="frame" x="237" y="453" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="gmailLogoutBtn:" destination="Il7-uK-xc9" eventType="touchUpInside" id="Uzg-Oh-pd6"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="s2G-Nj-ChO" firstAttribute="centerX" secondItem="8zU-YU-Y5h" secondAttribute="centerX" id="0wK-eB-lBu"/>
                             <constraint firstItem="feL-MY-9nH" firstAttribute="centerY" secondItem="8zU-YU-Y5h" secondAttribute="centerY" id="4bC-zP-XH4"/>
+                            <constraint firstItem="E72-Fh-Amr" firstAttribute="centerX" secondItem="8zU-YU-Y5h" secondAttribute="centerX" id="A78-vC-ek3"/>
                             <constraint firstItem="zbw-7T-kq4" firstAttribute="centerX" secondItem="8zU-YU-Y5h" secondAttribute="centerX" id="ByR-cy-uoK"/>
+                            <constraint firstItem="E72-Fh-Amr" firstAttribute="height" secondItem="feL-MY-9nH" secondAttribute="height" id="Lt5-nr-G5B"/>
                             <constraint firstItem="zbw-7T-kq4" firstAttribute="width" secondItem="feL-MY-9nH" secondAttribute="width" id="MGW-rb-pyj"/>
-                            <constraint firstItem="zbw-7T-kq4" firstAttribute="top" secondItem="feL-MY-9nH" secondAttribute="bottom" constant="30" id="U1I-ET-JXa"/>
+                            <constraint firstItem="E72-Fh-Amr" firstAttribute="width" secondItem="feL-MY-9nH" secondAttribute="width" id="Mpa-gi-Ldl"/>
+                            <constraint firstItem="zbw-7T-kq4" firstAttribute="top" secondItem="feL-MY-9nH" secondAttribute="bottom" constant="60" id="U1I-ET-JXa"/>
                             <constraint firstItem="feL-MY-9nH" firstAttribute="top" secondItem="s2G-Nj-ChO" secondAttribute="bottom" constant="30" id="aBH-Co-Xem"/>
                             <constraint firstItem="s2G-Nj-ChO" firstAttribute="top" secondItem="nqT-ka-YlI" secondAttribute="bottom" constant="195" id="d4L-5d-Nbj"/>
                             <constraint firstItem="feL-MY-9nH" firstAttribute="centerX" secondItem="8zU-YU-Y5h" secondAttribute="centerX" id="dmC-f1-9RE"/>
                             <constraint firstItem="feL-MY-9nH" firstAttribute="width" secondItem="s2G-Nj-ChO" secondAttribute="width" id="vS1-Si-Un9"/>
+                            <constraint firstItem="E72-Fh-Amr" firstAttribute="top" secondItem="feL-MY-9nH" secondAttribute="bottom" id="xUd-bH-2hw"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="新會員註冊" id="iUb-gL-LVW"/>
@@ -902,10 +901,10 @@
             </objects>
             <point key="canvasLocation" x="676" y="-1101.4992503748126"/>
         </scene>
-        <!--Title-->
+        <!--會員專區-->
         <scene sceneID="Wmm-hS-5rZ">
             <objects>
-                <viewController id="lHG-gy-5i2" customClass="MemberViewController" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MemberViewController" id="lHG-gy-5i2" customClass="MemberViewController" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2DD-RM-ZXP"/>
                         <viewControllerLayoutGuide type="bottom" id="BbZ-ZH-imn"/>
@@ -983,11 +982,23 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T7L-eJ-gUN">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="05i-eT-rD9">
                                 <rect key="frame" x="212" y="475" width="80" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="Gxa-xt-MjB"/>
+                                    <constraint firstAttribute="width" constant="80" id="GlK-yS-4oE"/>
+                                    <constraint firstAttribute="height" constant="30" id="a6w-UR-c6M"/>
+                                </constraints>
+                                <state key="normal" title="登出">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T7L-eJ-gUN">
+                                <rect key="frame" x="102" y="475" width="80" height="30"/>
+                                <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="qPs-0q-bcw"/>
+                                    <constraint firstAttribute="width" constant="80" id="vPk-bh-zK7"/>
                                 </constraints>
                                 <state key="normal" title="重設密碼">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1003,28 +1014,30 @@
                         <constraints>
                             <constraint firstItem="hRo-4p-Da7" firstAttribute="top" secondItem="hbN-Y4-gYv" secondAttribute="bottom" constant="20" id="0Sg-nN-yRN"/>
                             <constraint firstItem="hbN-Y4-gYv" firstAttribute="leading" secondItem="rTv-9e-t3g" secondAttribute="trailing" constant="18" id="0vO-QY-cyM"/>
+                            <constraint firstItem="05i-eT-rD9" firstAttribute="leading" secondItem="T7L-eJ-gUN" secondAttribute="trailing" constant="30" id="48k-Eq-3E7"/>
                             <constraint firstItem="hRo-4p-Da7" firstAttribute="top" secondItem="6eg-IF-vZP" secondAttribute="top" id="AGu-o3-KmG"/>
-                            <constraint firstItem="ZOm-JA-sQJ" firstAttribute="trailing" secondItem="T7L-eJ-gUN" secondAttribute="trailing" id="BlS-z6-OeZ"/>
                             <constraint firstItem="hbN-Y4-gYv" firstAttribute="top" secondItem="Ibp-qG-84V" secondAttribute="bottom" constant="27" id="GJW-zX-nET"/>
                             <constraint firstItem="hbN-Y4-gYv" firstAttribute="trailing" secondItem="ZOm-JA-sQJ" secondAttribute="trailing" id="IOD-aW-ir6"/>
                             <constraint firstItem="Arr-oi-WWl" firstAttribute="centerX" secondItem="3fV-YN-m4T" secondAttribute="centerX" id="IR0-R1-euH"/>
+                            <constraint firstItem="05i-eT-rD9" firstAttribute="trailing" secondItem="ZOm-JA-sQJ" secondAttribute="trailing" id="JOa-yG-841"/>
                             <constraint firstItem="Arr-oi-WWl" firstAttribute="top" secondItem="2DD-RM-ZXP" secondAttribute="bottom" constant="40" id="KNt-Mh-fFi"/>
                             <constraint firstItem="hbN-Y4-gYv" firstAttribute="leading" secondItem="hRo-4p-Da7" secondAttribute="leading" id="ME8-Jf-jPK"/>
                             <constraint firstItem="hbN-Y4-gYv" firstAttribute="leading" secondItem="ZOm-JA-sQJ" secondAttribute="leading" id="MNT-Ja-urU"/>
-                            <constraint firstItem="T7L-eJ-gUN" firstAttribute="top" secondItem="ZOm-JA-sQJ" secondAttribute="bottom" constant="20" id="O6I-du-SA5"/>
                             <constraint firstItem="ZOm-JA-sQJ" firstAttribute="top" secondItem="hRo-4p-Da7" secondAttribute="bottom" constant="20" id="brG-sd-GfL"/>
                             <constraint firstItem="hRo-4p-Da7" firstAttribute="leading" secondItem="6eg-IF-vZP" secondAttribute="trailing" constant="20" id="eab-7D-n1x"/>
                             <constraint firstItem="6eg-IF-vZP" firstAttribute="bottom" secondItem="hRo-4p-Da7" secondAttribute="bottom" id="fOk-j5-qBw"/>
                             <constraint firstItem="Ibp-qG-84V" firstAttribute="trailing" secondItem="Arr-oi-WWl" secondAttribute="trailing" id="ghP-rV-iyl"/>
+                            <constraint firstItem="05i-eT-rD9" firstAttribute="top" secondItem="ZOm-JA-sQJ" secondAttribute="bottom" constant="20" id="o6X-qs-WqF"/>
                             <constraint firstItem="ZOm-JA-sQJ" firstAttribute="centerY" secondItem="Aa4-26-C0s" secondAttribute="centerY" id="oCe-eM-COf"/>
                             <constraint firstItem="hbN-Y4-gYv" firstAttribute="centerY" secondItem="rTv-9e-t3g" secondAttribute="centerY" id="poI-WU-REM"/>
+                            <constraint firstItem="05i-eT-rD9" firstAttribute="top" secondItem="T7L-eJ-gUN" secondAttribute="top" id="rWy-ae-abc"/>
                             <constraint firstItem="ZOm-JA-sQJ" firstAttribute="leading" secondItem="Aa4-26-C0s" secondAttribute="trailing" constant="20" id="trU-bw-s0j"/>
                             <constraint firstItem="Ibp-qG-84V" firstAttribute="top" secondItem="Arr-oi-WWl" secondAttribute="bottom" constant="8" id="vrN-gh-p0w"/>
                             <constraint firstItem="hbN-Y4-gYv" firstAttribute="trailing" secondItem="hRo-4p-Da7" secondAttribute="trailing" id="wtw-D2-WV5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="hbN-Y4-gYv" secondAttribute="trailing" constant="67" id="xuL-Hu-hTE"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="dn1-XM-Rrq"/>
+                    <navigationItem key="navigationItem" title="會員專區" id="dn1-XM-Rrq"/>
                     <connections>
                         <outlet property="changePersonalphotoBtn" destination="Ibp-qG-84V" id="i2L-NR-BqC"/>
                         <outlet property="personalImage" destination="Arr-oi-WWl" id="Hxr-pN-N2Z"/>
@@ -1032,7 +1045,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hzD-O7-mqf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="614" y="-1965"/>
+            <point key="canvasLocation" x="613.60000000000002" y="-1965.0674662668666"/>
         </scene>
         <!--Title-->
         <scene sceneID="Rg8-Lc-YUW">
@@ -1378,7 +1391,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

@@ -74,6 +74,27 @@ class LoginViewController: UIViewController {
         if self.sharedData.isLogin == true {
             
             showAlertMessage(title: "Success", message: "登入成功")
+            
+//            performSegue(withIdentifier: "goMemberVC" , sender: nil)
+            
+            
+//            // Dismiss the Old
+//            if let presented = self.presentedViewController {
+//                presented.removeFromParentViewController()
+//            }
+            
+            if presentedViewController != nil {
+                removeFromParentViewController()
+            }
+            
+            // Present the New
+            let main = UIStoryboard(name: "Main", bundle: nil)
+            let memberVC = main.instantiateViewController(withIdentifier: "MemberViewController") as! MemberViewController
+            self.present(memberVC, animated: true, completion: nil)
+            
+        
+            
+            
         } else if self.sharedData.isLogin == false {
             
             showAlertMessage(title: "Fail", message: "登入失敗，請確認帳號或密碼是否正確")
