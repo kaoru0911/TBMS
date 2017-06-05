@@ -153,6 +153,7 @@ function uploadSpot($db, $request){
 	$ownerUser = $_POST['username'];
 	$nDay = $_POST['nDay'];
 	$nth = $_POST['nth'];
+	$trafficTitle = $_POST['trafficTitle'];
 	$traffic = $_POST['traffic'];
 
 	if($request == "uploadPocketTripSpot"){
@@ -170,9 +171,9 @@ function uploadSpot($db, $request){
 
 		$db->prepare("
 			insert into `sharedtripSpot`
-			(`spotName`,`tripName`,`nDay`,`nth`, `trafficToNext`,`ownerUser`)
+			(`spotName`,`tripName`,`nDay`,`nth`, `trafficTitle`, `trafficToNext`,`ownerUser`)
 			values
-			('$spotName','$tripName','$nDay','$nth','$traffic','$ownerUser')
+			('$spotName','$tripName','$nDay','$nth','$trafficTitle','$traffic','$ownerUser')
 			")->execute();
 
 		echo '{"result":true, "errorCode":"none"}';

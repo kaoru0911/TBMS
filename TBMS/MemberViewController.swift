@@ -12,10 +12,15 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
 
     
 
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var usernameTextField: UITextField!
     @IBOutlet weak var changePersonalphotoBtn: UIButton!
     @IBOutlet weak var personalImage: UIImageView!
     
-    
+    var serverCommunicate: ServerConnector = ServerConnector()
+    var sharedData = DataManager.shareDataManager
+
     
     
     override func viewDidLoad() {
@@ -24,6 +29,11 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
         // Do any additional setup after loading the view.
             personalImage.image = UIImage(named: "UserPhotoDefault")
             changePersonalphotoBtn.layer.cornerRadius = 5.0
+        
+        usernameTextField.text = sharedData.memberData?.account
+        passwordTextField.text =  sharedData.memberData?.password
+        emailTextField.text = sharedData.memberData?.email
+        
         
         }
 
@@ -92,6 +102,16 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
     //按下cancel的處理
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
+    }
+   
+    // 重設資料按鈕
+    @IBAction func resetDataBtn(_ sender: Any) {
+    }
+  
+    // 登出按鈕
+    @IBAction func LogoutBtn(_ sender: Any) {
+        
+        
     }
     
     
