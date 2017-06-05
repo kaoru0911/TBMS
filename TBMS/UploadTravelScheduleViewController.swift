@@ -18,12 +18,14 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
     var travelDays: Int!
     var travelCountry: String!
     var attractionsAndRoute: [tripSpotData]!
-    
+//    var spots: [tripSpotData]!
     var sharedData = DataManager.shareDataManager
+    
+    let unwindSegueID = "unwindSegueToMenuVC"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
 
@@ -37,7 +39,7 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         let imagePicker = UIImagePickerController()
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
-        imagePicker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
+        imagePicker.delegate = self
         
         present(imagePicker, animated: true, completion: nil)
     }
@@ -45,33 +47,38 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
     @IBAction func uploadTripDataBtnPressed(_ sender: Any) {
         
         guard let tripName = tripNameTextField.text else {
-            /// show alert
+            print("沒有name唷")
             return
         }
         
-        guard let image = tripCoverImage.image else {
+        guard tripCoverImage.image != nil else {
+            print("沒有圖")
             /// show alert
             return
         }
         
         guard sharedData.memberData != nil else {
+            print("沒有登入唷")
             /// show alert
                 return
         }
         
         trip.tripName = tripName
-        trip.coverImg = image
-
-        trip.days = travelDays
-        trip.spots = attractionsAndRoute
+        
+        trip.days = travelDays!
+        trip.spots = sharedData.tmpSpotDatas
         trip.country = sharedData.chooseCountry
         
         let server = ServerConnector()
+        
         server.uploadPocketTripToServer(tripData: trip)
         
         if shareTripOption.isOn {
             server.uploadSharedTripToServer(tripData: trip)
         }
+        
+        performSegue(withIdentifier: unwindSegueID, sender: nil)
+        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -82,12 +89,24 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         }
         
         tripCoverImage.image = image
+        trip.coverImg = image
         dismiss(animated: true, completion: nil)
+        
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
+    
+//    func setNthValueToSpotData(tripName: String, tripDays: Int, spotDatas: [tripSpotData]) -> [tripSpotData] {
+    
+//        for spotData in spotDatas {
+//            
+//            spotData.belongTripName = tripName
+//            spotData.nDays = tripName
+//        }
+//        
+//    }
     /*
     // MARK: - Navigation
 
