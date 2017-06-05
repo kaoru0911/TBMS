@@ -149,7 +149,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
             
             // =============================================
             // 創造一個新個TabBarController與NavigationController，再放回appDelegate內取代原本的root
+            // =============================================
             
+            // TabBar
             let rootTabBarController = UITabBarController()
             
             // 注意！創造viewController的方式跟創造view的方式不同
@@ -161,6 +163,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
             let rightTabBarItem = UITabBarItem(title: "會員專區", image: UIImage(named: "circle-user-7.png"), tag: 0)
             rightTab.tabBarItem = rightTabBarItem
             
+            // Navigation
+            let rightNavigation = UINavigationController(rootViewController: rightTab)
+            
 //            let leftTab = MenuTableViewController()
             let leftTab = storyboard.instantiateViewController(withIdentifier: "MenuTableViewController") as! MenuTableViewController
             leftTab.title = "TravelByMyself"
@@ -168,8 +173,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
             let leftTabBarItem = UITabBarItem(title: "旅遊選單", image: UIImage(named: "airplane-symbol-7.png"), tag: 0)
             leftTab.tabBarItem = leftTabBarItem
             
-            rootTabBarController.viewControllers = [leftTab, rightTab]
+            // Navigation
+            let leftNavigation = UINavigationController(rootViewController: leftTab)
             
+            rootTabBarController.viewControllers = [leftNavigation, rightNavigation]            
             
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             
