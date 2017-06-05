@@ -13,9 +13,9 @@ class MenuTableViewController: UITableViewController {
     
     @IBOutlet weak var menuTableView: UITableView!
     
-    var container: UIView = UIView()
-    var loadingView: UIView = UIView()
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+//    var container: UIView = UIView()
+//    var loadingView: UIView = UIView()
+//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     
     var choosen = ""
@@ -167,7 +167,8 @@ class MenuTableViewController: UITableViewController {
                     serverCommunicate.getPocketSpotFromServer()
                     
                     // show loading view
-                    showLoadingView(uiView: self.view)
+//                    showLoadingView(uiView: self.view)
+                    customActivityIndicatory(self.view, startAnimate: true)
                 } else{
                     performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
                 }
@@ -197,73 +198,73 @@ class MenuTableViewController: UITableViewController {
         
         // stop loading view
 //        hideActivityIndicator(uiView: self.view)
-//        customActivityIndicatory(self.view, startAnimate: false)
+        customActivityIndicatory(self.view, startAnimate: false)
         
-//        performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+        performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
     }
     
-//    func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) -> UIActivityIndicatorView {
-//        let mainContainer: UIView = UIView(frame: viewContainer.frame)
-//        mainContainer.center = viewContainer.center
-//        mainContainer.backgroundColor = UIColor.init(netHex: 0xFFFFFF)
-////        mainContainer.alpha = 0.5
-//        mainContainer.tag = 789456123
-//        mainContainer.isUserInteractionEnabled = false
-//        
-//        let viewBackgroundLoading: UIView = UIView(frame: CGRect(x:0,y: 0,width: 80,height: 80))
-//        viewBackgroundLoading.center = viewContainer.center
-//        viewBackgroundLoading.backgroundColor = UIColor.init(coder: 0x444444)
-////        viewBackgroundLoading.alpha = 0.5
-//        viewBackgroundLoading.clipsToBounds = true
-//        viewBackgroundLoading.layer.cornerRadius = 15
-//        
-//        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
-//        activityIndicatorView.frame = CGRect(x:0.0,y: 0.0,width: 40.0, height: 40.0)
-//        activityIndicatorView.activityIndicatorViewStyle =
-//            UIActivityIndicatorViewStyle.whiteLarge
-//        activityIndicatorView.center = CGPoint(x: viewBackgroundLoading.frame.size.width / 2, y: viewBackgroundLoading.frame.size.height / 2)
-//        
-//        if startAnimate!{
-//            viewBackgroundLoading.addSubview(activityIndicatorView)
-//            mainContainer.addSubview(viewBackgroundLoading)
-//            viewContainer.addSubview(mainContainer)
-//            activityIndicatorView.startAnimating()
-//        }else{
-//            for subview in viewContainer.subviews{
-//                if subview.tag == 789456123{
-//                    subview.removeFromSuperview()
-//                }
-//            }
-//        }
-//        return activityIndicatorView
-//    }
-    
-    func showLoadingView(uiView:UIView) {
+    func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) -> UIActivityIndicatorView {
+        let mainContainer: UIView = UIView(frame: viewContainer.frame)
+        mainContainer.center = viewContainer.center
+        mainContainer.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
+//        mainContainer.alpha = 0.5
+        mainContainer.tag = 789456123
+        mainContainer.isUserInteractionEnabled = false
         
-        container.frame = uiView.frame
-        container.center = uiView.center
-        container.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
+        let viewBackgroundLoading: UIView = UIView(frame: CGRect(x:0,y: 0,width: 80,height: 80))
+        viewBackgroundLoading.center = viewContainer.center
+        viewBackgroundLoading.backgroundColor = UIColor(white: 0x444444, alpha: 0.7)
+//        viewBackgroundLoading.alpha = 0.5
+        viewBackgroundLoading.clipsToBounds = true
+        viewBackgroundLoading.layer.cornerRadius = 15
         
-        loadingView.frame = CGRect(x:0.0, y:0.0, width:80.0, height:80.0)
-        loadingView.center = uiView.center
-        loadingView.backgroundColor = UIColor(white: 0x444444, alpha: 0.7)
-        loadingView.clipsToBounds = true
-        loadingView.layer.cornerRadius = 10
-        
-        activityIndicator.frame = CGRect(x:0.0, y:0.0, width:40.0, height:40.0);
-        activityIndicator.activityIndicatorViewStyle =
+        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+        activityIndicatorView.frame = CGRect(x:0.0,y: 0.0,width: 40.0, height: 40.0)
+        activityIndicatorView.activityIndicatorViewStyle =
             UIActivityIndicatorViewStyle.whiteLarge
-        activityIndicator.center = CGPoint(x:loadingView.frame.size.width / 2, y:loadingView.frame.size.height / 2);
-        loadingView.addSubview(activityIndicator)
-        container.addSubview(loadingView)
-        uiView.addSubview(container)
-        activityIndicator.startAnimating()
+        activityIndicatorView.center = CGPoint(x: viewBackgroundLoading.frame.size.width / 2, y: viewBackgroundLoading.frame.size.height / 2)
+        
+        if startAnimate!{
+            viewBackgroundLoading.addSubview(activityIndicatorView)
+            mainContainer.addSubview(viewBackgroundLoading)
+            viewContainer.addSubview(mainContainer)
+            activityIndicatorView.startAnimating()
+        }else{
+            for subview in viewContainer.subviews{
+                if subview.tag == 789456123{
+                    subview.removeFromSuperview()
+                }
+            }
+        }
+        return activityIndicatorView
     }
     
-    func hideActivityIndicator(uiView: UIView) {
-        activityIndicator.stopAnimating()
-        container.removeFromSuperview()
-    }
+//    func showLoadingView(uiView:UIView) {
+//        
+//        container.frame = uiView.frame
+//        container.center = uiView.center
+//        container.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
+//        
+//        loadingView.frame = CGRect(x:0.0, y:0.0, width:80.0, height:80.0)
+//        loadingView.center = uiView.center
+//        loadingView.backgroundColor = UIColor(white: 0x444444, alpha: 0.7)
+//        loadingView.clipsToBounds = true
+//        loadingView.layer.cornerRadius = 10
+//        
+//        activityIndicator.frame = CGRect(x:0.0, y:0.0, width:40.0, height:40.0);
+//        activityIndicator.activityIndicatorViewStyle =
+//            UIActivityIndicatorViewStyle.whiteLarge
+//        activityIndicator.center = CGPoint(x:loadingView.frame.size.width / 2, y:loadingView.frame.size.height / 2);
+//        loadingView.addSubview(activityIndicator)
+//        container.addSubview(loadingView)
+//        uiView.addSubview(container)
+//        activityIndicator.startAnimating()
+//    }
+//    
+//    func hideActivityIndicator(uiView: UIView) {
+//        activityIndicator.stopAnimating()
+//        container.removeFromSuperview()
+//    }
     
     
     
