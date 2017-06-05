@@ -28,6 +28,9 @@ class SetStartPointViewController: UIViewController {
         super.viewDidLoad()
         goToNextPage.isHidden = true
         chosenStartingPoint.isHidden = true
+        goToNextPage.layer.cornerRadius = 5.0
+        chosenStartingPoint.layer.cornerRadius = 5.0
+        
         print(attractionsList.first!.attrctionName!)
     }
     

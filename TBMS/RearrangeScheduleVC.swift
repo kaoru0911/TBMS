@@ -58,6 +58,10 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         //實體化一個長壓的手勢物件, 當啟動時呼叫handleLongGesture這個func
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(_:)))
         self.collectionView.addGestureRecognizer(longPressGesture)
+        
+        
+        
+    
     }
     
     override func didReceiveMemoryWarning() {

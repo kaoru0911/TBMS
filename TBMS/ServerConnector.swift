@@ -13,7 +13,11 @@ import SwiftyJSON
 class ServerConnector: NSObject {
     
     // URL
+    
+    // 本機server
     let baseURLStr: String = "http://localhost/TravelByMyself/"
+    // ngrok的server
+    // let baseURLStr: String = "https://c6432ec1.ngrok.io/TravelByMyself/"
     let memberURLstr: String = "member.php"
     let dataDownloadURLstr: String = "dataDownload.php"
     let dataUploadURLstr: String = "dataUpload.php"
