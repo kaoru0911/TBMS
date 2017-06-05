@@ -26,7 +26,7 @@ class DirectParametersAndRequestURLGenerator: NSObject {
     var outputFormat : RespondsDataType = .json
     var language : LanguageSetting = .chinese
     var distanceUnit : DistanceUnit = .metric
-    var travelMod : TravelMod = .transit
+    var travelMod : TravelMod = .driving
     
     // Parameters with transit travelMod.
     var departureTime = "1495004263"

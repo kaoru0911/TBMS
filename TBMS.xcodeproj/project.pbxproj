@@ -217,7 +217,6 @@
 				A74BDDDE1ED5B78B00987446 /* Menu */,
 				A74BDDDD1ED5B76E00987446 /* CountrySelect */,
 				A74BDDDC1ED5B72F00987446 /* PocketSpot */,
-				A74BDDDB1ED5B70E00987446 /* TripList */,
 				22F43F551ECD669800791D55 /* AddViewPoint */,
 				22F43F501ECD666900791D55 /* RearrangeSchedule */,
 			);
@@ -283,6 +282,7 @@
 			isa = PBXGroup;
 			children = (
 				A74BDDE01ED6F10B00987446 /* addSpot.png */,
+				A74BDDDB1ED5B70E00987446 /* TripList */,
 				A74BDDD11ED5B69000987446 /* PocketSpotTVC.swift */,
 				A74BDDD21ED5B69000987446 /* PocketSpotTVCell.swift */,
 			);

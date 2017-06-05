@@ -604,6 +604,7 @@
                                 <state key="normal" title="庫存行程"/>
                                 <connections>
                                     <action selector="uploadTripDataBtnPressed:" destination="6GZ-KH-w72" eventType="touchUpInside" id="DWZ-e9-uxD"/>
+                                    <segue destination="hhN-hE-NTa" kind="unwind" identifier="unwindSegueToMenuVC" unwindAction="functionNameWith_segue:" id="DoX-8Q-59a"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pID-nw-onH">
@@ -639,6 +640,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KIJ-1Q-wol" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="hhN-hE-NTa" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="5264.8000000000002" y="-890.10494752623697"/>
         </scene>
@@ -1237,6 +1239,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="selectedImageTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="Jr2-OO-ePz" kind="relationship" relationship="viewControllers" id="PWT-Pe-60b"/>

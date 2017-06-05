@@ -56,7 +56,7 @@ class BestRouteCalculator: NSObject {
         var finishTravelTimeCalculateAttrs = [Attraction]()
         
         // setting the request detail about getting travelTime
-        self.request.transportType = .automobile
+        self.request.transportType = .walking
         self.request.source = MKMapItem(placemark:(MKPlacemark(coordinate: startingPlace.coordinate)))
         
         // find the closest attraction

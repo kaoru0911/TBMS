@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class DataManager: NSObject {
     
@@ -20,6 +21,7 @@ class DataManager: NSObject {
     var pocketSpot:Array<spotData>?
     var tempTripData:tripData?
     var isLogin:Bool!
+    var tmpSpotDatas = [tripSpotData]()
     
     // 將init設為private，以免外部去調用到
     private override init() {
@@ -98,6 +100,7 @@ class spotData: NSObject {
     var spotInfo:String?
     var spotCountry:String?
     var placeID:String?
+    var coordinate:CLLocationCoordinate2D?
 }
 
 class tripSpotData: spotData {
