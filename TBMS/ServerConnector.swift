@@ -34,6 +34,7 @@ class ServerConnector: NSObject {
     let TRIPCOUNTRY_KEY: String = "tripCountry"
     let NDAY_KEY: String = "nDay"
     let NTH_KEY: String = "nth"
+    let TRAFFICTITLE_KEY: String = "trafficTitle"
     let TRAFFIC_KEY: String = "traffic"
     let COVERIMG_KEY: String = "coverImg"
     let PLACEID_KEY: String = "placeID"
@@ -708,7 +709,7 @@ class ServerConnector: NSObject {
 //            return
 //        }
         
-        for i in 0...tripData.spots.count {
+        for i in 0..<tripData.spots.count {
             
             // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
             let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,
@@ -716,6 +717,7 @@ class ServerConnector: NSObject {
                                          SPOTNAME_KEY: tripData.spots[i].spotName! as Any,
                                          NDAY_KEY: tripData.spots[i].nDays as Any,
                                          NTH_KEY: tripData.spots[i].nTh as Any,
+                                         TRAFFICTITLE_KEY: tripData.spots[i].trafficTitle as Any,
                                          TRAFFIC_KEY: tripData.spots[i].trafficToNextSpot as Any,
                                          PLACEID_KEY: tripData.spots[i].placeID as Any,
                                          REQUEST_KEY: request]

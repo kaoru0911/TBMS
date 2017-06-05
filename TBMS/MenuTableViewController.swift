@@ -13,9 +13,9 @@ class MenuTableViewController: UITableViewController {
     
     @IBOutlet weak var menuTableView: UITableView!
     
-    var container: UIView = UIView()
-    var loadingView: UIView = UIView()
-    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+//    var container: UIView = UIView()
+//    var loadingView: UIView = UIView()
+//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     
     var choosen = ""
@@ -131,6 +131,7 @@ class MenuTableViewController: UITableViewController {
             case "開始規劃":
                 if sharedData.pocketSpot?.count == 0 {
                     serverCommunicate.getPocketSpotFromServer()
+                    customActivityIndicatory(self.view, startAnimate: true)
                 } else{
                     performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
                 }
@@ -138,6 +139,7 @@ class MenuTableViewController: UITableViewController {
             case "推薦行程":
                 if sharedData.sharedTrips?.count == 0 {
                     serverCommunicate.getSharedTripFromServer()
+                    customActivityIndicatory(self.view, startAnimate: true)
                 } else{
                     performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
                 }
@@ -150,6 +152,9 @@ class MenuTableViewController: UITableViewController {
                 
                 if sharedData.pocketTrips?.count == 0 {
                     serverCommunicate.getPocketTripFromServer()
+                    
+                    customActivityIndicatory(self.view, startAnimate: true)
+                    
                 } else{
                     performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
                 }
@@ -161,7 +166,11 @@ class MenuTableViewController: UITableViewController {
                 }
                 
                 if sharedData.pocketSpot?.count == 0 {
+                    
                     serverCommunicate.getPocketSpotFromServer()
+                    
+                    // show loading view
+                    customActivityIndicatory(self.view, startAnimate: true)
                 } else{
                     performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
                 }
@@ -188,35 +197,85 @@ class MenuTableViewController: UITableViewController {
     }
     
     func NotificationDidGet() {
+        
+        // stop loading view
+//        hideActivityIndicator(uiView: self.view)
+        customActivityIndicatory(self.view, startAnimate: false)
+        
         performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
     }
     
-    func showLoadingView(uiView:UIView) {
+    func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) {
         
-        container.frame = uiView.frame
-        container.center = uiView.center
-        container.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
+        // 做一個透明的view來裝
+        let mainContainer: UIView = UIView(frame: viewContainer.frame)
+        mainContainer.center = viewContainer.center
+        mainContainer.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
+        // background的alpha跟view的alpha不同
+        mainContainer.alpha = 0.5
+        //================================
+        mainContainer.tag = 789456123
+        mainContainer.isUserInteractionEnabled = false
         
-        loadingView.frame = CGRect(x:0.0, y:0.0, width:80.0, height:80.0)
-        loadingView.center = uiView.center
-        loadingView.backgroundColor = UIColor(white: 0x444444, alpha: 0.7)
-        loadingView.clipsToBounds = true
-        loadingView.layer.cornerRadius = 10
+        // 旋轉圈圈放在這個view上
+        let viewBackgroundLoading: UIView = UIView(frame: CGRect(x:0,y: 0,width: 80,height: 80))
+        viewBackgroundLoading.center = viewContainer.center
+//        viewBackgroundLoading.backgroundColor = UIColor(red:0x7F, green:0x7F, blue:0x7F, alpha: 1)
+        viewBackgroundLoading.backgroundColor = UIColor(red:0, green:0, blue:0, alpha: 1)
+        //================================
+//        viewBackgroundLoading.alpha = 0.5
+        //================================
+        viewBackgroundLoading.clipsToBounds = true
+        viewBackgroundLoading.layer.cornerRadius = 15
         
-        activityIndicator.frame = CGRect(x:0.0, y:0.0, width:40.0, height:40.0);
-        activityIndicator.activityIndicatorViewStyle =
+        // 創造旋轉圈圈
+        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+        activityIndicatorView.frame = CGRect(x:0.0,y: 0.0,width: 40.0, height: 40.0)
+        activityIndicatorView.activityIndicatorViewStyle =
             UIActivityIndicatorViewStyle.whiteLarge
-        activityIndicator.center = CGPoint(x:loadingView.frame.size.width / 2, y:loadingView.frame.size.height / 2);
-        loadingView.addSubview(activityIndicator)
-        container.addSubview(loadingView)
-        uiView.addSubview(container)
-        activityIndicator.startAnimating()
+        activityIndicatorView.center = CGPoint(x: viewBackgroundLoading.frame.size.width / 2, y: viewBackgroundLoading.frame.size.height / 2)
+        
+        if startAnimate!{
+            viewBackgroundLoading.addSubview(activityIndicatorView)
+            mainContainer.addSubview(viewBackgroundLoading)
+            viewContainer.addSubview(mainContainer)
+            activityIndicatorView.startAnimating()
+        }else{
+            for subview in viewContainer.subviews{
+                if subview.tag == 789456123{
+                    subview.removeFromSuperview()
+                }
+            }
+        }
+//        return activityIndicatorView
     }
     
-    func hideActivityIndicator(uiView: UIView) {
-        activityIndicator.stopAnimating()
-        container.removeFromSuperview()
-    }
+//    func showLoadingView(uiView:UIView) {
+//        
+//        container.frame = uiView.frame
+//        container.center = uiView.center
+//        container.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
+//        
+//        loadingView.frame = CGRect(x:0.0, y:0.0, width:80.0, height:80.0)
+//        loadingView.center = uiView.center
+//        loadingView.backgroundColor = UIColor(white: 0x444444, alpha: 0.7)
+//        loadingView.clipsToBounds = true
+//        loadingView.layer.cornerRadius = 10
+//        
+//        activityIndicator.frame = CGRect(x:0.0, y:0.0, width:40.0, height:40.0);
+//        activityIndicator.activityIndicatorViewStyle =
+//            UIActivityIndicatorViewStyle.whiteLarge
+//        activityIndicator.center = CGPoint(x:loadingView.frame.size.width / 2, y:loadingView.frame.size.height / 2);
+//        loadingView.addSubview(activityIndicator)
+//        container.addSubview(loadingView)
+//        uiView.addSubview(container)
+//        activityIndicator.startAnimating()
+//    }
+//    
+//    func hideActivityIndicator(uiView: UIView) {
+//        activityIndicator.stopAnimating()
+//        container.removeFromSuperview()
+//    }
     
     
     
