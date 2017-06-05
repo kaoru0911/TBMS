@@ -36,12 +36,33 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
     
     @IBAction func changeCoverImgBtnPressed(_ sender: Any) {
     
-        let imagePicker = UIImagePickerController()
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.delegate = self
+//        let imagePicker = UIImagePickerController()
+//        imagePicker.allowsEditing = false
+//        imagePicker.sourceType = .photoLibrary
+//        imagePicker.delegate = self
+//        
+//        present(imagePicker, animated: true, completion: nil)
+
         
-        present(imagePicker, animated: true, completion: nil)
+        let alert = UIAlertController(title: "請選擇照片來源", message: nil, preferredStyle: .alert)
+        
+        let camera = UIAlertAction(title: "使用相機", style: .default) { (action:UIAlertAction) in
+            //self.openCamera()
+            self.launchImagePickerWithSourceType(type: .camera)
+        }
+        
+        let photoLibray = UIAlertAction(title: "存取相簿", style: .default) { (action:UIAlertAction) in
+            //self.openPhotoLibrary()
+            self.launchImagePickerWithSourceType(type: .photoLibrary)
+        }
+        
+        let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
+        
+        alert.addAction(camera)
+        alert.addAction(photoLibray)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
+        
     }
     
     @IBAction func uploadTripDataBtnPressed(_ sender: Any) {
@@ -81,22 +102,52 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        guard let image = info[UIImagePickerControllerOriginalImage] as! UIImage! else {
-            print("image = nil")
+    
+    func launchImagePickerWithSourceType(type:UIImagePickerControllerSourceType) {
+        // Check if source type is available first
+        if(UIImagePickerController.isSourceTypeAvailable(type) == false) {
+            print("InValid Source Type")
             return
         }
+        // Prepare picker
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.sourceType = type
+        imagePickerController.delegate = self
+        self.present(imagePickerController, animated: true, completion: nil)
         
-        tripCoverImage.image = image
-        trip.coverImg = image
-        dismiss(animated: true, completion: nil)
-        
+    }
+
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let imagePick = info[UIImagePickerControllerOriginalImage] as! UIImage
+        tripCoverImage.image = imagePick
+        self.dismiss(animated: true, completion: nil)
     }
     
+    //按下cancel的處理
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
+    
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        
+//        guard let image = info[UIImagePickerControllerOriginalImage] as! UIImage! else {
+//            print("image = nil")
+//            return
+//        }
+//        
+//        tripCoverImage.image = image
+//        trip.coverImg = image
+//        dismiss(animated: true, completion: nil)
+//        
+//    }
+//    
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        dismiss(animated: true, completion: nil)
+//    }
+    
+    
     
 //    func setNthValueToSpotData(tripName: String, tripDays: Int, spotDatas: [tripSpotData]) -> [tripSpotData] {
     
