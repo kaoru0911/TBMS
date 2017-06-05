@@ -51,6 +51,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         // Dispose of any resources that can be recreated.
     }
     
+    // FB登入按鈕
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         
         print("成功登入")
@@ -114,6 +115,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
 //        let nextPage = segue.destination as! MemberViewController
 //    }
     
+    // 會員登入
     @IBAction func loginBtn(_ sender: Any) {
         
         if (inputAccountName.text?.isEmpty)! || (inputPassword.text?.isEmpty)! {
@@ -126,12 +128,15 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         sharedData.memberData?.password = inputPassword.text
     
         serverCommunicate.userLogin()
+        
+       
 
     }
     
 //    func getUpdateNoti(noti:Notification) {
 //        loginResponse = noti.userInfo!["PASS"] as! Bool
 //    }
+
     
     func NotificationDidGet() {
         
@@ -139,7 +144,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
             
             showAlertMessage(title: "Success", message: "登入成功")
             
-            performSegue(withIdentifier: "goMemberVC" , sender: nil)
+            tabBarController?.selectedIndex = 0
+            
+            //performSegue(withIdentifier: "goMemberVC" , sender: nil)
             
             
 ////            // Dismiss the Old
@@ -173,11 +180,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         
         self.present(alert,animated: true,completion: nil)
     }
-    @IBAction func gmailLogoutBtn(_ sender: Any) {
-        GIDSignIn.sharedInstance().signOut()
-        print("gmail log out")
-
-    }
+    
+   
 }
 
 
