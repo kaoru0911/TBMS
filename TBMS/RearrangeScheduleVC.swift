@@ -218,12 +218,34 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
-    fileprivate func generateDetailRouteString (route:LegsData!) -> String {
+    fileprivate func generateDetailRouteString (route:LegsData!) -> String! {
         
         guard let routeData = route else {
-            return "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+            return "路線計算錯誤"
         }
-        return "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        
+        guard let steps = routeData.steps else {
+            return nil
+        }
+        
+        var routeDetailString = String()
+        for i in 0 ... steps.count - 1 {
+            let step = steps[i]
+            var stepString = "\(i+1). \(step.htmlInstructions!)\n\n"
+            
+            if let secondSteps = step.steps {
+                stepString.removeAll()
+                stepString = "\(i+1)"
+                for secondStep in secondSteps {
+                    let tmpString = "\(secondStep.htmlInstructions!)\n\n"
+                    stepString.append(tmpString)
+                }
+            }
+            routeDetailString.append(stepString)
+        }
+        var returnString = routeDetailString.replacingOccurrences(of: "<div style=\"font-size:0.9em\">", with: "\n註：").replacingOccurrences(of: "</div>", with: "").replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "<b>", with: "")
+        returnString.characters.removeLast(2)
+        return returnString
     }
     
     fileprivate func generateRouteTitleString (cellContent:ScheduleAndTrafficCellContent) -> String! {
@@ -242,6 +264,7 @@ extension RearrangeScheduleVC {
         
         let sb = UIStoryboard(name: nameOfFinalScheduleStoryBoard, bundle: nil)
         let trip = transferCellsContentToTripSpotDataType(cellContent: cellContentsArray)
+        shareData.tmpSpotDatas = trip.spots
         let vcArray = produceVCArray(myStoryBoard: sb, cellContents: trip)
         //設定scrollView
         let scrollVCProductor = ProduceScrollViewWithVCArray(vcArrayInput: vcArray)
@@ -508,16 +531,20 @@ extension ScheduleTableViewController {
 class DataTypeTransformer {
     
     func transferGMPlaceToSpotDataType(obj: GMSPlace) -> spotData {
+        
         let spotObj = spotData()
         spotObj.spotName = obj.name
         spotObj.placeID = obj.placeID
+        spotObj.coordinate = obj.coordinate
         return spotObj
     }
     
     func transferSpotDataToAttractionsType(obj: spotData) -> Attraction {
+        
         var attr = Attraction()
         attr.attrctionName = obj.spotName
         attr.placeID = obj.placeID
+        if let coordinate = obj.coordinate { attr.coordinate = coordinate }
         return attr
     }
     
@@ -525,6 +552,7 @@ class DataTypeTransformer {
         let spotObj = spotData()
         spotObj.spotName = obj.attrctionName
         spotObj.placeID = obj.placeID
+        if let coordinate = obj.coordinate { spotObj.coordinate = coordinate }
         return spotObj
     }
     

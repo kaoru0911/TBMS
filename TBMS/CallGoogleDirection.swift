@@ -22,7 +22,7 @@ class GoogleDirectionCaller: NSObject {
     //設定預設參數
     init( responseFormat : RespondsDataType = .json,
           language : LanguageSetting = .chinese,
-          travelMod : TravelMod = .transit,
+          travelMod : TravelMod = .driving,
           distanceUnit : DistanceUnit = .metric,
           departureTime : String = "1526540263" ) {
         

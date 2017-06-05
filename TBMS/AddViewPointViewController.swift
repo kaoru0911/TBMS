@@ -97,12 +97,14 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell: viewPointTableViewCell = tableView.dequeueReusableCell(withIdentifier: "viewPointTableViewCell") as! viewPointTableViewCell
         
         cell.noCellLabel.text = "\(indexPath.row + 1 ). "
-        cell.spotCellLabel.text = "\(listArray.object(at: indexPath.row))"
+        cell.spotCellLabel.text = attractionStorage[indexPath.row].attrctionName
         //        cell.textLabel?.text = "\(listArray.object(at: indexPath.row))"
         return cell
+        
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -111,6 +113,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         self.listArray.removeObject(at: indexPath.row)
+        attractionStorage.remove(at: indexPath.row)
         
         self.spotTableView.reloadData()
         
@@ -143,11 +146,13 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         // 若沒有相同景點字串，可加入TableView陣列
         if spotExistedChecking == false {
             listArray.add(spotTextView.text)
-            self.spotTableView.reloadData();
             
             var attr = Attraction()
             attr.setValueToAttractionObject(place: tmpPlaceData)
             attractionStorage.append(attr)
+            
+            print(listArray)
+            self.spotTableView.reloadData();
         }
     }
     
@@ -180,6 +185,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             print("Place name \(place.name)")
             print("Place address \(String(describing: place.formattedAddress))")
             print("Place attributions \(String(describing: place.attributions))")
+            print("placeID=\(place.placeID)")
             
             self.tmpPlaceData = place
         })
@@ -191,10 +197,11 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         
         if segue.identifier == "GoToSetStartPoint" {
             
+            guard attractionStorage != nil else { return }
             guard attractionStorage.isEmpty != true else { return }
             
             let vc = segue.destination as! SetStartPointViewController
-            //let attractions = setValueToAttractionsList(placeList: tmpPlaceDataStorage)
+//            let attractions = setValueToAttractionsList(placeList: tmpPlaceDataStorage)
             vc.attractionsList = attractionStorage
             
         } else if segue.identifier == "ShowStorageAttration" {
@@ -211,8 +218,6 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
 extension AddViewPointViewController {
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        attractionStorage.remove(at: indexPath.row)
     }
     
     func addNewAttractionFromPocket( notification:Notification ) {
