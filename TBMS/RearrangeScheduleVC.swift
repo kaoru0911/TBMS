@@ -25,6 +25,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
     fileprivate let currentPageDotTintColor = UIColor.black
     fileprivate let otherPageDotTintColor = UIColor.lightGray
+    fileprivate let scheduleTypeCellColor = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
     let goSaveTripPageBtnTitle = "確認規劃"
     let saveTripBtnTitle = "儲存行程"
     
@@ -42,15 +43,11 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
     
     override func viewDidLoad() {
-        super.viewDidLoad()//        let count = cellContentsArray.count - 1
-        //        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).attraction)
-        //        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficTime)
-        //        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficInformation.duration)
-        //        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficInformation.distance)
-        //        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficInformation.steps[0].htmlInstructions)
-        //        print((cellContentsArray[count] as! ScheduleAndTrafficCellContent).trafficInformation.steps)
-        
+        super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        let collectionViewLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        collectionViewLayout.minimumLineSpacing = 0
         
         cellContentsArray = prepareCellsContents(attractions: attractions!, routesDetails: routesDetails)
         
@@ -289,6 +286,23 @@ extension RearrangeScheduleVC {
         var tmpAttractionData = tripSpotData()
         var tmpDateStorage = 0
         var tmpCellIndexCount = 0
+        var tmpList = [Int]()
+        
+        for i in 0...cellContentsArray.count - 1 {
+            if cellContentsArray[i] is DateCellContent && cellContentsArray[i+1] is DateCellContent {
+                tmpList.append(i)
+            }
+        }
+        
+        let removeList = tmpList.sorted { $0 > $1 }
+        
+        for i in removeList {
+           cellContentsArray.remove(at: i)
+        }
+        
+        if cellContentsArray.last is DateCellContent {
+            cellContentsArray.removeLast()
+        }
         
         for cellContent in cellContentsArray {
             
@@ -383,14 +397,25 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForscheduleAndTrafficCell, for: indexPath) as! ScheduleAndTrafficCell
             // setting the label text
             let cellContent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
+            
             cell.viewPointName.text = cellContent.viewPointName
+            cell.viewPointBGBlock.layer.cornerRadius = 10
+            cell.viewPointBGBlock.backgroundColor = scheduleTypeCellColor
+            cell.arrow.layer.cornerRadius = 10
+            cell.arrow.backgroundColor = scheduleTypeCellColor
+            
             cell.trafficInf.text = "\(cellContent.travelMode ?? ""), \(cellContent.trafficTime ?? "")"
+            
             return cell
             
         case .lastAttactionCellType:
+            
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForLastAttractionCell, for: indexPath) as! LastAttractionCell
-            let cellCotent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
-            cell.viewPointName.text = cellCotent.viewPointName
+            let cellContent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
+            cell.viewPointName.text = cellContent.viewPointName
+            cell.viewPointBGBlock.layer.cornerRadius = 10
+            cell.viewPointBGBlock.backgroundColor = scheduleTypeCellColor
+            
             return cell
         }
     }
@@ -499,6 +524,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         }
         self.collectionView.reloadData()
     }
+    
     func transferToLastAttrCellContent (targetCellContent: inout ScheduleAndTrafficCellContent) {
         targetCellContent.type = CustomerCellType.lastAttactionCellType
         targetCellContent.trafficInformation = nil

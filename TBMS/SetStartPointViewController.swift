@@ -12,8 +12,6 @@ import GooglePlacePicker
 class SetStartPointViewController: UIViewController {
     
     @IBOutlet weak var chosenStartingPoint: UILabel!
-    //    @IBOutlet weak var startingPointText: UITextField!
-    
     @IBOutlet weak var chooseStartingPtBtn: UIButton!
     @IBOutlet weak var goToNextPage: UIButton!
     
@@ -23,7 +21,6 @@ class SetStartPointViewController: UIViewController {
     var attractionsList : [Attraction]!
     var routesDetails : [LegsData]!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         goToNextPage.isHidden = true
@@ -31,12 +28,10 @@ class SetStartPointViewController: UIViewController {
         print(attractionsList.first!.attrctionName!)
     }
     
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
     @IBAction func chooseStartingBtnPressed(_ sender: UIButton) {
         
@@ -61,58 +56,63 @@ class SetStartPointViewController: UIViewController {
             
             self.startPoint = Attraction()
             self.startPoint.setValueToAttractionObject(place: place)
-            
         })
     }
     
-    
     @IBAction func goToNextPage(_ sender: Any) {
         
-//        attractionsList.insert(startPoint, at: 0)
         let bestRoutePoductor = BestRouteCalculator(startingPoint: startPoint, attractionsList: attractionsList)
         bestRoutePoductor.getBestRoute { (bestRouteAttrList) in
             
             self.attractionsList = bestRouteAttrList
             self.getTotalRouteInformation( completion: { _ in
+                
                 self.performSegue(withIdentifier: self.keyNextPageSegID, sender: nil)
             })
         }
     }
     
+    func setTravelModType(routeDetail: inout [LegsData]) {
+        
+        for leg in routeDetail {
+            
+//            guard let step =  else {
+//                
+//            }
+            
+//            routeDetail[0].steps[0].travelMode;
+//            let setp = routeDetail[0].steps[0].steps?[0].travelMode
+        }
+    }
     
     func getTotalRouteInformation(completion: @escaping ()->Void ) {
-//        print("近來囉")
+        
         var origin = attractionsList.first!
         var attractionsNumber = attractionsList.count
         
         for i in 1...attractionsList.count-1 {
-//            print("i=\(i)唷")
             let destination = attractionsList[i]
             routesDetails = [LegsData]()
+            
             let routeGenerator = GoogleDirectionCaller()
-            //            let route = LegsData()
             routeGenerator.getRouteInformation(origin: origin.placeID,
                                                destination: destination.placeID,
                                                completion: { (route) in
-//                print("跑\(i)的畢包囉")
-                self.routesDetails.append(route)
-                attractionsNumber -= 1
-//                print(route.steps[1].htmlInstructions)
-                print(attractionsNumber)
-                if attractionsNumber == 1 {
-//                    print("全部都傳完囉")
-                    completion()
-                }
+                                                self.routesDetails.append(route)
+                                                attractionsNumber -= 1
+                                                print(attractionsNumber)
+                                                if attractionsNumber == 1 {
+                                                    completion()
+                                                }
             })
             origin = destination
         }
     }
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc : RearrangeScheduleVC = segue.destination as! RearrangeScheduleVC
         vc.routesDetails = routesDetails
-        vc.attractions = attractionsList   
+        vc.attractions = attractionsList
     }
 }
 
@@ -129,7 +129,6 @@ struct Attraction {
     var coordinate : CLLocationCoordinate2D!
     var address : String?
     var phoneNumber : String?
-    
     var trafficTime : Double!
     
     mutating func setValueToAttractionObject (place:GMSPlace) {
@@ -140,13 +139,5 @@ struct Attraction {
         
         if let phoneNumber = place.phoneNumber { self.phoneNumber = phoneNumber }
         if let address = place.formattedAddress { self.address = address }
-    }
-}
-
-extension MenuTableViewController {
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        self.tabBarController?.tabBar.isHidden = false
     }
 }

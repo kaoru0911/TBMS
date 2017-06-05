@@ -78,7 +78,6 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         }
         
         performSegue(withIdentifier: unwindSegueID, sender: nil)
-        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
