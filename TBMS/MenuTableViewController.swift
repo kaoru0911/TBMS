@@ -131,6 +131,7 @@ class MenuTableViewController: UITableViewController {
             case "開始規劃":
                 if sharedData.pocketSpot?.count == 0 {
                     serverCommunicate.getPocketSpotFromServer()
+                    customActivityIndicatory(self.view, startAnimate: true)
                 } else{
                     performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
                 }
@@ -138,6 +139,7 @@ class MenuTableViewController: UITableViewController {
             case "推薦行程":
                 if sharedData.sharedTrips?.count == 0 {
                     serverCommunicate.getSharedTripFromServer()
+                    customActivityIndicatory(self.view, startAnimate: true)
                 } else{
                     performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
                 }
@@ -151,6 +153,7 @@ class MenuTableViewController: UITableViewController {
                 if sharedData.pocketTrips?.count == 0 {
                     serverCommunicate.getPocketTripFromServer()
                     
+                    customActivityIndicatory(self.view, startAnimate: true)
                     
                 } else{
                     performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
@@ -167,7 +170,6 @@ class MenuTableViewController: UITableViewController {
                     serverCommunicate.getPocketSpotFromServer()
                     
                     // show loading view
-//                    showLoadingView(uiView: self.view)
                     customActivityIndicatory(self.view, startAnimate: true)
                 } else{
                     performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
@@ -203,21 +205,30 @@ class MenuTableViewController: UITableViewController {
         performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
     }
     
-    func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) -> UIActivityIndicatorView {
+    func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) {
+        
+        // 做一個透明的view來裝
         let mainContainer: UIView = UIView(frame: viewContainer.frame)
         mainContainer.center = viewContainer.center
         mainContainer.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
-//        mainContainer.alpha = 0.5
+        // background的alpha跟view的alpha不同
+        mainContainer.alpha = 0.5
+        //================================
         mainContainer.tag = 789456123
         mainContainer.isUserInteractionEnabled = false
         
+        // 旋轉圈圈放在這個view上
         let viewBackgroundLoading: UIView = UIView(frame: CGRect(x:0,y: 0,width: 80,height: 80))
         viewBackgroundLoading.center = viewContainer.center
-        viewBackgroundLoading.backgroundColor = UIColor(white: 0x444444, alpha: 0.7)
+//        viewBackgroundLoading.backgroundColor = UIColor(red:0x7F, green:0x7F, blue:0x7F, alpha: 1)
+        viewBackgroundLoading.backgroundColor = UIColor(red:0, green:0, blue:0, alpha: 1)
+        //================================
 //        viewBackgroundLoading.alpha = 0.5
+        //================================
         viewBackgroundLoading.clipsToBounds = true
         viewBackgroundLoading.layer.cornerRadius = 15
         
+        // 創造旋轉圈圈
         let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
         activityIndicatorView.frame = CGRect(x:0.0,y: 0.0,width: 40.0, height: 40.0)
         activityIndicatorView.activityIndicatorViewStyle =
@@ -236,7 +247,7 @@ class MenuTableViewController: UITableViewController {
                 }
             }
         }
-        return activityIndicatorView
+//        return activityIndicatorView
     }
     
 //    func showLoadingView(uiView:UIView) {

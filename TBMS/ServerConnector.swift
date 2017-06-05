@@ -709,7 +709,7 @@ class ServerConnector: NSObject {
 //            return
 //        }
         
-        for i in 0...tripData.spots.count {
+        for i in 0..<tripData.spots.count {
             
             // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
             let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,

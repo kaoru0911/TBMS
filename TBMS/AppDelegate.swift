@@ -24,6 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, GIDSignInDelegate {
         GMSPlacesClient.provideAPIKey("AIzaSyDiA58UEYkaprWIYZVQIRsvm0KfiFm1qyk")
          FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         
+//        window?.rootViewController
+//        UIApplication.shared.delegate as! AppDelegate
+        
         // Initialize sign-in
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
