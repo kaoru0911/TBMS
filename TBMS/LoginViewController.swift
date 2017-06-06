@@ -41,14 +41,31 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         if (FBSDKAccessToken.current()) != nil{
             //            fetchProfile()
         }
-
         
+        // dismiss keyboard
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
+
+
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "loginNotifier"), object: nil)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    // For pressing return on the keyboard to dismiss keyboard
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        for textField in self.view.subviews where textField is UITextField {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func hideKeyboard() {
+        view.endEditing(true)
     }
     
     // FB登入按鈕
@@ -129,8 +146,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     
         serverCommunicate.userLogin()
         
-       
-
         customActivityIndicatory(self.view, startAnimate: true)
     }
     

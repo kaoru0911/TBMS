@@ -190,6 +190,7 @@ function downloadSharedTripSpot($db, $account){
 						 "spotName"=>$v['spotName'],	
 						 "nDay"=>$v['nDay'],
 						 "nth"=>$v['nth'],	
+						 "trafficTitle"=>$v['trafficTitle'],
 						 "trafficToNext"=>$v['trafficToNext'],
 						 "placeID"=>$v['placeID'],					 
 						 );
@@ -228,6 +229,7 @@ function downloadPocketTripSpot($db, $account){
 						 "spotName"=>$v['spotName'],	
 						 "nDay"=>$v['nDay'],
 						 "nth"=>$v['nth'],	
+						 "trafficTitle"=>$v['trafficTitle'],
 						 "trafficToNext"=>$v['trafficToNext'],
 						 "placeID"=>$v['placeID'],					 
 						 );

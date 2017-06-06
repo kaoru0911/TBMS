@@ -57,12 +57,20 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         //實體化一個長壓的手勢物件, 當啟動時呼叫handleLongGesture這個func
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(_:)))
         self.collectionView.addGestureRecognizer(longPressGesture)
+        
+       
+       
+
+    
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+ 
+    
     
     
     @IBAction func addDateCellBtnPressed(_ sender: UIButton) {
@@ -366,6 +374,15 @@ extension RearrangeScheduleVC {
                 tmpAttractionData.nDays = tmpDateStorage
                 tmpAttractionData.nTh = tmpCellIndexCount
                 tmpAttractionData.trafficToNextSpot = generateDetailRouteString(route: cellContentData.trafficInformation)
+<<<<<<< HEAD
+=======
+                print("\(String(describing: tmpAttractionData.spotName))")
+                print("\(tmpAttractionData.trafficTitle)")
+                print("\(tmpAttractionData.nDays)")
+                print("\(tmpAttractionData.nTh)")
+                print("\(tmpAttractionData.trafficToNextSpot)")
+                
+>>>>>>> 3912fc87e07f80bd01048c416e9827171ea69347
                 spots.append(tmpAttractionData)
                 tmpAttractionData = tripSpotData()
                 tmpCellIndexCount += 1
@@ -403,6 +420,8 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         let attractionsCellSize = CGSize(width: UIScreen.main.bounds.width, height: 120)
         let lastAttractionsCellSize = CGSize(width: UIScreen.main.bounds.width, height: 60)
         
+        
+        
         switch cellContentsArray[indexPath.item].type! {
         case .dateCellType:
             return dayCellSize
@@ -410,6 +429,8 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             return attractionsCellSize
         case .lastAttactionCellType:
             return lastAttractionsCellSize
+            
+            
         }
     }
     
@@ -422,7 +443,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForDateTypeCell, for: indexPath) as! DateCell
             // if is the 1st day cell, show the adding days button
-            if indexPath.item == 0{
+            if indexPath.item == 0 {
                 cell.addNewTripDayButton.isHidden = false
             } else {
                 cell.addNewTripDayButton.isHidden = true
@@ -440,12 +461,20 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             let cellContent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
             
             cell.viewPointName.text = cellContent.viewPointName
+<<<<<<< HEAD
             cell.viewPointBGBlock.layer.cornerRadius = 10
             cell.viewPointBGBlock.backgroundColor = scheduleTypeCellColor
             cell.arrow.layer.cornerRadius = 10
             cell.arrow.backgroundColor = scheduleTypeCellColor
             
             cell.trafficInf.text = generateRouteTitleString(cellContent: cellContent)
+=======
+            cell.trafficInf.text = "\(cellContent.travelMode ?? ""), \(cellContent.trafficTime ?? "")"
+            
+            
+            cell.viewPointBGBlock.layer.cornerRadius = 4.0
+            cell.arrow.layer.cornerRadius = 4.0
+>>>>>>> 3912fc87e07f80bd01048c416e9827171ea69347
             
             return cell
             
@@ -602,7 +631,8 @@ class DataTypeTransformer {
         let spotObj = spotData()
         spotObj.spotName = obj.name
         spotObj.placeID = obj.placeID
-        spotObj.coordinate = obj.coordinate
+        spotObj.latitude = obj.coordinate.latitude
+        spotObj.longitude = obj.coordinate.longitude
         return spotObj
     }
     
@@ -611,7 +641,9 @@ class DataTypeTransformer {
         var attr = Attraction()
         attr.attrctionName = obj.spotName
         attr.placeID = obj.placeID
-        if let coordinate = obj.coordinate { attr.coordinate = coordinate }
+        let coordinate = CLLocationCoordinate2D(latitude: obj.latitude!, longitude: obj.longitude!)
+        attr.coordinate = coordinate
+        
         return attr
     }
     
@@ -619,7 +651,8 @@ class DataTypeTransformer {
         let spotObj = spotData()
         spotObj.spotName = obj.attrctionName
         spotObj.placeID = obj.placeID
-        if let coordinate = obj.coordinate { spotObj.coordinate = coordinate }
+        spotObj.latitude = obj.coordinate.latitude
+        spotObj.longitude = obj.coordinate.longitude
         return spotObj
     }
     

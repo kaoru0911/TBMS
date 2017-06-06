@@ -126,6 +126,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBAction func addSpotBtn(_ sender: Any) {
         
+        
         // 檢查是否有存在相同景點
         var spotExistedChecking = false
         
@@ -154,6 +155,17 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             print(listArray)
             self.spotTableView.reloadData();
         }
+    }
+    
+    func showAlertMessage(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
+        
+        alert.addAction(ok)
+        
+        self.present(alert,animated: true,completion: nil)
     }
     
     
@@ -218,7 +230,15 @@ extension AddViewPointViewController {
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     }
     
+    
+    
     func addNewAttractionFromPocket( notification:Notification ) {
+        
+        
+        if !sharedData.isLogin {
+            showAlertMessage(title: "", message: "請先登入會員")
+            return
+        }
         
         attractionStorage += ( notification.object as! [Attraction] )
         

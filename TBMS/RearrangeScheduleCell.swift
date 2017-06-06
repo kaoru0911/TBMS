@@ -14,6 +14,11 @@ class ScheduleAndTrafficCell: UICollectionViewCell {
     @IBOutlet weak var viewPointName: UILabel!
     @IBOutlet weak var arrow: UIImageView!
     @IBOutlet weak var trafficInf: UILabel!
+<<<<<<< HEAD
+=======
+
+    
+>>>>>>> 3912fc87e07f80bd01048c416e9827171ea69347
 }
 
 class LastAttractionCell: UICollectionViewCell {

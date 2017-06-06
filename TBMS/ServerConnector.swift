@@ -13,7 +13,11 @@ import SwiftyJSON
 class ServerConnector: NSObject {
     
     // URL
+    
+    // 本機server
     let baseURLStr: String = "http://localhost/TravelByMyself/"
+    // ngrok的server:在terminal輸入ngrok的位置後加上http 80即產生網址
+//    let baseURLStr: String = "https://becc12da.ngrok.io/TravelByMyself/"
     let memberURLstr: String = "member.php"
     let dataDownloadURLstr: String = "dataDownload.php"
     let dataUploadURLstr: String = "dataUpload.php"
@@ -38,6 +42,8 @@ class ServerConnector: NSObject {
     let TRAFFIC_KEY: String = "traffic"
     let COVERIMG_KEY: String = "coverImg"
     let PLACEID_KEY: String = "placeID"
+    let LATITUDE_KEY: String = "latitude"
+    let LONGITUDE_KEY: String = "longitude"
     
     // tripTye
     let SHAREDTRIP: String = "sharedTrip"
@@ -116,10 +122,11 @@ class ServerConnector: NSObject {
                     }
                 
                     let result = getFeedback["result"] as! Bool
-                
                     let error = getFeedback["errorCode"] as! String
+                    let email = getFeedback["email"] as! String
                 
                     self.sharedData.isLogin = result
+                    self.sharedData.memberData?.email = email
                 
                     print("Result: \(result), Error code:", error)
                 
@@ -130,6 +137,10 @@ class ServerConnector: NSObject {
             
             NotificationCenter.default.post(name: self.loginNotifier, object: nil)
         }
+    }
+    
+    func userLogout() {
+        sharedData.dataReset()        
     }
     
     /**
@@ -506,6 +517,7 @@ class ServerConnector: NSObject {
                     getSpot.belongTripName = (getFeedback[i]["tripName"] as? String)!
                     getSpot.nDays = (getFeedback[i]["nDay"] as? Int)!
                     getSpot.nTh = (getFeedback[i]["nth"] as? Int)!
+                    getSpot.trafficTitle = (getFeedback[i]["trafficTitle"] as? String)!
                     getSpot.trafficToNextSpot = (getFeedback[i]["trafficToNext"] as? String)!
                     getSpot.spotName = (getFeedback[i]["spotName"] as? String)!
                     getSpot.placeID = (getFeedback[i]["placeID"] as? String)!
@@ -534,6 +546,8 @@ class ServerConnector: NSObject {
                                      SPOTNAME_KEY: spotData.spotName as Any,
                                      SPOTCOUNTRY_KEY: spotData.spotCountry as Any,
                                      PLACEID_KEY: spotData.placeID as Any,
+                                     LATITUDE_KEY: spotData.latitude as Any,
+                                     LONGITUDE_KEY: spotData.longitude as Any,
                                      REQUEST_KEY: UPLOAD_POCKETSPOT_REQ]
         
         
@@ -720,6 +734,8 @@ class ServerConnector: NSObject {
                                          TRAFFICTITLE_KEY: tripData.spots[i].trafficTitle as Any,
                                          TRAFFIC_KEY: tripData.spots[i].trafficToNextSpot as Any,
                                          PLACEID_KEY: tripData.spots[i].placeID as Any,
+                                         LATITUDE_KEY: tripData.spots[i].latitude as Any,
+                                         LONGITUDE_KEY: tripData.spots[i].longitude as Any,
                                          REQUEST_KEY: request]
             
             Alamofire.request(baseURLStr + dataUploadURLstr, method: .post, parameters: parameters).responseJSON { response in

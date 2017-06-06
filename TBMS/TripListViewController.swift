@@ -97,7 +97,16 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
         // 清空資料重新下載
         sharedData.tempTripData = tripData()
         
-        serverCommunicate.getTripSpotFromServer(selectTrip: selectCell.cellTripData, req: serverCommunicate.DOWNLOAD_POCKETTRIPSPOT_REQ)
+        switch selectedProcess {
+        case "庫存行程":
+            serverCommunicate.getTripSpotFromServer(selectTrip: selectCell.cellTripData, req: serverCommunicate.DOWNLOAD_POCKETTRIPSPOT_REQ)
+        case "推薦行程":
+            serverCommunicate.getTripSpotFromServer(selectTrip: selectCell.cellTripData, req: serverCommunicate.DOWNLOAD_SHAREDTRIPSPOT_REQ)
+        default:
+            break
+        }
+        
+        
         
         customActivityIndicatory(self.view, startAnimate: true)
     }

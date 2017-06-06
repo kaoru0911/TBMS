@@ -57,14 +57,22 @@ class BestRouteCalculator: NSObject {
         
         // setting the request detail about getting travelTime
         self.request.transportType = .walking
-        self.request.source = MKMapItem(placemark:(MKPlacemark(coordinate: startingPlace.coordinate)))
+        if #available(iOS 10.0, *) {
+            self.request.source = MKMapItem(placemark:(MKPlacemark(coordinate: startingPlace.coordinate)))
+        } else {
+            // Fallback on earlier versions
+        }
         
         // find the closest attraction
         for i in 0...attractionsList.count-1 {
             var arrivalPlace = attractionsList[i]
             
             // sending request
-            self.request.destination = MKMapItem(placemark:(MKPlacemark(coordinate: arrivalPlace.coordinate)))
+            if #available(iOS 10.0, *) {
+                self.request.destination = MKMapItem(placemark:(MKPlacemark(coordinate: arrivalPlace.coordinate)))
+            } else {
+                // Fallback on earlier versions
+            }
             let directCalculator = MKDirections(request: self.request)
             
             directCalculator.calculateETA(completionHandler: { (response, error) in
