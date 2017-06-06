@@ -320,6 +320,7 @@
 		A74BDDDF1ED5B7A700987446 /* Login&Register */ = {
 			isa = PBXGroup;
 			children = (
+				A7929A471ED586FB0024B4D7 /* EmailRegisterViewController.swift */,
 				A7929A431ED573F00024B4D7 /* RegisterViewController.swift */,
 				A7929A451ED574520024B4D7 /* LoginViewController.swift */,
 				A747645E1ED8111F0059D586 /* MemberViewController.swift */,
@@ -358,7 +359,6 @@
 				A76BA9FD1ECC697000443947 /* SectionInfo.swift */,
 				A7929A3F1ED56A2C0024B4D7 /* ServerConnector.swift */,
 				A742B1491EDEC34300C7EA36 /* TBMS-Bridging-Header.h */,
-				A7929A471ED586FB0024B4D7 /* EmailRegisterViewController.swift */,
 				A76BA9E01ECC67ED00443947 /* Main.storyboard */,
 				22F43F4F1ECD664D00791D55 /* Controller */,
 				22F43F3E1ECD660000791D55 /* Model */,

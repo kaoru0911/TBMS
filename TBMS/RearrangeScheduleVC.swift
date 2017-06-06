@@ -58,12 +58,20 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         //實體化一個長壓的手勢物件, 當啟動時呼叫handleLongGesture這個func
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(_:)))
         self.collectionView.addGestureRecognizer(longPressGesture)
+        
+       
+       
+
+    
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+ 
+    
     
     
     @IBAction func addDateCellBtnPressed(_ sender: UIButton) {
@@ -348,6 +356,8 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         let attractionsCellSize = CGSize(width: UIScreen.main.bounds.width, height: 120)
         let lastAttractionsCellSize = CGSize(width: UIScreen.main.bounds.width, height: 60)
         
+        
+        
         switch cellContentsArray[indexPath.item].type! {
         case .dateCellType:
             return dayCellSize
@@ -355,6 +365,8 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             return attractionsCellSize
         case .lastAttactionCellType:
             return lastAttractionsCellSize
+            
+            
         }
     }
     
@@ -367,7 +379,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForDateTypeCell, for: indexPath) as! DateCell
             // if is the 1st day cell, show the adding days button
-            if indexPath.item == 0{
+            if indexPath.item == 0 {
                 cell.addNewTripDayButton.isHidden = false
             } else {
                 cell.addNewTripDayButton.isHidden = true
@@ -385,6 +397,11 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             let cellContent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
             cell.viewPointName.text = cellContent.viewPointName
             cell.trafficInf.text = "\(cellContent.travelMode ?? ""), \(cellContent.trafficTime ?? "")"
+            
+            
+            cell.viewPointBGBlock.layer.cornerRadius = 4.0
+            cell.arrow.layer.cornerRadius = 4.0
+            
             return cell
             
         case .lastAttactionCellType:

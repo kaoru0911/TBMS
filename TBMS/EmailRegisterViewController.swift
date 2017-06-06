@@ -23,6 +23,11 @@ class EmailRegisterViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         registerBtn.layer.cornerRadius = 5.0
+        
+        // dismiss keyboard
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,6 +46,18 @@ class EmailRegisterViewController: UIViewController {
     }
     */
 
+    // For pressing return on the keyboard to dismiss keyboard
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        for textField in self.view.subviews where textField is UITextField {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
     func isValidPassword(candidate: String) -> Bool {
         
         //驗證用户名或密碼的正則表達式：”^[a-zA-Z]\w{5,15}$”

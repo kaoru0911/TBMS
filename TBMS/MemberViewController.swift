@@ -19,6 +19,8 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
     @IBOutlet weak var changePersonalphotoBtn: UIButton!
     @IBOutlet weak var personalImage: UIImageView!
     
+    @IBOutlet weak var logoutBtn: UIButton!
+    @IBOutlet weak var resetDataBtn: UIButton!
     var serverCommunicate: ServerConnector = ServerConnector()
     var sharedData = DataManager.shareDataManager
 
@@ -30,11 +32,17 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
         // Do any additional setup after loading the view.
             personalImage.image = UIImage(named: "UserPhotoDefault")
             changePersonalphotoBtn.layer.cornerRadius = 5.0
+            resetDataBtn.layer.cornerRadius = 5.0
+            logoutBtn.layer.cornerRadius = 5.0
         
         usernameLabel.text = sharedData.memberData?.account
         passwordTextField.text =  sharedData.memberData?.password
         emailTextField.text = sharedData.memberData?.email
         
+        // dismiss keyboard
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
+
         
         }
 
@@ -54,6 +62,19 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     */
 
+    // For pressing return on the keyboard to dismiss keyboard
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        for textField in self.view.subviews where textField is UITextField {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func hideKeyboard() {
+        view.endEditing(true)
+    }
+
+    
     
     func launchImagePickerWithSourceType(type:UIImagePickerControllerSourceType) {
         // Check if source type is available first
