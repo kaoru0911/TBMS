@@ -374,15 +374,6 @@ extension RearrangeScheduleVC {
                 tmpAttractionData.nDays = tmpDateStorage
                 tmpAttractionData.nTh = tmpCellIndexCount
                 tmpAttractionData.trafficToNextSpot = generateDetailRouteString(route: cellContentData.trafficInformation)
-<<<<<<< HEAD
-=======
-                print("\(String(describing: tmpAttractionData.spotName))")
-                print("\(tmpAttractionData.trafficTitle)")
-                print("\(tmpAttractionData.nDays)")
-                print("\(tmpAttractionData.nTh)")
-                print("\(tmpAttractionData.trafficToNextSpot)")
-                
->>>>>>> 3912fc87e07f80bd01048c416e9827171ea69347
                 spots.append(tmpAttractionData)
                 tmpAttractionData = tripSpotData()
                 tmpCellIndexCount += 1
@@ -461,20 +452,13 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             let cellContent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
             
             cell.viewPointName.text = cellContent.viewPointName
-<<<<<<< HEAD
+
             cell.viewPointBGBlock.layer.cornerRadius = 10
             cell.viewPointBGBlock.backgroundColor = scheduleTypeCellColor
             cell.arrow.layer.cornerRadius = 10
             cell.arrow.backgroundColor = scheduleTypeCellColor
             
             cell.trafficInf.text = generateRouteTitleString(cellContent: cellContent)
-=======
-            cell.trafficInf.text = "\(cellContent.travelMode ?? ""), \(cellContent.trafficTime ?? "")"
-            
-            
-            cell.viewPointBGBlock.layer.cornerRadius = 4.0
-            cell.arrow.layer.cornerRadius = 4.0
->>>>>>> 3912fc87e07f80bd01048c416e9827171ea69347
             
             return cell
             

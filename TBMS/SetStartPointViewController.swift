@@ -35,16 +35,13 @@ class SetStartPointViewController: UIViewController {
         // dismiss keyboard
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
-        
-        print(attractionsList.first!.attrctionName!)
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-<<<<<<< HEAD
+
     @IBAction func travelModeValueChanged(_ sender: UISegmentedControl) {
         
         let index = sender.selectedSegmentIndex
@@ -59,21 +56,7 @@ class SetStartPointViewController: UIViewController {
             expectedTravelMode = .defaultValue
         }
     }
-=======
-    // For pressing return on the keyboard to dismiss keyboard
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        for textField in self.view.subviews where textField is UITextField {
-            textField.resignFirstResponder()
-        }
-        return true
-    }
-    
-    func hideKeyboard() {
-        view.endEditing(true)
-    }
-    
->>>>>>> 3912fc87e07f80bd01048c416e9827171ea69347
-    
+        
     @IBAction func chooseStartingBtnPressed(_ sender: UIButton) {
         
         let config = GMSPlacePickerConfig(viewport: nil)
@@ -136,6 +119,18 @@ class SetStartPointViewController: UIViewController {
             })
             origin = destination
         }
+    }
+    
+    // For pressing return on the keyboard to dismiss keyboard
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        for textField in self.view.subviews where textField is UITextField {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func hideKeyboard() {
+        view.endEditing(true)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
