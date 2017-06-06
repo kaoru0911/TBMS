@@ -58,36 +58,56 @@ class EmailRegisterViewController: UIViewController {
         view.endEditing(true)
     }
     
+    
     func isValidPassword(candidate: String) -> Bool {
         
         //驗證用户名或密碼的正則表達式：”^[a-zA-Z]\w{5,15}$”
         //驗證Email地址：(“^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\.\\w+([-.]\\w+)*$”)；
+        //(?=.[a-z])(?=.[A-Z])(?=.*\\d).{6,15}
+        
         let passwordRegex = "(?=.[a-z])(?=.[A-Z])(?=.*\\d).{6,15}"
         
         return NSPredicate(format: "SELF MATCHES %@", passwordRegex).evaluate(with: candidate)
     }
     
+    func isValidUsername(candidate:String) -> Bool {
+            let userRegex = "(?=.[a-z])(?=.[A-Z])(?=.*\\d).{6,15}"
+        
+        return NSPredicate(format: "SELF MATCHES %@", userRegex).evaluate(with: candidate)
+    
+    }
+        
+    
+    
     @IBAction func emailRegisterBtn(_ sender: Any) {
         
-        if isValidPassword(candidate: inputPassword.text!) {
-            print("password is good")
-        } else {
-            print("password is wrong")
+//        if isValidPassword(candidate: inputPassword.text!) {
+//            print("password is good")
+//        } else {
+//            print("password is wrong")
+//        }
+        
+        
+//        if isValidUsername(candidate: inputAccount.text!)  {
+//            print("username is good")
+//        } else {
+//            showAlertMessage(title: "註冊失敗", message: "帳號需為6-15個英文字母與數字")
+//        }
+//        
+//        if isValidPassword(candidate: inputPassword.text!)  {
+//            print("password is good")
+//        } else {
+//            showAlertMessage(title: "註冊失敗", message: "密碼需為6-15個英文字母與數字")
+//        }
+        
+        
+        if ((inputAccount.text?.characters.count)! < 6 || (inputAccount.text?.characters.count)! > 15 ) {
+                showAlertMessage(title: "註冊失敗", message: "帳號需為6-15個英文字母與數字")
+
         }
         
-        
-        if ((inputAccount.text?.characters.count)! <= 6) {
-            let alert = UIAlertController(title: "會員註冊", message:"會員名稱至少需6個字元", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
-            alert.addAction(ok)
-            self.present(alert,animated: true,completion: nil)
-        }
-        
-        if ((inputPassword.text?.characters.count)! < 6) {
-            let alert = UIAlertController(title: "會員註冊", message:"會員密碼至少需6個字元", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
-            alert.addAction(ok)
-            self.present(alert,animated: true,completion: nil)
+        if ((inputPassword.text?.characters.count)! < 6 || (inputPassword.text?.characters.count)! > 15 ) {
+                showAlertMessage(title: "註冊失敗", message: "帳號需為6-15個英文字母與數字")
         }
         
         guard inputAccount.text != nil && inputAccount.text != "" && inputPassword.text != nil && inputPassword.text != "" else {
@@ -101,14 +121,25 @@ class EmailRegisterViewController: UIViewController {
                 
         serverCommunicate.createAccount()
         
-        let alert = UIAlertController(title: "會員註冊", message:"註冊成功", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
-        alert.addAction(ok)
-        self.present(alert,animated: true,completion: nil)
+//        let alert = UIAlertController(title: "會員註冊", message:"註冊成功", preferredStyle: .alert)
+//        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
+//        alert.addAction(ok)
+//        self.present(alert,animated: true,completion: nil)
 
         
 //                return
         
+    }
+    
+    func showAlertMessage(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
+        
+        alert.addAction(ok)
+        
+        self.present(alert,animated: true,completion: nil)
     }
 
 }
