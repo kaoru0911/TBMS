@@ -14,19 +14,32 @@ import CoreLocation
 class GoogleDirectionCaller: NSObject {
     
     private let jsonObjector = DirectionJsonAnalyst()
-    private let parametersSetting = DirectParametersAndRequestURLGenerator()
     private var requestURL : String!
+    let parametersSetting = DirectParametersAndRequestURLGenerator()
     
     var route : LegsData!
     
     //設定預設參數
     init( responseFormat : RespondsDataType = .json,
           language : LanguageSetting = .chinese,
-          travelMod : TravelMod = .driving,
+          travelMod : TravelMod = .walking,
           distanceUnit : DistanceUnit = .metric,
-          departureTime : String = "1526540263" ) {
+          departureTime : String = "" ) {
         
         super.init()
+        // setting departureTime
+        var firstDate = DateComponents()
+        firstDate.year = 1970
+        firstDate.month = 1
+        firstDate.day = 1
+        firstDate.hour = 0
+        firstDate.minute = 0
+        firstDate.second = 0
+        
+//        
+//        let calendar = Calendar.current
+//        let timeSpace = calendar.dateComponents([.year,.month, .day, .hour,.minute,.second], from: )
+        
         // Setting parameters
         parametersSetting.outputFormat = responseFormat
         parametersSetting.language = language

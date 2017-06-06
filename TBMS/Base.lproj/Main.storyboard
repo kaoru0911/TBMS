@@ -310,34 +310,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="請輸入旅遊國家的地點, 以日本旅遊為例：                                                 成田機場, 羽田機場, ＸＸ飯店, ＸＸ車站" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oTd-aA-irk">
-                                <rect key="frame" x="76" y="240" width="223" height="187"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="textColor" red="0.33100015859999998" green="0.33100015859999998" blue="0.33100015859999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8s-J1-wki">
-                                <rect key="frame" x="168" y="432" width="131" height="30"/>
+                                <rect key="frame" x="198" y="545" width="131" height="30"/>
                                 <state key="normal" title="確定行程, 開始規劃"/>
                                 <connections>
                                     <action selector="goToNextPage:" destination="I8i-xe-uxU" eventType="touchUpInside" id="0f3-7d-cCW"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="請輸入旅遊國家的地點, 以日本旅遊為例：                                                 成田機場, 羽田機場, ＸＸ飯店, ＸＸ車站" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hxt-9m-DaA">
+                                <rect key="frame" x="46" y="158" width="283" height="125"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="125" id="ioL-6r-0ow"/>
+                                </constraints>
+                                <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你要從哪裏出發？" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndp-oQ-P5L">
-                                <rect key="frame" x="76" y="214" width="139" height="21"/>
+                                <rect key="frame" x="46" y="122" width="139" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tKf-sc-OLb">
-                                <rect key="frame" x="220" y="214" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tKf-sc-OLb">
+                                <rect key="frame" x="190" y="122" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j57-iU-Tjy">
-                                <rect key="frame" x="76" y="432" width="77" height="30"/>
+                                <rect key="frame" x="46" y="213" width="77" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="titleShadowOffset" width="1" height="1"/>
                                 <state key="normal" title="選擇出發地"/>
@@ -345,25 +348,55 @@
                                     <action selector="chooseStartingBtnPressed:" destination="I8i-xe-uxU" eventType="touchUpInside" id="xb7-1a-J7j"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="選擇交通方式 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gg0-C7-l5e">
+                                <rect key="frame" x="46" y="323" width="114" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="a8W-bo-U0v">
+                                <rect key="frame" x="46" y="359" width="206" height="29"/>
+                                <segments>
+                                    <segment title="走路"/>
+                                    <segment title="開車"/>
+                                    <segment title="大眾運輸"/>
+                                </segments>
+                                <connections>
+                                    <action selector="travelModeValueChanged:" destination="I8i-xe-uxU" eventType="valueChanged" id="Pls-fq-Sws"/>
+                                </connections>
+                            </segmentedControl>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="大眾運輸預設以下午作為出發時間, 實際開放時間請參考各國家大眾運輸系統公告" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ess-N9-sld">
+                                <rect key="frame" x="46" y="402" width="283" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="l0T-GH-n77"/>
+                                </constraints>
+                                <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="oTd-aA-irk" firstAttribute="centerX" secondItem="g5a-IB-ptC" secondAttribute="centerX" id="1BL-2z-cmk"/>
-                            <constraint firstItem="g8s-J1-wki" firstAttribute="bottom" secondItem="j57-iU-Tjy" secondAttribute="bottom" id="2Ip-MK-zyn"/>
-                            <constraint firstItem="oTd-aA-irk" firstAttribute="leading" secondItem="g5a-IB-ptC" secondAttribute="leadingMargin" constant="60" id="3S3-tc-T7K"/>
-                            <constraint firstItem="oTd-aA-irk" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" constant="5" id="7bW-VF-KOQ"/>
-                            <constraint firstItem="tKf-sc-OLb" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="top" id="7lW-3A-I6b"/>
-                            <constraint firstItem="g8s-J1-wki" firstAttribute="trailing" secondItem="oTd-aA-irk" secondAttribute="trailing" id="Crz-ud-i4d"/>
-                            <constraint firstItem="tKf-sc-OLb" firstAttribute="bottom" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" id="IDV-oy-PKw"/>
-                            <constraint firstItem="oTd-aA-irk" firstAttribute="centerX" secondItem="g5a-IB-ptC" secondAttribute="centerX" id="TTu-Du-HJ7"/>
-                            <constraint firstItem="j57-iU-Tjy" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="WtH-Do-yXb"/>
-                            <constraint firstItem="j57-iU-Tjy" firstAttribute="top" secondItem="oTd-aA-irk" secondAttribute="bottom" constant="5" id="Ywb-gG-qba"/>
-                            <constraint firstItem="tKf-sc-OLb" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="trailing" constant="5" id="dTT-9L-Yip"/>
-                            <constraint firstItem="oTd-aA-irk" firstAttribute="centerY" secondItem="g5a-IB-ptC" secondAttribute="centerY" id="kls-bQ-nvf"/>
-                            <constraint firstItem="g8s-J1-wki" firstAttribute="top" secondItem="j57-iU-Tjy" secondAttribute="top" id="oKi-93-G7B"/>
-                            <constraint firstItem="oTd-aA-irk" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="oTN-71-AwL"/>
-                            <constraint firstItem="oTd-aA-irk" firstAttribute="centerY" secondItem="g5a-IB-ptC" secondAttribute="centerY" id="sdY-bU-ZcO"/>
-                            <constraint firstItem="Ndp-oQ-P5L" firstAttribute="top" secondItem="HJu-WO-Wk1" secondAttribute="bottom" constant="150" id="zq2-K2-CC3"/>
+                            <constraint firstItem="a8W-bo-U0v" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="0fU-QL-HQA"/>
+                            <constraint firstItem="a8W-bo-U0v" firstAttribute="top" secondItem="gg0-C7-l5e" secondAttribute="bottom" constant="15" id="6vF-rj-2cg"/>
+                            <constraint firstItem="j57-iU-Tjy" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="AMx-5g-Lfn"/>
+                            <constraint firstItem="ess-N9-sld" firstAttribute="centerX" secondItem="hxt-9m-DaA" secondAttribute="centerX" id="EjU-nB-CyI"/>
+                            <constraint firstItem="ess-N9-sld" firstAttribute="top" secondItem="a8W-bo-U0v" secondAttribute="bottom" constant="15" id="Iy5-id-dfm"/>
+                            <constraint firstItem="Ndp-oQ-P5L" firstAttribute="leading" secondItem="g5a-IB-ptC" secondAttribute="leadingMargin" constant="30" id="J1n-th-UMS"/>
+                            <constraint firstItem="gg0-C7-l5e" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="Lbk-TT-ztM"/>
+                            <constraint firstItem="gg0-C7-l5e" firstAttribute="centerY" secondItem="g5a-IB-ptC" secondAttribute="centerY" id="NNo-Fk-BZs"/>
+                            <constraint firstItem="hxt-9m-DaA" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" constant="15" id="Of1-HJ-A4X"/>
+                            <constraint firstItem="hxt-9m-DaA" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="Ue7-hb-oYa"/>
+                            <constraint firstItem="g8s-J1-wki" firstAttribute="top" secondItem="ess-N9-sld" secondAttribute="bottom" constant="15" id="Uro-pq-CS3"/>
+                            <constraint firstItem="ess-N9-sld" firstAttribute="leading" secondItem="hxt-9m-DaA" secondAttribute="leading" id="XP7-ek-xh5"/>
+                            <constraint firstItem="ess-N9-sld" firstAttribute="trailing" secondItem="hxt-9m-DaA" secondAttribute="trailing" id="Yq7-m2-bLk"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="trailing" constant="5" id="bvJ-P2-dmx"/>
+                            <constraint firstItem="hxt-9m-DaA" firstAttribute="centerX" secondItem="g5a-IB-ptC" secondAttribute="centerX" id="e1H-bh-tc0"/>
+                            <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="hxt-9m-DaA" secondAttribute="bottom" constant="40" id="fFA-0U-wGJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="g8s-J1-wki" secondAttribute="trailing" constant="30" id="l5R-gG-F02"/>
+                            <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="j57-iU-Tjy" secondAttribute="bottom" constant="80" id="oT5-6h-4kU"/>
+                            <constraint firstItem="j57-iU-Tjy" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" constant="70" id="tEE-43-vcs"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="起點設定" id="wld-mh-Prh"/>
@@ -654,7 +687,7 @@
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1354,7 +1387,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

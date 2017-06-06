@@ -197,17 +197,15 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         
         if segue.identifier == "GoToSetStartPoint" {
             
-            guard attractionStorage != nil else { return }
+//            guard attractionStorage != nil else { return }
             guard attractionStorage.isEmpty != true else { return }
             
             let vc = segue.destination as! SetStartPointViewController
-//            let attractions = setValueToAttractionsList(placeList: tmpPlaceDataStorage)
             vc.attractionsList = attractionStorage
             
         } else if segue.identifier == "ShowStorageAttration" {
             
             let nextPage = segue.destination as! PocketSpotTVC
-            
             nextPage.selectedCountry = sharedData.chooseCountry
             nextPage.selectedProcess = "開始規劃"
             nextPage.scheduleAttractions = attractionStorage

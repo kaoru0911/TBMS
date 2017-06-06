@@ -111,22 +111,29 @@ class DirectionJsonAnalyst: NSObject {
                                                strLctLat: starLctLat,
                                                starLctLng: starLctlng )
             // another step-parameters setting
-            stepDetail.travelMode = step[keyTravelMode].string
+            let tmpTravel = step[keyTravelMode].string
+            
+            if tmpTravel == TravelMod.driving.rawValue {
+                stepDetail.travelMode = .driving
+            } else if tmpTravel == TravelMod.transit.rawValue {
+                stepDetail.travelMode = .transit
+            } else if tmpTravel == TravelMod.walking.rawValue {
+                stepDetail.travelMode = .walking
+            }
+            
             stepDetail.htmlInstructions = step[keyInstructions].string ?? ""
             stepDetail.maneuver = step[keyManeuver].string ?? ""
             
-            if travelMode == "transit" {
+            if step[keySteps].array != nil {
+                self.analyteBusModeResponseJSON(stepDetail: &stepDetail, steps:step[keySteps].arrayValue )
                 
-                if step[keySteps].array != nil {
-                    self.analyteBusModeResponseJSON(stepDetail: &stepDetail, steps:step[keySteps].arrayValue )
-                    
-                } else if step[keyTransitDetails].dictionary != nil {
-                    self.analyteSubwayModeResponseJSON(stepDetail: &stepDetail, step: step)
-                    
-                } else {
-                    self.analyteWalkingModeResponseJSON(stepDetail: &stepDetail)
-                }
+            } else if step[keyTransitDetails].dictionary != nil {
+                self.analyteSubwayModeResponseJSON(stepDetail: &stepDetail, step: step)
+                
+            } else {
+                self.analyteWalkingModeResponseJSON(stepDetail: &stepDetail)
             }
+            
             legs.steps.append(stepDetail)
         }
         return legs
@@ -136,11 +143,13 @@ class DirectionJsonAnalyst: NSObject {
     // Mark: These 3 methods is for handling 4 different travel type response JSONs
     
     private func analyteWalkingModeResponseJSON (stepDetail:inout StepsData) {
+        print("走路模式唷")
         stepDetail.trafficType = TrafficType.walking
+        stepDetail.travelMode = .walking
     }
     
     private func analyteBusModeResponseJSON (stepDetail:inout StepsData ,steps:[JSON]) {
-        
+        print("近來巴士模式")
         stepDetail.steps = [StepsData]()
         for step in steps {
             let distance = step[keyDistance][keyText].string!
@@ -160,15 +169,27 @@ class DirectionJsonAnalyst: NSObject {
                                               strLctLat: starLctLat,
                                               starLctLng: starLctlng )
             // another step-parameters setting
-            stepsData.travelMode = step[keyTravelMode].string
+            let tmpTravel = step[keyTravelMode].string
+            
+            if tmpTravel == TravelMod.driving.rawValue {
+                stepsData.travelMode = .driving
+            } else if tmpTravel == TravelMod.transit.rawValue {
+                stepsData.travelMode = .transit
+            } else if tmpTravel == TravelMod.walking.rawValue {
+                stepsData.travelMode = .walking
+            }
+            
             stepsData.htmlInstructions = step[keyInstructions].string ?? ""
             stepDetail.steps!.append(stepsData)
         }
-        stepDetail.trafficType = TrafficType.bus
+        stepDetail.travelMode = .bus
+        stepDetail.trafficType = .bus
+        
+        print("\(String(describing: stepDetail.arrivalStop)), \(String(describing: stepDetail.headsign)), \(String(describing: stepDetail.lineAgencies)), \(String(describing: stepDetail.lineShortame))")
     }
     
     private func analyteSubwayModeResponseJSON (stepDetail:inout StepsData ,step:JSON) {
-        
+        print("r進來地鐵模式")
         // setting each step's detail
         let transitDetailsData = step[keyTransitDetails]
         
@@ -212,6 +233,7 @@ class DirectionJsonAnalyst: NSObject {
         stepDetail.lineLocalIcon = tmpLineDetail[keyVehicle]?[keyLocalIcon].string ?? ""
         
         stepDetail.trafficType = TrafficType.subwayOrBoat
+        print("\(String(describing: stepDetail.arrivalStop)), \(String(describing: stepDetail.headsign)), \(String(describing: stepDetail.lineAgencies)), \(String(describing: stepDetail.lineShortame))")
     }
     
     
@@ -296,7 +318,7 @@ class LegsData: GeneralDirectionData, ResponceRouteType {
 }
 
 class SecondOrderStepsData: GeneralDirectionData {
-    var travelMode : String!
+    var travelMode : TravelMod!
     var htmlInstructions : String!  //路程簡介
 }
 

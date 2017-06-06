@@ -29,6 +29,13 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     let goSaveTripPageBtnTitle = "確認規劃"
     let saveTripBtnTitle = "儲存行程"
     
+    let bikeTravelTypeLabel = "單車"
+    let drivingTravelTypeLabel = "開車"
+    let walkingTravelTypeLabel = "走路"
+    let busTravelTypeLabel = "公車"
+    let transitTravelTypeLabel = "捷運/地鐵"
+    let defaultTravelTypeLabel = "異常"
+    
     var attractions: [Attraction]!
     var routesDetails: [LegsData]!
     var cellContentsArray = [CellContent]()
@@ -36,11 +43,6 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
     var travelDays : Int!
     var tmpTripData = [tripSpotData]()
-    
-    
-    var expectedTravelMode = TravelMod.transit
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -217,30 +219,56 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
     fileprivate func generateDetailRouteString (route:LegsData!) -> String! {
         
-        guard let routeData = route else {
-            return "路線計算錯誤"
-        }
-        
-        guard let steps = routeData.steps else {
-            return nil
-        }
+        guard let routeData = route else { return "路線計算錯誤" }
+        guard let steps = routeData.steps else { return nil }
         
         var routeDetailString = String()
+        var trasitTypeCheck = false
+        
+        for step in route.steps {
+            if step.arrivalStop?.name != "" || step.arrivalStop?.name != nil {
+                trasitTypeCheck = true
+                break
+            }
+        }
+        
         for i in 0 ... steps.count - 1 {
             let step = steps[i]
-            var stepString = "\(i+1). \(step.htmlInstructions!)\n\n"
+            var stepString = "\(i+1). "
             
-            if let secondSteps = step.steps {
-                stepString.removeAll()
-                stepString = "\(i+1)"
-                for secondStep in secondSteps {
-                    let tmpString = "\(secondStep.htmlInstructions!)\n\n"
-                    stepString.append(tmpString)
+            if step.arrivalStop != nil {
+                stepString += "搭乘\(step.lineAgencies!) - \(step.lineShortame!): \n 從 \(step.departureStop!.name!) 到 \(step.arrivalStop!.name!)\n\n"
+                
+            } else {
+                
+                let htmlInstructions = step.htmlInstructions
+                
+                if htmlInstructions != nil || htmlInstructions != "" {
+                    stepString += "\(htmlInstructions!)\n\n"
+                } else {
+                    stepString = ""
+                }
+            }
+            
+            if trasitTypeCheck != true {
+                
+                if let secondSteps = step.steps {
+                    stepString.removeAll()
+                    stepString = "\(i+1). "
+                    
+                    for secondStep in secondSteps {
+                        let htmlInstructions = secondStep.htmlInstructions
+                        
+                        if htmlInstructions != nil || htmlInstructions != "" {
+                            let tmpString = "\(htmlInstructions!)\n\n"
+                            stepString.append(tmpString)
+                        }
+                    }
                 }
             }
             routeDetailString.append(stepString)
         }
-        var returnString = routeDetailString.replacingOccurrences(of: "<div style=\"font-size:0.9em\">", with: "\n註：").replacingOccurrences(of: "</div>", with: "").replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "<b>", with: "")
+        var returnString = routeDetailString.replacingOccurrences(of: "<div style=\"font-size:0.9em\">", with: "\n註：").replacingOccurrences(of: "</div>", with: "").replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "<b>", with: "").replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: "[", with: "")
         returnString.characters.removeLast(2)
         return returnString
     }
@@ -249,7 +277,26 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         
         guard let travelTime = cellContent.trafficTime else { return "時間計算error唷" }
         guard travelTime != "routeCalculate error" else { return "時間計算error唷" }
-        return "\(cellContent.travelMode!), \(travelTime)"
+        guard let travelMod = cellContent.travelMode else { return "交通方式計算error唷" }
+        
+        let trafficTypeText: String
+        
+        switch travelMod{
+        case .bike:
+            trafficTypeText = bikeTravelTypeLabel
+        case .bus:
+            trafficTypeText = busTravelTypeLabel
+        case .driving:
+            trafficTypeText = drivingTravelTypeLabel
+        case .walking:
+            trafficTypeText = walkingTravelTypeLabel
+        case .transit:
+            trafficTypeText = transitTravelTypeLabel
+        default:
+            trafficTypeText = defaultTravelTypeLabel
+        }
+        
+        return "\(trafficTypeText), \(travelTime)"
     }
 }
 
@@ -297,7 +344,7 @@ extension RearrangeScheduleVC {
         let removeList = tmpList.sorted { $0 > $1 }
         
         for i in removeList {
-           cellContentsArray.remove(at: i)
+            cellContentsArray.remove(at: i)
         }
         
         if cellContentsArray.last is DateCellContent {
@@ -319,12 +366,6 @@ extension RearrangeScheduleVC {
                 tmpAttractionData.nDays = tmpDateStorage
                 tmpAttractionData.nTh = tmpCellIndexCount
                 tmpAttractionData.trafficToNextSpot = generateDetailRouteString(route: cellContentData.trafficInformation)
-                print("\(tmpAttractionData.spotName)")
-                print("\(tmpAttractionData.trafficTitle)")
-                print("\(tmpAttractionData.nDays)")
-                print("\(tmpAttractionData.nTh)")
-                print("\(tmpAttractionData.trafficToNextSpot)")
-                
                 spots.append(tmpAttractionData)
                 tmpAttractionData = tripSpotData()
                 tmpCellIndexCount += 1
@@ -404,7 +445,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             cell.arrow.layer.cornerRadius = 10
             cell.arrow.backgroundColor = scheduleTypeCellColor
             
-            cell.trafficInf.text = "\(cellContent.travelMode ?? ""), \(cellContent.trafficTime ?? "")"
+            cell.trafficInf.text = generateRouteTitleString(cellContent: cellContent)
             
             return cell
             

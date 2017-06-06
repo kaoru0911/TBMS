@@ -50,15 +50,15 @@ class DateCellContent : CellContent {
 
 /// For Storing the cell content about the ScheduleAndTrafficType cell.
 class ScheduleAndTrafficCellContent : CellContent {
-    var travelMode : String!
+    var travelMode : TravelMod!
     var trafficTime : String!
     var viewPointName : String!
     var attraction : Attraction!
     var trafficInformation : LegsData!
     
-    private let strTransitTravelMode = TravelMod.transit.rawValue
-    private let strWalkingTravelMode = TravelMod.driving.rawValue
-    private let strDrivingTravelMode = TravelMod.walking.rawValue
+    private let strTransitTravelMode: TravelMod = .transit
+    private let strWalkingTravelMode: TravelMod = .walking
+    private let strDrivingTravelMode: TravelMod = .driving
     
     let calculateErrorWarnning: String! = "routeCalculate error"
     
@@ -87,7 +87,7 @@ class ScheduleAndTrafficCellContent : CellContent {
         self.trafficInformation = trafficInformation
         self.trafficTime = self.trafficInformation.duration
         
-        self.travelMode = strDisplayWalkingMode
+        self.travelMode = .walking
 
         guard let routeDetail = self.trafficInformation.steps else{
             print("這是走路模式, 沒有step唷")
@@ -96,12 +96,12 @@ class ScheduleAndTrafficCellContent : CellContent {
         
         for step in routeDetail {
             
-            if step.travelMode == strTransitTravelMode {
-                self.travelMode = strDisplayTransitMode
+            if step.travelMode == .transit {
+                self.travelMode = .transit
                 break
                 
-            } else if step.travelMode == strDrivingTravelMode {
-                self.travelMode = strDisplayDrivingMode
+            } else if step.travelMode == .driving {
+                self.travelMode = .driving
                 break
             }
         }

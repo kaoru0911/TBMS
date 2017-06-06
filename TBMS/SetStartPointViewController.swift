@@ -20,6 +20,9 @@ class SetStartPointViewController: UIViewController {
     var startPoint : Attraction!
     var attractionsList : [Attraction]!
     var routesDetails : [LegsData]!
+    var attractionsListToNextPage : [Attraction]!
+    
+    var expectedTravelMode: TravelMod = .walking
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +34,21 @@ class SetStartPointViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @IBAction func travelModeValueChanged(_ sender: UISegmentedControl) {
+        
+        let index = sender.selectedSegmentIndex
+        switch index {
+        case 0:
+            expectedTravelMode = .walking
+        case 1:
+            expectedTravelMode = .driving
+        case 2:
+            expectedTravelMode = .transit
+        default:
+            expectedTravelMode = .defaultValue
+        }
     }
     
     @IBAction func chooseStartingBtnPressed(_ sender: UIButton) {
@@ -64,7 +82,7 @@ class SetStartPointViewController: UIViewController {
         let bestRoutePoductor = BestRouteCalculator(startingPoint: startPoint, attractionsList: attractionsList)
         bestRoutePoductor.getBestRoute { (bestRouteAttrList) in
             
-            self.attractionsList = bestRouteAttrList
+            self.attractionsListToNextPage = bestRouteAttrList
             self.getTotalRouteInformation( completion: { _ in
                 
                 self.performSegue(withIdentifier: self.keyNextPageSegID, sender: nil)
@@ -74,14 +92,15 @@ class SetStartPointViewController: UIViewController {
     
     func getTotalRouteInformation(completion: @escaping ()->Void ) {
         
-        var origin = attractionsList.first!
-        var attractionsNumber = attractionsList.count
+        var origin = attractionsListToNextPage.first!
+        var attractionsNumber = attractionsListToNextPage.count
         
-        for i in 1...attractionsList.count-1 {
-            let destination = attractionsList[i]
+        for i in 1...attractionsListToNextPage.count-1 {
+            let destination = attractionsListToNextPage[i]
             routesDetails = [LegsData]()
             
             let routeGenerator = GoogleDirectionCaller()
+            routeGenerator.parametersSetting.travelMod = expectedTravelMode
             routeGenerator.getRouteInformation(origin: origin.placeID,
                                                destination: destination.placeID,
                                                completion: { (route) in
@@ -99,7 +118,7 @@ class SetStartPointViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc : RearrangeScheduleVC = segue.destination as! RearrangeScheduleVC
         vc.routesDetails = routesDetails
-        vc.attractions = attractionsList
+        vc.attractions = attractionsListToNextPage
     }
 }
 
