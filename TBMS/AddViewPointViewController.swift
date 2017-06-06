@@ -171,8 +171,8 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBAction func searchBtn(_ sender: Any) {
         
-        let config = GMSPlacePickerConfig(viewport: nil)
-        let placePicker = GMSPlacePicker(config: config)
+        let pickerGenerator = GooglePlacePickerGenerator()
+        let placePicker = pickerGenerator.generatePlacePicker(selectedCountry: sharedData.chooseCountry)
         
         placePicker.pickPlace(callback: { (place, error) -> Void in
             if let error = error {

@@ -52,7 +52,7 @@ class DirectParametersAndRequestURLGenerator: NSObject {
                               "language":language.rawValue,
                               "mode":travelMod.rawValue.lowercased(),
                               "units":distanceUnit.rawValue,
-                              "traffic_model":trafficModel.rawValue,
+//                              "traffic_model":trafficModel.rawValue,
                               "transit_mode":transitModePreference!,
                               /*"avoid":avoid,*/
                               "key":goldKey]

@@ -7,7 +7,10 @@
 //
 
 import UIKit
+import CoreLocation
 import GooglePlaces
+import GooglePlacePicker
+import GoogleMaps
 
 class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
@@ -36,13 +39,15 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     let transitTravelTypeLabel = "捷運/地鐵"
     let defaultTravelTypeLabel = "異常"
     
+    let shareData = DataManager.shareDataManager
     var attractions: [Attraction]!
     var routesDetails: [LegsData]!
     var cellContentsArray = [CellContent]()
-    let shareData = DataManager.shareDataManager
-    fileprivate var longPressGesture: UILongPressGestureRecognizer!
-    var travelDays : Int!
+    var travelDays: Int!
     var tmpTripData = [tripSpotData]()
+    var selectedTravelMod: TravelMod!
+    
+    fileprivate var longPressGesture: UILongPressGestureRecognizer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,24 +58,14 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         
         cellContentsArray = prepareCellsContents(attractions: attractions!, routesDetails: routesDetails)
         
-        
-        //實體化一個長壓的手勢物件, 當啟動時呼叫handleLongGesture這個func
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(_:)))
         self.collectionView.addGestureRecognizer(longPressGesture)
-        
-       
-       
-
-    
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
- 
-    
     
     
     @IBAction func addDateCellBtnPressed(_ sender: UIButton) {
@@ -93,29 +88,19 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
                 
             } else if i == attractions.count {
                 
-                let cellContent = ScheduleAndTrafficCellContent(attraction: attractions[i-1], trafficInformation: nil)
+                let cellContent = ScheduleAndTrafficCellContent(attraction: attractions[i-1], trafficInformation: nil, selectedTravelMode: selectedTravelMod)
                 cellContent.type = CustomerCellType.lastAttactionCellType
                 cellsContents.append(cellContent)
                 
             } else {
                 
-                let cellContent = ScheduleAndTrafficCellContent(attraction: attractions[i-1], trafficInformation: routesDetails[i-1])
+                let cellContent = ScheduleAndTrafficCellContent(attraction: attractions[i-1], trafficInformation: routesDetails[i-1], selectedTravelMode: selectedTravelMod)
                 cellsContents.append(cellContent)
             }
         }
         return cellsContents
     }
     
-    //    //確認天數
-    //    fileprivate func countTripDays(inputArray:[CellContent]) -> Int{
-    //        var daysCounting = 0
-    //        for obj in inputArray {
-    //            if (obj is DateCellContent){
-    //                daysCounting += 1
-    //            }
-    //        }
-    //        return daysCounting
-    //    }
     
     /// Produce the cellContent for next Page
     ///
@@ -124,15 +109,8 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     ///     - The Array with dictionary type contents:
     ///         - the contens with key - "dailyScheduleSetting": CellContent with dateType.
     ///         - The contens with key - "scheduleArray": CellContent with dateType.
-    
-    
     fileprivate func seperateArrayByDate (intputArray:[CellContent]) -> [[String:Any]]
     {
-        //-------測試用-------
-        //        print("intputArray(seperateArrayByDate)=\(intputArray.count)")
-        
-        //-------------------
-        
         //outputArray
         var seperateFinishArray = [[String:Any]]()
         //tmpObj
@@ -143,14 +121,12 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         var isFirstObj = true
         
         for obj in intputArray {
+            
             if isFirstObj {
-                //如果是第一次, 將day的資訊丟到tmpdic
                 tmpDateCellContent = 1
                 isFirstObj = false
-                //                print("FirstObj唷")
                 
             } else if obj is DateCellContent {
-                //                print("obj is DateCellContent唷")
                 //如果是天數type, 將之前的tmpDic＆tmpArray彙整到一天頁面的物件, 並將tmpDic更新為現在這個obj
                 tmpDic = [keyOfDateCell:tmpDateCellContent, keyOfScheduleAndTrafficCell:tmpArray]
                 seperateFinishArray.append(tmpDic)
@@ -158,13 +134,11 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
                 tmpDateCellContent = (obj as! DateCellContent).date
                 
             } else {
-                //                print("obj is ScheduleAndTrafficCellContent唷")
                 //是交通＆景點的type, 存到tmpArray中
                 let tmpObj = obj as! ScheduleAndTrafficCellContent
                 tmpArray += [tmpObj]
                 
                 if obj == intputArray.last {
-                    //                    print("obj is last了唷")
                     tmpDic = [keyOfDateCell:tmpDateCellContent, keyOfScheduleAndTrafficCell:tmpArray]
                     seperateFinishArray.append(tmpDic)
                 }
@@ -182,13 +156,16 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     func produceVCArray (myStoryBoard: UIStoryboard, cellContents:tripData!) -> [UIViewController] {
         
         var tmpVCArray = [ScheduleTableViewController]()
+        
         guard let cellContents = cellContents else {
             print("沒有spot唷")
             return tmpVCArray
         }
+        
         travelDays = countTotalTripDays(spot: cellContents.spots)
         
         for i in 0...travelDays - 1 {
+            
             let tmpVC = myStoryBoard.instantiateViewController(withIdentifier: nameOfFinalScheduleVC) as! ScheduleTableViewController
             tmpVC.data = cellContents
             tmpVC.nDaySchedule = i + 1
@@ -284,8 +261,8 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     fileprivate func generateRouteTitleString (cellContent:ScheduleAndTrafficCellContent) -> String! {
         
         guard let travelTime = cellContent.trafficTime else { return "時間計算error唷" }
-        guard travelTime != "routeCalculate error" else { return "時間計算error唷" }
-        guard let travelMod = cellContent.travelMode else { return "交通方式計算error唷" }
+        guard travelTime != "routeCalculate error" else { return "routeCalculate error" }
+        guard let travelMod = cellContent.travelMode else { return "交通方式error唷" }
         
         let trafficTypeText: String
         
@@ -366,6 +343,7 @@ extension RearrangeScheduleVC {
                 tmpCellIndexCount = 0
                 
             } else if cellContent is ScheduleAndTrafficCellContent {
+                
                 let cellContentData = cellContent as! ScheduleAndTrafficCellContent
                 
                 tmpAttractionData.trafficTitle = generateRouteTitleString(cellContent: cellContentData)
@@ -374,7 +352,10 @@ extension RearrangeScheduleVC {
                 tmpAttractionData.nDays = tmpDateStorage
                 tmpAttractionData.nTh = tmpCellIndexCount
                 tmpAttractionData.trafficToNextSpot = generateDetailRouteString(route: cellContentData.trafficInformation)
+                tmpAttractionData.placeID = cellContentData.placeID
+                
                 spots.append(tmpAttractionData)
+                
                 tmpAttractionData = tripSpotData()
                 tmpCellIndexCount += 1
                 
@@ -389,9 +370,11 @@ extension RearrangeScheduleVC {
     }
     
     func finishScheduleScrollViewAndGoNextPage() {
+        
         let sb = UIStoryboard(name: nameOfFinalScheduleStoryBoard, bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: nameOfUploadlScheduleVC) as! UploadTravelScheduleViewController
         vc.travelDays = travelDays
+        
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
@@ -411,17 +394,12 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         let attractionsCellSize = CGSize(width: UIScreen.main.bounds.width, height: 120)
         let lastAttractionsCellSize = CGSize(width: UIScreen.main.bounds.width, height: 60)
         
-        
-        
         switch cellContentsArray[indexPath.item].type! {
-        case .dateCellType:
-            return dayCellSize
+        case .dateCellType: return dayCellSize
         case .scheduleAndTrafficCellType:
             return attractionsCellSize
         case .lastAttactionCellType:
             return lastAttractionsCellSize
-            
-            
         }
     }
     
@@ -452,7 +430,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             let cellContent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
             
             cell.viewPointName.text = cellContent.viewPointName
-
+            
             cell.viewPointBGBlock.layer.cornerRadius = 10
             cell.viewPointBGBlock.backgroundColor = scheduleTypeCellColor
             cell.arrow.layer.cornerRadius = 10
@@ -493,7 +471,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         let srcPreIndex = srcIndex - 1
         let srcNextIndex = srcIndex + 1
         
-        let dstIndex = (destinationIndexPath.item != 0 ? destinationIndexPath.item : 1)
+        let dstIndex = (destinationIndexPath.item != 0 ? destinationIndexPath.item: 1)
         let dstPreIndex = dstIndex - 1
         let dstNextIndex = dstIndex + 1
         
@@ -607,6 +585,8 @@ extension ScheduleTableViewController {
     }
 }
 
+
+
 // MARK: - 待建立.swift的model
 class DataTypeTransformer {
     
@@ -620,6 +600,7 @@ class DataTypeTransformer {
         return spotObj
     }
     
+    
     func transferSpotDataToAttractionsType(obj: spotData) -> Attraction {
         
         var attr = Attraction()
@@ -631,7 +612,9 @@ class DataTypeTransformer {
         return attr
     }
     
+    
     func transferAttractionToSpotDataTypeType(obj: Attraction) -> spotData {
+        
         let spotObj = spotData()
         spotObj.spotName = obj.attrctionName
         spotObj.placeID = obj.placeID
@@ -639,6 +622,7 @@ class DataTypeTransformer {
         spotObj.longitude = obj.coordinate.longitude
         return spotObj
     }
+    
     
     func setValueToAttractionsList(placeList: [GMSPlace]) -> [Attraction] {
         
@@ -652,6 +636,7 @@ class DataTypeTransformer {
         return attractionsList
     }
     
+    
     func setValueToAtrractionListFromSpotList(spotList: [spotData]) -> [Attraction] {
         
         var attractionsList = [Attraction]()
@@ -662,6 +647,7 @@ class DataTypeTransformer {
         }
         return attractionsList
     }
+    
     
     func setValueToSpotDataList(attractionList: [Attraction]!) -> [spotData]! {
         
@@ -676,6 +662,93 @@ class DataTypeTransformer {
     }
 }
 
+struct GooglePlacePickerGenerator {
+    
+    func generatePlacePicker(selectedCountry: String) -> GMSPlacePicker {
+        
+        let tmpCountry = self.selectCountryTypeTrasformer(selectedCountry: selectedCountry)
+        var bounds: GMSCoordinateBounds? = nil
+        
+        if let country = tmpCountry {
+            let coordinateNE = getBoundCoordinate(selectedCountry: country, space: .positive)
+            let coordinateWS = getBoundCoordinate(selectedCountry: country, space: .negative)
+            
+            let path = GMSMutablePath()
+            path.add(coordinateNE)
+            path.add(coordinateWS)
+            
+            bounds = GMSCoordinateBounds(path: path)
+        }
+        
+        let config = GMSPlacePickerConfig(viewport: bounds)
+        let placePicker = GMSPlacePicker(config: config)
+        
+        return placePicker
+    }
+    
+    
+    private func getBoundCoordinate(selectedCountry: BoundsCoordinate, space: Space) -> CLLocationCoordinate2D {
 
+        let seperateResult = selectedCountry.rawValue.components(separatedBy: ",")
+        let spaceValue = 0.01
+        let lat: Double
+        let lng: Double
+        
+        if space == .positive {
+            lat = Double(seperateResult[0])! + spaceValue
+            lng = Double(seperateResult[1])! + spaceValue
+        } else {
+            lat = Double(seperateResult[0])! - spaceValue
+            lng = Double(seperateResult[1])! - spaceValue
+        }
+        
+        return CLLocationCoordinate2DMake(lat, lng)
+    }
+    
+    
+    private func selectCountryTypeTrasformer(selectedCountry: String) -> BoundsCoordinate! {
+        
+        let countryList: [String: BoundsCoordinate] = ["台灣":.臺灣,"日本":.日本,"香港":.香港,"韓國":.韓國,"中國":.中國,
+                                                       "新加坡":.新加坡,"泰國":.泰國,"菲律賓":.菲律賓,
+                                                       "英國":.英國,"法國":.法國,"德國":.德國,"西班牙":.西班牙,
+                                                       "瑞士":.瑞士,"冰島":.冰島,"芬蘭":.芬蘭,"義大利":.義大利,
+                                                       "美國":.美國,"加拿大":.加拿大,
+                                                       "委內瑞拉":.委內瑞拉,"巴西":.巴西,"阿根廷":.阿根廷,
+                                                       "澳大利亞":.澳洲,"紐西蘭":.新西蘭 ]
+        
+        let country = countryList[selectedCountry]
+        return country!
+    }
+}
 
+enum BoundsCoordinate: String {
+    
+    case 香港 = "22.2768196,114.1681163,16z",
+    日本 = "35.668864,139.4611935,10z",
+    韓國 = "37.5647689,126.7093638,10z",
+    中國 = "39.9375346,115.837023,9z",
+    臺灣 = "25.0498002,121.5363940,11z",
+    新加坡 = "1.314715,103.5668226,10z",
+    泰國 = "13.7244426,100.3529157,10z",
+    菲律賓 = "14.5964879,120.9094042,12z",
+    英國 = "51.528308,-0.3817961,10z",
+    法國 = "48.8587741,2.2074741,11z",
+    德國 = "59.3258414,17.7073729,10z",
+    西班牙 = "40.4378698,-3.8196207,11z",
+    瑞士 = "46.9545845,7.2547869,11z",
+    冰島 = "64.1322134,-21.9925226,11z",
+    芬蘭 = "60.1637088,24.7600957,10z",
+    義大利 = "41.9097306,12.2558141,10z",
+    美國 = "38.8993276,-77.0847778,12z",
+    加拿大 = "45.2487862,-76.3606792,9z",
+    委內瑞拉 = "10.4683612,-67.0304525,11z",
+    巴西 = "-15.6936233,-47.9963963,10.25z",
+    阿根廷 = "-34.6156541,-58.5734051,11z",
+    澳洲 = "-35.2813043,149.1204446,15z",
+    新西蘭 = "-41.2442852,174.6217707,11z"
+}
+
+enum Space {
+    case positive, negative
+}
 
