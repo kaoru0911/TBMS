@@ -129,8 +129,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     
         serverCommunicate.userLogin()
         
-       
-
         customActivityIndicatory(self.view, startAnimate: true)
     }
     

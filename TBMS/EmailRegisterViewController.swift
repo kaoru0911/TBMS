@@ -13,6 +13,7 @@ class EmailRegisterViewController: UIViewController {
 
     @IBOutlet weak var inputAccount: UITextField!
     
+    @IBOutlet weak var inputEmail: UITextField!
     @IBOutlet weak var registerBtn: UIButton!
     var serverCommunicate: ServerConnector = ServerConnector()
     
@@ -58,7 +59,7 @@ class EmailRegisterViewController: UIViewController {
         }
         
         
-        if ((inputAccount.text?.characters.count)! < 6) {
+        if ((inputAccount.text?.characters.count)! <= 6) {
             let alert = UIAlertController(title: "會員註冊", message:"會員名稱至少需6個字元", preferredStyle: .alert)
             let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
             alert.addAction(ok)
@@ -78,6 +79,8 @@ class EmailRegisterViewController: UIViewController {
         sharedData.memberData?.account = inputAccount.text
         
         sharedData.memberData?.password = inputPassword.text
+        
+        sharedData.memberData?.email = inputEmail.text
                 
         serverCommunicate.createAccount()
         

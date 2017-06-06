@@ -305,7 +305,7 @@ extension RearrangeScheduleVC {
                 tmpAttractionData.nDays = tmpDateStorage
                 tmpAttractionData.nTh = tmpCellIndexCount
                 tmpAttractionData.trafficToNextSpot = generateDetailRouteString(route: cellContentData.trafficInformation)
-                print("\(tmpAttractionData.spotName)")
+                print("\(String(describing: tmpAttractionData.spotName))")
                 print("\(tmpAttractionData.trafficTitle)")
                 print("\(tmpAttractionData.nDays)")
                 print("\(tmpAttractionData.nTh)")
@@ -535,7 +535,8 @@ class DataTypeTransformer {
         let spotObj = spotData()
         spotObj.spotName = obj.name
         spotObj.placeID = obj.placeID
-        spotObj.coordinate = obj.coordinate
+        spotObj.latitude = obj.coordinate.latitude
+        spotObj.longitude = obj.coordinate.longitude
         return spotObj
     }
     
@@ -544,7 +545,9 @@ class DataTypeTransformer {
         var attr = Attraction()
         attr.attrctionName = obj.spotName
         attr.placeID = obj.placeID
-        if let coordinate = obj.coordinate { attr.coordinate = coordinate }
+        let coordinate = CLLocationCoordinate2D(latitude: obj.latitude!, longitude: obj.longitude!)
+        attr.coordinate = coordinate
+        
         return attr
     }
     
@@ -552,7 +555,8 @@ class DataTypeTransformer {
         let spotObj = spotData()
         spotObj.spotName = obj.attrctionName
         spotObj.placeID = obj.placeID
-        if let coordinate = obj.coordinate { spotObj.coordinate = coordinate }
+        spotObj.latitude = obj.coordinate.latitude
+        spotObj.longitude = obj.coordinate.longitude
         return spotObj
     }
     

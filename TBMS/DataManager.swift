@@ -58,16 +58,9 @@ class DataManager: NSObject {
         spot_4.belongTripName = "日本五日遊"
         spot_4.nDays = 2
         spot_4.nTh = 2
-        //=====================
+        //=====================        
         
-        
-        memberData = MemberData()
-        tempTripData = tripData()
-        pocketTrips = []
-        sharedTrips = []
-        menuCountries = []
-        pocketSpot = []
-        isLogin = false
+        dataReset()
         
         // test==================
         trip.spots.append(spot_1)
@@ -90,6 +83,16 @@ class DataManager: NSObject {
         // ======================
         
     }
+    
+    func dataReset() {
+        memberData = MemberData()
+        tempTripData = tripData()
+        pocketTrips = []
+        sharedTrips = []
+        menuCountries = []
+        pocketSpot = []
+        isLogin = false
+    }
 }
 
 // 公開class，給外部調用來創造景點
@@ -100,7 +103,8 @@ class spotData: NSObject {
     var spotInfo:String?
     var spotCountry:String?
     var placeID:String?
-    var coordinate:CLLocationCoordinate2D?
+    var latitude:Double?
+    var longitude:Double?
 }
 
 class tripSpotData: spotData {

@@ -64,10 +64,14 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         }
         
         trip.tripName = tripName
-        
         trip.days = travelDays!
         trip.spots = sharedData.tmpSpotDatas
         trip.country = sharedData.chooseCountry
+        
+        // 將行程名稱放入每個景點的資料裡面
+        for i in 0..<trip.spots.count {
+            trip.spots[i].belongTripName = tripName
+        }
         
         let server = ServerConnector()
         

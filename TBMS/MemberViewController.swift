@@ -14,7 +14,8 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var usernameTextField: UITextField!
+//    @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var changePersonalphotoBtn: UIButton!
     @IBOutlet weak var personalImage: UIImageView!
     
@@ -30,7 +31,7 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
             personalImage.image = UIImage(named: "UserPhotoDefault")
             changePersonalphotoBtn.layer.cornerRadius = 5.0
         
-        usernameTextField.text = sharedData.memberData?.account
+        usernameLabel.text = sharedData.memberData?.account
         passwordTextField.text =  sharedData.memberData?.password
         emailTextField.text = sharedData.memberData?.email
         
@@ -103,15 +104,69 @@ class MemberViewController: UIViewController, UIImagePickerControllerDelegate, U
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    func showAlertMessage(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
+        
+        alert.addAction(ok)
+        
+        self.present(alert,animated: true,completion: nil)
+    }
    
     // 重設資料按鈕
     @IBAction func resetDataBtn(_ sender: Any) {
+        
+        sharedData.memberData?.password = passwordTextField.text
+        
+        sharedData.memberData?.email = emailTextField.text
+        
+        serverCommunicate.userInfoUpdate()
     }
   
     // 登出按鈕
     @IBAction func LogoutBtn(_ sender: Any) {
         
+        serverCommunicate.userLogout()
         
+        showAlertMessage(title: "Success", message: "登出成功")
+        
+        // =============================================
+        // 創造一個新個TabBarController與NavigationController，再放回appDelegate內取代原本的root
+        // =============================================
+        
+        // TabBar
+        let rootTabBarController = UITabBarController()
+        
+        // 注意！創造viewController的方式跟創造view的方式不同
+        //            let rightTab = MemberViewController()
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let rightTab = storyboard.instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        rightTab.title = "會員登入"
+        
+        let rightTabBarItem = UITabBarItem(title: "會員專區", image: UIImage(named: "circle-user-7.png"), tag: 0)
+        rightTab.tabBarItem = rightTabBarItem
+        
+        // Navigation
+        let rightNavigation = UINavigationController(rootViewController: rightTab)
+        
+        //            let leftTab = MenuTableViewController()
+        let leftTab = storyboard.instantiateViewController(withIdentifier: "MenuTableViewController") as! MenuTableViewController
+        leftTab.title = "TravelByMyself"
+        
+        let leftTabBarItem = UITabBarItem(title: "旅遊選單", image: UIImage(named: "airplane-symbol-7.png"), tag: 0)
+        leftTab.tabBarItem = leftTabBarItem
+        
+        // Navigation
+        let leftNavigation = UINavigationController(rootViewController: leftTab)
+        
+        rootTabBarController.viewControllers = [leftNavigation, rightNavigation]
+        
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
+        appDelegate.window?.rootViewController = rootTabBarController
     }
     
     
