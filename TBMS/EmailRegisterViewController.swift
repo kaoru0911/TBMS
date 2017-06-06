@@ -87,34 +87,28 @@ class EmailRegisterViewController: UIViewController {
 //            print("password is wrong")
 //        }
         
-        // showAlertMessage(title: "Success", message: "登入成功")
         
-        if isValidUsername(candidate: inputAccount.text!)  {
-            print("username is good")
-        } else {
-            showAlertMessage(title: "註冊失敗", message: "帳號需為6-15個英文字母與數字")
-        }
-        
-        if isValidPassword(candidate: inputPassword.text!)  {
-            print("password is good")
-        } else {
-            showAlertMessage(title: "註冊失敗", message: "密碼需為6-15個英文字母與數字")
-        }
-        
-//        
-//        if ((inputAccount.text?.characters.count)! < 6 ) {
-//            let alert = UIAlertController(title: "會員註冊", message:"會員名稱至少需6個字元", preferredStyle: .alert)
-//            let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
-//            alert.addAction(ok)
-//            self.present(alert,animated: true,completion: nil)
+//        if isValidUsername(candidate: inputAccount.text!)  {
+//            print("username is good")
+//        } else {
+//            showAlertMessage(title: "註冊失敗", message: "帳號需為6-15個英文字母與數字")
 //        }
 //        
-//        if ((inputPassword.text?.characters.count)! < 6) {
-//            let alert = UIAlertController(title: "會員註冊", message:"會員密碼至少需6個字元", preferredStyle: .alert)
-//            let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
-//            alert.addAction(ok)
-//            self.present(alert,animated: true,completion: nil)
+//        if isValidPassword(candidate: inputPassword.text!)  {
+//            print("password is good")
+//        } else {
+//            showAlertMessage(title: "註冊失敗", message: "密碼需為6-15個英文字母與數字")
 //        }
+        
+        
+        if ((inputAccount.text?.characters.count)! < 6 || (inputAccount.text?.characters.count)! > 15 ) {
+                showAlertMessage(title: "註冊失敗", message: "帳號需為6-15個英文字母與數字")
+
+        }
+        
+        if ((inputPassword.text?.characters.count)! < 6 || (inputPassword.text?.characters.count)! > 15 ) {
+                showAlertMessage(title: "註冊失敗", message: "帳號需為6-15個英文字母與數字")
+        }
         
         guard inputAccount.text != nil && inputAccount.text != "" && inputPassword.text != nil && inputPassword.text != "" else {
             return
