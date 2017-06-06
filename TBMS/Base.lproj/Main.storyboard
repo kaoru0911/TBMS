@@ -717,7 +717,7 @@
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1096,19 +1096,19 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="帳號" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WMc-nF-7xK">
-                                <rect key="frame" x="86" y="199" width="35" height="30"/>
+                                <rect key="frame" x="66" y="199" width="35" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="密碼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1nO-HF-dRN">
-                                <rect key="frame" x="86" y="259" width="35" height="30"/>
+                                <rect key="frame" x="66" y="259" width="35" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pK5-k8-L2w">
-                                <rect key="frame" x="86" y="319" width="40.5" height="30"/>
+                                <rect key="frame" x="66" y="319" width="40.5" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -1132,7 +1132,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQO-cw-Otz">
-                                <rect key="frame" x="248.5" y="319" width="60" height="30"/>
+                                <rect key="frame" x="258.5" y="319" width="60" height="30"/>
                                 <color key="backgroundColor" red="0.53581905360000004" green="0.82478779550000003" blue="0.81959408519999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="OI7-mz-Saq"/>
@@ -1153,14 +1153,14 @@
                             <constraint firstItem="64y-XT-4of" firstAttribute="centerX" secondItem="7mc-ew-iwN" secondAttribute="centerX" id="2FI-yE-6Mp"/>
                             <constraint firstItem="pK5-k8-L2w" firstAttribute="bottom" secondItem="LCD-oy-BIc" secondAttribute="bottom" id="2SV-w3-5P4"/>
                             <constraint firstItem="pK5-k8-L2w" firstAttribute="top" secondItem="LCD-oy-BIc" secondAttribute="top" id="4JJ-xg-Jdy"/>
-                            <constraint firstItem="LCD-oy-BIc" firstAttribute="leading" secondItem="pK5-k8-L2w" secondAttribute="trailing" constant="10" id="504-GX-lMJ"/>
+                            <constraint firstItem="LCD-oy-BIc" firstAttribute="leading" secondItem="pK5-k8-L2w" secondAttribute="trailing" constant="30" id="504-GX-lMJ"/>
                             <constraint firstItem="SUA-rB-DKJ" firstAttribute="leading" secondItem="LCD-oy-BIc" secondAttribute="leading" id="6bE-H9-xsB"/>
-                            <constraint firstItem="vQO-cw-Otz" firstAttribute="leading" secondItem="LCD-oy-BIc" secondAttribute="trailing" constant="10" id="9Jd-Wc-EPd"/>
+                            <constraint firstItem="vQO-cw-Otz" firstAttribute="leading" secondItem="LCD-oy-BIc" secondAttribute="trailing" constant="20" id="9Jd-Wc-EPd"/>
                             <constraint firstItem="64y-XT-4of" firstAttribute="top" secondItem="Apf-Bv-F1e" secondAttribute="bottom" constant="135" id="Fqa-gF-kY0"/>
                             <constraint firstItem="64y-XT-4of" firstAttribute="leading" secondItem="SUA-rB-DKJ" secondAttribute="leading" id="IR5-rY-vTf"/>
                             <constraint firstItem="SUA-rB-DKJ" firstAttribute="top" secondItem="64y-XT-4of" secondAttribute="bottom" constant="30" id="PhY-61-JGG"/>
                             <constraint firstItem="1nO-HF-dRN" firstAttribute="leading" secondItem="pK5-k8-L2w" secondAttribute="leading" id="aPD-jn-PxY"/>
-                            <constraint firstItem="WMc-nF-7xK" firstAttribute="leading" secondItem="7mc-ew-iwN" secondAttribute="leadingMargin" constant="70" id="bIj-iU-vnC"/>
+                            <constraint firstItem="WMc-nF-7xK" firstAttribute="leading" secondItem="7mc-ew-iwN" secondAttribute="leadingMargin" constant="50" id="bIj-iU-vnC"/>
                             <constraint firstItem="WMc-nF-7xK" firstAttribute="leading" secondItem="1nO-HF-dRN" secondAttribute="leading" id="f4F-RX-Cu8"/>
                             <constraint firstItem="1nO-HF-dRN" firstAttribute="top" secondItem="SUA-rB-DKJ" secondAttribute="top" id="hxS-9W-suB"/>
                             <constraint firstItem="1nO-HF-dRN" firstAttribute="bottom" secondItem="SUA-rB-DKJ" secondAttribute="bottom" id="ieW-X9-NVY"/>
@@ -1334,7 +1334,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
