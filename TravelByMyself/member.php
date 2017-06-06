@@ -67,7 +67,23 @@ function login($db, $account, $password){
 		`password`='$password'")->fetch();
 
 	if($adminData!=""){
-		echo '{"result":true, "errorCode":"none, login success"}';
+
+		$getMemberData = $db->query("
+		select * from `member` where 
+		`username`='$account' 
+		")->fetch();
+
+		// result = 1 = true
+		$resultArray = array(
+				 "result"=>1,
+				 "errorCode"=>"none, login success",
+				 "email"=>$getMemberData['email']
+			 );
+
+		$rtnResult = json_encode($resultArray, JSON_NUMERIC_CHECK);
+
+		echo $rtnResult;
+
 	}else{
 		echo '{"result":false, "errorCode":"login fail"}';
 	}

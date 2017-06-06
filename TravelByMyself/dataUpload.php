@@ -155,14 +155,16 @@ function uploadSpot($db, $request){
 	$nth = $_POST['nth'];
 	$trafficTitle = $_POST['trafficTitle'];
 	$traffic = $_POST['traffic'];
+	$latitude = $_POST['latitude'];
+	$longitude = $_POST['longitude'];
 
 	if($request == "uploadPocketTripSpot"){
 
 		$db->prepare("
 			insert into `pockettripspot`
-			(`spotName`,`tripName`,`nDay`,`nth`, `trafficToNext`,`ownerUser`)
+			(`spotName`,`tripName`,`nDay`,`nth`, `trafficTitle`, `trafficToNext`,`ownerUser`,`latitude`,`longitude`)
 			values
-			('$spotName','$tripName','$nDay','$nth','$traffic','$ownerUser')
+			('$spotName','$tripName','$nDay','$nth','$trafficTitle','$traffic','$ownerUser','$latitude','$longitude')
 			")->execute();
 
 		echo '{"result":true, "errorCode":"none"}';
@@ -171,9 +173,9 @@ function uploadSpot($db, $request){
 
 		$db->prepare("
 			insert into `sharedtripSpot`
-			(`spotName`,`tripName`,`nDay`,`nth`, `trafficTitle`, `trafficToNext`,`ownerUser`)
+			(`spotName`,`tripName`,`nDay`,`nth`, `trafficTitle`, `trafficToNext`,`ownerUser`,`latitude`,`longitude`)
 			values
-			('$spotName','$tripName','$nDay','$nth','$trafficTitle','$traffic','$ownerUser')
+			('$spotName','$tripName','$nDay','$nth','$trafficTitle','$traffic','$ownerUser','$latitude','$longitude')
 			")->execute();
 
 		echo '{"result":true, "errorCode":"none"}';
