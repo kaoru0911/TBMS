@@ -34,7 +34,9 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
         
         tripArray = prepareTripArray(country: selectedCountry, rootSelect: selectedProcess)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getTripSpotNotifier"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(tripSpotNotificationDidGet), name: NSNotification.Name(rawValue: "getTripSpotNotifier"), object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(tripUploadNotificationDidGet), name: NSNotification.Name(rawValue: "tripUploadSpotNotifier"), object: nil)
         
 //        tripListTableView.delegate = self
 //        tripListTableView.dataSource = self
@@ -83,6 +85,7 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
         cell.tripCoverImg.image = tripArray[indexPath.row].coverImg
         
         cell.cellTripData = tripArray[indexPath.row]
+
         
         cell.tripTitle.shadowColor = UIColor.white
         cell.tripSubTitle.shadowColor = UIColor.white
@@ -99,6 +102,7 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
         
         switch selectedProcess {
         case "庫存行程":
+            selectCell.cellTripData.ownerUser = sharedData.memberData?.account
             serverCommunicate.getTripSpotFromServer(selectTrip: selectCell.cellTripData, req: serverCommunicate.DOWNLOAD_POCKETTRIPSPOT_REQ)
         case "推薦行程":
             serverCommunicate.getTripSpotFromServer(selectTrip: selectCell.cellTripData, req: serverCommunicate.DOWNLOAD_SHAREDTRIPSPOT_REQ)
@@ -106,12 +110,10 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
             break
         }
         
-        
-        
         customActivityIndicatory(self.view, startAnimate: true)
     }
     
-    func NotificationDidGet() {
+    func tripSpotNotificationDidGet() {
         
         let sb = UIStoryboard(name: "Main", bundle: nil)
         
@@ -126,13 +128,39 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
         scrollView?.automaticallyAdjustsScrollViewInsets = false
         self.navigationController?.navigationBar.isTranslucent = false
         
-        //        let nextPageBtn = UIBarButtonItem(title: goSaveTripPageBtnTitle, style: .plain, target: self, action: #selector(finishScheduleScrollViewAndGoNextPage))
-        //        scrollView?.navigationItem.rightBarButtonItem = nextPageBtn
+        if selectedProcess == "推薦行程" && sharedData.isLogin{
+            let nextPageBtn = UIBarButtonItem(title: "儲存行程", style: .plain, target: self, action: #selector(saveTrip))
+            scrollView?.navigationItem.rightBarButtonItem = nextPageBtn
+        }
         
         // 關閉loading view
         customActivityIndicatory(self.view, startAnimate: false)
         
         self.navigationController?.pushViewController(scrollView!, animated: true)
+    }
+    
+    func tripUploadNotificationDidGet() {
+        customActivityIndicatory(self.view, startAnimate: false)
+        showAlertMessage(title: "Success", message: "儲存完成")
+    }
+    
+    func saveTrip(tirp:tripData) {
+        
+        sharedData.tempTripData?.ownerUser = sharedData.memberData?.account
+        
+        customActivityIndicatory(self.view, startAnimate: true)
+        serverCommunicate.uploadPocketTripToServer(tripData: sharedData.tempTripData!)
+    }
+    
+    func showAlertMessage(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
+        
+        alert.addAction(ok)
+        
+        self.present(alert,animated: true,completion: nil)
     }
     
     
