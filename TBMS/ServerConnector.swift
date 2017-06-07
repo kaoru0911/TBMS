@@ -92,6 +92,8 @@ class ServerConnector: NSObject {
     let getPocketSpotNotifier = Notification.Name("getPocketSpotNotifier")
     let getTripSpotNotifier = Notification.Name("getTripSpotNotifier")
     let downloadCoverImgNotifier = Notification.Name("downloadCoverImgNotifier")
+    let uploadTripNotifier = Notification.Name("tripUploadSpotNotifier")
+    let uploadPocketSpotNotifier = Notification.Name("uploadPocketSpotNotifier")
     
     
     /**
@@ -605,9 +607,9 @@ class ServerConnector: NSObject {
         
         // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
         let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,
-                                     SPOTNAME_KEY: spotData.spotName as Any,
-                                     SPOTCOUNTRY_KEY: spotData.spotCountry as Any,
-                                     PLACEID_KEY: spotData.placeID as Any,
+                                     SPOTNAME_KEY: spotData.spotName! as Any,
+                                     SPOTCOUNTRY_KEY: spotData.spotCountry! as Any,
+                                     PLACEID_KEY: spotData.placeID! as Any,
                                      LATITUDE_KEY: spotData.latitude as Any,
                                      LONGITUDE_KEY: spotData.longitude as Any,
                                      REQUEST_KEY: UPLOAD_POCKETSPOT_REQ]
@@ -636,6 +638,8 @@ class ServerConnector: NSObject {
                 case .failure(_):
                     print("Server feedback fail")
             }
+            
+            NotificationCenter.default.post(name: self.uploadPocketSpotNotifier, object: nil)
         }
     }
 
@@ -774,17 +778,6 @@ class ServerConnector: NSObject {
         // thread locked
         threadKey.lock()
         
-//        uploadIndex -= 1
-//        
-//        guard uploadIndex >= 0 else {
-//            
-//            // thread unlocked
-//            threadKey.unlock()
-//            
-//            uploadIndex = 0
-//            return
-//        }
-        
         for i in 0..<tripData.spots.count {
             
             // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
@@ -810,6 +803,8 @@ class ServerConnector: NSObject {
                 print("Response: \(String(describing: response.result.value))")
             }
         }
+        
+        NotificationCenter.default.post(name: self.uploadTripNotifier, object: nil)
         
         // thread unlocked
         self.threadKey.unlock()

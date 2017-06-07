@@ -20,10 +20,12 @@ class ScheduleTableViewCell: UITableViewCell {
     
     @IBOutlet weak var cellImage: UIImageView!
     
+    @IBOutlet weak var navigateBtn: UIButton!
 //    var cellImage: UIImageView!
 //    var describeLabel: UILabel!
 //    var spotItemLabel: UILabel!
     
+    @IBOutlet weak var saveSpotBtn: UIButton!
     var screenSize: CGRect!
     
     let spotLabelWidth: CGFloat = 230
