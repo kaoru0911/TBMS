@@ -18,7 +18,7 @@ if($getRequest == "login"){
 
 	// error_log(json_encode($_POST));
 
-	login($db, $getAccount, $getPassword);
+		login($db, $getAccount, $getPassword);
 
 	} else{
 
@@ -33,7 +33,7 @@ if($getRequest == "login"){
 
 	if($getAccount != ""){
 
-	create($db, $getAccount, $getPassword, $getEmail);
+		create($db, $getAccount, $getPassword, $getEmail);
 
 	} else{
 
@@ -47,9 +47,22 @@ if($getRequest == "login"){
 
 	if($getAccount != ""){
 
-	update($db, $getAccount, $getPassword, $getEmail);
+		update($db, $getAccount, $getPassword, $getEmail);
 
 		// echo '{"result":true, "errorCode":"Update success"}';
+
+	} else{
+
+		echo '{"result":false, "errorCode":"Update user info fail"}';
+
+	}
+} else if($getRequest == "fbLogin"){
+
+	$getPassword = $_POST['password'];
+
+	if($getAccount != ""){
+
+		FBLogin($db, $getAccount, $getPassword);
 
 	} else{
 
@@ -87,6 +100,27 @@ function login($db, $account, $password){
 	}else{
 		echo '{"result":false, "errorCode":"login fail"}';
 	}
+}
+
+function FBLogin($db, $account, $password){
+
+	$adminData = $db->query("
+		select * from `member` where 
+		`username`='$account' and 
+		`password`='$password'")->fetch();
+
+	if($adminData!=""){
+		echo '{"result":true, "errorCode":"none, FB login success"}';
+	}else{
+		$db->prepare("
+			insert into `member`
+			(`username`,`password`)
+			values
+			('$account','$password')
+			")->execute();
+
+		echo '{"result":true, "errorCode":"none, create FB account success"}';
+	}	
 }
 
 function create($db, $account, $password, $email){
