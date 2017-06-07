@@ -153,7 +153,10 @@ function downloadPocketSpot($db, $account){
 						 "id"=>$v['id'],
 						 "spotName"=>$v['spotName'],							 							 					 
 						 "ownerUser"=>$v['ownerUser'],
-						 "spotCountry"=>$v['spotCountry']
+						 "spotCountry"=>$v['spotCountry'],
+						 "placeID"=>$v['placeID'],	
+						 "latitude"=>$v['latitude'],
+						 "longitude"=>$v['longitude']
 						 );
 
 			array_push($rtnTrips, $item);
@@ -192,7 +195,9 @@ function downloadSharedTripSpot($db, $account){
 						 "nth"=>$v['nth'],	
 						 "trafficTitle"=>$v['trafficTitle'],
 						 "trafficToNext"=>$v['trafficToNext'],
-						 "placeID"=>$v['placeID'],					 
+						 "placeID"=>$v['placeID'],	
+						 "latitude"=>$v['latitude'],
+						 "longitude"=>$v['longitude']				 
 						 );
 
 			array_push($rtnTrips, $item);
@@ -231,7 +236,9 @@ function downloadPocketTripSpot($db, $account){
 						 "nth"=>$v['nth'],	
 						 "trafficTitle"=>$v['trafficTitle'],
 						 "trafficToNext"=>$v['trafficToNext'],
-						 "placeID"=>$v['placeID'],					 
+						 "placeID"=>$v['placeID'],	
+						 "latitude"=>$v['latitude'],
+						 "longitude"=>$v['longitude']				 
 						 );
 
 			array_push($rtnTrips, $item);
