@@ -1086,6 +1086,37 @@
             </objects>
             <point key="canvasLocation" x="613.60000000000002" y="-1965.0674662668666"/>
         </scene>
+        <!--Register View Controller-->
+        <scene sceneID="E5W-Ub-efR">
+            <objects>
+                <viewController id="Y7D-dH-tWc" customClass="RegisterViewController" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Hrt-Ky-MMv"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ech-Nr-hmp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="D62-GA-gdq">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8te-ff-NBm" customClass="FBSDKLoginButton">
+                                <rect key="frame" x="164.5" y="318.5" width="46" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="8te-ff-NBm" firstAttribute="centerY" secondItem="D62-GA-gdq" secondAttribute="centerY" id="Mi3-KC-76t"/>
+                            <constraint firstItem="8te-ff-NBm" firstAttribute="centerX" secondItem="D62-GA-gdq" secondAttribute="centerX" id="TlP-cy-KeO"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="FBLoginBtn" destination="8te-ff-NBm" id="Qfy-pt-QvQ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ChC-Pb-1ee" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1781.5999999999999" y="-1750.0749625187407"/>
+        </scene>
         <!--email註冊-->
         <scene sceneID="NBr-0g-7El">
             <objects>

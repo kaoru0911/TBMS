@@ -81,24 +81,7 @@ class EmailRegisterViewController: UIViewController {
     
     @IBAction func emailRegisterBtn(_ sender: Any) {
         
-//        if isValidPassword(candidate: inputPassword.text!) {
-//            print("password is good")
-//        } else {
-//            print("password is wrong")
-//        }
-        
-        
-//        if isValidUsername(candidate: inputAccount.text!)  {
-//            print("username is good")
-//        } else {
-//            showAlertMessage(title: "註冊失敗", message: "帳號需為6-15個英文字母與數字")
-//        }
-//        
-//        if isValidPassword(candidate: inputPassword.text!)  {
-//            print("password is good")
-//        } else {
-//            showAlertMessage(title: "註冊失敗", message: "密碼需為6-15個英文字母與數字")
-//        }
+
         
         
         if ((inputAccount.text?.characters.count)! < 6 || (inputAccount.text?.characters.count)! > 15 ) {
