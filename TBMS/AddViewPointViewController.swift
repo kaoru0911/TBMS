@@ -171,8 +171,8 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBAction func searchBtn(_ sender: Any) {
         
-        let config = GMSPlacePickerConfig(viewport: nil)
-        let placePicker = GMSPlacePicker(config: config)
+        let pickerGenerator = GooglePlacePickerGenerator()
+        let placePicker = pickerGenerator.generatePlacePicker(selectedCountry: sharedData.chooseCountry)
         
         placePicker.pickPlace(callback: { (place, error) -> Void in
             if let error = error {
@@ -209,17 +209,15 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         
         if segue.identifier == "GoToSetStartPoint" {
             
-            guard attractionStorage != nil else { return }
+//            guard attractionStorage != nil else { return }
             guard attractionStorage.isEmpty != true else { return }
             
             let vc = segue.destination as! SetStartPointViewController
-//            let attractions = setValueToAttractionsList(placeList: tmpPlaceDataStorage)
             vc.attractionsList = attractionStorage
             
         } else if segue.identifier == "ShowStorageAttration" {
             
             let nextPage = segue.destination as! PocketSpotTVC
-            
             nextPage.selectedCountry = sharedData.chooseCountry
             nextPage.selectedProcess = "開始規劃"
             nextPage.scheduleAttractions = attractionStorage

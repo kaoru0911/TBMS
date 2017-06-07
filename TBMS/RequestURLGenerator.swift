@@ -26,7 +26,7 @@ class DirectParametersAndRequestURLGenerator: NSObject {
     var outputFormat : RespondsDataType = .json
     var language : LanguageSetting = .chinese
     var distanceUnit : DistanceUnit = .metric
-    var travelMod : TravelMod = .driving
+    var travelMod : TravelMod = .transit
     
     // Parameters with transit travelMod.
     var departureTime = "1495004263"
@@ -50,9 +50,9 @@ class DirectParametersAndRequestURLGenerator: NSObject {
         var parameterArray = ["origin":origin,
                               "destination":destination,
                               "language":language.rawValue,
-                              "mode":travelMod.rawValue,
+                              "mode":travelMod.rawValue.lowercased(),
                               "units":distanceUnit.rawValue,
-                              "traffic_model":trafficModel.rawValue,
+//                              "traffic_model":trafficModel.rawValue,
                               "transit_mode":transitModePreference!,
                               /*"avoid":avoid,*/
                               "key":goldKey]
@@ -98,6 +98,7 @@ enum TravelMod : String {  //&mod=
     case walking = "WALKING"
     case bike = "BICYCLING"
     case transit = "TRANSIT"
+    case bus = "BUS"
     case defaultValue = ""
 }
 //設定距離單位

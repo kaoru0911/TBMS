@@ -12,8 +12,6 @@ import GooglePlacePicker
 class SetStartPointViewController: UIViewController {
     
     @IBOutlet weak var chosenStartingPoint: UILabel!
-    //    @IBOutlet weak var startingPointText: UITextField!
-    
     @IBOutlet weak var chooseStartingPtBtn: UIButton!
     @IBOutlet weak var goToNextPage: UIButton!
     
@@ -22,7 +20,10 @@ class SetStartPointViewController: UIViewController {
     var startPoint : Attraction!
     var attractionsList : [Attraction]!
     var routesDetails : [LegsData]!
+    var attractionsListToNextPage : [Attraction]!
+    let shareData = DataManager.shareDataManager
     
+    var expectedTravelMode: TravelMod = .walking
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,33 +36,33 @@ class SetStartPointViewController: UIViewController {
         // dismiss keyboard
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
-        
-        print(attractionsList.first!.attrctionName!)
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    // For pressing return on the keyboard to dismiss keyboard
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        for textField in self.view.subviews where textField is UITextField {
-            textField.resignFirstResponder()
+
+    @IBAction func travelModeValueChanged(_ sender: UISegmentedControl) {
+        
+        let index = sender.selectedSegmentIndex
+        switch index {
+        case 0:
+            expectedTravelMode = .walking
+        case 1:
+            expectedTravelMode = .driving
+        case 2:
+            expectedTravelMode = .transit
+        default:
+            expectedTravelMode = .defaultValue
         }
-        return true
+        print(expectedTravelMode.rawValue) ///
     }
-    
-    func hideKeyboard() {
-        view.endEditing(true)
-    }
-    
-    
+        
     @IBAction func chooseStartingBtnPressed(_ sender: UIButton) {
         
-        let config = GMSPlacePickerConfig(viewport: nil)
-        let placePicker = GMSPlacePicker(config: config)
+        let pickerGenerator = GooglePlacePickerGenerator()
+        let placePicker = pickerGenerator.generatePlacePicker(selectedCountry: shareData.chooseCountry)
         
         placePicker.pickPlace(callback: { (place, error) -> Void in
             if let error = error {
@@ -81,58 +82,64 @@ class SetStartPointViewController: UIViewController {
             
             self.startPoint = Attraction()
             self.startPoint.setValueToAttractionObject(place: place)
-            
         })
     }
     
-    
     @IBAction func goToNextPage(_ sender: Any) {
         
-//        attractionsList.insert(startPoint, at: 0)
         let bestRoutePoductor = BestRouteCalculator(startingPoint: startPoint, attractionsList: attractionsList)
         bestRoutePoductor.getBestRoute { (bestRouteAttrList) in
             
-            self.attractionsList = bestRouteAttrList
+            self.attractionsListToNextPage = bestRouteAttrList
             self.getTotalRouteInformation( completion: { _ in
+                
                 self.performSegue(withIdentifier: self.keyNextPageSegID, sender: nil)
             })
         }
     }
     
-    
     func getTotalRouteInformation(completion: @escaping ()->Void ) {
-//        print("近來囉")
-        var origin = attractionsList.first!
-        var attractionsNumber = attractionsList.count
         
-        for i in 1...attractionsList.count-1 {
-//            print("i=\(i)唷")
-            let destination = attractionsList[i]
+        var origin = attractionsListToNextPage.first!
+        var attractionsNumber = attractionsListToNextPage.count
+        
+        for i in 1...attractionsListToNextPage.count-1 {
+            let destination = attractionsListToNextPage[i]
             routesDetails = [LegsData]()
+            
             let routeGenerator = GoogleDirectionCaller()
-            //            let route = LegsData()
+            routeGenerator.parametersSetting.travelMod = expectedTravelMode
             routeGenerator.getRouteInformation(origin: origin.placeID,
                                                destination: destination.placeID,
                                                completion: { (route) in
-//                print("跑\(i)的畢包囉")
-                self.routesDetails.append(route)
-                attractionsNumber -= 1
-//                print(route.steps[1].htmlInstructions)
-                print(attractionsNumber)
-                if attractionsNumber == 1 {
-//                    print("全部都傳完囉")
-                    completion()
-                }
+                                                self.routesDetails.append(route)
+                                                attractionsNumber -= 1
+                                                print(attractionsNumber)
+                                                if attractionsNumber == 1 {
+                                                    completion()
+                                                }
             })
             origin = destination
         }
     }
     
+    // For pressing return on the keyboard to dismiss keyboard
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        for textField in self.view.subviews where textField is UITextField {
+            textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func hideKeyboard() {
+        view.endEditing(true)
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let vc : RearrangeScheduleVC = segue.destination as! RearrangeScheduleVC
         vc.routesDetails = routesDetails
-        vc.attractions = attractionsList   
+        vc.attractions = attractionsListToNextPage
+        vc.selectedTravelMod = expectedTravelMode
     }
 }
 
@@ -149,7 +156,6 @@ struct Attraction {
     var coordinate : CLLocationCoordinate2D!
     var address : String?
     var phoneNumber : String?
-    
     var trafficTime : Double!
     
     mutating func setValueToAttractionObject (place:GMSPlace) {
@@ -160,13 +166,5 @@ struct Attraction {
         
         if let phoneNumber = place.phoneNumber { self.phoneNumber = phoneNumber }
         if let address = place.formattedAddress { self.address = address }
-    }
-}
-
-extension MenuTableViewController {
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        self.tabBarController?.tabBar.isHidden = false
     }
 }

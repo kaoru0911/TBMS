@@ -318,9 +318,13 @@ class MenuTableViewController: UITableViewController {
 extension MenuTableViewController {
     
     @IBAction func functionName (_segue: UIStoryboardSegue) {}
-    
-    override func viewWillLayoutSubviews() {
         
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.tabBarController?.tabBar.isHidden = false
+    }
+
+    override func viewWillLayoutSubviews() {
         let color = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
         self.tabBarController?.tabBar.barTintColor = color
         self.navigationController?.navigationBar.barTintColor = color
