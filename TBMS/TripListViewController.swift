@@ -85,7 +85,7 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
         cell.tripCoverImg.image = tripArray[indexPath.row].coverImg
         
         cell.cellTripData = tripArray[indexPath.row]
-
+        
         
         cell.tripTitle.shadowColor = UIColor.white
         cell.tripSubTitle.shadowColor = UIColor.white
@@ -150,6 +150,8 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
         
         customActivityIndicatory(self.view, startAnimate: true)
         serverCommunicate.uploadPocketTripToServer(tripData: sharedData.tempTripData!)
+        
+        sharedData.pocketTrips = [tripData]()
     }
     
     func showAlertMessage(title: String, message: String) {
@@ -179,6 +181,7 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
             let tmpVC = myStoryBoard.instantiateViewController(withIdentifier: "dailyRouteVC") as! ScheduleTableViewController
             tmpVC.data = cellContents
             tmpVC.nDaySchedule = i + 1
+            tmpVC.selectedProcess = selectedProcess
             
             tmpVCArray += [tmpVC]
             print("tmpVCArray=\(tmpVCArray.count)")

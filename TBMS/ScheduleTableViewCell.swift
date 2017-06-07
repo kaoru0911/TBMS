@@ -25,6 +25,7 @@ class ScheduleTableViewCell: UITableViewCell {
 //    var describeLabel: UILabel!
 //    var spotItemLabel: UILabel!
     
+    @IBOutlet weak var saveSpotBtn: UIButton!
     var screenSize: CGRect!
     
     let spotLabelWidth: CGFloat = 230

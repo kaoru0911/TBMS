@@ -17,9 +17,11 @@ class ScheduleTableViewController: UITableViewController {
     var data = tripData()
     var spotData = [tripSpotData]()
     var addAttrIndexList = [Int]()
+    var serverCommunicate:ServerConnector = ServerConnector()
     
     var filter = TripFilter()
     var nDaySchedule: Int!
+    var selectedProcess: String!
     
     let googleMapSchemeStr = "https://www.google.es/maps/dir/"
     //====test===
@@ -38,6 +40,8 @@ class ScheduleTableViewController: UITableViewController {
         spotData = filter.filtBySpotNDays(nDays: nDaySchedule, trip: data)
         
         checkSpotPosition(spotArray: &spotData)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(uploadPocketSpotNotificationDidGet), name: NSNotification.Name(rawValue: "uploadPocketSpotNotifier"), object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,6 +85,15 @@ class ScheduleTableViewController: UITableViewController {
         cell.navigateBtn.layer.cornerRadius = 10
         cell.navigateBtn.layer.masksToBounds = true
         cell.navigateBtn.isHidden = false
+        
+        cell.saveSpotBtn.layer.cornerRadius = 10
+        cell.saveSpotBtn.layer.masksToBounds = true
+        
+        if selectedProcess == "推薦行程" {
+            cell.saveSpotBtn.isHidden = false
+        } else{
+            cell.saveSpotBtn.isHidden = true
+        }
         
         // auto line break
         cell.describeLabel.text = spotData[indexPath.row].trafficToNextSpot
@@ -197,6 +210,80 @@ class ScheduleTableViewController: UITableViewController {
             UIApplication.shared.openURL(URL(string: schmemURL)!)
             print("沒有googleMap唷")
         }
+    }
+    
+    @IBAction func saveSpotBtnPress(_ sender: UIButton) {
+        
+        let index = sender.tag
+        
+        let selectSpot = spotData[index] as spotData
+        
+        selectSpot.spotCountry = data.country
+        
+        customActivityIndicatory(self.view, startAnimate: true)
+        
+        serverCommunicate.uploadPocketSpotToServer(spotData: selectSpot)
+    }
+    
+    func uploadPocketSpotNotificationDidGet() {
+        customActivityIndicatory(self.view, startAnimate: false)
+        showAlertMessage(title: "Success", message: "景點收藏成功")
+    }
+    
+    func showAlertMessage(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
+        
+        alert.addAction(ok)
+        
+        self.present(alert,animated: true,completion: nil)
+    }
+    
+    func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) {
+        
+        // 做一個透明的view來裝
+        let mainContainer: UIView = UIView(frame: viewContainer.frame)
+        mainContainer.center = viewContainer.center
+        mainContainer.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
+        // background的alpha跟view的alpha不同
+        mainContainer.alpha = 0.5
+        //================================
+        mainContainer.tag = 789456123
+        mainContainer.isUserInteractionEnabled = false
+        
+        // 旋轉圈圈放在這個view上
+        let viewBackgroundLoading: UIView = UIView(frame: CGRect(x:0,y: 0,width: 80,height: 80))
+        viewBackgroundLoading.center = viewContainer.center
+        //        viewBackgroundLoading.backgroundColor = UIColor(red:0x7F, green:0x7F, blue:0x7F, alpha: 1)
+        viewBackgroundLoading.backgroundColor = UIColor(red:0, green:0, blue:0, alpha: 1)
+        //================================
+        //        viewBackgroundLoading.alpha = 0.5
+        //================================
+        viewBackgroundLoading.clipsToBounds = true
+        viewBackgroundLoading.layer.cornerRadius = 15
+        
+        // 創造旋轉圈圈
+        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+        activityIndicatorView.frame = CGRect(x:0.0,y: 0.0,width: 40.0, height: 40.0)
+        activityIndicatorView.activityIndicatorViewStyle =
+            UIActivityIndicatorViewStyle.whiteLarge
+        activityIndicatorView.center = CGPoint(x: viewBackgroundLoading.frame.size.width / 2, y: viewBackgroundLoading.frame.size.height / 2)
+        
+        if startAnimate!{
+            viewBackgroundLoading.addSubview(activityIndicatorView)
+            mainContainer.addSubview(viewBackgroundLoading)
+            viewContainer.addSubview(mainContainer)
+            activityIndicatorView.startAnimating()
+        }else{
+            for subview in viewContainer.subviews{
+                if subview.tag == 789456123{
+                    subview.removeFromSuperview()
+                }
+            }
+        }
+        //        return activityIndicatorView
     }
 }
 

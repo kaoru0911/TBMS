@@ -678,7 +678,7 @@
                                     <segue destination="hhN-hE-NTa" kind="unwind" unwindAction="functionNameWith_segue:" id="66n-sv-dfS"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jxu-rq-DNl">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jxu-rq-DNl">
                                 <rect key="frame" x="33" y="517" width="120" height="40"/>
                                 <color key="backgroundColor" red="0.44175875190000002" green="0.73191380500000003" blue="0.78333240749999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -700,6 +700,7 @@
                             <constraint firstItem="ZX0-7v-j6O" firstAttribute="trailing" secondItem="IHI-SC-7Xr" secondAttribute="trailing" id="DbW-gs-UDi"/>
                             <constraint firstItem="IHI-SC-7Xr" firstAttribute="centerX" secondItem="vbZ-h8-ePK" secondAttribute="centerX" id="EcE-oZ-oj2"/>
                             <constraint firstItem="0fE-UE-0x3" firstAttribute="leading" secondItem="BPR-CM-BWx" secondAttribute="leading" id="FvL-MX-Xe0"/>
+                            <constraint firstItem="XVt-uc-YYI" firstAttribute="top" secondItem="Jxu-rq-DNl" secondAttribute="bottom" constant="110" id="Ios-E9-d7t"/>
                             <constraint firstItem="ZX0-7v-j6O" firstAttribute="leading" secondItem="pID-nw-onH" secondAttribute="trailing" constant="82" id="Lko-4s-JG1"/>
                             <constraint firstItem="IHI-SC-7Xr" firstAttribute="centerX" secondItem="kIC-Hr-THu" secondAttribute="centerX" id="RZO-88-29r"/>
                             <constraint firstItem="pID-nw-onH" firstAttribute="baseline" secondItem="ZX0-7v-j6O" secondAttribute="baseline" id="Uwn-cz-m97"/>
@@ -707,6 +708,7 @@
                             <constraint firstItem="0fE-UE-0x3" firstAttribute="top" secondItem="BPR-CM-BWx" secondAttribute="bottom" constant="15" id="XkX-ep-joC"/>
                             <constraint firstItem="vbZ-h8-ePK" firstAttribute="bottom" secondItem="BPR-CM-BWx" secondAttribute="bottom" id="a5v-8L-XIU"/>
                             <constraint firstItem="Mh0-Bl-0ne" firstAttribute="leading" secondItem="kIC-Hr-THu" secondAttribute="leading" constant="137" id="c89-Hf-cQd"/>
+                            <constraint firstItem="Jxu-rq-DNl" firstAttribute="leading" secondItem="kIC-Hr-THu" secondAttribute="leadingMargin" constant="17" id="d8i-xj-ksE"/>
                             <constraint firstItem="vbZ-h8-ePK" firstAttribute="leading" secondItem="BPR-CM-BWx" secondAttribute="trailing" constant="13" id="ihn-7h-RbM"/>
                             <constraint firstItem="Mh0-Bl-0ne" firstAttribute="top" secondItem="IHI-SC-7Xr" secondAttribute="bottom" constant="23" id="mnK-Xj-C9L"/>
                             <constraint firstItem="Mh0-Bl-0ne" firstAttribute="leading" secondItem="Hxz-ST-Hgm" secondAttribute="trailing" constant="8" symbolic="YES" id="r8a-sW-9PP"/>
@@ -735,7 +737,7 @@
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -798,6 +800,21 @@
                                                 <constraint firstAttribute="width" constant="20" id="WGA-DB-Q5t"/>
                                             </constraints>
                                         </imageView>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nLK-yh-jG3">
+                                            <rect key="frame" x="8" y="8" width="60" height="20"/>
+                                            <color key="backgroundColor" red="0.035217871259999999" green="0.75908153550000002" blue="0.57940080370000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="NOX-py-gqz"/>
+                                                <constraint firstAttribute="height" constant="20" id="Sui-Ol-ggs"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <state key="normal" title="加入收藏">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="saveSpotBtnPress:" destination="QhJ-bN-7Yv" eventType="touchUpInside" id="4xy-fv-6sj"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="HNH-Uf-uEJ" secondAttribute="trailing" constant="65" id="ADT-Xu-40E"/>
@@ -805,8 +822,10 @@
                                         <constraint firstItem="OTR-DJ-e0P" firstAttribute="leading" secondItem="HIt-Au-h1z" secondAttribute="leadingMargin" constant="64" id="CLi-0T-jr8"/>
                                         <constraint firstItem="HNH-Uf-uEJ" firstAttribute="top" secondItem="j4E-ZK-DRd" secondAttribute="bottom" id="W2l-L2-gpl"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="OTR-DJ-e0P" secondAttribute="bottom" id="XcR-fM-sEl"/>
+                                        <constraint firstItem="nLK-yh-jG3" firstAttribute="leading" secondItem="HIt-Au-h1z" secondAttribute="leadingMargin" id="aBx-zS-hCy"/>
                                         <constraint firstItem="OTR-DJ-e0P" firstAttribute="top" secondItem="j4E-ZK-DRd" secondAttribute="bottom" constant="1" id="i7t-6B-gpi"/>
                                         <constraint firstItem="HNH-Uf-uEJ" firstAttribute="leading" secondItem="HIt-Au-h1z" secondAttribute="leadingMargin" constant="104" id="inh-wi-Cd3"/>
+                                        <constraint firstItem="nLK-yh-jG3" firstAttribute="top" secondItem="HIt-Au-h1z" secondAttribute="topMargin" id="rw9-17-NXW"/>
                                         <constraint firstItem="j4E-ZK-DRd" firstAttribute="leading" secondItem="HIt-Au-h1z" secondAttribute="leadingMargin" constant="64" id="sOx-j0-gqB"/>
                                     </constraints>
                                 </tableViewCellContentView>
@@ -814,6 +833,7 @@
                                     <outlet property="cellImage" destination="OTR-DJ-e0P" id="m4U-qA-mgA"/>
                                     <outlet property="describeLabel" destination="HNH-Uf-uEJ" id="fPi-Ga-kwK"/>
                                     <outlet property="navigateBtn" destination="nWy-LX-m2E" id="fOU-k3-TPc"/>
+                                    <outlet property="saveSpotBtn" destination="nLK-yh-jG3" id="qnc-IH-T64"/>
                                     <outlet property="spotItemLabel" destination="j4E-ZK-DRd" id="quI-ir-A4Q"/>
                                 </connections>
                             </tableViewCell>
@@ -1400,7 +1420,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

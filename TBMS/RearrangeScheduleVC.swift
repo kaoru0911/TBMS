@@ -170,6 +170,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
             let tmpVC = myStoryBoard.instantiateViewController(withIdentifier: nameOfFinalScheduleVC) as! ScheduleTableViewController
             tmpVC.data = cellContents
             tmpVC.nDaySchedule = i + 1
+            tmpVC.selectedProcess = ""
             
             tmpVCArray += [tmpVC]
             print("tmpVCArray=\(tmpVCArray.count)")
