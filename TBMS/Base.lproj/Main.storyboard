@@ -883,11 +883,13 @@
                     <navigationItem key="navigationItem" title="會員登入" id="Tqh-cc-jeC"/>
                     <connections>
                         <outlet property="FBLoginBtn" destination="avy-Nk-Rer" id="biX-Qd-tRd"/>
+                        <outlet property="accountLabel" destination="zpa-Ss-9CI" id="Mqe-LM-BBZ"/>
                         <outlet property="gmailLoginBtn" destination="WLr-wh-xAK" id="uBE-Rx-uq4"/>
                         <outlet property="inputAccountName" destination="wZA-rs-tZe" id="Coe-8h-3cU"/>
                         <outlet property="inputPassword" destination="wAL-Qr-bFD" id="2FQ-D1-HOR"/>
                         <outlet property="loginBtn" destination="8bD-1F-dvs" id="MSZ-X3-C3A"/>
                         <outlet property="newMemberRegisterBtn" destination="MD2-7W-XgI" id="axi-rK-wjk"/>
+                        <outlet property="pswLabel" destination="NC2-6r-cXV" id="Iy2-6e-474"/>
                         <segue destination="lHG-gy-5i2" kind="show" identifier="goMemberVC" id="e8Y-b6-uGY"/>
                     </connections>
                 </viewController>

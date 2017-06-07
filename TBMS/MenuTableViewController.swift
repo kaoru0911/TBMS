@@ -28,6 +28,8 @@ class MenuTableViewController: UITableViewController {
     var filter:TripFilter = TripFilter()
     var filtArray = [tripData]()
     
+    let userDefault = UserDefaults.standard
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,6 +63,18 @@ class MenuTableViewController: UITableViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getSharedTripNotifier"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketSpotNotifier"), object: nil)
+        
+//        userDefault.set("FBTest", forKey: "FBSDKAccessToken")
+//        userDefault.set(nil, forKey: "FBSDKAccessToken")
+        
+        if userDefault.string(forKey: "FBSDKAccessToken") != nil {
+            
+            sharedData.memberData?.account = userDefault.string(forKey: "FBSDKAccessToken")
+            
+            sharedData.memberData?.password = userDefault.string(forKey: "FBSDKAccessToken")
+            
+            serverCommunicate.useFBLogin()
+        }
         
         
         //        serverCommunicate.uploadPocketSpotToServer(spotName: "清水寺")
@@ -180,6 +194,10 @@ class MenuTableViewController: UITableViewController {
         }
     }
     
+//    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+//        
+//    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let nextPage = segue.destination as! CountrySelectTableViewController
         nextPage.selectedProcess = choosen
@@ -248,36 +266,7 @@ class MenuTableViewController: UITableViewController {
             }
         }
 //        return activityIndicatorView
-    }
-    
-//    func showLoadingView(uiView:UIView) {
-//        
-//        container.frame = uiView.frame
-//        container.center = uiView.center
-//        container.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
-//        
-//        loadingView.frame = CGRect(x:0.0, y:0.0, width:80.0, height:80.0)
-//        loadingView.center = uiView.center
-//        loadingView.backgroundColor = UIColor(white: 0x444444, alpha: 0.7)
-//        loadingView.clipsToBounds = true
-//        loadingView.layer.cornerRadius = 10
-//        
-//        activityIndicator.frame = CGRect(x:0.0, y:0.0, width:40.0, height:40.0);
-//        activityIndicator.activityIndicatorViewStyle =
-//            UIActivityIndicatorViewStyle.whiteLarge
-//        activityIndicator.center = CGPoint(x:loadingView.frame.size.width / 2, y:loadingView.frame.size.height / 2);
-//        loadingView.addSubview(activityIndicator)
-//        container.addSubview(loadingView)
-//        uiView.addSubview(container)
-//        activityIndicator.startAnimating()
-//    }
-//    
-//    func hideActivityIndicator(uiView: UIView) {
-//        activityIndicator.stopAnimating()
-//        container.removeFromSuperview()
-//    }
-    
-    
+    }    
     
     /*
      // Override to support conditional editing of the table view.

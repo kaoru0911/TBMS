@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import FBSDKLoginKit
 
 class ServerConnector: NSObject {
     
@@ -51,6 +52,7 @@ class ServerConnector: NSObject {
     
     // request
     let LOGIN_REQ: String = "login"
+    let FBLOGIN_REQ: String = "fbLogin"
     let CREATE_REQ: String = "create"
     let GET_POCKETTRIP_REQ: String = "getPocketTrip"
     let UPDATEINFO_REQ: String = "updateUserInfo"
@@ -77,6 +79,8 @@ class ServerConnector: NSObject {
 //    var uploadIndex: Int = 0
     var downloadImgIndex: Int = 0
     var threadKey = NSLock.init()
+    let fbManager = FBSDKLoginManager()
+    let userDefault = UserDefaults.standard
     
     let loginNotifier = Notification.Name("loginNotifier")
     let getPocketTripNotifier = Notification.Name("getPocketTripNotifier")
@@ -139,8 +143,60 @@ class ServerConnector: NSObject {
         }
     }
     
+    func useFBLogin() {
+        
+        guard ((sharedData.memberData?.account) != nil) ||
+            ((sharedData.memberData?.password) != nil) else {
+                
+                print("account or password is nil")
+                
+                sharedData.isLogin = false
+                
+                return
+        }
+        
+        // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
+        let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,
+                                     PASSWORD_KEY: sharedData.memberData!.password! as Any,                    
+                                     REQUEST_KEY: FBLOGIN_REQ]
+        
+        Alamofire.request(baseURLStr + memberURLstr, method: .post, parameters: parameters).responseJSON { response in
+            
+            debugPrint(response)
+            print("Is FB login post success: \(response.result.isSuccess)")
+            print("Response: \(String(describing: response.result.value))")
+            
+            
+            switch(response.result) {
+                
+            case .success(let json):
+                
+                guard let getFeedback = json as? Dictionary<String,Any> else {
+                    return
+                }
+                
+                let result = getFeedback["result"] as! Bool
+                let error = getFeedback["errorCode"] as! String
+                
+                self.sharedData.isLogin = result
+                
+                print("Result: \(result), Error code:", error)
+                
+            case .failure(_):
+                self.sharedData.isLogin = false
+                print("Server feedback fail")
+            }
+            
+            NotificationCenter.default.post(name: self.loginNotifier, object: nil)
+        }
+    }
+
+    
     func userLogout() {
-        sharedData.dataReset()        
+        //clear login data
+        sharedData.dataReset()
+        fbManager.logOut()
+        userDefault.set(nil, forKey: "FBSDKAccessToken")
     }
     
     /**

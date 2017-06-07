@@ -16,6 +16,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     @IBOutlet weak var inputPassword: UITextField!
     @IBOutlet weak var inputAccountName: UITextField!
     
+    @IBOutlet weak var accountLabel: UILabel!
+    @IBOutlet weak var pswLabel: UILabel!
     @IBOutlet weak var FBLoginBtn: FBSDKLoginButton!
    
     @IBOutlet weak var loginBtn: UIButton!
@@ -26,6 +28,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     var serverCommunicate: ServerConnector = ServerConnector()
     var sharedData = DataManager.shareDataManager
     var loginResponse = Bool()
+    var fbAccess: String?
+    
+    let userDefault = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +42,19 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         FBLoginBtn.readPermissions = ["public_profile", "email", "user_friends"]
         FBLoginBtn.delegate = self
         
+        gmailLoginBtn.isHidden = true
+        
         //  FB第一次登入後可取得使用者token，後續即可直接登入
         if (FBSDKAccessToken.current()) != nil{
             //            fetchProfile()
+        }
+        
+        if userDefault.string(forKey: "FBSDKAccessToken") != nil {
+            loginBtn.isHidden = true
+            inputPassword.isHidden = true
+            inputAccountName.isHidden = true
+            accountLabel.isHidden = true
+            pswLabel.isHidden = true
         }
         
         // dismiss keyboard
@@ -48,6 +63,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
 
 
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "loginNotifier"), object: nil)
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,7 +87,24 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     // FB登入按鈕
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         
+        guard let loginResult = result.token.userID else {
+            
+            print("登入失敗", error)
+            serverCommunicate.userLogout()
+            return
+        }
+        
         print("成功登入")
+        
+        fbAccess = loginResult
+        
+        sharedData.memberData?.account = fbAccess
+        
+        sharedData.memberData?.password = fbAccess
+        
+        userDefault.set(fbAccess, forKey: "FBSDKAccessToken")
+        
+        serverCommunicate.useFBLogin()
         
         fetchProfile()
         
@@ -198,25 +231,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
             appDelegate.window?.rootViewController = rootTabBarController            
             
 //            tabBarController?.selectedIndex = 0
-            
-            
-            
-            //performSegue(withIdentifier: "goMemberVC" , sender: nil)
-            
-            
-////            // Dismiss the Old
-////            if let presented = self.presentedViewController {
-////                presented.removeFromParentViewController()
-////            }
-//            
-//            if presentedViewController != nil {
-//                removeFromParentViewController()
-//            }
-//            
-//            // Present the New
-//            let main = UIStoryboard(name: "Main", bundle: nil)
-//            let memberVC = main.instantiateViewController(withIdentifier: "MemberViewController") as! MemberViewController
-//            self.present(memberVC, animated: true, completion: nil)
             
             
         } else if self.sharedData.isLogin == false {
