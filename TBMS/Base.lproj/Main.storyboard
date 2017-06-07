@@ -332,7 +332,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tKf-sc-OLb">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tKf-sc-OLb">
                                 <rect key="frame" x="190" y="122" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -379,6 +379,7 @@
                         <constraints>
                             <constraint firstItem="a8W-bo-U0v" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="0fU-QL-HQA"/>
                             <constraint firstItem="a8W-bo-U0v" firstAttribute="top" secondItem="gg0-C7-l5e" secondAttribute="bottom" constant="15" id="6vF-rj-2cg"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="centerY" secondItem="Ndp-oQ-P5L" secondAttribute="centerY" id="77E-gz-LhH"/>
                             <constraint firstItem="j57-iU-Tjy" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="AMx-5g-Lfn"/>
                             <constraint firstItem="ess-N9-sld" firstAttribute="centerX" secondItem="hxt-9m-DaA" secondAttribute="centerX" id="EjU-nB-CyI"/>
                             <constraint firstItem="ess-N9-sld" firstAttribute="top" secondItem="a8W-bo-U0v" secondAttribute="bottom" constant="15" id="Iy5-id-dfm"/>
@@ -390,9 +391,9 @@
                             <constraint firstItem="g8s-J1-wki" firstAttribute="top" secondItem="ess-N9-sld" secondAttribute="bottom" constant="15" id="Uro-pq-CS3"/>
                             <constraint firstItem="ess-N9-sld" firstAttribute="leading" secondItem="hxt-9m-DaA" secondAttribute="leading" id="XP7-ek-xh5"/>
                             <constraint firstItem="ess-N9-sld" firstAttribute="trailing" secondItem="hxt-9m-DaA" secondAttribute="trailing" id="Yq7-m2-bLk"/>
-                            <constraint firstItem="tKf-sc-OLb" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="trailing" constant="5" id="bvJ-P2-dmx"/>
                             <constraint firstItem="hxt-9m-DaA" firstAttribute="centerX" secondItem="g5a-IB-ptC" secondAttribute="centerX" id="e1H-bh-tc0"/>
                             <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="hxt-9m-DaA" secondAttribute="bottom" constant="40" id="fFA-0U-wGJ"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="trailing" constant="5" id="gLH-2s-qvl"/>
                             <constraint firstAttribute="trailingMargin" secondItem="g8s-J1-wki" secondAttribute="trailing" constant="30" id="l5R-gG-F02"/>
                             <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="j57-iU-Tjy" secondAttribute="bottom" constant="80" id="oT5-6h-4kU"/>
                             <constraint firstItem="j57-iU-Tjy" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" constant="70" id="tEE-43-vcs"/>
@@ -672,7 +673,7 @@
                                 </state>
                                 <connections>
                                     <action selector="uploadTripDataBtnPressed:" destination="6GZ-KH-w72" eventType="touchUpInside" id="DWZ-e9-uxD"/>
-                                    <segue destination="hhN-hE-NTa" kind="unwind" identifier="unwindSegueToMenuVC" unwindAction="functionNameWith_segue:" id="DoX-8Q-59a"/>
+                                    <segue destination="hhN-hE-NTa" kind="unwind" unwindAction="functionNameWith_segue:" id="66n-sv-dfS"/>
                                 </connections>
                             </button>
                         </subviews>

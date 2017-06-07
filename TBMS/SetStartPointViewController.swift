@@ -21,6 +21,7 @@ class SetStartPointViewController: UIViewController {
     var attractionsList : [Attraction]!
     var routesDetails : [LegsData]!
     var attractionsListToNextPage : [Attraction]!
+    let shareData = DataManager.shareDataManager
     
     var expectedTravelMode: TravelMod = .walking
     
@@ -55,12 +56,13 @@ class SetStartPointViewController: UIViewController {
         default:
             expectedTravelMode = .defaultValue
         }
+        print(expectedTravelMode.rawValue) ///
     }
         
     @IBAction func chooseStartingBtnPressed(_ sender: UIButton) {
         
-        let config = GMSPlacePickerConfig(viewport: nil)
-        let placePicker = GMSPlacePicker(config: config)
+        let pickerGenerator = GooglePlacePickerGenerator()
+        let placePicker = pickerGenerator.generatePlacePicker(selectedCountry: shareData.chooseCountry)
         
         placePicker.pickPlace(callback: { (place, error) -> Void in
             if let error = error {
@@ -137,6 +139,7 @@ class SetStartPointViewController: UIViewController {
         let vc : RearrangeScheduleVC = segue.destination as! RearrangeScheduleVC
         vc.routesDetails = routesDetails
         vc.attractions = attractionsListToNextPage
+        vc.selectedTravelMod = expectedTravelMode
     }
 }
 
