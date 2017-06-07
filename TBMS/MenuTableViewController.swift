@@ -130,7 +130,7 @@ class MenuTableViewController: UITableViewController {
         
         //cell.menuCellName.textColor = UIColor.white
         
-        cell.menuCellName.shadowOffset = CGSize(width: 2, height: 2)
+        cell.menuCellName.shadowOffset = CGSize(width: 3, height: 3)
         
         cell.menuCellName.shadowColor = UIColor.white
         

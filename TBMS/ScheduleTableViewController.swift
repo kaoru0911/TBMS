@@ -212,11 +212,12 @@ class ScheduleTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func saveSpotBtnPress(_ sender: UIButton) {
+    @IBAction func saveSpotBtnPress(_ sender: AnyObject) {
         
-        let index = sender.tag
+        let btnPos: CGPoint = sender.convert(CGPoint.zero, to: self.tableView)
+        let indexPath: NSIndexPath = self.tableView.indexPathForRow(at: btnPos)! as NSIndexPath
         
-        let selectSpot = spotData[index] as spotData
+        let selectSpot = spotData[indexPath.row] as spotData
         
         selectSpot.spotCountry = data.country
         
