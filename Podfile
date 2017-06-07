@@ -14,9 +14,9 @@ target 'TBMS' do
   pod'Alamofire', '~> 4.4.0'
   pod 'AlamofireImage'
   pod 'SwiftyJSON'
-  pod 'FacebookCore'
-  pod 'FacebookLogin'
-  pod 'FacebookShare'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
+  pod 'FBSDKShareKit'
   pod 'Google/SignIn'
  
   

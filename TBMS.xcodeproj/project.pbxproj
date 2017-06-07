@@ -38,7 +38,6 @@
 		A74BDDE91ED6FE1C00987446 /* circle-user-7.png in Resources */ = {isa = PBXBuildFile; fileRef = A74BDDE81ED6FE1C00987446 /* circle-user-7.png */; };
 		A76BA9E21ECC67ED00443947 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9E01ECC67ED00443947 /* Main.storyboard */; };
 		A76BA9E41ECC67ED00443947 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9E31ECC67ED00443947 /* Assets.xcassets */; };
-		A76BA9E71ECC67ED00443947 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9E51ECC67ED00443947 /* LaunchScreen.storyboard */; };
 		A76BAA021ECC697000443947 /* AddViewPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BA9EE1ECC697000443947 /* AddViewPointViewController.swift */; };
 		A76BAA031ECC697000443947 /* arrowClose.png in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9EF1ECC697000443947 /* arrowClose.png */; };
 		A76BAA041ECC697000443947 /* arrowOpen.png in Resources */ = {isa = PBXBuildFile; fileRef = A76BA9F01ECC697000443947 /* arrowOpen.png */; };
@@ -63,6 +62,7 @@
 		A7929A441ED573F00024B4D7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A431ED573F00024B4D7 /* RegisterViewController.swift */; };
 		A7929A461ED574520024B4D7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A451ED574520024B4D7 /* LoginViewController.swift */; };
 		A7929A481ED586FB0024B4D7 /* EmailRegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A471ED586FB0024B4D7 /* EmailRegisterViewController.swift */; };
+		CD90C3B01EE7CA30006EF239 /* Launch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CD90C3AF1EE7CA30006EF239 /* Launch.storyboard */; };
 		CDEACC451EE039DE00280CEA /* TripFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDEACC441EE039DE00280CEA /* TripFilter.swift */; };
 		CDEACC5A1EE03ABE00280CEA /* 中國.png in Resources */ = {isa = PBXBuildFile; fileRef = CDEACC461EE03ABE00280CEA /* 中國.png */; };
 		CDEACC5B1EE03ABE00280CEA /* 巴西.png in Resources */ = {isa = PBXBuildFile; fileRef = CDEACC471EE03ABE00280CEA /* 巴西.png */; };
@@ -126,7 +126,6 @@
 		A76BA9D91ECC67ED00443947 /* TBMS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TBMS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A76BA9E11ECC67ED00443947 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		A76BA9E31ECC67ED00443947 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A76BA9E61ECC67ED00443947 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A76BA9E81ECC67ED00443947 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A76BA9EE1ECC697000443947 /* AddViewPointViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddViewPointViewController.swift; sourceTree = "<group>"; };
 		A76BA9EF1ECC697000443947 /* arrowClose.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowClose.png; sourceTree = "<group>"; };
@@ -152,6 +151,7 @@
 		A7929A431ED573F00024B4D7 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		A7929A451ED574520024B4D7 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		A7929A471ED586FB0024B4D7 /* EmailRegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailRegisterViewController.swift; sourceTree = "<group>"; };
+		CD90C3AF1EE7CA30006EF239 /* Launch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Launch.storyboard; sourceTree = "<group>"; };
 		CDEACC441EE039DE00280CEA /* TripFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripFilter.swift; sourceTree = "<group>"; };
 		CDEACC461EE03ABE00280CEA /* 中國.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "中國.png"; sourceTree = "<group>"; };
 		CDEACC471EE03ABE00280CEA /* 巴西.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "巴西.png"; sourceTree = "<group>"; };
@@ -366,7 +366,7 @@
 				A76BAA001ECC697000443947 /* ViewPointListCell.swift */,
 				A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */,
 				A76BA9E31ECC67ED00443947 /* Assets.xcassets */,
-				A76BA9E51ECC67ED00443947 /* LaunchScreen.storyboard */,
+				CD90C3AF1EE7CA30006EF239 /* Launch.storyboard */,
 				A742B1451EDEBA4E00C7EA36 /* GoogleService-Info.plist */,
 				A76BA9E81ECC67ED00443947 /* Info.plist */,
 			);
@@ -521,10 +521,10 @@
 				CDEACC671EE03ABE00280CEA /* 菲律賓.png in Resources */,
 				CDEACC651EE03ABE00280CEA /* 泰國.png in Resources */,
 				CDEACC611EE03ABE00280CEA /* 阿根廷.png in Resources */,
+				CD90C3B01EE7CA30006EF239 /* Launch.storyboard in Resources */,
 				CDEACC6B1EE03ABE00280CEA /* 德國.png in Resources */,
 				CDEACC731EE03BE400280CEA /* 西班牙.png in Resources */,
 				CDEACC5A1EE03ABE00280CEA /* 中國.png in Resources */,
-				A76BA9E71ECC67ED00443947 /* LaunchScreen.storyboard in Resources */,
 				A76BA9E41ECC67ED00443947 /* Assets.xcassets in Resources */,
 				A76BAA041ECC697000443947 /* arrowOpen.png in Resources */,
 				A76BAA0E1ECC697000443947 /* MenuCell.xib in Resources */,
@@ -661,14 +661,6 @@
 				A76BA9E11ECC67ED00443947 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		A76BA9E51ECC67ED00443947 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A76BA9E61ECC67ED00443947 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

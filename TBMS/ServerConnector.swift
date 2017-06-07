@@ -83,6 +83,8 @@ class ServerConnector: NSObject {
     let userDefault = UserDefaults.standard
     
     let loginNotifier = Notification.Name("loginNotifier")
+    let logoutNotifier = Notification.Name("logoutNotifier")
+    let fbLoginNotifier = Notification.Name("fbLoginNotifier")
     let getPocketTripNotifier = Notification.Name("getPocketTripNotifier")
     let getSharedTripNotifier = Notification.Name("getSharedTripNotifier")
     let getPocketSpotNotifier = Notification.Name("getPocketSpotNotifier")
@@ -187,7 +189,7 @@ class ServerConnector: NSObject {
                 print("Server feedback fail")
             }
             
-            NotificationCenter.default.post(name: self.loginNotifier, object: nil)
+            NotificationCenter.default.post(name: self.fbLoginNotifier, object: nil)
         }
     }
 
@@ -197,6 +199,8 @@ class ServerConnector: NSObject {
         sharedData.dataReset()
         fbManager.logOut()
         userDefault.set(nil, forKey: "FBSDKAccessToken")
+        
+        NotificationCenter.default.post(name: self.logoutNotifier, object: nil)
     }
     
     /**
