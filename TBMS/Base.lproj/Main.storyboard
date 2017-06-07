@@ -202,7 +202,7 @@
                                     <attributedString key="attributedTitle">
                                         <fragment content="庫存景點">
                                             <attributes>
-                                                <font key="NSFont" size="15" name=".PingFangTC-Regular"/>
+                                                <font key="NSFont" size="17" name=".PingFangTC-Regular"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="15"/>
                                             </attributes>
                                         </fragment>
@@ -220,6 +220,7 @@
                                     <constraint firstAttribute="height" constant="30" id="Ia3-KW-D0X"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="ZLW-aB-f3d"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="加入行程">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -234,6 +235,7 @@
                                     <constraint firstAttribute="height" constant="30" id="2HN-MR-9dX"/>
                                     <constraint firstAttribute="width" constant="100" id="P1T-Wb-Ez9"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="搜尋景點">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -339,8 +341,9 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j57-iU-Tjy">
-                                <rect key="frame" x="46" y="213" width="77" height="30"/>
+                                <rect key="frame" x="46" y="213" width="87" height="30"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <size key="titleShadowOffset" width="1" height="1"/>
                                 <state key="normal" title="選擇出發地"/>
                                 <connections>
@@ -718,7 +721,7 @@
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1370,7 +1373,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
