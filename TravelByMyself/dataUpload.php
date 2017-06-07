@@ -81,12 +81,16 @@ function uploadPocketSpot($db){
 
 	$spotName = $_POST['spotName'];
 	$ownerUser = $_POST['username'];
+	$spotCountry = $_POST['spotCountry'];
+	$placeID = $_POST['placeID'];
+	$latitude = $_POST['latitude'];
+	$longitude = $_POST['longitude'];
 
 	$db->prepare("
 			insert into `pocketspot`
-			(`spotName`,`ownerUser`,`spotCountry`)
+			(`spotName`,`ownerUser`,`spotCountry`,`placeID`,`latitude`,`longitude`)
 			values
-			('$spotName','$ownerUser')
+			('$spotName','$ownerUser','$spotCountry','$placeID','$latitude','$longitude')
 			")->execute();
 
 	echo '{"result":true, "errorCode":"none"}';
