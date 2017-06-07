@@ -529,7 +529,8 @@ class ServerConnector: NSObject {
                         spot.spotName = getFeedback[i]["spotName"] as? String
                         spot.spotCountry = getFeedback[i]["spotCountry"] as? String
                         spot.placeID = getFeedback[i]["placeID"] as? String
-                        
+                        spot.latitude = (getFeedback[i]["latitude"] as! Double)
+                        spot.longitude = (getFeedback[i]["longitude"] as! Double)
                         
                         self.sharedData.pocketSpot?.append(spot)
                     }
@@ -585,6 +586,9 @@ class ServerConnector: NSObject {
                     getSpot.trafficToNextSpot = (getFeedback[i]["trafficToNext"] as? String)!
                     getSpot.spotName = (getFeedback[i]["spotName"] as? String)!
                     getSpot.placeID = (getFeedback[i]["placeID"] as? String)!
+                    getSpot.latitude = (getFeedback[i]["latitude"] as! Double)
+                    getSpot.longitude = (getFeedback[i]["longitude"] as! Double)
+                    
 //                    getSpot.spotCountry = (getFeedback[i]["spotCountry"] as? String)!
                     
                     self.sharedData.tempTripData?.spots.append(getSpot)
@@ -788,7 +792,7 @@ class ServerConnector: NSObject {
                                          NTH_KEY: tripData.spots[i].nTh as Any,
                                          TRAFFICTITLE_KEY: tripData.spots[i].trafficTitle as Any,
                                          TRAFFIC_KEY: tripData.spots[i].trafficToNextSpot as Any,
-                                         PLACEID_KEY: tripData.spots[i].placeID as Any,
+                                         PLACEID_KEY: tripData.spots[i].placeID! as Any,
                                          LATITUDE_KEY: tripData.spots[i].latitude as Any,
                                          LONGITUDE_KEY: tripData.spots[i].longitude as Any,
                                          REQUEST_KEY: request]

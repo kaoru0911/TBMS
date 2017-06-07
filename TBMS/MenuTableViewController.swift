@@ -143,13 +143,10 @@ class MenuTableViewController: UITableViewController {
         
         switch choosen {
             case "開始規劃":
-                if sharedData.pocketSpot?.count == 0 {
+                    sharedData.pocketSpot = [tripSpotData]()
                     serverCommunicate.getPocketSpotFromServer()
                     customActivityIndicatory(self.view, startAnimate: true)
-                } else{
-                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
-                }
-                
+            
             case "推薦行程":
                 if sharedData.sharedTrips?.count == 0 {
                     serverCommunicate.getSharedTripFromServer()
