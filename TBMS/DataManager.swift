@@ -105,6 +105,7 @@ class spotData: NSObject {
     var placeID:String?
     var latitude:Double?
     var longitude:Double?
+    var spotAddress:String?
 }
 
 class tripSpotData: spotData {

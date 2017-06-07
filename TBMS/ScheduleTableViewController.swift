@@ -21,6 +21,7 @@ class ScheduleTableViewController: UITableViewController {
     var filter = TripFilter()
     var nDaySchedule: Int!
     
+    let googleMapSchemeStr = "https://www.google.es/maps/dir/"
     //====test===
     //    var sharedData = DataManager.shareDataManager
     //=======
@@ -68,7 +69,7 @@ class ScheduleTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "scheduleCellID", for: indexPath) as! ScheduleTableViewCell
-        
+        cell.navigateBtn.tag = indexPath.row
         cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
         
         cell.spotItemLabel.text = spotData[indexPath.row].spotName  //spotArray[indexPath.row]
@@ -77,6 +78,9 @@ class ScheduleTableViewController: UITableViewController {
         
         cell.spotItemLabel.layer.cornerRadius = 10
         cell.spotItemLabel.layer.masksToBounds = true
+        cell.navigateBtn.layer.cornerRadius = 10
+        cell.navigateBtn.layer.masksToBounds = true
+        cell.navigateBtn.isHidden = false
         
         // auto line break
         cell.describeLabel.text = spotData[indexPath.row].trafficToNextSpot
@@ -93,6 +97,7 @@ class ScheduleTableViewController: UITableViewController {
             
             if selectCellRow[indexPath.row] {
                 cell.describeLabel.text = spotData[indexPath.row].trafficToNextSpot
+                cell.navigateBtn.isHidden = !cell.navigateBtn.isHidden
             } else{
                 cell.describeLabel.text = spotData[indexPath.row].trafficTitle
             }
@@ -104,7 +109,7 @@ class ScheduleTableViewController: UITableViewController {
         }
         
         if cell.describeLabel.text == "" || cell.describeLabel.text == nil || indexPath.row == spotData.count - 1 {
-            
+            cell.navigateBtn.isHidden = true
             cell.describeLabel.text = ""
             
         } else{
@@ -158,5 +163,90 @@ class ScheduleTableViewController: UITableViewController {
                 }
             }
         }
+    }
+    
+    @IBAction func navigateButtonBtnPressed(_ sender: UIButton) {
+        
+        let index = sender.tag
+        print(index)
+        
+        let cellContent = spotData[index]
+        let strCoordinate = "\(cellContent.latitude!),\(cellContent.longitude!)"
+//        let strCoordinate = cellContent.spotName!
+//        let strCoordinate = transferAddressString(address: cellContent.spotAddress!)
+        let trafficTitleLabelText = cellContent.trafficTitle
+        print(strCoordinate)
+        print(trafficTitleLabelText)
+        
+        let destCellContent = spotData[index + 1]
+        let destCoordinate = "\(destCellContent.latitude!),\(destCellContent.longitude!)"
+//        let destCoordinate = destCellContent.spotName!
+//        let destCoordinate = transferAddressString(address: destCellContent.spotAddress!)
+        print(destCoordinate)
+        print(destCellContent.trafficTitle)
+
+        let parameterURL = self.parameterURLGenerator(startPoint: strCoordinate, destination: destCoordinate, trafficTitle: trafficTitleLabelText)
+        
+        if (UIApplication.shared.canOpenURL(URL(string:googleMapSchemeStr)!)) {
+            
+            let schmemURL = schemeURLGenerator(schmemURL: googleMapSchemeStr, parameterURL: parameterURL)
+            UIApplication.shared.openURL(URL(string: schmemURL)!)
+ 
+        } else {
+            let schmemURL = schemeURLGenerator(schmemURL: googleMapSchemeStr, parameterURL: parameterURL)
+            UIApplication.shared.openURL(URL(string: schmemURL)!)
+            print("沒有googleMap唷")
+        }
+    }
+}
+
+extension ScheduleTableViewController {
+    
+    func schemeURLGenerator(schmemURL: String, parameterURL: String) -> String {
+        return "\(schmemURL)\(parameterURL)"
+    }
+    
+    func parameterURLGenerator(startPoint: String, destination: String, trafficTitle: String) -> String {
+        
+//        let travelMod = seperateTravelModString(trafficTitle: trafficTitle)
+        let str = "'\(startPoint)'/'\(destination)'"//&directionsmode=\(travelMod)"
+        
+        return str
+    }
+    
+    fileprivate func transferAddressString(address: String!) -> String {
+        
+        guard let adrs = address else { return "" }
+        let adrsString = adrs.replacingOccurrences(of: " ", with: "+")
+        return adrsString
+    }
+    
+    fileprivate func seperateTravelModString(trafficTitle: String) -> String {
+        
+        let travelTypeString: String
+        
+        let seperateResult = trafficTitle.components(separatedBy: ",")
+        let travleMod = seperateResult[0]
+        
+        let strSource = RearrangeScheduleVC()
+        let strDrivingMod = strSource.drivingTravelTypeLabel
+        let strTrasitMod = strSource.transitTravelTypeLabel
+        let strWalkingMod = strSource.walkingTravelTypeLabel
+        
+        switch travleMod {
+        case strTrasitMod:
+            travelTypeString = TravelMod.transit.rawValue.lowercased()
+            
+        case strDrivingMod:
+            travelTypeString = TravelMod.driving.rawValue.lowercased()
+        
+        case strWalkingMod:
+            travelTypeString = TravelMod.walking.rawValue.lowercased()
+            
+        default:
+            travelTypeString = TravelMod.driving.rawValue.lowercased()
+        }
+        
+        return travelTypeString
     }
 }

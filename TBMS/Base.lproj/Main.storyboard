@@ -202,7 +202,7 @@
                                     <attributedString key="attributedTitle">
                                         <fragment content="庫存景點">
                                             <attributes>
-                                                <font key="NSFont" size="15" name=".PingFangTC-Regular"/>
+                                                <font key="NSFont" size="17" name=".PingFangTC-Regular"/>
                                                 <font key="NSOriginalFont" metaFont="system" size="15"/>
                                             </attributes>
                                         </fragment>
@@ -220,6 +220,7 @@
                                     <constraint firstAttribute="height" constant="30" id="Ia3-KW-D0X"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="ZLW-aB-f3d"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="加入行程">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -234,6 +235,7 @@
                                     <constraint firstAttribute="height" constant="30" id="2HN-MR-9dX"/>
                                     <constraint firstAttribute="width" constant="100" id="P1T-Wb-Ez9"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="搜尋景點">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -309,15 +311,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g8s-J1-wki">
-                                <rect key="frame" x="198" y="545" width="131" height="30"/>
-                                <state key="normal" title="確定行程, 開始規劃"/>
-                                <connections>
-                                    <action selector="goToNextPage:" destination="I8i-xe-uxU" eventType="touchUpInside" id="0f3-7d-cCW"/>
-                                </connections>
-                            </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="請輸入旅遊國家的地點, 以日本旅遊為例：                                                 成田機場, 羽田機場, ＸＸ飯店, ＸＸ車站" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hxt-9m-DaA">
-                                <rect key="frame" x="46" y="158" width="283" height="125"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="請輸入旅遊國家的地點, 以日本旅遊為例：                                                 成田機場, 羽田機場, ＸＸ飯店, ＸＸ車站" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hxt-9m-DaA">
+                                <rect key="frame" x="46" y="122" width="283" height="125"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="125" id="ioL-6r-0ow"/>
@@ -333,20 +328,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tKf-sc-OLb">
-                                <rect key="frame" x="190" y="122" width="42" height="21"/>
+                                <rect key="frame" x="46" y="158" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j57-iU-Tjy">
-                                <rect key="frame" x="46" y="213" width="77" height="30"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <size key="titleShadowOffset" width="1" height="1"/>
-                                <state key="normal" title="選擇出發地"/>
-                                <connections>
-                                    <action selector="chooseStartingBtnPressed:" destination="I8i-xe-uxU" eventType="touchUpInside" id="Rkb-ep-Dwl"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="選擇交通方式 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gg0-C7-l5e">
                                 <rect key="frame" x="46" y="323" width="114" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -364,7 +350,7 @@
                                     <action selector="travelModeValueChanged:" destination="I8i-xe-uxU" eventType="valueChanged" id="Pls-fq-Sws"/>
                                 </connections>
                             </segmentedControl>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="大眾運輸預設以下午作為出發時間, 實際開放時間請參考各國家大眾運輸系統公告" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="ess-N9-sld">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="大眾運輸預設以下午作為出發時間, 實際開放時間請參考各國家大眾運輸系統公告" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ess-N9-sld">
                                 <rect key="frame" x="46" y="402" width="283" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -374,32 +360,50 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j57-iU-Tjy">
+                                <rect key="frame" x="183" y="117" width="77" height="30"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <size key="titleShadowOffset" width="1" height="1"/>
+                                <state key="normal" title="選擇出發地"/>
+                                <connections>
+                                    <action selector="chooseStartingBtnPressed:" destination="I8i-xe-uxU" eventType="touchUpInside" id="Rkb-ep-Dwl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="a8W-bo-U0v" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="0fU-QL-HQA"/>
                             <constraint firstItem="a8W-bo-U0v" firstAttribute="top" secondItem="gg0-C7-l5e" secondAttribute="bottom" constant="15" id="6vF-rj-2cg"/>
-                            <constraint firstItem="tKf-sc-OLb" firstAttribute="centerY" secondItem="Ndp-oQ-P5L" secondAttribute="centerY" id="77E-gz-LhH"/>
-                            <constraint firstItem="j57-iU-Tjy" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="AMx-5g-Lfn"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="centerY" secondItem="Ndp-oQ-P5L" secondAttribute="centerY" constant="36" id="77E-gz-LhH"/>
+                            <constraint firstItem="j57-iU-Tjy" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" constant="137" id="AMx-5g-Lfn"/>
                             <constraint firstItem="ess-N9-sld" firstAttribute="centerX" secondItem="hxt-9m-DaA" secondAttribute="centerX" id="EjU-nB-CyI"/>
                             <constraint firstItem="ess-N9-sld" firstAttribute="top" secondItem="a8W-bo-U0v" secondAttribute="bottom" constant="15" id="Iy5-id-dfm"/>
                             <constraint firstItem="Ndp-oQ-P5L" firstAttribute="leading" secondItem="g5a-IB-ptC" secondAttribute="leadingMargin" constant="30" id="J1n-th-UMS"/>
                             <constraint firstItem="gg0-C7-l5e" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="Lbk-TT-ztM"/>
                             <constraint firstItem="gg0-C7-l5e" firstAttribute="centerY" secondItem="g5a-IB-ptC" secondAttribute="centerY" id="NNo-Fk-BZs"/>
-                            <constraint firstItem="hxt-9m-DaA" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" constant="15" id="Of1-HJ-A4X"/>
+                            <constraint firstItem="hxt-9m-DaA" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" constant="-21" id="Of1-HJ-A4X"/>
                             <constraint firstItem="hxt-9m-DaA" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="Ue7-hb-oYa"/>
-                            <constraint firstItem="g8s-J1-wki" firstAttribute="top" secondItem="ess-N9-sld" secondAttribute="bottom" constant="15" id="Uro-pq-CS3"/>
                             <constraint firstItem="ess-N9-sld" firstAttribute="leading" secondItem="hxt-9m-DaA" secondAttribute="leading" id="XP7-ek-xh5"/>
                             <constraint firstItem="ess-N9-sld" firstAttribute="trailing" secondItem="hxt-9m-DaA" secondAttribute="trailing" id="Yq7-m2-bLk"/>
                             <constraint firstItem="hxt-9m-DaA" firstAttribute="centerX" secondItem="g5a-IB-ptC" secondAttribute="centerX" id="e1H-bh-tc0"/>
-                            <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="hxt-9m-DaA" secondAttribute="bottom" constant="40" id="fFA-0U-wGJ"/>
-                            <constraint firstItem="tKf-sc-OLb" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="trailing" constant="5" id="gLH-2s-qvl"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="g8s-J1-wki" secondAttribute="trailing" constant="30" id="l5R-gG-F02"/>
-                            <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="j57-iU-Tjy" secondAttribute="bottom" constant="80" id="oT5-6h-4kU"/>
-                            <constraint firstItem="j57-iU-Tjy" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" constant="70" id="tEE-43-vcs"/>
+                            <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="hxt-9m-DaA" secondAttribute="bottom" constant="76" id="fFA-0U-wGJ"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="trailing" constant="-139" id="gLH-2s-qvl"/>
+                            <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="j57-iU-Tjy" secondAttribute="bottom" constant="176" id="oT5-6h-4kU"/>
+                            <constraint firstItem="j57-iU-Tjy" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" constant="-26" id="tEE-43-vcs"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="起點設定" id="wld-mh-Prh"/>
+                    <navigationItem key="navigationItem" title="起點設定" id="wld-mh-Prh">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="vdz-qq-TTQ">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="g8s-J1-wki">
+                                <rect key="frame" x="297" y="7" width="62" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="開始規劃"/>
+                                <connections>
+                                    <action selector="goToNextPage:" destination="I8i-xe-uxU" eventType="touchUpInside" id="0f3-7d-cCW"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="chooseStartingPtBtn" destination="j57-iU-Tjy" id="vCK-Ua-4IN"/>
                         <outlet property="chosenStartingPoint" destination="tKf-sc-OLb" id="w4T-Ht-nfQ"/>
@@ -424,14 +428,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mWY-Ji-JSd">
-                                <rect key="frame" x="0.0" y="64" width="375" height="263"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="190"/>
                                 <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </webView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HWz-5r-StC">
-                                <rect key="frame" x="0.0" y="327" width="375" height="296"/>
+                                <rect key="frame" x="0.0" y="254" width="375" height="369"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="296" id="GdE-Md-F4s"/>
+                                    <constraint firstAttribute="height" constant="369" id="GdE-Md-F4s"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Gke-bT-Sr7">
                                     <size key="itemSize" width="414" height="42"/>
@@ -447,9 +451,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="365" height="42"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hP4-LW-2ag">
-                                                    <rect key="frame" x="305" y="6" width="30" height="30"/>
-                                                    <state key="normal" title="add"/>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hP4-LW-2ag">
+                                                    <rect key="frame" x="288" y="6" width="62" height="30"/>
+                                                    <state key="normal" title="增加天數"/>
                                                     <connections>
                                                         <action selector="addDateCellBtnPressed:" destination="DLZ-YW-dcw" eventType="touchUpInside" id="l8F-Mc-IqD"/>
                                                         <action selector="addNewTripDay:" destination="bwU-tL-24C" eventType="touchUpInside" id="fwW-ab-hbO"/>
@@ -496,16 +500,15 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="景點一" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K7Y-go-fwA">
-                                                    <rect key="frame" x="35.5" y="22.5" width="52" height="21"/>
+                                                    <rect key="frame" x="46.5" y="22.5" width="52" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JM7-vt-lDb">
-                                                    <rect key="frame" x="35.5" y="58" width="34.5" height="61"/>
-                                                    <color key="backgroundColor" red="0.049140577759909987" green="1" blue="0.7610422169149621" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="JM7-vt-lDb">
+                                                    <rect key="frame" x="47" y="58" width="23" height="61"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="JM7-vt-lDb" secondAttribute="height" multiplier="4:7" id="fIn-DT-fOa"/>
+                                                        <constraint firstAttribute="width" secondItem="JM7-vt-lDb" secondAttribute="height" multiplier="23:61" id="3bZ-E4-KYT"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
@@ -522,7 +525,6 @@
                                             <constraint firstItem="ZDd-Em-wTH" firstAttribute="leading" secondItem="JM7-vt-lDb" secondAttribute="trailing" constant="10" id="eov-EJ-h6j"/>
                                             <constraint firstItem="K7Y-go-fwA" firstAttribute="centerY" secondItem="dDJ-SF-K3G" secondAttribute="centerY" id="gRV-qp-hGP"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="dDJ-SF-K3G" secondAttribute="trailing" constant="10" id="jPw-8c-xJ7"/>
-                                            <constraint firstItem="JM7-vt-lDb" firstAttribute="width" secondItem="JM7-vt-lDb" secondAttribute="height" multiplier="4:7" id="wVR-au-2XA"/>
                                         </constraints>
                                         <size key="customSize" width="373" height="120"/>
                                         <connections>
@@ -547,7 +549,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="景點一" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wzm-PE-t9y">
-                                                    <rect key="frame" x="40" y="24" width="52" height="21"/>
+                                                    <rect key="frame" x="43.5" y="24" width="52" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -556,7 +558,7 @@
                                         </view>
                                         <constraints>
                                             <constraint firstItem="jko-b1-7Xd" firstAttribute="leading" secondItem="ntT-ea-DJQ" secondAttribute="leadingMargin" constant="10" id="Hgo-Kq-vjO"/>
-                                            <constraint firstItem="Wzm-PE-t9y" firstAttribute="leading" secondItem="ntT-ea-DJQ" secondAttribute="leadingMargin" constant="32" id="Ocu-RN-DTR"/>
+                                            <constraint firstItem="Wzm-PE-t9y" firstAttribute="leading" secondItem="ntT-ea-DJQ" secondAttribute="leadingMargin" constant="35.5" id="Ocu-RN-DTR"/>
                                             <constraint firstItem="jko-b1-7Xd" firstAttribute="centerX" secondItem="ntT-ea-DJQ" secondAttribute="centerX" id="QJo-qK-rhy"/>
                                             <constraint firstItem="Wzm-PE-t9y" firstAttribute="centerY" secondItem="jko-b1-7Xd" secondAttribute="centerY" id="eck-cN-sX4"/>
                                             <constraint firstItem="jko-b1-7Xd" firstAttribute="centerY" secondItem="ntT-ea-DJQ" secondAttribute="centerY" id="fiS-Ex-9es"/>
@@ -632,8 +634,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pID-nw-onH">
-                                <rect key="frame" x="26.5" y="517" width="120" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pID-nw-onH">
+                                <rect key="frame" x="228" y="329" width="120" height="40"/>
                                 <color key="backgroundColor" red="0.43006226420402527" green="0.73552185297012329" blue="0.79083317518234253" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="7VK-Vl-Ru8"/>
@@ -652,14 +654,14 @@
                                     <constraint firstAttribute="height" constant="162" id="PTX-Dy-Dxd"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="是否分享" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hxz-ST-Hgm">
-                                <rect key="frame" x="59" y="340" width="70" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="是否分享" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hxz-ST-Hgm">
+                                <rect key="frame" x="26" y="375" width="70" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mh0-Bl-0ne">
-                                <rect key="frame" x="137" y="335" width="51" height="31"/>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Mh0-Bl-0ne">
+                                <rect key="frame" x="104" y="370" width="51" height="31"/>
                             </switch>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZX0-7v-j6O">
                                 <rect key="frame" x="228.5" y="517" width="120" height="40"/>
@@ -674,6 +676,20 @@
                                 <connections>
                                     <action selector="uploadTripDataBtnPressed:" destination="6GZ-KH-w72" eventType="touchUpInside" id="DWZ-e9-uxD"/>
                                     <segue destination="hhN-hE-NTa" kind="unwind" unwindAction="functionNameWith_segue:" id="66n-sv-dfS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jxu-rq-DNl">
+                                <rect key="frame" x="33" y="517" width="120" height="40"/>
+                                <color key="backgroundColor" red="0.44175875190000002" green="0.73191380500000003" blue="0.78333240749999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="Nt9-7u-MiY"/>
+                                    <constraint firstAttribute="height" constant="40" id="yWg-Ay-nXu"/>
+                                </constraints>
+                                <state key="normal" title="取消行程">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="hhN-hE-NTa" kind="unwind" unwindAction="functionNameWith_segue:" id="irf-aO-tZ0"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -700,6 +716,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cancelAndBackToMenu" destination="Jxu-rq-DNl" id="HQc-Sa-i3t"/>
                         <outlet property="changeTripCoverBtn" destination="pID-nw-onH" id="jqT-9p-nss"/>
                         <outlet property="saveTripBtn" destination="ZX0-7v-j6O" id="ktE-En-Wpj"/>
                         <outlet property="shareTripOption" destination="Mh0-Bl-0ne" id="nPj-sK-qQc"/>
@@ -718,7 +735,7 @@
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -747,6 +764,18 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nWy-LX-m2E">
+                                            <rect key="frame" x="303" y="25" width="46" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" red="0.035217871259677812" green="0.75908153553299496" blue="0.57940080370395086" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <state key="normal" title="導航">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="navigateButtonBtnPressed:" destination="QhJ-bN-7Yv" eventType="touchUpInside" id="3GW-PJ-2EX"/>
+                                            </connections>
+                                        </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j4E-ZK-DRd">
                                             <rect key="frame" x="72" y="8" width="230" height="20"/>
                                             <constraints>
@@ -784,6 +813,7 @@
                                 <connections>
                                     <outlet property="cellImage" destination="OTR-DJ-e0P" id="m4U-qA-mgA"/>
                                     <outlet property="describeLabel" destination="HNH-Uf-uEJ" id="fPi-Ga-kwK"/>
+                                    <outlet property="navigateBtn" destination="nWy-LX-m2E" id="fOU-k3-TPc"/>
                                     <outlet property="spotItemLabel" destination="j4E-ZK-DRd" id="quI-ir-A4Q"/>
                                 </connections>
                             </tableViewCell>
@@ -797,7 +827,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8up-tP-r6h" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2417" y="-2363"/>
+            <point key="canvasLocation" x="2416.8000000000002" y="-2363.568215892054"/>
         </scene>
         <!--會員登入-->
         <scene sceneID="rcU-Lf-xfe">
@@ -1370,7 +1400,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
