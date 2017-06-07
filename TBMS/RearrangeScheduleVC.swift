@@ -31,6 +31,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     fileprivate let scheduleTypeCellColor = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
     let goSaveTripPageBtnTitle = "確認規劃"
     let saveTripBtnTitle = "儲存行程"
+    let arrowImageName = "downArrow2"
     
     let bikeTravelTypeLabel = "單車"
     let drivingTravelTypeLabel = "開車"
@@ -352,7 +353,11 @@ extension RearrangeScheduleVC {
                 tmpAttractionData.nDays = tmpDateStorage
                 tmpAttractionData.nTh = tmpCellIndexCount
                 tmpAttractionData.trafficToNextSpot = generateDetailRouteString(route: cellContentData.trafficInformation)
+                
                 tmpAttractionData.placeID = cellContentData.placeID
+                tmpAttractionData.latitude = cellContentData.attraction.coordinate.latitude
+                tmpAttractionData.longitude = cellContentData.attraction.coordinate.longitude
+                tmpAttractionData.spotAddress = cellContentData.address ?? cellContentData.attraction.address
                 
                 spots.append(tmpAttractionData)
                 
@@ -433,8 +438,11 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             cell.viewPointBGBlock.layer.cornerRadius = 10
             cell.viewPointBGBlock.backgroundColor = scheduleTypeCellColor
-            cell.arrow.layer.cornerRadius = 10
-            cell.arrow.backgroundColor = scheduleTypeCellColor
+//            cell.arrow.layer.cornerRadius = 10
+//            cell.arrow.backgroundColor = scheduleTypeCellColor
+            
+            cell.arrow.image = UIImage(named: arrowImageName)
+            
             
             cell.trafficInf.text = generateRouteTitleString(cellContent: cellContent)
             

@@ -438,7 +438,7 @@
 				TargetAttributes = {
 					A76BA9D81ECC67ED00443947 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 5S8ZM6F4LE;
+						DevelopmentTeam = HFASZRDDQG;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -779,7 +779,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = YES;
 				CODE_SIGN_ENTITLEMENTS = TBMS/TBMS.entitlements;
-				DEVELOPMENT_TEAM = 5S8ZM6F4LE;
+				DEVELOPMENT_TEAM = HFASZRDDQG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/GoogleMaps/Base/Frameworks",
@@ -789,7 +789,7 @@
 				);
 				INFOPLIST_FILE = TBMS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rydertsai.TBMS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chiao.TBMS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "TBMS/TBMS-Bridging-Header.h";
@@ -806,7 +806,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = YES;
 				CODE_SIGN_ENTITLEMENTS = TBMS/TBMS.entitlements;
-				DEVELOPMENT_TEAM = 5S8ZM6F4LE;
+				DEVELOPMENT_TEAM = HFASZRDDQG;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/GoogleMaps/Base/Frameworks",
@@ -816,7 +816,7 @@
 				);
 				INFOPLIST_FILE = TBMS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.rydertsai.TBMS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chiao.TBMS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "TBMS/TBMS-Bridging-Header.h";

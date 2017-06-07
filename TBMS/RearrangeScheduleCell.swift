@@ -57,6 +57,7 @@ class ScheduleAndTrafficCellContent: CellContent {
     var attraction: Attraction!
     var trafficInformation: LegsData!
     var placeID: String!
+    var address: String!
     
     //    private let strTransitTravelMode: TravelMod = .transit
     //    private let strWalkingTravelMode: TravelMod = .walking
@@ -76,6 +77,7 @@ class ScheduleAndTrafficCellContent: CellContent {
         self.type = CustomerCellType.scheduleAndTrafficCellType
         self.setTrafficValue(legsData: trafficInformation)
         self.placeID = attraction.placeID
+        self.address = attraction.address
         
         guard selectedTravelMode != .transit else { return }
         self.travelMode = selectedTravelMode
