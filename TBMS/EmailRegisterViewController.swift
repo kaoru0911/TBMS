@@ -81,8 +81,6 @@ class EmailRegisterViewController: UIViewController {
     
     @IBAction func emailRegisterBtn(_ sender: Any) {
         
-
-        
         
         if ((inputAccount.text?.characters.count)! < 6 || (inputAccount.text?.characters.count)! > 15 ) {
                 showAlertMessage(title: "註冊失敗", message: "帳號需為6-15個英文字母與數字")
@@ -103,14 +101,44 @@ class EmailRegisterViewController: UIViewController {
         sharedData.memberData?.email = inputEmail.text
                 
         serverCommunicate.createAccount()
-        
-//        let alert = UIAlertController(title: "會員註冊", message:"註冊成功", preferredStyle: .alert)
-//        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
-//        alert.addAction(ok)
-//        self.present(alert,animated: true,completion: nil)
-
-        
-//                return
+            
+            showAlertMessage(title: "會員註冊", message: "註冊成功")
+            
+            // =============================================
+            // 創造一個新個TabBarController與NavigationController，再放回appDelegate內取代原本的root
+            // =============================================
+            
+            // TabBar
+            let rootTabBarController = UITabBarController()
+            
+            // 注意！創造viewController的方式跟創造view的方式不同
+            //            let rightTab = MemberViewController()
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let rightTab = storyboard.instantiateViewController(withIdentifier: "MemberViewController") as! MemberViewController
+            rightTab.title = "會員專區"
+            
+            let rightTabBarItem = UITabBarItem(title: "會員專區", image: UIImage(named: "circle-user-7.png"), tag: 0)
+            rightTab.tabBarItem = rightTabBarItem
+            
+            // Navigation
+            let rightNavigation = UINavigationController(rootViewController: rightTab)
+            
+            //            let leftTab = MenuTableViewController()
+            let leftTab = storyboard.instantiateViewController(withIdentifier: "MenuTableViewController") as! MenuTableViewController
+            leftTab.title = "TravelByMyself"
+            
+            let leftTabBarItem = UITabBarItem(title: "旅遊選單", image: UIImage(named: "airplane-symbol-7.png"), tag: 0)
+            leftTab.tabBarItem = leftTabBarItem
+            
+            // Navigation
+            let leftNavigation = UINavigationController(rootViewController: leftTab)
+            
+            rootTabBarController.viewControllers = [leftNavigation, rightNavigation]
+            
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            
+            appDelegate.window?.rootViewController = rootTabBarController
+                return
         
     }
     
