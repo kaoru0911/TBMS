@@ -22,6 +22,7 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
     var travelDays: Int!
     var travelCountry: String!
     var attractionsAndRoute: [tripSpotData]!
+    let generalTools = GeneralToolModels()
     //    var spots: [tripSpotData]!
     var sharedData = DataManager.shareDataManager
     
@@ -40,6 +41,8 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         // dismiss keyboard
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
+        
+        tripCoverImage.image = generalTools.imageGeneratore(selectedCountry: sharedData.chooseCountry)
     }
     
     override func didReceiveMemoryWarning() {
