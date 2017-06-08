@@ -132,6 +132,9 @@ class ScrollVC: UIViewController, UIScrollViewDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationItem.title = "第\(1)天"
+        self.navigationController?.title = "第\(1)天"
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -161,6 +164,9 @@ class ScrollVC: UIViewController, UIScrollViewDelegate{
         }
         
         var page = Int(scrollView.contentOffset.x/scrollView.frame.width)
+        
+        self.navigationItem.title = "第\(page + 1)天"
+        self.navigationController?.title = "第\(page + 1)天"
         
         if page <= 0 {
             page = 0

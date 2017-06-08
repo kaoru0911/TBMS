@@ -42,8 +42,6 @@ class ScheduleTableViewController: UITableViewController {
         checkSpotPosition(spotArray: &spotData)
         
         NotificationCenter.default.addObserver(self, selector: #selector(uploadPocketSpotNotificationDidGet), name: NSNotification.Name(rawValue: "uploadPocketSpotNotifier"), object: nil)
-        
-        self.navigationItem.title = "第\(nDaySchedule)天"
     }
     
     
@@ -75,9 +73,12 @@ class ScheduleTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "scheduleCellID", for: indexPath) as! ScheduleTableViewCell
+        
         cell.navigateBtn.tag = indexPath.row
         cell.separatorInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        cell.cellImage.isHidden = true
         
         cell.spotItemLabel.text = spotData[indexPath.row].spotName  //spotArray[indexPath.row]
         
@@ -130,6 +131,7 @@ class ScheduleTableViewController: UITableViewController {
             
         } else{
             // 放入箭頭圖片
+            cell.cellImage.isHidden = false
             cell.cellImage.image = UIImage(named: "downArrow2")
         }
         
