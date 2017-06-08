@@ -86,6 +86,7 @@ class DataManager: NSObject {
     
     func dataReset() {
         memberData = MemberData()
+        memberData?.account = "guest"
         tempTripData = tripData()
         pocketTrips = []
         sharedTrips = []
