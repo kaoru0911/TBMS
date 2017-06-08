@@ -182,8 +182,11 @@
                                     <outlet property="delegate" destination="EhH-8Q-d51" id="mFX-gS-bsP"/>
                                 </connections>
                             </tableView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="xVd-rj-Txe">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xVd-rj-Txe">
                                 <rect key="frame" x="0.0" y="319" width="375" height="30"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="aqM-OL-IJ1"/>
                                 </constraints>
@@ -311,27 +314,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="請輸入旅遊國家的地點, 以日本旅遊為例：                                                 成田機場, 羽田機場, ＸＸ飯店, ＸＸ車站" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hxt-9m-DaA">
-                                <rect key="frame" x="46" y="124" width="283" height="119"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你要從哪裏出發？" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndp-oQ-P5L">
-                                <rect key="frame" x="46" y="122" width="139" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rPU-eo-ZcB">
+                                <rect key="frame" x="46" y="115" width="216" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="你要從哪裏出發？" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ndp-oQ-P5L">
+                                        <rect key="frame" x="0.0" y="0.0" width="139" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j57-iU-Tjy">
+                                        <rect key="frame" x="139" y="0.0" width="77" height="30"/>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <size key="titleShadowOffset" width="1" height="1"/>
+                                        <state key="normal" title="選擇出發地"/>
+                                        <connections>
+                                            <action selector="chooseStartingBtnPressed:" destination="I8i-xe-uxU" eventType="touchUpInside" id="Rkb-ep-Dwl"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tKf-sc-OLb">
-                                <rect key="frame" x="46" y="158" width="42" height="21"/>
+                                <rect key="frame" x="46" y="155" width="42" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="選擇交通方式 :" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gg0-C7-l5e">
-                                <rect key="frame" x="46" y="323" width="114" height="21"/>
+                                <rect key="frame" x="46" y="323.5" width="113.5" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -357,35 +367,32 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j57-iU-Tjy">
-                                <rect key="frame" x="183" y="117" width="77" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <size key="titleShadowOffset" width="1" height="1"/>
-                                <state key="normal" title="選擇出發地"/>
-                                <connections>
-                                    <action selector="chooseStartingBtnPressed:" destination="I8i-xe-uxU" eventType="touchUpInside" id="Rkb-ep-Dwl"/>
-                                </connections>
-                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="請輸入旅遊國家的地點, 以日本旅遊為例：                                                 成田機場, 羽田機場, ＸＸ飯店, ＸＸ車站" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="xIL-Yh-nK0">
+                                <rect key="frame" x="46" y="185.5" width="283" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.52682703792176777" green="0.53204314720812185" blue="0.53204314720812185" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ess-N9-sld" firstAttribute="centerX" secondItem="hxt-9m-DaA" secondAttribute="centerX" id="5Df-a1-cvZ"/>
-                            <constraint firstItem="tKf-sc-OLb" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="6bG-IM-Ac4"/>
+                            <constraint firstItem="ess-N9-sld" firstAttribute="leading" secondItem="g5a-IB-ptC" secondAttribute="leadingMargin" constant="30" id="37P-HA-vHu"/>
                             <constraint firstItem="a8W-bo-U0v" firstAttribute="top" secondItem="gg0-C7-l5e" secondAttribute="bottom" constant="15" id="6vF-rj-2cg"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="hxt-9m-DaA" secondAttribute="trailing" constant="30" id="Bi8-z6-9rd"/>
-                            <constraint firstItem="ess-N9-sld" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="CiI-lf-wM9"/>
-                            <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="tKf-sc-OLb" secondAttribute="bottom" constant="144" id="IKw-b1-YMW"/>
+                            <constraint firstItem="ess-N9-sld" firstAttribute="trailing" secondItem="xIL-Yh-nK0" secondAttribute="trailing" id="7Sk-9G-zpA"/>
+                            <constraint firstItem="ess-N9-sld" firstAttribute="width" secondItem="xIL-Yh-nK0" secondAttribute="width" id="9ha-h9-uHl"/>
+                            <constraint firstItem="xIL-Yh-nK0" firstAttribute="top" secondItem="tKf-sc-OLb" secondAttribute="bottom" constant="10" id="AHc-1h-uD1"/>
+                            <constraint firstItem="gg0-C7-l5e" firstAttribute="leading" secondItem="xIL-Yh-nK0" secondAttribute="leading" id="Afz-Rh-ZvA"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="top" secondItem="rPU-eo-ZcB" secondAttribute="bottom" constant="10" id="BDK-mI-tmc"/>
+                            <constraint firstItem="ess-N9-sld" firstAttribute="height" secondItem="xIL-Yh-nK0" secondAttribute="height" id="CPy-9i-4fi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xIL-Yh-nK0" secondAttribute="trailing" constant="30" id="Cpl-dr-0xg"/>
+                            <constraint firstItem="a8W-bo-U0v" firstAttribute="leading" secondItem="g5a-IB-ptC" secondAttribute="leadingMargin" constant="30" id="HQq-Wk-zzH"/>
                             <constraint firstItem="ess-N9-sld" firstAttribute="top" secondItem="a8W-bo-U0v" secondAttribute="bottom" constant="15" id="Iy5-id-dfm"/>
+                            <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="xIL-Yh-nK0" secondAttribute="bottom" constant="10" id="J07-yb-rZA"/>
                             <constraint firstItem="gg0-C7-l5e" firstAttribute="centerY" secondItem="g5a-IB-ptC" secondAttribute="centerY" id="NNo-Fk-BZs"/>
-                            <constraint firstItem="ess-N9-sld" firstAttribute="trailing" secondItem="hxt-9m-DaA" secondAttribute="trailing" id="ZGu-PC-RrQ"/>
-                            <constraint firstItem="hxt-9m-DaA" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="cqy-Jk-XzP"/>
-                            <constraint firstItem="gg0-C7-l5e" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="gdm-6e-q5o"/>
-                            <constraint firstItem="tKf-sc-OLb" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" constant="15" id="jYU-ha-BS5"/>
-                            <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="hxt-9m-DaA" secondAttribute="bottom" constant="80" id="lHc-gc-5tg"/>
-                            <constraint firstItem="hxt-9m-DaA" firstAttribute="leading" secondItem="g5a-IB-ptC" secondAttribute="leadingMargin" constant="30" id="nLA-m7-daA"/>
-                            <constraint firstItem="a8W-bo-U0v" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="qYA-Hv-ID5"/>
-                            <constraint firstItem="hxt-9m-DaA" firstAttribute="top" secondItem="HJu-WO-Wk1" secondAttribute="bottom" constant="60" id="uM7-Y1-d12"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="leading" secondItem="rPU-eo-ZcB" secondAttribute="leading" id="Pe5-Jc-0xU"/>
+                            <constraint firstItem="xIL-Yh-nK0" firstAttribute="leading" secondItem="g5a-IB-ptC" secondAttribute="leadingMargin" constant="30" id="nVp-ct-hzY"/>
+                            <constraint firstItem="xIL-Yh-nK0" firstAttribute="leading" secondItem="rPU-eo-ZcB" secondAttribute="leading" id="png-J0-yJm"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="起點設定" id="wld-mh-Prh">
@@ -741,7 +748,7 @@
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1429,7 +1436,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
