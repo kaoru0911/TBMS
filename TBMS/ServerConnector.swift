@@ -20,7 +20,7 @@ class ServerConnector: NSObject {
     // ngrok安裝方法:
     // 網頁下載mgrok
     // 在terminal輸入ngrok的路徑位置後加上http 80 即產生網址
-    let baseURLStr: String = "https://becc12da.ngrok.io/TravelByMyself/"
+    let baseURLStr: String = "https://e2a8afc8.ngrok.io/TravelByMyself/"
     let memberURLstr: String = "member.php"
     let dataDownloadURLstr: String = "dataDownload.php"
     let dataUploadURLstr: String = "dataUpload.php"
@@ -594,11 +594,13 @@ class ServerConnector: NSObject {
                     self.sharedData.tempTripData?.spots.append(getSpot)
                 }
                 
+                NotificationCenter.default.post(name: self.getTripSpotNotifier, object: nil)
+                
             case .failure(_):
                 print("Server feedback fail")
             }
             
-            NotificationCenter.default.post(name: self.getTripSpotNotifier, object: nil)
+//            NotificationCenter.default.post(name: self.getTripSpotNotifier, object: nil)
         }
         
         
@@ -746,7 +748,7 @@ class ServerConnector: NSObject {
      */
     private func uploadTripCoverImgToServer(tripData:tripData, Req:String) {
         
-        let imageData = UIImageJPEGRepresentation(tripData.coverImg!, 0.5)!
+        let imageData = UIImageJPEGRepresentation(tripData.coverImg!, 0.3)!
             
         Alamofire.upload(
             multipartFormData: { multipartFormData in
