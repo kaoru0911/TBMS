@@ -13,9 +13,9 @@ class MenuTableViewController: UITableViewController {
     
     @IBOutlet weak var menuTableView: UITableView!
     
-//    var container: UIView = UIView()
-//    var loadingView: UIView = UIView()
-//    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    //    var container: UIView = UIView()
+    //    var loadingView: UIView = UIView()
+    //    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
     
     
     var choosen = ""
@@ -58,16 +58,16 @@ class MenuTableViewController: UITableViewController {
         
         cellData.append(("庫存景點" , UIImage(named: "Swizerland8")!))
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketTripNotifier"), object: nil)
-//        
-//        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getSharedTripNotifier"), object: nil)
+        //        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketTripNotifier"), object: nil)
+        //
+        //        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getSharedTripNotifier"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "downloadCoverImgNotifier"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketSpotNotifier"), object: nil)
         
-//        userDefault.set("FBTest", forKey: "FBSDKAccessToken")
-//        userDefault.set(nil, forKey: "FBSDKAccessToken")
+        //        userDefault.set("FBTest", forKey: "FBSDKAccessToken")
+        //        userDefault.set(nil, forKey: "FBSDKAccessToken")
         
         if userDefault.string(forKey: "FBSDKAccessToken") != nil {
             
@@ -144,58 +144,60 @@ class MenuTableViewController: UITableViewController {
         choosen = cellData[indexPath.row].0
         
         switch choosen {
-            case "開始規劃":
-                    sharedData.pocketSpot = [tripSpotData]()
-                    serverCommunicate.getPocketSpotFromServer()
-                    customActivityIndicatory(self.view, startAnimate: true)
+        case "開始規劃":
+            sharedData.pocketSpot = [tripSpotData]()
+            serverCommunicate.getPocketSpotFromServer()
+            customActivityIndicatory(self.view, startAnimate: true)
             
-            case "推薦行程":
-                if sharedData.sharedTrips?.count == 0 {
-                    serverCommunicate.getSharedTripFromServer()
-                    customActivityIndicatory(self.view, startAnimate: true)
-                } else{
-                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
-                }
+        case "推薦行程":
+            //                if sharedData.sharedTrips?.count == 0 {
+            
+            sharedData.sharedTrips = [tripData]()
+            serverCommunicate.getSharedTripFromServer()
+            customActivityIndicatory(self.view, startAnimate: true)
+            //                } else{
+            //                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+            //                }
+            
+        case "庫存行程":
+            if !sharedData.isLogin {
+                showAlertMessage(title: "", message: "請先登入會員")
+                return
+            }
+            
+            //                if sharedData.pocketTrips?.count == 0 {
+            sharedData.pocketTrips = [tripData]()
+            serverCommunicate.getPocketTripFromServer()
+            customActivityIndicatory(self.view, startAnimate: true)
+            
+            //                } else{
+            //                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+            //                }
+            
+        case "庫存景點":
+            if !sharedData.isLogin {
+                showAlertMessage(title: "", message: "請先登入會員")
+                return
+            }
+            
+            if sharedData.pocketSpot?.count == 0 {
                 
-            case "庫存行程":
-                if !sharedData.isLogin {
-                    showAlertMessage(title: "", message: "請先登入會員")
-                    return
-                }
+                serverCommunicate.getPocketSpotFromServer()
                 
-                if sharedData.pocketTrips?.count == 0 {
-                    serverCommunicate.getPocketTripFromServer()
-                    
-                    customActivityIndicatory(self.view, startAnimate: true)
-                    
-                } else{
-                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
-                }
-                
-            case "庫存景點":
-                if !sharedData.isLogin {
-                    showAlertMessage(title: "", message: "請先登入會員")
-                    return
-                }
-                
-                if sharedData.pocketSpot?.count == 0 {
-                    
-                    serverCommunicate.getPocketSpotFromServer()
-                    
-                    // show loading view
-                    customActivityIndicatory(self.view, startAnimate: true)
-                } else{
-                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
-                }
-                
-            default:
-                break
+                // show loading view
+                customActivityIndicatory(self.view, startAnimate: true)
+            } else{
+                performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+            }
+            
+        default:
+            break
         }
     }
     
-//    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-//        
-//    }
+    //    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+    //
+    //    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let nextPage = segue.destination as! CountrySelectTableViewController
@@ -216,7 +218,7 @@ class MenuTableViewController: UITableViewController {
     func NotificationDidGet() {
         
         // stop loading view
-//        hideActivityIndicator(uiView: self.view)
+        //        hideActivityIndicator(uiView: self.view)
         customActivityIndicatory(self.view, startAnimate: false)
         
         performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
@@ -237,10 +239,10 @@ class MenuTableViewController: UITableViewController {
         // 旋轉圈圈放在這個view上
         let viewBackgroundLoading: UIView = UIView(frame: CGRect(x:0,y: 0,width: 80,height: 80))
         viewBackgroundLoading.center = viewContainer.center
-//        viewBackgroundLoading.backgroundColor = UIColor(red:0x7F, green:0x7F, blue:0x7F, alpha: 1)
+        //        viewBackgroundLoading.backgroundColor = UIColor(red:0x7F, green:0x7F, blue:0x7F, alpha: 1)
         viewBackgroundLoading.backgroundColor = UIColor(red:0, green:0, blue:0, alpha: 1)
         //================================
-//        viewBackgroundLoading.alpha = 0.5
+        //        viewBackgroundLoading.alpha = 0.5
         //================================
         viewBackgroundLoading.clipsToBounds = true
         viewBackgroundLoading.layer.cornerRadius = 15
@@ -264,8 +266,8 @@ class MenuTableViewController: UITableViewController {
                 }
             }
         }
-//        return activityIndicatorView
-    }    
+        //        return activityIndicatorView
+    }
     
     /*
      // Override to support conditional editing of the table view.
@@ -317,12 +319,12 @@ class MenuTableViewController: UITableViewController {
 extension MenuTableViewController {
     
     @IBAction func functionName (_segue: UIStoryboardSegue) {}
-        
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.tabBarController?.tabBar.isHidden = false
     }
-
+    
     override func viewWillLayoutSubviews() {
         let color = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
         self.tabBarController?.tabBar.barTintColor = color

@@ -103,19 +103,31 @@ class SetStartPointViewController: UIViewController {
         
         var origin = attractionsListToNextPage.first!
         var attractionsNumber = attractionsListToNextPage.count
+        routesDetails = [LegsData]()
+        print("attrList = \(attractionsListToNextPage.count)")
+        
+        for _ in 0...attractionsListToNextPage.count-1 {
+            let blankLegsData = LegsData()
+            routesDetails.append(blankLegsData)
+            print("routeDetail = \(routesDetails.count)")
+        }
         
         for i in 1...attractionsListToNextPage.count-1 {
             let destination = attractionsListToNextPage[i]
-            routesDetails = [LegsData]()
             
             let routeGenerator = GoogleDirectionCaller()
             routeGenerator.parametersSetting.travelMod = expectedTravelMode
+            
             routeGenerator.getRouteInformation(origin: origin.placeID,
                                                destination: destination.placeID,
                                                completion: { (route) in
-                                                self.routesDetails.append(route)
+                                                
+                                                print("i=\(i-1)")
+                                                print("\(self.routesDetails[i-1].duration ?? "")")
+                                                self.routesDetails[i-1] = route
+                                                print("\(i-1).\(self.routesDetails[i].duration ?? "")")
                                                 attractionsNumber -= 1
-                                                print(attractionsNumber)
+                                                print("attractionsNumber=\(attractionsNumber)")
                                                 if attractionsNumber == 1 {
                                                     completion()
                                                 }

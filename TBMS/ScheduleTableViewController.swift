@@ -42,7 +42,10 @@ class ScheduleTableViewController: UITableViewController {
         checkSpotPosition(spotArray: &spotData)
         
         NotificationCenter.default.addObserver(self, selector: #selector(uploadPocketSpotNotificationDidGet), name: NSNotification.Name(rawValue: "uploadPocketSpotNotifier"), object: nil)
+        
+        self.navigationItem.title = "第\(nDaySchedule)天"
     }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         tableView.rowHeight = UITableViewAutomaticDimension
