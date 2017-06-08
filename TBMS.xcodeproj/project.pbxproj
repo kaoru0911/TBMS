@@ -191,6 +191,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		22ADDAAE1EE96D4300EB92F6 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
 		22F43F3E1ECD660000791D55 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -365,6 +372,7 @@
 				A76BA9FF1ECC697000443947 /* ViewPointDetailViewController.swift */,
 				A76BAA001ECC697000443947 /* ViewPointListCell.swift */,
 				A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */,
+				22ADDAAE1EE96D4300EB92F6 /* New Group */,
 				A76BA9E31ECC67ED00443947 /* Assets.xcassets */,
 				CD90C3AF1EE7CA30006EF239 /* Launch.storyboard */,
 				A742B1451EDEBA4E00C7EA36 /* GoogleService-Info.plist */,
