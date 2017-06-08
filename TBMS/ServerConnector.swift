@@ -16,11 +16,11 @@ class ServerConnector: NSObject {
     // URL
     
     // 本機server
-    let baseURLStr: String = "http://localhost/TravelByMyself/"
+    //let baseURLStr: String = "http://localhost/TravelByMyself/"
     // ngrok安裝方法:
     // 網頁下載mgrok
     // 在terminal輸入ngrok的路徑位置後加上http 80 即產生網址
-    //let baseURLStr: String = "https://becc12da.ngrok.io/TravelByMyself/"
+    let baseURLStr: String = "https://becc12da.ngrok.io/TravelByMyself/"
     let memberURLstr: String = "member.php"
     let dataDownloadURLstr: String = "dataDownload.php"
     let dataUploadURLstr: String = "dataUpload.php"
