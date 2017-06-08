@@ -55,6 +55,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
             inputAccountName.isHidden = true
             accountLabel.isHidden = true
             pswLabel.isHidden = true
+            newMemberRegisterBtn.isHidden = true
         }
         
         // dismiss keyboard
@@ -249,6 +250,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         inputAccountName.isHidden = true
         accountLabel.isHidden = true
         pswLabel.isHidden = true
+        newMemberRegisterBtn.isHidden = true
     }
     
     func logoutNotificationDidGet() {
@@ -257,6 +259,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         inputAccountName.isHidden = false
         accountLabel.isHidden = false
         pswLabel.isHidden = false
+        newMemberRegisterBtn.isHidden = false
     }
     
     func showAlertMessage(title: String, message: String) {

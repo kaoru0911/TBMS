@@ -130,7 +130,7 @@ class MenuTableViewController: UITableViewController {
         
         //cell.menuCellName.textColor = UIColor.white
         
-        cell.menuCellName.shadowOffset = CGSize(width: 2, height: 2)
+        cell.menuCellName.shadowOffset = CGSize(width: 3, height: 3)
         
         cell.menuCellName.shadowColor = UIColor.white
         
@@ -143,13 +143,10 @@ class MenuTableViewController: UITableViewController {
         
         switch choosen {
             case "開始規劃":
-                if sharedData.pocketSpot?.count == 0 {
+                    sharedData.pocketSpot = [tripSpotData]()
                     serverCommunicate.getPocketSpotFromServer()
                     customActivityIndicatory(self.view, startAnimate: true)
-                } else{
-                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
-                }
-                
+            
             case "推薦行程":
                 if sharedData.sharedTrips?.count == 0 {
                     serverCommunicate.getSharedTripFromServer()

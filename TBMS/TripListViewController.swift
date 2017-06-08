@@ -88,7 +88,9 @@ class TripListViewController: UIViewController , UITableViewDataSource , UITable
         
         
         cell.tripTitle.shadowColor = UIColor.white
+        cell.tripTitle.shadowOffset = CGSize(width: 2, height: 2)
         cell.tripSubTitle.shadowColor = UIColor.white
+        cell.tripSubTitle.shadowOffset = CGSize(width: 2, height: 2)
         
         return cell
     }
