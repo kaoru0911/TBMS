@@ -8,6 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		22A6D96A1ED81AA600934AA6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22A6D9691ED81AA600934AA6 /* CoreLocation.framework */; };
+		22ADDAC11EE9794200EB92F6 /* 巴西img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDAAF1EE9794200EB92F6 /* 巴西img.jpg */; };
+		22ADDAC21EE9794200EB92F6 /* 委內瑞拉img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDAB01EE9794200EB92F6 /* 委內瑞拉img.jpg */; };
+		22ADDAC31EE9794200EB92F6 /* 加拿大img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDAB11EE9794200EB92F6 /* 加拿大img.jpg */; };
+		22ADDAC41EE9794200EB92F6 /* 芬蘭img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDAB21EE9794200EB92F6 /* 芬蘭img.jpg */; };
+		22ADDAC51EE9794200EB92F6 /* 瑞士img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDAB31EE9794200EB92F6 /* 瑞士img.jpg */; };
+		22ADDAC61EE9794200EB92F6 /* 西班牙img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDAB41EE9794200EB92F6 /* 西班牙img.jpg */; };
+		22ADDAC71EE9794200EB92F6 /* 義大利img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDAB51EE9794200EB92F6 /* 義大利img.jpg */; };
+		22ADDAC81EE9794200EB92F6 /* 德國img.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDAB61EE9794200EB92F6 /* 德國img.jpeg */; };
+		22ADDAC91EE9794200EB92F6 /* 法國img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDAB71EE9794200EB92F6 /* 法國img.jpg */; };
+		22ADDACA1EE9794200EB92F6 /* 英國img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDAB81EE9794200EB92F6 /* 英國img.jpg */; };
+		22ADDACB1EE9794200EB92F6 /* 菲律賓img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDAB91EE9794200EB92F6 /* 菲律賓img.jpg */; };
+		22ADDACC1EE9794200EB92F6 /* 泰國img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDABA1EE9794200EB92F6 /* 泰國img.jpg */; };
+		22ADDACD1EE9794200EB92F6 /* 新加坡img.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDABB1EE9794200EB92F6 /* 新加坡img.JPG */; };
+		22ADDACE1EE9794200EB92F6 /* 香港img.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDABC1EE9794200EB92F6 /* 香港img.JPG */; };
+		22ADDACF1EE9794200EB92F6 /* 中國img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDABD1EE9794200EB92F6 /* 中國img.jpg */; };
+		22ADDAD01EE9794200EB92F6 /* 日本img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDABE1EE9794200EB92F6 /* 日本img.jpg */; };
+		22ADDAD11EE9794200EB92F6 /* 臺灣img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDABF1EE9794200EB92F6 /* 臺灣img.jpg */; };
+		22ADDAD21EE9794200EB92F6 /* 美國img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDAC01EE9794200EB92F6 /* 美國img.jpg */; };
 		22AF44E01ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AF44DF1ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift */; };
 		22BBB6D21EE0551000F3D0FD /* UploadTravelScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BBB6D11EE0551000F3D0FD /* UploadTravelScheduleViewController.swift */; };
 		22CF17051ECDD2EA00B3F20E /* FinalScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CF17041ECDD2EA00B3F20E /* FinalScheduleVC.swift */; };
@@ -91,6 +109,24 @@
 
 /* Begin PBXFileReference section */
 		22A6D9691ED81AA600934AA6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		22ADDAAF1EE9794200EB92F6 /* 巴西img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "巴西img.jpg"; sourceTree = "<group>"; };
+		22ADDAB01EE9794200EB92F6 /* 委內瑞拉img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "委內瑞拉img.jpg"; sourceTree = "<group>"; };
+		22ADDAB11EE9794200EB92F6 /* 加拿大img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "加拿大img.jpg"; sourceTree = "<group>"; };
+		22ADDAB21EE9794200EB92F6 /* 芬蘭img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "芬蘭img.jpg"; sourceTree = "<group>"; };
+		22ADDAB31EE9794200EB92F6 /* 瑞士img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "瑞士img.jpg"; sourceTree = "<group>"; };
+		22ADDAB41EE9794200EB92F6 /* 西班牙img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "西班牙img.jpg"; sourceTree = "<group>"; };
+		22ADDAB51EE9794200EB92F6 /* 義大利img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "義大利img.jpg"; sourceTree = "<group>"; };
+		22ADDAB61EE9794200EB92F6 /* 德國img.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "德國img.jpeg"; sourceTree = "<group>"; };
+		22ADDAB71EE9794200EB92F6 /* 法國img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "法國img.jpg"; sourceTree = "<group>"; };
+		22ADDAB81EE9794200EB92F6 /* 英國img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "英國img.jpg"; sourceTree = "<group>"; };
+		22ADDAB91EE9794200EB92F6 /* 菲律賓img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "菲律賓img.jpg"; sourceTree = "<group>"; };
+		22ADDABA1EE9794200EB92F6 /* 泰國img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "泰國img.jpg"; sourceTree = "<group>"; };
+		22ADDABB1EE9794200EB92F6 /* 新加坡img.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "新加坡img.JPG"; sourceTree = "<group>"; };
+		22ADDABC1EE9794200EB92F6 /* 香港img.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "香港img.JPG"; sourceTree = "<group>"; };
+		22ADDABD1EE9794200EB92F6 /* 中國img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "中國img.jpg"; sourceTree = "<group>"; };
+		22ADDABE1EE9794200EB92F6 /* 日本img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "日本img.jpg"; sourceTree = "<group>"; };
+		22ADDABF1EE9794200EB92F6 /* 臺灣img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "臺灣img.jpg"; sourceTree = "<group>"; };
+		22ADDAC01EE9794200EB92F6 /* 美國img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "美國img.jpg"; sourceTree = "<group>"; };
 		22AF44DF1ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponceAndJsonAnalyst.swift; sourceTree = "<group>"; };
 		22BBB6D11EE0551000F3D0FD /* UploadTravelScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadTravelScheduleViewController.swift; sourceTree = "<group>"; };
 		22CF17041ECDD2EA00B3F20E /* FinalScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinalScheduleVC.swift; sourceTree = "<group>"; };
@@ -191,11 +227,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		22ADDAAE1EE96D4300EB92F6 /* New Group */ = {
+		22ADDAAE1EE96D4300EB92F6 /* figure */ = {
 			isa = PBXGroup;
 			children = (
+				22ADDAAF1EE9794200EB92F6 /* 巴西img.jpg */,
+				22ADDAB01EE9794200EB92F6 /* 委內瑞拉img.jpg */,
+				22ADDAB11EE9794200EB92F6 /* 加拿大img.jpg */,
+				22ADDAB21EE9794200EB92F6 /* 芬蘭img.jpg */,
+				22ADDAB31EE9794200EB92F6 /* 瑞士img.jpg */,
+				22ADDAB41EE9794200EB92F6 /* 西班牙img.jpg */,
+				22ADDAB51EE9794200EB92F6 /* 義大利img.jpg */,
+				22ADDAB61EE9794200EB92F6 /* 德國img.jpeg */,
+				22ADDAB71EE9794200EB92F6 /* 法國img.jpg */,
+				22ADDAB81EE9794200EB92F6 /* 英國img.jpg */,
+				22ADDAB91EE9794200EB92F6 /* 菲律賓img.jpg */,
+				22ADDABA1EE9794200EB92F6 /* 泰國img.jpg */,
+				22ADDABB1EE9794200EB92F6 /* 新加坡img.JPG */,
+				22ADDABC1EE9794200EB92F6 /* 香港img.JPG */,
+				22ADDABD1EE9794200EB92F6 /* 中國img.jpg */,
+				22ADDABE1EE9794200EB92F6 /* 日本img.jpg */,
+				22ADDABF1EE9794200EB92F6 /* 臺灣img.jpg */,
+				22ADDAC01EE9794200EB92F6 /* 美國img.jpg */,
 			);
-			name = "New Group";
+			name = figure;
 			sourceTree = "<group>";
 		};
 		22F43F3E1ECD660000791D55 /* Model */ = {
@@ -372,7 +426,7 @@
 				A76BA9FF1ECC697000443947 /* ViewPointDetailViewController.swift */,
 				A76BAA001ECC697000443947 /* ViewPointListCell.swift */,
 				A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */,
-				22ADDAAE1EE96D4300EB92F6 /* New Group */,
+				22ADDAAE1EE96D4300EB92F6 /* figure */,
 				A76BA9E31ECC67ED00443947 /* Assets.xcassets */,
 				CD90C3AF1EE7CA30006EF239 /* Launch.storyboard */,
 				A742B1451EDEBA4E00C7EA36 /* GoogleService-Info.plist */,
@@ -521,6 +575,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22ADDAC91EE9794200EB92F6 /* 法國img.jpg in Resources */,
+				22ADDAC71EE9794200EB92F6 /* 義大利img.jpg in Resources */,
 				CDEACC6D1EE03ABE00280CEA /* 韓國.png in Resources */,
 				CDEACC5E1EE03ABE00280CEA /* 台灣.png in Resources */,
 				CDEACC5D1EE03ABE00280CEA /* 加拿大.png in Resources */,
@@ -528,37 +584,53 @@
 				CDEACC5B1EE03ABE00280CEA /* 巴西.png in Resources */,
 				CDEACC671EE03ABE00280CEA /* 菲律賓.png in Resources */,
 				CDEACC651EE03ABE00280CEA /* 泰國.png in Resources */,
+				22ADDAD11EE9794200EB92F6 /* 臺灣img.jpg in Resources */,
 				CDEACC611EE03ABE00280CEA /* 阿根廷.png in Resources */,
+				22ADDAD01EE9794200EB92F6 /* 日本img.jpg in Resources */,
 				CD90C3B01EE7CA30006EF239 /* Launch.storyboard in Resources */,
 				CDEACC6B1EE03ABE00280CEA /* 德國.png in Resources */,
 				CDEACC731EE03BE400280CEA /* 西班牙.png in Resources */,
+				22ADDACE1EE9794200EB92F6 /* 香港img.JPG in Resources */,
 				CDEACC5A1EE03ABE00280CEA /* 中國.png in Resources */,
+				22ADDAC41EE9794200EB92F6 /* 芬蘭img.jpg in Resources */,
 				A76BA9E41ECC67ED00443947 /* Assets.xcassets in Resources */,
 				A76BAA041ECC697000443947 /* arrowOpen.png in Resources */,
+				22ADDAC61EE9794200EB92F6 /* 西班牙img.jpg in Resources */,
 				A76BAA0E1ECC697000443947 /* MenuCell.xib in Resources */,
 				CDEACC621EE03ABE00280CEA /* 美國.png in Resources */,
+				22ADDACF1EE9794200EB92F6 /* 中國img.jpg in Resources */,
+				22ADDAC81EE9794200EB92F6 /* 德國img.jpeg in Resources */,
 				A74BDDE91ED6FE1C00987446 /* circle-user-7.png in Resources */,
+				22ADDAC21EE9794200EB92F6 /* 委內瑞拉img.jpg in Resources */,
+				22ADDAC31EE9794200EB92F6 /* 加拿大img.jpg in Resources */,
 				CDEACC5C1EE03ABE00280CEA /* 日本.png in Resources */,
 				CDEACC641EE03ABE00280CEA /* 香港.png in Resources */,
 				A742B14B1EDEC55000C7EA36 /* CertificateSigningRequest.certSigningRequest in Resources */,
+				22ADDAC51EE9794200EB92F6 /* 瑞士img.jpg in Resources */,
 				A74BDDE11ED6F10B00987446 /* addSpot.png in Resources */,
 				CDEACC631EE03ABE00280CEA /* 英國.png in Resources */,
 				CDEACC6A1EE03ABE00280CEA /* 義大利.png in Resources */,
 				CDEACC5F1EE03ABE00280CEA /* 法國.png in Resources */,
 				A76BAA0A1ECC697000443947 /* CountryInfo.plist in Resources */,
+				22ADDACA1EE9794200EB92F6 /* 英國img.jpg in Resources */,
 				CDEACC681EE03ABE00280CEA /* 新加坡.png in Resources */,
 				A74BDDE71ED6FE0B00987446 /* airplane-symbol-7.png in Resources */,
 				22FAC4661ED5812200C402D8 /* testStoryboard.storyboard in Resources */,
 				CDEACC6C1EE03ABE00280CEA /* 澳大利亞.png in Resources */,
+				22ADDACD1EE9794200EB92F6 /* 新加坡img.JPG in Resources */,
 				CDEACC661EE03ABE00280CEA /* 紐西蘭.png in Resources */,
 				A76BAA031ECC697000443947 /* arrowClose.png in Resources */,
+				22ADDAC11EE9794200EB92F6 /* 巴西img.jpg in Resources */,
 				A76BAA081ECC697000443947 /* ContinentalView.xib in Resources */,
 				A76BA9E21ECC67ED00443947 /* Main.storyboard in Resources */,
 				CDEACC601EE03ABE00280CEA /* 芬蘭.png in Resources */,
+				22ADDACC1EE9794200EB92F6 /* 泰國img.jpg in Resources */,
 				CDEACC691EE03ABE00280CEA /* 瑞士.png in Resources */,
 				A742B1461EDEBA4E00C7EA36 /* GoogleService-Info.plist in Resources */,
 				CDEACC721EE03BE400280CEA /* 冰島.png in Resources */,
 				CDEACC741EE03BE400280CEA /* 委內瑞拉.png in Resources */,
+				22ADDAD21EE9794200EB92F6 /* 美國img.jpg in Resources */,
+				22ADDACB1EE9794200EB92F6 /* 菲律賓img.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

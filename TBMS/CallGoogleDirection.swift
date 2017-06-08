@@ -60,6 +60,7 @@ class GoogleDirectionCaller: NSObject {
         
         let parameters = parametersSetting.produceParameterDictionary(origin: originString, destination: destinationString)
         //----測試用-----
+        print("travelMode=\(parametersSetting.travelMod)")
         let testURL = produceRequestURLForTest(urlString: requestURL, parameters: parameters)
         print(testURL)
         //--------------

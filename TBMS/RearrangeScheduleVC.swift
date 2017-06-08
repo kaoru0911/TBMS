@@ -14,7 +14,7 @@ import GoogleMaps
 
 class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
-    @IBOutlet weak var travelPathWebView: UIWebView!
+    @IBOutlet weak var coverPageImage: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     // key setting
     fileprivate let keyOfDateCell = "dailyScheduleSetting"
@@ -47,6 +47,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     var travelDays: Int!
     var tmpTripData = [tripSpotData]()
     var selectedTravelMod: TravelMod!
+    let commentModel = GeneralToolModels()
     
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
     
@@ -61,6 +62,9 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(_:)))
         self.collectionView.addGestureRecognizer(longPressGesture)
+        
+        coverPageImage.image = commentModel.imageGeneratore(selectedCountry: shareData.chooseCountry)
+        print(selectedTravelMod.rawValue)
     }
     
     override func didReceiveMemoryWarning() {
@@ -266,7 +270,15 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         guard travelTime != "routeCalculate error" else { return "routeCalculate error" }
         guard let travelMod = cellContent.travelMode else { return "交通方式error唷" }
         
+        let selfTravelMod = self.selectedTravelMod
         let trafficTypeText: String
+        
+        guard selfTravelMod == .driving else {
+            print("駕駛模式囉")
+            trafficTypeText = drivingTravelTypeLabel
+            return "\(trafficTypeText), \(travelTime)"
+        }
+        
         
         switch travelMod{
         case .bike:
@@ -567,6 +579,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func transferToLastAttrCellContent (targetCellContent: inout ScheduleAndTrafficCellContent) {
+        
         targetCellContent.type = CustomerCellType.lastAttactionCellType
         targetCellContent.trafficInformation = nil
         targetCellContent.trafficTime = nil
@@ -579,6 +592,9 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         targetCellContent.type = CustomerCellType.scheduleAndTrafficCellType
         
         let googleDirectCaller = GoogleDirectionCaller()
+        googleDirectCaller.parametersSetting.travelMod = selectedTravelMod
+//        print("selectedTravelMod=\(selectedTravelMod)")///
+        
         googleDirectCaller.getRouteInformation(origin: targetCellContent.attraction.placeID,
                                                destination: destinationPlaceID) { (responseLegsData) in
                                                 completion(responseLegsData)
@@ -597,6 +613,21 @@ extension ScheduleTableViewController {
 
 
 // MARK: - 待建立.swift的model
+class GeneralToolModels {
+    
+    func imageGeneratore(selectedCountry: String) -> UIImage {
+        
+        let countryName = selectedCountry + "img.jpg"
+        
+        guard let image = UIImage(named: countryName) else {
+            print("沒圖片唷")
+            let imageBlank = UIImage()
+            return imageBlank
+        }
+        return image
+    }
+}
+
 class DataTypeTransformer {
     
     func transferGMPlaceToSpotDataType(obj: GMSPlace) -> spotData {
@@ -737,7 +768,7 @@ enum BoundsCoordinate: String {
     韓國 = "37.5647689,126.7093638,10z",
     中國 = "39.9375346,115.837023,9z",
     臺灣 = "25.0498002,121.5363940,11z",
-    新加坡 = "1.314715,103.5668226,10z",
+    新加坡 = "1.3122663,103.8353844,12.73z",
     泰國 = "13.7244426,100.3529157,10z",
     菲律賓 = "14.5964879,120.9094042,12z",
     英國 = "51.528308,-0.3817961,10z",

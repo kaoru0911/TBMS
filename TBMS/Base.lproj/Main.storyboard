@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Apw-6b-Oxl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Apw-6b-Oxl">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -312,11 +312,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="請輸入旅遊國家的地點, 以日本旅遊為例：                                                 成田機場, 羽田機場, ＸＸ飯店, ＸＸ車站" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hxt-9m-DaA">
-                                <rect key="frame" x="46" y="122" width="283" height="125"/>
+                                <rect key="frame" x="46" y="124" width="283" height="119"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="125" id="ioL-6r-0ow"/>
-                                </constraints>
                                 <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -360,8 +357,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j57-iU-Tjy">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j57-iU-Tjy">
                                 <rect key="frame" x="183" y="117" width="77" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="titleShadowOffset" width="1" height="1"/>
                                 <state key="normal" title="選擇出發地"/>
@@ -372,24 +370,22 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="a8W-bo-U0v" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="0fU-QL-HQA"/>
+                            <constraint firstItem="ess-N9-sld" firstAttribute="centerX" secondItem="hxt-9m-DaA" secondAttribute="centerX" id="5Df-a1-cvZ"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="6bG-IM-Ac4"/>
                             <constraint firstItem="a8W-bo-U0v" firstAttribute="top" secondItem="gg0-C7-l5e" secondAttribute="bottom" constant="15" id="6vF-rj-2cg"/>
-                            <constraint firstItem="tKf-sc-OLb" firstAttribute="centerY" secondItem="Ndp-oQ-P5L" secondAttribute="centerY" constant="36" id="77E-gz-LhH"/>
-                            <constraint firstItem="j57-iU-Tjy" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" constant="137" id="AMx-5g-Lfn"/>
-                            <constraint firstItem="ess-N9-sld" firstAttribute="centerX" secondItem="hxt-9m-DaA" secondAttribute="centerX" id="EjU-nB-CyI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hxt-9m-DaA" secondAttribute="trailing" constant="30" id="Bi8-z6-9rd"/>
+                            <constraint firstItem="ess-N9-sld" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="CiI-lf-wM9"/>
+                            <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="tKf-sc-OLb" secondAttribute="bottom" constant="144" id="IKw-b1-YMW"/>
                             <constraint firstItem="ess-N9-sld" firstAttribute="top" secondItem="a8W-bo-U0v" secondAttribute="bottom" constant="15" id="Iy5-id-dfm"/>
-                            <constraint firstItem="Ndp-oQ-P5L" firstAttribute="leading" secondItem="g5a-IB-ptC" secondAttribute="leadingMargin" constant="30" id="J1n-th-UMS"/>
-                            <constraint firstItem="gg0-C7-l5e" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="Lbk-TT-ztM"/>
                             <constraint firstItem="gg0-C7-l5e" firstAttribute="centerY" secondItem="g5a-IB-ptC" secondAttribute="centerY" id="NNo-Fk-BZs"/>
-                            <constraint firstItem="hxt-9m-DaA" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" constant="-21" id="Of1-HJ-A4X"/>
-                            <constraint firstItem="hxt-9m-DaA" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="Ue7-hb-oYa"/>
-                            <constraint firstItem="ess-N9-sld" firstAttribute="leading" secondItem="hxt-9m-DaA" secondAttribute="leading" id="XP7-ek-xh5"/>
-                            <constraint firstItem="ess-N9-sld" firstAttribute="trailing" secondItem="hxt-9m-DaA" secondAttribute="trailing" id="Yq7-m2-bLk"/>
-                            <constraint firstItem="hxt-9m-DaA" firstAttribute="centerX" secondItem="g5a-IB-ptC" secondAttribute="centerX" id="e1H-bh-tc0"/>
-                            <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="hxt-9m-DaA" secondAttribute="bottom" constant="76" id="fFA-0U-wGJ"/>
-                            <constraint firstItem="tKf-sc-OLb" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="trailing" constant="-139" id="gLH-2s-qvl"/>
-                            <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="j57-iU-Tjy" secondAttribute="bottom" constant="176" id="oT5-6h-4kU"/>
-                            <constraint firstItem="j57-iU-Tjy" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" constant="-26" id="tEE-43-vcs"/>
+                            <constraint firstItem="ess-N9-sld" firstAttribute="trailing" secondItem="hxt-9m-DaA" secondAttribute="trailing" id="ZGu-PC-RrQ"/>
+                            <constraint firstItem="hxt-9m-DaA" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="cqy-Jk-XzP"/>
+                            <constraint firstItem="gg0-C7-l5e" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="gdm-6e-q5o"/>
+                            <constraint firstItem="tKf-sc-OLb" firstAttribute="top" secondItem="Ndp-oQ-P5L" secondAttribute="bottom" constant="15" id="jYU-ha-BS5"/>
+                            <constraint firstItem="gg0-C7-l5e" firstAttribute="top" secondItem="hxt-9m-DaA" secondAttribute="bottom" constant="80" id="lHc-gc-5tg"/>
+                            <constraint firstItem="hxt-9m-DaA" firstAttribute="leading" secondItem="g5a-IB-ptC" secondAttribute="leadingMargin" constant="30" id="nLA-m7-daA"/>
+                            <constraint firstItem="a8W-bo-U0v" firstAttribute="leading" secondItem="Ndp-oQ-P5L" secondAttribute="leading" id="qYA-Hv-ID5"/>
+                            <constraint firstItem="hxt-9m-DaA" firstAttribute="top" secondItem="HJu-WO-Wk1" secondAttribute="bottom" constant="60" id="uM7-Y1-d12"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="起點設定" id="wld-mh-Prh">
@@ -418,7 +414,7 @@
         <!--建議規劃-->
         <scene sceneID="X85-vd-uqG">
             <objects>
-                <viewController id="DLZ-YW-dcw" customClass="RearrangeScheduleVC" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="DLZ-YW-dcw" customClass="RearrangeScheduleVC" customModule="TBMS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="kx3-XI-tKf"/>
                         <viewControllerLayoutGuide type="bottom" id="TnU-kb-V8Y"/>
@@ -427,11 +423,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mWY-Ji-JSd">
-                                <rect key="frame" x="0.0" y="64" width="375" height="190"/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </webView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="HWz-5r-StC">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" prefetchingEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HWz-5r-StC">
                                 <rect key="frame" x="0.0" y="254" width="375" height="369"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -451,8 +443,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="365" height="42"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hP4-LW-2ag">
-                                                    <rect key="frame" x="288" y="6" width="62" height="30"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hP4-LW-2ag">
+                                                    <rect key="frame" x="273" y="6" width="62" height="30"/>
                                                     <state key="normal" title="增加天數"/>
                                                     <connections>
                                                         <action selector="addDateCellBtnPressed:" destination="DLZ-YW-dcw" eventType="touchUpInside" id="l8F-Mc-IqD"/>
@@ -576,16 +568,19 @@
                                     <outlet property="delegate" destination="DLZ-YW-dcw" id="uZK-Ej-fH6"/>
                                 </connections>
                             </collectionView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oZe-qK-aHv">
+                                <rect key="frame" x="0.0" y="64" width="375" height="190"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="HWz-5r-StC" firstAttribute="leading" secondItem="TM7-eO-Qq1" secondAttribute="leading" id="2qV-H8-KLV"/>
-                            <constraint firstItem="HWz-5r-StC" firstAttribute="top" secondItem="mWY-Ji-JSd" secondAttribute="bottom" id="McU-gL-EHC"/>
-                            <constraint firstItem="mWY-Ji-JSd" firstAttribute="top" secondItem="kx3-XI-tKf" secondAttribute="bottom" id="XdB-UB-Mf6"/>
+                            <constraint firstItem="oZe-qK-aHv" firstAttribute="leading" secondItem="TM7-eO-Qq1" secondAttribute="leading" id="Pib-kG-K3i"/>
+                            <constraint firstItem="HWz-5r-StC" firstAttribute="top" secondItem="oZe-qK-aHv" secondAttribute="bottom" id="hT7-dA-A9d"/>
                             <constraint firstItem="HWz-5r-StC" firstAttribute="bottom" secondItem="TnU-kb-V8Y" secondAttribute="top" id="krv-E6-PRm"/>
-                            <constraint firstAttribute="trailing" secondItem="mWY-Ji-JSd" secondAttribute="trailing" id="oEt-cC-JaU"/>
                             <constraint firstAttribute="trailing" secondItem="HWz-5r-StC" secondAttribute="trailing" id="pdu-NU-YPj"/>
-                            <constraint firstItem="mWY-Ji-JSd" firstAttribute="leading" secondItem="TM7-eO-Qq1" secondAttribute="leading" id="xzz-c0-9Qz"/>
+                            <constraint firstAttribute="trailing" secondItem="oZe-qK-aHv" secondAttribute="trailing" id="uhZ-VC-3ZJ"/>
+                            <constraint firstItem="oZe-qK-aHv" firstAttribute="top" secondItem="kx3-XI-tKf" secondAttribute="bottom" id="w4L-e8-Miy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="建議規劃" id="JQh-TR-34R">
@@ -597,7 +592,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="HWz-5r-StC" id="iLV-zj-1br"/>
-                        <outlet property="travelPathWebView" destination="mWY-Ji-JSd" id="17T-Ae-mzH"/>
+                        <outlet property="coverPageImage" destination="oZe-qK-aHv" id="zRW-qh-2yO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gSK-db-lrl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -746,7 +741,7 @@
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1434,7 +1429,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

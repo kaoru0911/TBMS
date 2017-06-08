@@ -137,6 +137,7 @@ class SetStartPointViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         let vc : RearrangeScheduleVC = segue.destination as! RearrangeScheduleVC
         vc.routesDetails = routesDetails
         vc.attractions = attractionsListToNextPage

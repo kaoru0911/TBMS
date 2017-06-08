@@ -129,6 +129,9 @@ class DirectionJsonAnalyst: NSObject {
                 
             } else if step[keyTransitDetails].dictionary != nil {
                 self.analyteSubwayModeResponseJSON(stepDetail: &stepDetail, step: step)
+            
+            } else if step[keyTravelMode].string == "DRIVING" {
+                self.analyteDrivingModeResponseJSON(stepDetail: &stepDetail)
                 
             } else {
                 self.analyteWalkingModeResponseJSON(stepDetail: &stepDetail)
@@ -146,6 +149,12 @@ class DirectionJsonAnalyst: NSObject {
         print("走路模式唷")
         stepDetail.trafficType = TrafficType.walking
         stepDetail.travelMode = .walking
+    }
+    
+    private func analyteDrivingModeResponseJSON (stepDetail:inout StepsData) {
+        print("駕車模式唷")
+        stepDetail.trafficType = TrafficType.driving
+        stepDetail.travelMode = .driving
     }
     
     private func analyteBusModeResponseJSON (stepDetail:inout StepsData ,steps:[JSON]) {
@@ -303,9 +312,11 @@ class GeneralDirectionData {
 }
 
 enum TrafficType : String {
+    
     case walking = "walking"
     case subwayOrBoat = "subwayOrBoat"
     case bus = "bus"
+    case driving = "driving"
 }
 
 
