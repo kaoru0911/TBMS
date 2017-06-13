@@ -16,11 +16,11 @@ class BestRouteCalculator: NSObject {
     private var firstStartingPoint : Attraction
     private var totalAttractions : [Attraction]
     private var totalAttractionsSum : Int
+    private let request = MKDirectionsRequest()
     
     /// Attractions order list, we could use it after getBestRoute method finished.
     /// If you want to use it, please call it in the closure "completion" of getBestRoute method.
     var bestRoute = [Attraction]()
-    private let request = MKDirectionsRequest()
     
     /// initializer
     ///
@@ -52,6 +52,7 @@ class BestRouteCalculator: NSObject {
     ///   - queue: If we want to run this function in background queue.
     ///   - completion: What you want to do after the calculation is finished.
     private func rearrangeRoute(startingPlace:Attraction, attractionsList:[Attraction], queue:DispatchQueue ,completion:@escaping (_ bestRoute:[Attraction]) -> Void){
+        
         var finishCalCount = attractionsList.count
         var finishTravelTimeCalculateAttrs = [Attraction]()
         
@@ -107,7 +108,6 @@ class BestRouteCalculator: NSObject {
                 }
             })
         }
-        
     }
 }
 
