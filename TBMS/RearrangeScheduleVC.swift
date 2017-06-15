@@ -273,7 +273,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         let selfTravelMod = self.selectedTravelMod
         let trafficTypeText: String
         
-        guard selfTravelMod == .driving else {
+        guard selfTravelMod != .driving else {
             print("駕駛模式囉")
             trafficTypeText = drivingTravelTypeLabel
             return "\(trafficTypeText), \(travelTime)"
