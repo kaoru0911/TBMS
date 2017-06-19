@@ -14,24 +14,20 @@ import GoogleMaps
 
 class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
-    @IBOutlet weak var coverPageImage: UIImageView!
-    @IBOutlet weak var collectionView: UICollectionView!
-    // key setting
+    // MARK: - Keys
     fileprivate let keyOfDateCell = "dailyScheduleSetting"
     fileprivate let keyOfScheduleAndTrafficCell = "scheduleArray"
     fileprivate let nameOfFinalScheduleStoryBoard = "Main"
     fileprivate let nameOfFinalScheduleVC = "dailyRouteVC"
     fileprivate let nameOfUploadlScheduleVC = "UploadTripScheduleVC"
+    
     let reuseIdForDateTypeCell = "dateCell"
     let reuseIdForscheduleAndTrafficCell = "scheduleAndTrafficCell"
     let reuseIdForLastAttractionCell = "lastAttractionCell"
     
-    fileprivate let currentPageDotTintColor = UIColor.black
-    fileprivate let otherPageDotTintColor = UIColor.lightGray
-    fileprivate let scheduleTypeCellColor = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
-    let goSaveTripPageBtnTitle = "確認規劃"
-    let saveTripBtnTitle = "儲存行程"
-    let arrowImageName = "downArrow2"
+    fileprivate let goSaveTripPageBtnTitle = "確認規劃"
+    fileprivate let saveTripBtnTitle = "儲存行程"
+    fileprivate let arrowImageName = "downArrow2"
     
     let bikeTravelTypeLabel = "單車"
     let drivingTravelTypeLabel = "開車"
@@ -39,6 +35,10 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     let busTravelTypeLabel = "公車"
     let transitTravelTypeLabel = "捷運/地鐵"
     let defaultTravelTypeLabel = "異常"
+    
+    // MARK: - Values
+    @IBOutlet weak var coverPageImage: UIImageView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     let shareData = DataManager.shareDataManager
     var attractions: [Attraction]!
@@ -49,23 +49,32 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     var selectedTravelMod: TravelMod!
     let commentModel = GeneralToolModels()
     
+    fileprivate let currentPageDotTintColor = UIColor.black
+    fileprivate let otherPageDotTintColor = UIColor.lightGray
+    fileprivate let scheduleTypeCellColor = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
+    
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
     
+    // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let collectionViewLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        collectionViewLayout.minimumLineSpacing = 0
-        
-        cellContentsArray = prepareCellsContents(attractions: attractions!, routesDetails: routesDetails)
-        
+        // Setting gesture to let cell be movable.
         longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(_:)))
         self.collectionView.addGestureRecognizer(longPressGesture)
         
+        // Setting cells space
+        let collectionViewLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        collectionViewLayout.minimumLineSpacing = 0
+        
+        // Prepare cells display contents
+        cellContentsArray = prepareCellsContents(attractions: attractions!, routesDetails: routesDetails)
+        
+        // general the image whitch will display on the top
         coverPageImage.image = commentModel.imageGeneratore(selectedCountry: shareData.chooseCountry)
-        print(selectedTravelMod.rawValue)
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -75,12 +84,40 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
     @IBAction func addDateCellBtnPressed(_ sender: UIButton) {
         
-        let totalDays = cellContentsArray.filter({$0.type == CustomerCellType.dateCellType}).count
-        let newDateCellContent = DateCellContent(dateValue: totalDays + 1)
+        let dayCellsCount = cellContentsArray.filter({$0.type == CustomerCellType.dateCellType}).count
+        let newDateCellContent = DateCellContent(dateValue: dayCellsCount + 1)
         cellContentsArray.append(newDateCellContent)
+        
         self.collectionView.reloadData()
     }
     
+    // Setting gesture to let cells be movable
+    func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
+        
+        switch(gesture.state) {
+            
+        case UIGestureRecognizerState.began:
+            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else { break }
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+            
+        case UIGestureRecognizerState.changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+            
+        case UIGestureRecognizerState.ended:
+            collectionView.endInteractiveMovement()
+            
+        default:
+            collectionView.cancelInteractiveMovement()
+        }
+    }
+
+    
+    /// Initialize the cells contents
+    ///
+    /// - Parameters:
+    ///   - attractions: Attractions list.
+    ///   - routesDetails: Route details between each attractions.
+    /// - Returns: Cells content array
     fileprivate func prepareCellsContents (attractions:[Attraction], routesDetails:[LegsData]) -> [CellContent] {
         
         var cellsContents = [CellContent]()
@@ -92,7 +129,6 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
                 cellsContents.append(cellContent)
                 
             } else if i == attractions.count {
-                
                 let cellContent = ScheduleAndTrafficCellContent(attraction: attractions[i-1], trafficInformation: nil, selectedTravelMode: selectedTravelMod)
                 cellContent.type = CustomerCellType.lastAttactionCellType
                 cellsContents.append(cellContent)
@@ -106,6 +142,155 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         return cellsContents
     }
     
+    /// To generate a complete route informationfor the property "goToNextSpot" of the spot-data type object.
+    ///
+    /// - Parameter route: The response data from google direction like the property trafficInformation of the cell content data
+    /// - Returns: The complete route information string including each step of the route.
+    fileprivate func generateDetailRouteString (route:LegsData!) -> String! {
+        
+        guard let routeData = route else { return "路線計算錯誤" }
+        guard let steps = routeData.steps else { return nil }
+        
+        var routeDetailString = String()
+        var trasitTypeChecking = false
+        
+        // Check the route's travel mode is transit or anothers.
+        for step in route.steps {
+            
+            if step.arrivalStop?.name != "" || step.arrivalStop?.name != nil {
+                trasitTypeChecking = true
+                break
+            }
+        }
+        
+        
+        for i in 0 ... steps.count - 1 {
+            
+            let step = steps[i]
+            var stepString = "\(i+1). "
+            
+            // Check if
+            if step.arrivalStop != nil {
+                stepString += "搭乘\(step.lineAgencies!) - \(step.lineShortame!): \n 從 \(step.departureStop!.name!) 到 \(step.arrivalStop!.name!)\n\n"
+                
+            } else {
+                
+                let htmlInstructions = step.htmlInstructions
+                
+                if htmlInstructions != nil || htmlInstructions != "" {
+                    stepString += "\(htmlInstructions!)\n\n"
+                } else {
+                    stepString = ""
+                }
+            }
+            
+            if trasitTypeChecking != true {
+                
+                if let secondSteps = step.steps {
+                    stepString.removeAll()
+                    stepString = "\(i+1). "
+                    
+                    for secondStep in secondSteps {
+                        
+                        let htmlInstructions = secondStep.htmlInstructions
+                        
+                        if htmlInstructions != nil || htmlInstructions != "" {
+                            
+                            let tmpString = "\(htmlInstructions!)\n\n"
+                            stepString.append(tmpString)
+                        }
+                    }
+                }
+            }
+            routeDetailString.append(stepString)
+        }
+        
+        var returnString = routeDetailString
+            .replacingOccurrences(of: "<div style=\"font-size:0.9em\">", with: "\n註：")
+            .replacingOccurrences(of: "</div>", with: "")
+            .replacingOccurrences(of: "/", with: "")
+            .replacingOccurrences(of: "<b>", with: "")
+            .replacingOccurrences(of: "\"", with: "")
+            .replacingOccurrences(of: "]", with: "")
+            .replacingOccurrences(of: "[", with: "")
+        
+        returnString.characters.removeLast(2)
+        
+        return returnString
+    }
+    
+    
+    
+    /// To generate the short route information for the property "route title" of the spot data
+    ///
+    /// - Parameter cellContent: The cell-content type object witch wants to generate the shorter route information for the next page.
+    /// - Returns: The shorter route information for displaying on the next page.
+    fileprivate func generateRouteTitleString (cellContent:ScheduleAndTrafficCellContent) -> String! {
+        
+        guard let travelTime = cellContent.trafficTime else { return "時間計算error唷" }
+        guard travelTime != "routeCalculate error" else { return "routeCalculate error" }
+        guard let travelMod = cellContent.travelMode else { return "交通方式error唷" }
+        
+        let selfTravelMod = self.selectedTravelMod
+        let trafficTypeText: String
+        
+        guard selfTravelMod != .driving else {
+            print("駕駛模式囉")
+            trafficTypeText = drivingTravelTypeLabel
+            return "\(trafficTypeText), \(travelTime)"
+        }
+        
+        switch travelMod{
+            
+        case .bike:
+            trafficTypeText = bikeTravelTypeLabel
+        case .bus:
+            trafficTypeText = busTravelTypeLabel
+        case .driving:
+            trafficTypeText = drivingTravelTypeLabel
+        case .walking:
+            trafficTypeText = walkingTravelTypeLabel
+        case .transit:
+            trafficTypeText = transitTravelTypeLabel
+        default:
+            trafficTypeText = defaultTravelTypeLabel
+        }
+        
+        return "\(trafficTypeText), \(travelTime)"
+    }
+}
+
+
+// MARK: - Methods about packaging routes data and taking to the next page.
+
+extension RearrangeScheduleVC {
+    
+    @IBAction func finishAndNextPage(_ sender: UIBarButtonItem) {
+        
+        // Prepare all the Views with View Controllers which we want to display on the scrollView
+        let sb = UIStoryboard(name: nameOfFinalScheduleStoryBoard, bundle: nil)
+        let trip = tripDataGenerator(cellContent: cellContentsArray)
+        shareData.tmpSpotDatas = trip.spots
+        let vcArray = produceVCArray(myStoryBoard: sb, cellContents: trip)
+        
+        // ScrollView config setting
+        let scrollVCProductor = ProduceScrollViewWithVCArray(vcArrayInput: vcArray)
+        scrollVCProductor.pageControlDotExist = true
+        scrollVCProductor.currentPageIndicatorTintColorSetting = currentPageDotTintColor
+        scrollVCProductor.otherPageIndicatorTintColorSetting = otherPageDotTintColor
+        
+        // Generate the scrollView
+        let scrollView = scrollVCProductor.pagingScrollingVC
+        scrollView?.automaticallyAdjustsScrollViewInsets = false
+        self.navigationController?.navigationBar.isTranslucent = false
+        
+        // Generate the "goNextPage" Btn
+        let nextPageBtn = UIBarButtonItem(title: goSaveTripPageBtnTitle, style: .plain, target: self, action: #selector(finishPlanningAndGoToNextPage))
+        scrollView?.navigationItem.rightBarButtonItem = nextPageBtn
+        
+        // Present the scrollView
+        self.navigationController?.pushViewController(scrollView!, animated: true)
+    }
     
     /// Produce the cellContent for next Page
     ///
@@ -152,180 +337,8 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         return seperateFinishArray
     }
     
-    /// To produce ViewController array that will put into the ScrollView
-    ///
-    /// - Parameters:
-    ///   - myStoryBoard: The StoryBoard where the VC you wanna instantiating is
-    ///   - dataArray: The datas to setting the VC's content
-    /// - Returns: An array containing all VC you want to instantiate
-    func produceVCArray (myStoryBoard: UIStoryboard, cellContents:tripData!) -> [UIViewController] {
-        
-        var tmpVCArray = [ScheduleTableViewController]()
-        
-        guard let cellContents = cellContents else {
-            print("沒有spot唷")
-            return tmpVCArray
-        }
-        
-        travelDays = countTotalTripDays(spot: cellContents.spots)
-        
-        for i in 0...travelDays - 1 {
-            
-            let tmpVC = myStoryBoard.instantiateViewController(withIdentifier: nameOfFinalScheduleVC) as! ScheduleTableViewController
-            tmpVC.data = cellContents
-            tmpVC.nDaySchedule = i + 1
-            tmpVC.selectedProcess = ""
-            
-            tmpVCArray += [tmpVC]
-            print("tmpVCArray=\(tmpVCArray.count)")
-        }
-        return tmpVCArray
-    }
-    
-    fileprivate func countTotalTripDays (spot:[tripSpotData]) -> Int {
-        
-        let days = (spot.max{$0.0.nDays < $0.1.nDays})?.nDays
-        
-        guard let travelDays = days else { return 0 }
-        
-        return travelDays
-    }
-    
-    func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
-        
-        switch(gesture.state) {
-        case UIGestureRecognizerState.began:
-            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else {
-                break
-            }
-            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
-        case UIGestureRecognizerState.changed:
-            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
-        case UIGestureRecognizerState.ended:
-            collectionView.endInteractiveMovement()
-        default:
-            collectionView.cancelInteractiveMovement()
-        }
-    }
-    
-    fileprivate func generateDetailRouteString (route:LegsData!) -> String! {
-        
-        guard let routeData = route else { return "路線計算錯誤" }
-        guard let steps = routeData.steps else { return nil }
-        
-        var routeDetailString = String()
-        var trasitTypeCheck = false
-        
-        for step in route.steps {
-            if step.arrivalStop?.name != "" || step.arrivalStop?.name != nil {
-                trasitTypeCheck = true
-                break
-            }
-        }
-        
-        for i in 0 ... steps.count - 1 {
-            let step = steps[i]
-            var stepString = "\(i+1). "
-            
-            if step.arrivalStop != nil {
-                stepString += "搭乘\(step.lineAgencies!) - \(step.lineShortame!): \n 從 \(step.departureStop!.name!) 到 \(step.arrivalStop!.name!)\n\n"
-                
-            } else {
-                
-                let htmlInstructions = step.htmlInstructions
-                
-                if htmlInstructions != nil || htmlInstructions != "" {
-                    stepString += "\(htmlInstructions!)\n\n"
-                } else {
-                    stepString = ""
-                }
-            }
-            
-            if trasitTypeCheck != true {
-                
-                if let secondSteps = step.steps {
-                    stepString.removeAll()
-                    stepString = "\(i+1). "
-                    
-                    for secondStep in secondSteps {
-                        let htmlInstructions = secondStep.htmlInstructions
-                        
-                        if htmlInstructions != nil || htmlInstructions != "" {
-                            let tmpString = "\(htmlInstructions!)\n\n"
-                            stepString.append(tmpString)
-                        }
-                    }
-                }
-            }
-            routeDetailString.append(stepString)
-        }
-        var returnString = routeDetailString.replacingOccurrences(of: "<div style=\"font-size:0.9em\">", with: "\n註：").replacingOccurrences(of: "</div>", with: "").replacingOccurrences(of: "/", with: "").replacingOccurrences(of: "<b>", with: "").replacingOccurrences(of: "\"", with: "").replacingOccurrences(of: "]", with: "").replacingOccurrences(of: "[", with: "")
-        returnString.characters.removeLast(2)
-        return returnString
-    }
-    
-    fileprivate func generateRouteTitleString (cellContent:ScheduleAndTrafficCellContent) -> String! {
-        
-        guard let travelTime = cellContent.trafficTime else { return "時間計算error唷" }
-        guard travelTime != "routeCalculate error" else { return "routeCalculate error" }
-        guard let travelMod = cellContent.travelMode else { return "交通方式error唷" }
-        
-        let selfTravelMod = self.selectedTravelMod
-        let trafficTypeText: String
-        
-        guard selfTravelMod != .driving else {
-            print("駕駛模式囉")
-            trafficTypeText = drivingTravelTypeLabel
-            return "\(trafficTypeText), \(travelTime)"
-        }
-        
-        
-        switch travelMod{
-        case .bike:
-            trafficTypeText = bikeTravelTypeLabel
-        case .bus:
-            trafficTypeText = busTravelTypeLabel
-        case .driving:
-            trafficTypeText = drivingTravelTypeLabel
-        case .walking:
-            trafficTypeText = walkingTravelTypeLabel
-        case .transit:
-            trafficTypeText = transitTravelTypeLabel
-        default:
-            trafficTypeText = defaultTravelTypeLabel
-        }
-        
-        return "\(trafficTypeText), \(travelTime)"
-    }
-}
-
-
-// MARK: - Methods about packaging routes data and taking to the next page.
-extension RearrangeScheduleVC {
-    
-    @IBAction func finishAndNextPage(_ sender: UIBarButtonItem) {
-        
-        let sb = UIStoryboard(name: nameOfFinalScheduleStoryBoard, bundle: nil)
-        let trip = transferCellsContentToTripSpotDataType(cellContent: cellContentsArray)
-        shareData.tmpSpotDatas = trip.spots
-        let vcArray = produceVCArray(myStoryBoard: sb, cellContents: trip)
-        //設定scrollView
-        let scrollVCProductor = ProduceScrollViewWithVCArray(vcArrayInput: vcArray)
-        scrollVCProductor.pageControlDotExist = true
-        scrollVCProductor.currentPageIndicatorTintColorSetting = currentPageDotTintColor
-        scrollVCProductor.otherPageIndicatorTintColorSetting = otherPageDotTintColor
-        //輸出scrollView
-        let scrollView = scrollVCProductor.pagingScrollingVC
-        scrollView?.automaticallyAdjustsScrollViewInsets = false
-        self.navigationController?.navigationBar.isTranslucent = false
-        
-        let nextPageBtn = UIBarButtonItem(title: goSaveTripPageBtnTitle, style: .plain, target: self, action: #selector(finishScheduleScrollViewAndGoNextPage))
-        scrollView?.navigationItem.rightBarButtonItem = nextPageBtn
-        
-        self.navigationController?.pushViewController(scrollView!, animated: true)
-    }
-    
-    func transferCellsContentToTripSpotDataType(cellContent: [CellContent]) -> tripData {
+    /// To transfer cellContent Objct to the tripData type objct.
+    func tripDataGenerator(cellContent: [CellContent]) -> tripData {
         
         var spots = [tripSpotData]()
         
@@ -335,7 +348,9 @@ extension RearrangeScheduleVC {
         var tmpList = [Int]()
         
         for i in 0...cellContentsArray.count - 1 {
+            
             if cellContentsArray[i] is DateCellContent && cellContentsArray[i+1] is DateCellContent {
+                
                 tmpList.append(i)
             }
         }
@@ -353,6 +368,7 @@ extension RearrangeScheduleVC {
         for cellContent in cellContentsArray {
             
             if cellContent is DateCellContent {
+                
                 tmpDateStorage += 1
                 tmpCellIndexCount = 0
                 
@@ -387,7 +403,51 @@ extension RearrangeScheduleVC {
         return trip
     }
     
-    func finishScheduleScrollViewAndGoNextPage() {
+    /// To produce ViewController array that will put into the ScrollView
+    ///
+    /// - Parameters:
+    ///   - myStoryBoard: The StoryBoard where the VC you wanna instantiating is
+    ///   - dataArray: The datas to setting the VC's content
+    /// - Returns: An array containing all VC you want to instantiate
+    func produceVCArray (myStoryBoard: UIStoryboard, cellContents:tripData!) -> [UIViewController] {
+        
+        var tmpVCArray = [ScheduleTableViewController]()
+        
+        guard let cellContents = cellContents else {
+            print("沒有spot唷")
+            return tmpVCArray
+        }
+        
+        travelDays = countTotalTripDays(spot: cellContents.spots)
+        
+        for i in 0...travelDays - 1 {
+            
+            let tmpVC = myStoryBoard.instantiateViewController(withIdentifier: nameOfFinalScheduleVC) as! ScheduleTableViewController
+            tmpVC.data = cellContents
+            tmpVC.nDaySchedule = i + 1
+            tmpVC.selectedProcess = ""
+            
+            tmpVCArray += [tmpVC]
+            print("tmpVCArray=\(tmpVCArray.count)")
+        }
+        return tmpVCArray
+    }
+    
+    
+    /// Countting Day-type cells amount for next page.
+    ///
+    /// - Parameter spot: Spots array trasfer from attractions array including date property.
+    /// - Returns: Total travel days
+    fileprivate func countTotalTripDays (spot:[tripSpotData]) -> Int {
+        
+        let days = (spot.max{$0.0.nDays < $0.1.nDays})?.nDays
+        
+        guard let travelDays = days else { return 0 }
+        
+        return travelDays
+    }
+    
+    func finishPlanningAndGoToNextPage() {
         
         let sb = UIStoryboard(name: nameOfFinalScheduleStoryBoard, bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: nameOfUploadlScheduleVC) as! UploadTravelScheduleViewController
@@ -402,7 +462,7 @@ extension RearrangeScheduleVC {
 extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //        print("count = \(cellContentsArray.count)")
+        
         return cellContentsArray.count
     }
     
@@ -423,9 +483,9 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        //Check the cell is for prsenting Date or viewPoint and traffic information, then built it.
+        //Check the cell is for prsenting Date or for presenting viewPoint and traffic information, then built it.
         switch cellContentsArray[indexPath.item].type! {
-        //for presenting Date
+            
         case .dateCellType:
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForDateTypeCell, for: indexPath) as! DateCell
@@ -438,9 +498,10 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             // setting the label text
             let cellContent = cellContentsArray[indexPath.item] as! DateCellContent
             cell.dateLabel.text = cellContent.dateStringForLabel
+            
             return cell
             
-        //for presenting viewPoint and traffic information
+
         case .scheduleAndTrafficCellType:
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForscheduleAndTrafficCell, for: indexPath) as! ScheduleAndTrafficCell
@@ -448,23 +509,20 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             let cellContent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
             
             cell.viewPointName.text = cellContent.viewPointName
+            cell.arrow.image = UIImage(named: arrowImageName)
+            cell.trafficInf.text = generateRouteTitleString(cellContent: cellContent)
             
             cell.viewPointBGBlock.layer.cornerRadius = 10
             cell.viewPointBGBlock.backgroundColor = scheduleTypeCellColor
-//            cell.arrow.layer.cornerRadius = 10
-//            cell.arrow.backgroundColor = scheduleTypeCellColor
-            
-            cell.arrow.image = UIImage(named: arrowImageName)
-            
-            
-            cell.trafficInf.text = generateRouteTitleString(cellContent: cellContent)
-            
+        
             return cell
             
+
         case .lastAttactionCellType:
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForLastAttractionCell, for: indexPath) as! LastAttractionCell
             let cellContent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
+            
             cell.viewPointName.text = cellContent.viewPointName
             cell.viewPointBGBlock.layer.cornerRadius = 10
             cell.viewPointBGBlock.backgroundColor = scheduleTypeCellColor
@@ -498,16 +556,18 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         
         // 關於移走的cell的變動
         if srcPreIndex > 0 {
+            
             if cellContentsArray[srcPreIndex] is ScheduleAndTrafficCellContent {   //如果前一個是交通格式交通格式, 處理前一個屬性
                 var previousCellContent = cellContentsArray[srcPreIndex] as! ScheduleAndTrafficCellContent
                 
                 if srcNextIndex <= cellContentsArray.count - 1 {
+                    
                     if cellContentsArray[srcNextIndex] is ScheduleAndTrafficCellContent { //如果下一個不是是日期格式
                         previousCellContent.type = CustomerCellType.scheduleAndTrafficCellType
                         
-                        let destination = (cellContentsArray[srcNextIndex] as! ScheduleAndTrafficCellContent).attraction.placeID
+                        let destination = (cellContentsArray[srcNextIndex] as! ScheduleAndTrafficCellContent).attraction
                         getNewTrafficDetail(targetCellContent: &previousCellContent,
-                                            destinationPlaceID: destination!,
+                                            destination: destination!,
                                             completion: { (legsData) in previousCellContent.setTrafficValue(legsData: legsData) })
                     } else {    // 如果下一個是日期格式
                         transferToLastAttrCellContent(targetCellContent: &previousCellContent)
@@ -534,9 +594,9 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
                     dstPreCellContent.type = CustomerCellType.scheduleAndTrafficCellType
                     
                     
-                    let destination = movedCellContent.attraction.placeID
+                    let destination = movedCellContent.attraction
                     getNewTrafficDetail(targetCellContent: &dstPreCellContent,
-                                        destinationPlaceID: destination!,
+                                        destination: destination!,
                                         completion: { (legsData) in
                                             dstPreCellContent.setTrafficValue(legsData: legsData)
                                             self.collectionView.reloadData()
@@ -550,7 +610,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
                     
                     let nextCellContent = cellContentsArray[dstNextIndex] as! ScheduleAndTrafficCellContent
                     getNewTrafficDetail(targetCellContent: &movedCellContent,
-                                        destinationPlaceID: nextCellContent.attraction.placeID,
+                                        destination: nextCellContent.attraction,
                                         completion: { (legsData) in
                                             movedCellContent.setTrafficValue(legsData: legsData)
                                             self.collectionView.reloadData()
@@ -586,30 +646,16 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func getNewTrafficDetail (targetCellContent: inout ScheduleAndTrafficCellContent,
-                              destinationPlaceID: String,
+                              destination: Attraction,
                               completion: @escaping ( _ routeInformation:LegsData) -> Void) {
         
         targetCellContent.type = CustomerCellType.scheduleAndTrafficCellType
         
         let googleDirectCaller = GoogleDirectionCaller()
         googleDirectCaller.parametersSetting.travelMod = selectedTravelMod
-//        print("selectedTravelMod=\(selectedTravelMod)")///
-        
-        googleDirectCaller.getRouteInformation(origin: targetCellContent.attraction.placeID,
-                                               destination: destinationPlaceID) { (responseLegsData) in
+        googleDirectCaller.getRouteInformation(origin: targetCellContent.attraction,
+                                               destination: destination) { (responseLegsData) in
                                                 completion(responseLegsData)
         }
     }
 }
-
-// MARK: - modify another one's class
-extension ScheduleTableViewController {
-    
-    override func viewDidAppear(_ animated: Bool) {
-        self.tableView.reloadData()
-    }
-}
-
-
-
-

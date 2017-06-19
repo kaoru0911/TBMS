@@ -16,7 +16,6 @@ class BestRouteCalculator: NSObject {
     private var firstStartingPoint : Attraction
     private var totalAttractions : [Attraction]
     private var totalAttractionsSum : Int
-    private let request = MKDirectionsRequest()
     
     /// Attractions order list, we could use it after getBestRoute method finished.
     /// If you want to use it, please call it in the closure "completion" of getBestRoute method.
@@ -100,73 +99,74 @@ class BestRouteCalculator: NSObject {
         
     }
     
-    //    /// Rearrange the attraction order by traffic time to find the best Route.  (以交通時間做計算)
-    //    ///
-    //    /// - Parameters:
-    //    ///   - startingPlace: The first attraction.
-    //    ///   - attractionsList: All the attraction you want to visit.
-    //    ///   - queue: If we want to run this function in background queue.
-    //    ///   - completion: What you want to do after the calculation is finished.
-    //    private func rearrangeRoute2(startingPlace:Attraction, attractionsList:[Attraction], queue:DispatchQueue ,completion:@escaping (_ bestRoute:[Attraction]) -> Void){
-    //
-    //        var finishCalCount = attractionsList.count
-    //        var finishTravelTimeCalculateAttrs = [Attraction]()
-    //
-    //        // setting the request detail about getting travelTime
-    //        self.request.transportType = .walking
-    //
-    //        if #available(iOS 10.0, *) {
-    //            self.request.source = MKMapItem(placemark:(MKPlacemark(coordinate: startingPlace.coordinate)))
-    //        } else {
-    //            // Fallback on earlier versions
-    //        }
-    //
-    //        // find the closest attraction
-    //        for i in 0...attractionsList.count-1 {
-    //            var arrivalPlace = attractionsList[i]
-    //
-    //            // sending request
-    //            if #available(iOS 10.0, *) {
-    //                self.request.destination = MKMapItem(placemark:(MKPlacemark(coordinate: arrivalPlace.coordinate)))
-    //            } else {
-    //                // Fallback on earlier versions
-    //            }
-    //
-    //            let directCalculator = MKDirections(request: self.request)
-    //
-    //            directCalculator.calculateETA(completionHandler: { (response, error) in
-    //                if error == nil {
-    //                    if let r = response {
-    //
-    //                        arrivalPlace.trafficTime = r.expectedTravelTime
-    //                        finishTravelTimeCalculateAttrs += [arrivalPlace]
-    //                        finishCalCount -= 1
-    //
-    //                        // When we get all of the response, compare the trafficTime from each attraction to the starting place.
-    //                        if finishCalCount == 0 {
-    //
-    //                            let (nextStartingPlace,unarrangedArray) = findClosestAttractions(attractionsArray: finishTravelTimeCalculateAttrs)
-    //                            finishCalCount = unarrangedArray.count
-    //                            self.bestRoute += [nextStartingPlace]
-    //
-    //                            // If we still have unarrangeAttractions, run this func again.
-    //                            if self.bestRoute.count < self.totalAttractionsSum {
-    //                                queue.async {
-    //                                    self.rearrangeRoute(startingPlace: nextStartingPlace, attractionsList: unarrangedArray, queue: queue, completion: completion)
-    //                                }
-    //                                // If all of the attractions are rearrange, run the completion closure.
-    //                            } else {
-    //                                self.bestRoute.insert(self.firstStartingPoint, at: 0)
-    //                                completion(self.bestRoute)
-    //                            }
-    //                        }
-    //                    }
-    //                } else {
-    //                    print("Error=\(error ?? "" as! Error)")
-    //                }
-    //            })
-    //        }
-    //    }
+    /// Rearrange the attraction order by traffic time to find the best Route.  (以交通時間做計算)
+    ///
+    /// - Parameters:
+    ///   - startingPlace: The first attraction.
+    ///   - attractionsList: All the attraction you want to visit.
+    ///   - queue: If we want to run this function in background queue.
+    ///   - completion: What you want to do after the calculation is finished.
+    private func rearrangeRoute2(startingPlace:Attraction, attractionsList:[Attraction], queue:DispatchQueue ,completion:@escaping (_ bestRoute:[Attraction]) -> Void){
+        
+        var finishCalCount = attractionsList.count
+        var finishTravelTimeCalculateAttrs = [Attraction]()
+        
+        // setting the request detail about getting travelTime
+        let request = MKDirectionsRequest()
+        request.transportType = .walking
+        
+        if #available(iOS 10.0, *) {
+            request.source = MKMapItem(placemark:(MKPlacemark(coordinate: startingPlace.coordinate)))
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        // find the closest attraction
+        for i in 0...attractionsList.count-1 {
+            var arrivalPlace = attractionsList[i]
+            
+            // sending request
+            if #available(iOS 10.0, *) {
+                request.destination = MKMapItem(placemark:(MKPlacemark(coordinate: arrivalPlace.coordinate)))
+            } else {
+                // Fallback on earlier versions
+            }
+            
+            let directCalculator = MKDirections(request: request)
+            
+            directCalculator.calculateETA(completionHandler: { (response, error) in
+                if error == nil {
+                    if let r = response {
+                        
+                        arrivalPlace.trafficTime = r.expectedTravelTime
+                        finishTravelTimeCalculateAttrs += [arrivalPlace]
+                        finishCalCount -= 1
+                        
+                        // When we get all of the response, compare the trafficTime from each attraction to the starting place.
+                        if finishCalCount == 0 {
+                            
+                            let (nextStartingPlace,unarrangedArray) = self.findClosestAttractions(attractionsArray: finishTravelTimeCalculateAttrs)
+                            finishCalCount = unarrangedArray.count
+                            self.bestRoute += [nextStartingPlace]
+                            
+                            // If we still have unarrangeAttractions, run this func again.
+                            if self.bestRoute.count < self.totalAttractionsSum {
+                                queue.async {
+                                    self.rearrangeRoute(startingPlace: nextStartingPlace, attractionsList: unarrangedArray, queue: queue, completion: completion)
+                                }
+                                // If all of the attractions are rearrange, run the completion closure.
+                            } else {
+                                self.bestRoute.insert(self.firstStartingPoint, at: 0)
+                                completion(self.bestRoute)
+                            }
+                        }
+                    }
+                } else {
+                    print("Error=\(error ?? "" as! Error)")
+                }
+            })
+        }
+    }
     
     /// To find the object has shortest traffic time
     ///

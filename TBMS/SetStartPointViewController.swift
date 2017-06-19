@@ -118,8 +118,8 @@ class SetStartPointViewController: UIViewController {
             let routeGenerator = GoogleDirectionCaller()
             routeGenerator.parametersSetting.travelMod = expectedTravelMode
             
-            routeGenerator.getRouteInformation(origin: origin.placeID,
-                                               destination: destination.placeID,
+            routeGenerator.getRouteInformation(origin: origin,
+                                               destination: destination,
                                                completion: { (route) in
                                                 
                                                 print("i=\(i-1)")

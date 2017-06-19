@@ -30,7 +30,6 @@
 		22ADDAD21EE9794200EB92F6 /* 美國img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 22ADDAC01EE9794200EB92F6 /* 美國img.jpg */; };
 		22AF44E01ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AF44DF1ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift */; };
 		22BBB6D21EE0551000F3D0FD /* UploadTravelScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BBB6D11EE0551000F3D0FD /* UploadTravelScheduleViewController.swift */; };
-		22CF17051ECDD2EA00B3F20E /* FinalScheduleVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CF17041ECDD2EA00B3F20E /* FinalScheduleVC.swift */; };
 		22F43F421ECD661200791D55 /* ProduceScrollViewWithVCArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F43F3F1ECD661200791D55 /* ProduceScrollViewWithVCArray.swift */; };
 		22F43F431ECD661200791D55 /* ViewPointAndPathStoraged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F43F401ECD661200791D55 /* ViewPointAndPathStoraged.swift */; };
 		22F43F441ECD661200791D55 /* ErrorCatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F43F411ECD661200791D55 /* ErrorCatch.swift */; };
@@ -133,7 +132,6 @@
 		22ADDAC01EE9794200EB92F6 /* 美國img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "美國img.jpg"; sourceTree = "<group>"; };
 		22AF44DF1ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponceAndJsonAnalyst.swift; sourceTree = "<group>"; };
 		22BBB6D11EE0551000F3D0FD /* UploadTravelScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadTravelScheduleViewController.swift; sourceTree = "<group>"; };
-		22CF17041ECDD2EA00B3F20E /* FinalScheduleVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinalScheduleVC.swift; sourceTree = "<group>"; };
 		22F43F3F1ECD661200791D55 /* ProduceScrollViewWithVCArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProduceScrollViewWithVCArray.swift; sourceTree = "<group>"; };
 		22F43F401ECD661200791D55 /* ViewPointAndPathStoraged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPointAndPathStoraged.swift; sourceTree = "<group>"; };
 		22F43F411ECD661200791D55 /* ErrorCatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorCatch.swift; sourceTree = "<group>"; };
@@ -377,7 +375,6 @@
 			isa = PBXGroup;
 			children = (
 				A76BA9FA1ECC697000443947 /* MenuCell.xib */,
-				22CF17041ECDD2EA00B3F20E /* FinalScheduleVC.swift */,
 				A76BA9FB1ECC697000443947 /* MenuTableViewCell.swift */,
 				A76BA9FC1ECC697000443947 /* MenuTableViewController.swift */,
 			);
@@ -701,7 +698,6 @@
 				22F43F431ECD661200791D55 /* ViewPointAndPathStoraged.swift in Sources */,
 				A76BAA121ECC697000443947 /* SetStartPointViewController.swift in Sources */,
 				22FAC4681ED67E4E00C402D8 /* StorageProtocolAndClass.swift in Sources */,
-				22CF17051ECDD2EA00B3F20E /* FinalScheduleVC.swift in Sources */,
 				A7929A461ED574520024B4D7 /* LoginViewController.swift in Sources */,
 				A74BDDD41ED5B69000987446 /* PocketSpotTVCell.swift in Sources */,
 				A747645F1ED8111F0059D586 /* MemberViewController.swift in Sources */,

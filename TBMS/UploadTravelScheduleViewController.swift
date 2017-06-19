@@ -23,7 +23,6 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
     var travelCountry: String!
     var attractionsAndRoute: [tripSpotData]!
     let generalTools = GeneralToolModels()
-    //    var spots: [tripSpotData]!
     var sharedData = DataManager.shareDataManager
     
     let unwindSegueID = "unwindSegueToMenuVC"
@@ -38,11 +37,11 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         saveTripBtn.layer.cornerRadius = cornerRadius
         cancelAndBackToMenu.layer.cornerRadius = cornerRadius
         
+        tripCoverImage.image = generalTools.imageGeneratore(selectedCountry: sharedData.chooseCountry)
+        
         // dismiss keyboard
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
-        
-        tripCoverImage.image = generalTools.imageGeneratore(selectedCountry: sharedData.chooseCountry)
     }
     
     override func didReceiveMemoryWarning() {
@@ -57,22 +56,16 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
     
     @IBAction func changeCoverImgBtnPressed(_ sender: Any) {
         
-        //        let imagePicker = UIImagePickerController()
-        //        imagePicker.allowsEditing = false
-        //        imagePicker.sourceType = .photoLibrary
-        //        imagePicker.delegate = self
-        //
-        //        present(imagePicker, animated: true, completion: nil)
-        
         let alert = UIAlertController(title: "請選擇照片來源", message: nil, preferredStyle: .alert)
+        
         let camera = UIAlertAction(title: "使用相機", style: .default) { (action:UIAlertAction) in
-            //self.openCamera()
             self.launchImagePickerWithSourceType(type: .camera)
         }
+        
         let photoLibray = UIAlertAction(title: "存取相簿", style: .default) { (action:UIAlertAction) in
-            //self.openPhotoLibrary()
             self.launchImagePickerWithSourceType(type: .photoLibrary)
         }
+        
         let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
         
         alert.addAction(camera)
@@ -85,7 +78,7 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
     @IBAction func uploadTripDataBtnPressed(_ sender: Any) {
         
         guard let tripName = tripNameTextField.text else {
-            let alert = UIAlertController(title: "請記得為本次行程命名唷", message: nil, preferredStyle: .alert)
+            let alert = UIAlertController(title: "請先為本次行程命名唷", message: nil, preferredStyle: .alert)
             let ok = UIAlertAction(title: "確認", style: .cancel, handler: nil)
             
             alert.addAction(ok)
@@ -134,8 +127,6 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         if shareTripOption.isOn {
             server.uploadSharedTripToServer(tripData: trip)
         }
-        
-        //        performSegue(withIdentifier: unwindSegueID, sender: nil)
     }
     
     func launchImagePickerWithSourceType(type:UIImagePickerControllerSourceType) {

@@ -190,26 +190,26 @@ class ScheduleTableViewController: UITableViewController {
         
         let cellContent = spotData[index]
         let strCoordinate = "\(cellContent.latitude!),\(cellContent.longitude!)"
-//        let strCoordinate = cellContent.spotName!
-//        let strCoordinate = transferAddressString(address: cellContent.spotAddress!)
+        //        let strCoordinate = cellContent.spotName!
+        //        let strCoordinate = transferAddressString(address: cellContent.spotAddress!)
         let trafficTitleLabelText = cellContent.trafficTitle
         print(strCoordinate)
         print(trafficTitleLabelText)
         
         let destCellContent = spotData[index + 1]
         let destCoordinate = "\(destCellContent.latitude!),\(destCellContent.longitude!)"
-//        let destCoordinate = destCellContent.spotName!
-//        let destCoordinate = transferAddressString(address: destCellContent.spotAddress!)
+        //        let destCoordinate = destCellContent.spotName!
+        //        let destCoordinate = transferAddressString(address: destCellContent.spotAddress!)
         print(destCoordinate)
         print(destCellContent.trafficTitle)
-
+        
         let parameterURL = self.parameterURLGenerator(startPoint: strCoordinate, destination: destCoordinate, trafficTitle: trafficTitleLabelText)
         
         if (UIApplication.shared.canOpenURL(URL(string:googleMapSchemeStr)!)) {
             
             let schmemURL = schemeURLGenerator(schmemURL: googleMapSchemeStr, parameterURL: parameterURL)
             UIApplication.shared.openURL(URL(string: schmemURL)!)
- 
+            
         } else {
             let schmemURL = schemeURLGenerator(schmemURL: googleMapSchemeStr, parameterURL: parameterURL)
             UIApplication.shared.openURL(URL(string: schmemURL)!)
@@ -295,13 +295,17 @@ class ScheduleTableViewController: UITableViewController {
 
 extension ScheduleTableViewController {
     
+    override func viewDidAppear(_ animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
     func schemeURLGenerator(schmemURL: String, parameterURL: String) -> String {
         return "\(schmemURL)\(parameterURL)"
     }
     
     func parameterURLGenerator(startPoint: String, destination: String, trafficTitle: String) -> String {
         
-//        let travelMod = seperateTravelModString(trafficTitle: trafficTitle)
+        //        let travelMod = seperateTravelModString(trafficTitle: trafficTitle)
         let str = "'\(startPoint)'/'\(destination)'"//&directionsmode=\(travelMod)"
         
         return str
@@ -327,12 +331,13 @@ extension ScheduleTableViewController {
         let strWalkingMod = strSource.walkingTravelTypeLabel
         
         switch travleMod {
+            
         case strTrasitMod:
             travelTypeString = TravelMod.transit.rawValue.lowercased()
             
         case strDrivingMod:
             travelTypeString = TravelMod.driving.rawValue.lowercased()
-        
+            
         case strWalkingMod:
             travelTypeString = TravelMod.walking.rawValue.lowercased()
             

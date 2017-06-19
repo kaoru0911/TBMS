@@ -26,8 +26,7 @@ class DateCell: UICollectionViewCell {
     
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var addNewTripDayButton: UIButton!
-    @IBAction func addNewTripDay(_ sender: Any) {
-    }
+    @IBAction func addNewTripDay(_ sender: Any) {}
 }
 
 class CellContent: NSObject {
@@ -86,7 +85,7 @@ class ScheduleAndTrafficCellContent: CellContent {
     func setTrafficValue(legsData:LegsData!) {
         
         guard let trafficInformation = legsData else {
-            print("沒有資料唷")
+            print("trafficInformation沒有資料唷")
             self.trafficInformation = nil
             self.trafficTime = calculateErrorWarnning
             return
