@@ -210,7 +210,15 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         if segue.identifier == "GoToSetStartPoint" {
             
 //            guard attractionStorage != nil else { return }
-            guard attractionStorage.isEmpty != true else { return }
+            guard attractionStorage.isEmpty != true else {
+                
+                let alert = UIAlertController(title: "警告", message: "你還沒選任何景點唷", preferredStyle: UIAlertControllerStyle.alert)
+                let cancel = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(cancel)
+                
+                present(alert, animated: true, completion: nil)
+                return
+            }
             
             let vc = segue.destination as! SetStartPointViewController
             vc.attractionsList = attractionStorage
