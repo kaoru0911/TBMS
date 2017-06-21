@@ -575,19 +575,19 @@
                                     <outlet property="delegate" destination="DLZ-YW-dcw" id="uZK-Ej-fH6"/>
                                 </connections>
                             </collectionView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oZe-qK-aHv">
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="jZC-ZB-MWf">
                                 <rect key="frame" x="0.0" y="64" width="375" height="190"/>
-                            </imageView>
+                            </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="HWz-5r-StC" firstAttribute="leading" secondItem="TM7-eO-Qq1" secondAttribute="leading" id="2qV-H8-KLV"/>
-                            <constraint firstItem="oZe-qK-aHv" firstAttribute="leading" secondItem="TM7-eO-Qq1" secondAttribute="leading" id="Pib-kG-K3i"/>
-                            <constraint firstItem="HWz-5r-StC" firstAttribute="top" secondItem="oZe-qK-aHv" secondAttribute="bottom" id="hT7-dA-A9d"/>
+                            <constraint firstAttribute="trailing" secondItem="jZC-ZB-MWf" secondAttribute="trailing" id="W1V-aT-Jxv"/>
                             <constraint firstItem="HWz-5r-StC" firstAttribute="bottom" secondItem="TnU-kb-V8Y" secondAttribute="top" id="krv-E6-PRm"/>
+                            <constraint firstItem="HWz-5r-StC" firstAttribute="top" secondItem="jZC-ZB-MWf" secondAttribute="bottom" id="l26-Dc-4sF"/>
                             <constraint firstAttribute="trailing" secondItem="HWz-5r-StC" secondAttribute="trailing" id="pdu-NU-YPj"/>
-                            <constraint firstAttribute="trailing" secondItem="oZe-qK-aHv" secondAttribute="trailing" id="uhZ-VC-3ZJ"/>
-                            <constraint firstItem="oZe-qK-aHv" firstAttribute="top" secondItem="kx3-XI-tKf" secondAttribute="bottom" id="w4L-e8-Miy"/>
+                            <constraint firstItem="jZC-ZB-MWf" firstAttribute="leading" secondItem="TM7-eO-Qq1" secondAttribute="leading" id="tOQ-lU-n8M"/>
+                            <constraint firstItem="jZC-ZB-MWf" firstAttribute="top" secondItem="kx3-XI-tKf" secondAttribute="bottom" id="vCF-sC-sLt"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="建議規劃" id="JQh-TR-34R">
@@ -599,7 +599,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="HWz-5r-StC" id="iLV-zj-1br"/>
-                        <outlet property="coverPageImage" destination="oZe-qK-aHv" id="zRW-qh-2yO"/>
+                        <outlet property="map" destination="jZC-ZB-MWf" id="qaq-Fh-85N"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gSK-db-lrl" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -748,7 +748,7 @@
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1436,7 +1436,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

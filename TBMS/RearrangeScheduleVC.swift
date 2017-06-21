@@ -8,11 +8,12 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 import GooglePlaces
 import GooglePlacePicker
 import GoogleMaps
 
-class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
+class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
     
     // MARK: - Keys
     fileprivate let keyOfDateCell = "dailyScheduleSetting"
@@ -37,8 +38,9 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     let defaultTravelTypeLabel = "異常"
     
     // MARK: - Values
-    @IBOutlet weak var coverPageImage: UIImageView!
+    //    @IBOutlet weak var coverPageImage: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var map: MKMapView!
     
     let shareData = DataManager.shareDataManager
     var attractions: [Attraction]!
@@ -55,7 +57,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
     
-    // MARK: - Methods
+    // MARK: - Methods/
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -71,8 +73,11 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
         // Prepare cells display contents
         cellContentsArray = prepareCellsContents(attractions: attractions!, routesDetails: routesDetails)
         
+        // Setting the routeMapRegion & annotation
+        routeMapGenerator(attractions: attractions)
+        map.delegate = self
         // general the image whitch will display on the top
-        coverPageImage.image = commentModel.imageGeneratore(selectedCountry: shareData.chooseCountry)
+        //        coverPageImage.image = commentModel.imageGeneratore(selectedCountry: shareData.chooseCountry)
     }
     
     
@@ -110,7 +115,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
             collectionView.cancelInteractiveMovement()
         }
     }
-
+    
     
     /// Initialize the cells contents
     ///
@@ -227,8 +232,8 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate {
     /// - Returns: The shorter route information for displaying on the next page.
     fileprivate func generateRouteTitleString (cellContent:ScheduleAndTrafficCellContent) -> String! {
         
-        guard let travelTime = cellContent.trafficTime else { return "時間計算error唷" }
-        guard travelTime != "routeCalculate error" else { return "routeCalculate error" }
+        guard let travelTime = cellContent.trafficTime else { return "時間重新計算中"/*時間計算error唷*/ }
+        guard travelTime != "routeCalculate error" else { return "路線重新計算中"/*routeCalculate error*/ }
         guard let travelMod = cellContent.travelMode else { return "交通方式error唷" }
         
         let selfTravelMod = self.selectedTravelMod
@@ -501,7 +506,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             return cell
             
-
+            
         case .scheduleAndTrafficCellType:
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForscheduleAndTrafficCell, for: indexPath) as! ScheduleAndTrafficCell
@@ -514,10 +519,10 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             cell.viewPointBGBlock.layer.cornerRadius = 10
             cell.viewPointBGBlock.backgroundColor = scheduleTypeCellColor
-        
+            
             return cell
             
-
+            
         case .lastAttactionCellType:
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForLastAttractionCell, for: indexPath) as! LastAttractionCell
@@ -657,5 +662,69 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
                                                destination: destination) { (responseLegsData) in
                                                 completion(responseLegsData)
         }
+    }
+}
+
+// MARK: - MKMapViewDelegate protocol methods
+extension RearrangeScheduleVC: MKMapViewDelegate {
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        
+        let renderer = MKPolylineRenderer(overlay: overlay)
+        renderer.lineWidth = 3.0
+        renderer.strokeColor = UIColor.red
+        
+        return renderer
+    }
+    
+    func routeMapGenerator(attractions: [Attraction]) {
+        
+        if map.annotations.isEmpty != true {
+            map.remove(map.overlays as! MKOverlay)
+            map.removeAnnotations(map.annotations)
+        }
+        
+        var points = [CLLocationCoordinate2D]()
+        var latSum = Double()
+        var lngSum = Double()
+        
+        for attr in attractions {
+    
+            guard let point = attr.coordinate else {
+                print("attr.coordinate isn't exist.")
+                return
+            }
+            
+            latSum += Double(point.latitude)
+            lngSum += Double(point.longitude)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = point
+            map.addAnnotation(annotation)
+            
+            points.append(point)
+        }
+        
+        let totalPoints = Double(points.count)
+        let center = CLLocationCoordinate2DMake(latSum/totalPoints, lngSum/totalPoints)
+        
+        var maxLatSpec = 0.0
+        var maxLngSpec = 0.0
+        
+        for point in points {
+            
+            let latSpec = abs(point.latitude - center.latitude)
+            let lngSpec = abs(point.longitude - center.longitude)
+            
+            maxLatSpec = max(latSpec, maxLatSpec)
+            maxLngSpec = max(lngSpec, maxLngSpec)
+        }
+        
+        let span = MKCoordinateSpan(latitudeDelta: maxLatSpec * 2, longitudeDelta: maxLngSpec * 2)
+        let region = MKCoordinateRegion(center: center, span: span)
+        map.setRegion(region, animated: true)
+        
+        let geodesic = MKGeodesicPolyline(coordinates: points, count: points.count)
+        map.add(geodesic)
     }
 }

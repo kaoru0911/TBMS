@@ -86,6 +86,7 @@ class SetStartPointViewController: UIViewController {
     
     @IBAction func goToNextPage(_ sender: Any) {
         
+        // Present a loading view
         customActivityIndicatory(self.view, startAnimate: true)
         
         let bestRoutePoductor = BestRouteCalculator(startingPoint: startPoint, attractionsList: attractionsList)
@@ -154,7 +155,13 @@ class SetStartPointViewController: UIViewController {
         vc.routesDetails = routesDetails
         vc.attractions = attractionsListToNextPage
         vc.selectedTravelMod = expectedTravelMode
+//        vc.map = vc.routeMapGenerator(attractions: attractionsListToNextPage)
+//        
+//        if vc.map == nil {
+//            print("map產生異常")
+//        }
         
+        // close the loading view
         customActivityIndicatory(self.view, startAnimate: false)
     }
 }
