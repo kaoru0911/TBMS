@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		225C00B41EFCE6C500F01F2C /* annotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 225C00B31EFCE6C500F01F2C /* annotation.png */; };
 		229DDBF81EEFB58100488B48 /* GeneralTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229DDBF71EEFB58000488B48 /* GeneralTools.swift */; };
 		229DDBFA1EEFB61900488B48 /* ObjectTypeTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229DDBF91EEFB61900488B48 /* ObjectTypeTransformer.swift */; };
 		22A6D96A1ED81AA600934AA6 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22A6D9691ED81AA600934AA6 /* CoreLocation.framework */; };
@@ -109,6 +110,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		225C00B31EFCE6C500F01F2C /* annotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = annotation.png; sourceTree = "<group>"; };
 		229DDBF71EEFB58000488B48 /* GeneralTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralTools.swift; sourceTree = "<group>"; };
 		229DDBF91EEFB61900488B48 /* ObjectTypeTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectTypeTransformer.swift; sourceTree = "<group>"; };
 		22A6D9691ED81AA600934AA6 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -229,7 +231,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		22ADDAAE1EE96D4300EB92F6 /* figure */ = {
+		225C00B21EFA615000F01F2C /* Img */ = {
+			isa = PBXGroup;
+			children = (
+				225C00B31EFCE6C500F01F2C /* annotation.png */,
+				A74BDDE61ED6FE0B00987446 /* airplane-symbol-7.png */,
+				A74BDDE81ED6FE1C00987446 /* circle-user-7.png */,
+			);
+			name = Img;
+			sourceTree = "<group>";
+		};
+		22ADDAAE1EE96D4300EB92F6 /* coverImg */ = {
 			isa = PBXGroup;
 			children = (
 				22ADDAAF1EE9794200EB92F6 /* 巴西img.jpg */,
@@ -251,7 +263,7 @@
 				22ADDABF1EE9794200EB92F6 /* 臺灣img.jpg */,
 				22ADDAC01EE9794200EB92F6 /* 美國img.jpg */,
 			);
-			name = figure;
+			name = coverImg;
 			sourceTree = "<group>";
 		};
 		22F43F3E1ECD660000791D55 /* Model */ = {
@@ -415,8 +427,6 @@
 			children = (
 				A742B1471EDEBA9300C7EA36 /* TBMS.entitlements */,
 				A742B14A1EDEC55000C7EA36 /* CertificateSigningRequest.certSigningRequest */,
-				A74BDDE61ED6FE0B00987446 /* airplane-symbol-7.png */,
-				A74BDDE81ED6FE1C00987446 /* circle-user-7.png */,
 				22FAC4651ED5812200C402D8 /* testStoryboard.storyboard */,
 				A76BAC3F1ECC6B4000443947 /* AppDelegate.swift */,
 				A76BA9F91ECC697000443947 /* DataManager.swift */,
@@ -429,7 +439,8 @@
 				A76BA9FF1ECC697000443947 /* ViewPointDetailViewController.swift */,
 				A76BAA001ECC697000443947 /* ViewPointListCell.swift */,
 				A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */,
-				22ADDAAE1EE96D4300EB92F6 /* figure */,
+				225C00B21EFA615000F01F2C /* Img */,
+				22ADDAAE1EE96D4300EB92F6 /* coverImg */,
 				A76BA9E31ECC67ED00443947 /* Assets.xcassets */,
 				CD90C3AF1EE7CA30006EF239 /* Launch.storyboard */,
 				A742B1451EDEBA4E00C7EA36 /* GoogleService-Info.plist */,
@@ -632,6 +643,7 @@
 				A742B1461EDEBA4E00C7EA36 /* GoogleService-Info.plist in Resources */,
 				CDEACC721EE03BE400280CEA /* 冰島.png in Resources */,
 				CDEACC741EE03BE400280CEA /* 委內瑞拉.png in Resources */,
+				225C00B41EFCE6C500F01F2C /* annotation.png in Resources */,
 				22ADDAD21EE9794200EB92F6 /* 美國img.jpg in Resources */,
 				22ADDACB1EE9794200EB92F6 /* 菲律賓img.jpg in Resources */,
 			);

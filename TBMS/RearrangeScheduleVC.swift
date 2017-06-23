@@ -54,6 +54,9 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
     fileprivate let currentPageDotTintColor = UIColor.black
     fileprivate let otherPageDotTintColor = UIColor.lightGray
     fileprivate let scheduleTypeCellColor = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
+
+    fileprivate let textPtYRatio: CGFloat = 2/79
+    fileprivate let textfontSetting = UIFont(name: "Helvetica Bold", size: 20)
     
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
     
@@ -74,8 +77,9 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
         cellContentsArray = prepareCellsContents(attractions: attractions!, routesDetails: routesDetails)
         
         // Setting the routeMapRegion & annotation
-        routeMapGenerator(attractions: attractions)
         map.delegate = self
+        routeMapGenerator(attractions: attractions)
+        
         // general the image whitch will display on the top
         //        coverPageImage.image = commentModel.imageGeneratore(selectedCountry: shareData.chooseCountry)
     }
@@ -95,6 +99,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
         
         self.collectionView.reloadData()
     }
+    
     
     // Setting gesture to let cells be movable
     func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
@@ -146,6 +151,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
         }
         return cellsContents
     }
+    
     
     /// To generate a complete route informationfor the property "goToNextSpot" of the spot-data type object.
     ///
@@ -297,6 +303,7 @@ extension RearrangeScheduleVC {
         self.navigationController?.pushViewController(scrollView!, animated: true)
     }
     
+    
     /// Produce the cellContent for next Page
     ///
     /// - Parameter intputArray: the cellContent Array including dateType and scheduleTrafficType cell, whitch we use them with different purples
@@ -341,6 +348,7 @@ extension RearrangeScheduleVC {
         }
         return seperateFinishArray
     }
+    
     
     /// To transfer cellContent Objct to the tripData type objct.
     func tripDataGenerator(cellContent: [CellContent]) -> tripData {
@@ -408,6 +416,7 @@ extension RearrangeScheduleVC {
         return trip
     }
     
+    
     /// To produce ViewController array that will put into the ScrollView
     ///
     /// - Parameters:
@@ -452,6 +461,7 @@ extension RearrangeScheduleVC {
         return travelDays
     }
     
+    
     func finishPlanningAndGoToNextPage() {
         
         let sb = UIStoryboard(name: nameOfFinalScheduleStoryBoard, bundle: nil)
@@ -471,6 +481,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         return cellContentsArray.count
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let dayCellSize = CGSize(width: UIScreen.main.bounds.width, height: 50)
@@ -485,6 +496,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             return lastAttractionsCellSize
         }
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -536,6 +548,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         }
     }
     
+    
     func collectionView(_ collectionView: UICollectionView, canMoveItemAt indexPath: IndexPath) -> Bool {
         
         var result = true
@@ -543,6 +556,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         
         return result
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
@@ -585,6 +599,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         
         let movedCellContent = cellContentsArray.remove(at: srcIndex)
         cellContentsArray.insert(movedCellContent, at: dstIndex)
+        
         
         // 關於插入Cell後的動作
         if cellContentsArray[dstIndex] is ScheduleAndTrafficCellContent { //在移動的是交通模式
@@ -641,16 +656,20 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             }
         }
         self.collectionView.reloadData()
+        
+        
     }
     
-    func transferToLastAttrCellContent (targetCellContent: inout ScheduleAndTrafficCellContent) {
+    
+    private func transferToLastAttrCellContent (targetCellContent: inout ScheduleAndTrafficCellContent) {
         
         targetCellContent.type = CustomerCellType.lastAttactionCellType
         targetCellContent.trafficInformation = nil
         targetCellContent.trafficTime = nil
     }
     
-    func getNewTrafficDetail (targetCellContent: inout ScheduleAndTrafficCellContent,
+    
+    fileprivate func getNewTrafficDetail (targetCellContent: inout ScheduleAndTrafficCellContent,
                               destination: Attraction,
                               completion: @escaping ( _ routeInformation:LegsData) -> Void) {
         
@@ -665,8 +684,9 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
 }
 
-// MARK: - MKMapViewDelegate protocol methods
+// MARK: - Methods for Annotation & MKMapViewDelegate protocol
 extension RearrangeScheduleVC: MKMapViewDelegate {
+    
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         
@@ -677,7 +697,42 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
         return renderer
     }
     
-    func routeMapGenerator(attractions: [Attraction]) {
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        let reuseID = annotation.subtitle! ?? "none"
+        var result = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID)
+        
+        if result == nil {
+            result = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            
+            let image = UIImage(named:  "annotation.png")
+            let pinImg = ProducePinImg( text: annotation.subtitle! ?? "error",
+                                        annotationImg: image! )
+            
+            guard let img = pinImg else {
+                print("沒有pinImg唷")
+                result?.image = image
+                return result
+            }
+            
+            result?.image = img
+            
+        } else {
+            result?.annotation = annotation
+        }
+        
+        result?.canShowCallout = true
+        
+        return result
+    }
+    
+    
+    fileprivate func routeMapGenerator(attractions: [Attraction]) {
         
         if map.annotations.isEmpty != true {
             map.remove(map.overlays as! MKOverlay)
@@ -688,8 +743,9 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
         var latSum = Double()
         var lngSum = Double()
         
-        for attr in attractions {
-    
+        for i in 0...attractions.count - 1 {
+            
+            let attr = attractions[i]
             guard let point = attr.coordinate else {
                 print("attr.coordinate isn't exist.")
                 return
@@ -700,8 +756,10 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = point
-            map.addAnnotation(annotation)
+            annotation.title = attr.attrctionName
+            annotation.subtitle = String(i + 1) // For present the number on the pin image
             
+            map.addAnnotation(annotation)
             points.append(point)
         }
         
@@ -726,5 +784,35 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
         
         let geodesic = MKGeodesicPolyline(coordinates: points, count: points.count)
         map.add(geodesic)
+    }
+    
+    fileprivate func ProducePinImg(text: String, annotationImg: UIImage) -> UIImage? {
+        
+        let imgSize = annotationImg.size
+        
+        let textFont = textfontSetting
+        let textColor = UIColor.white
+        //let paragraph = NSMutableParagraphStyle()
+        //paragraph.alignment = .center
+        let attributes = [ NSFontAttributeName: textFont,
+                           NSForegroundColorAttributeName: textColor ]
+        
+        let myText = NSMutableAttributedString(string: text, attributes: attributes)
+        let textSize = CGSize( width: myText.size().width,
+                               height: myText.size().height )
+        
+        UIGraphicsBeginImageContext(imgSize)
+        
+        let ptX = ( (imgSize.width - textSize.width)/2 )
+        let ptY = (imgSize.height * textPtYRatio)
+        let point = CGPoint(x: ptX, y: ptY)
+        
+        annotationImg.draw(in: CGRect(origin: CGPoint.zero, size: imgSize))
+        myText.draw(at: point)
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
     }
 }
