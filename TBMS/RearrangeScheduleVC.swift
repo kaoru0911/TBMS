@@ -54,7 +54,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
     fileprivate let currentPageDotTintColor = UIColor.black
     fileprivate let otherPageDotTintColor = UIColor.lightGray
     fileprivate let scheduleTypeCellColor = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
-
+    
     fileprivate let textPtYRatio: CGFloat = 2/79
     fileprivate let textfontSetting = UIFont(name: "Helvetica Bold", size: 20)
     
@@ -600,7 +600,6 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         let movedCellContent = cellContentsArray.remove(at: srcIndex)
         cellContentsArray.insert(movedCellContent, at: dstIndex)
         
-        
         // 關於插入Cell後的動作
         if cellContentsArray[dstIndex] is ScheduleAndTrafficCellContent { //在移動的是交通模式
             
@@ -657,7 +656,9 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         }
         self.collectionView.reloadData()
         
-        
+        let newAnnotations = createAnnotations(cellContents: cellContentsArray)
+        map.removeAnnotations(map.annotations)
+        map.addAnnotations(newAnnotations)
     }
     
     
@@ -670,8 +671,8 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
     
     
     fileprivate func getNewTrafficDetail (targetCellContent: inout ScheduleAndTrafficCellContent,
-                              destination: Attraction,
-                              completion: @escaping ( _ routeInformation:LegsData) -> Void) {
+                                          destination: Attraction,
+                                          completion: @escaping ( _ routeInformation:LegsData) -> Void) {
         
         targetCellContent.type = CustomerCellType.scheduleAndTrafficCellType
         
@@ -746,33 +747,31 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
         for i in 0...attractions.count - 1 {
             
             let attr = attractions[i]
+            
             guard let point = attr.coordinate else {
                 print("attr.coordinate isn't exist.")
                 return
             }
+            points.append(point)
             
             latSum += Double(point.latitude)
             lngSum += Double(point.longitude)
             
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = point
-            annotation.title = attr.attrctionName
-            annotation.subtitle = String(i + 1) // For present the number on the pin image
-            
+            let annotation = createAnnotation(attraction: attr, attrIndex: i)
             map.addAnnotation(annotation)
-            points.append(point)
         }
         
-        let totalPoints = Double(points.count)
+        let totalPoints = Double(map.annotations.count)
         let center = CLLocationCoordinate2DMake(latSum/totalPoints, lngSum/totalPoints)
         
         var maxLatSpec = 0.0
         var maxLngSpec = 0.0
         
-        for point in points {
+        for point in map.annotations {
             
-            let latSpec = abs(point.latitude - center.latitude)
-            let lngSpec = abs(point.longitude - center.longitude)
+            let coordinate = point.coordinate
+            let latSpec = abs(coordinate.latitude - center.latitude)
+            let lngSpec = abs(coordinate.longitude - center.longitude)
             
             maxLatSpec = max(latSpec, maxLatSpec)
             maxLngSpec = max(lngSpec, maxLngSpec)
@@ -785,6 +784,39 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
         let geodesic = MKGeodesicPolyline(coordinates: points, count: points.count)
         map.add(geodesic)
     }
+    
+    
+    fileprivate func createAnnotation(attraction: Attraction, attrIndex: Int) -> MKPointAnnotation {
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = attraction.coordinate
+        annotation.title = attraction.attrctionName
+        annotation.subtitle = String(attrIndex + 1) // For present the number on the pin image
+        
+        return annotation
+    }
+    
+    
+    fileprivate func createAnnotations(cellContents: [CellContent]) -> [MKPointAnnotation] {
+        
+        var annotations = [MKPointAnnotation]()
+        var attrIndex = 0
+        
+        for cellContent in cellContents {
+            
+            if cellContent is ScheduleAndTrafficCellContent {
+                
+                let content = cellContent as! ScheduleAndTrafficCellContent
+                let annotation = createAnnotation(attraction: content.attraction, attrIndex: attrIndex)
+                annotations.append(annotation)
+                
+                attrIndex += 1
+            }
+        }
+        
+        return annotations
+    }
+    
     
     fileprivate func ProducePinImg(text: String, annotationImg: UIImage) -> UIImage? {
         
