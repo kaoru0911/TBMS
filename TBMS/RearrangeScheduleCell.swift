@@ -31,6 +31,7 @@ class DateCell: UICollectionViewCell {
 
 class CellContent: NSObject {
     var type: CustomerCellType!
+    var cellColor: UIColor!
 }
 
 /// For Storing the cell content about the DateType cell.

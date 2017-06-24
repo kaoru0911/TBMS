@@ -6,6 +6,8 @@
 //  Copyright © 2017年 Chiao. All rights reserved.
 //
 
+// TODO: 天cell的顏色, 增加天數的button
+
 import UIKit
 import CoreLocation
 import MapKit
@@ -15,7 +17,7 @@ import GoogleMaps
 
 class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
     
-    // MARK: - Keys
+    // MARK: Keys
     fileprivate let keyOfDateCell = "dailyScheduleSetting"
     fileprivate let keyOfScheduleAndTrafficCell = "scheduleArray"
     fileprivate let nameOfFinalScheduleStoryBoard = "Main"
@@ -37,12 +39,13 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
     let transitTravelTypeLabel = "捷運/地鐵"
     let defaultTravelTypeLabel = "異常"
     
-    // MARK: - Values
+    // MARK:- Values
     //    @IBOutlet weak var coverPageImage: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var map: MKMapView!
     
     let shareData = DataManager.shareDataManager
+    
     var attractions: [Attraction]!
     var routesDetails: [LegsData]!
     var cellContentsArray = [CellContent]()
@@ -54,13 +57,20 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
     fileprivate let currentPageDotTintColor = UIColor.black
     fileprivate let otherPageDotTintColor = UIColor.lightGray
     fileprivate let scheduleTypeCellColor = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
+    fileprivate let routeColors = [UIColor.brown,
+                                   UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1),
+                                   UIColor.orange,
+                                   UIColor.red,
+                                   UIColor.blue,
+                                   UIColor.purple,
+                                   UIColor.green]
     
     fileprivate let textPtYRatio: CGFloat = 2/79
     fileprivate let textfontSetting = UIFont(name: "Helvetica Bold", size: 20)
     
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
     
-    // MARK: - Methods/
+    // MARK: Methods/
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -75,6 +85,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
         
         // Prepare cells display contents
         cellContentsArray = prepareCellsContents(attractions: attractions!, routesDetails: routesDetails)
+        prepareCellsColor(cellContents: cellContentsArray)
         
         // Setting the routeMapRegion & annotation
         map.delegate = self
@@ -150,6 +161,25 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
             }
         }
         return cellsContents
+    }
+    
+    fileprivate func prepareCellsColor(cellContents:[CellContent]) {
+        
+        // 方案： 1. 重算. 2. 僅算插入
+        var colorIndex = 0
+        
+        for cellContent in cellContents {
+            
+            if cellContent is DateCellContent {
+                colorIndex += 1
+            }
+            
+            if colorIndex > routeColors.count {
+                colorIndex = colorIndex % routeColors.count
+            }
+            
+            cellContent.cellColor = routeColors[colorIndex]
+        }
     }
     
     
@@ -489,11 +519,13 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         let lastAttractionsCellSize = CGSize(width: UIScreen.main.bounds.width, height: 60)
         
         switch cellContentsArray[indexPath.item].type! {
+        
         case .dateCellType: return dayCellSize
-        case .scheduleAndTrafficCellType:
-            return attractionsCellSize
-        case .lastAttactionCellType:
-            return lastAttractionsCellSize
+        
+        case .scheduleAndTrafficCellType: return attractionsCellSize
+        
+        case .lastAttactionCellType: return lastAttractionsCellSize
+        
         }
     }
     
@@ -506,15 +538,20 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         case .dateCellType:
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForDateTypeCell, for: indexPath) as! DateCell
-            // if is the 1st day cell, show the adding days button
+            
             if indexPath.item == 0 {
+              
                 cell.addNewTripDayButton.isHidden = false
+            
             } else {
+            
                 cell.addNewTripDayButton.isHidden = true
             }
+            
             // setting the label text
             let cellContent = cellContentsArray[indexPath.item] as! DateCellContent
             cell.dateLabel.text = cellContent.dateStringForLabel
+            cell.dateLabel.font = UIFont.boldSystemFont(ofSize: 24)
             
             return cell
             
@@ -530,7 +567,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             cell.trafficInf.text = generateRouteTitleString(cellContent: cellContent)
             
             cell.viewPointBGBlock.layer.cornerRadius = 10
-            cell.viewPointBGBlock.backgroundColor = scheduleTypeCellColor
+            cell.viewPointBGBlock.backgroundColor = cellContent.cellColor//scheduleTypeCellColor
             
             return cell
             
@@ -542,7 +579,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             cell.viewPointName.text = cellContent.viewPointName
             cell.viewPointBGBlock.layer.cornerRadius = 10
-            cell.viewPointBGBlock.backgroundColor = scheduleTypeCellColor
+            cell.viewPointBGBlock.backgroundColor = cellContent.cellColor//scheduleTypeCellColor
             
             return cell
         }
@@ -557,7 +594,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         return result
     }
     
-    
+    // FIXME: 移動DateCell的情況未寫：1. 第三天移到第二天要自動變換, 2. 移回最末端會crash
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         guard sourceIndexPath != destinationIndexPath else {
@@ -654,11 +691,15 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
                 }
             }
         }
+        prepareCellsColor(cellContents: cellContentsArray)
         self.collectionView.reloadData()
         
-        let newAnnotations = createAnnotations(cellContents: cellContentsArray)
+        let (newAnnotations,newGeodesics) = createAnnotationsAndGeodesics(cellContents: cellContentsArray)
+        
         map.removeAnnotations(map.annotations)
+        map.removeOverlays(map.overlays)
         map.addAnnotations(newAnnotations)
+        map.addOverlays(newGeodesics)
     }
     
     
@@ -688,17 +729,27 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
 // MARK: - Methods for Annotation & MKMapViewDelegate protocol
 extension RearrangeScheduleVC: MKMapViewDelegate {
     
-    
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         
         let renderer = MKPolylineRenderer(overlay: overlay)
-        renderer.lineWidth = 3.0
-        renderer.strokeColor = UIColor.red
+        renderer.lineWidth = 2.5
+        
+        guard let indexString = renderer.polyline.subtitle else {
+            print("index不存在唷")
+            renderer.strokeColor = routeColors[1]
+            return renderer
+        }
+        
+        let geoIndex = Int(indexString)
+        print("geoIndex = \(geoIndex)")
+        let colorIndex = (geoIndex! + 1) % routeColors.count
+        //        let colorIndex = 1
+        renderer.strokeColor = routeColors[colorIndex]
         
         return renderer
     }
     
-    
+    // TODO: 尋找隱藏圖標細節的方法
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         if annotation is MKUserLocation {
@@ -728,7 +779,7 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
         }
         
         result?.canShowCallout = true
-        
+        result?.detailCalloutAccessoryView?.isHidden = true /// 隱藏細節失敗
         return result
     }
     
@@ -797,10 +848,14 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
     }
     
     
-    fileprivate func createAnnotations(cellContents: [CellContent]) -> [MKPointAnnotation] {
+    fileprivate func createAnnotationsAndGeodesics(cellContents: [CellContent]) -> ([MKPointAnnotation],[MKGeodesicPolyline]) {
         
         var annotations = [MKPointAnnotation]()
         var attrIndex = 0
+        
+        var tmpPtCoordonates = [CLLocationCoordinate2D]()
+        var totalCoordinate = [[CLLocationCoordinate2D]]()
+        var geodesics = [MKGeodesicPolyline]()
         
         for cellContent in cellContents {
             
@@ -808,13 +863,34 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
                 
                 let content = cellContent as! ScheduleAndTrafficCellContent
                 let annotation = createAnnotation(attraction: content.attraction, attrIndex: attrIndex)
+                
+                tmpPtCoordonates.append(annotation.coordinate)
                 annotations.append(annotation)
                 
                 attrIndex += 1
+                
+            } else if cellContent is DateCellContent  {
+                
+                guard (cellContent as! DateCellContent).date != 1 else { continue }
+                print("dateCell囉： 第\((cellContent as! DateCellContent).date!)天")
+                
+                totalCoordinate.append(tmpPtCoordonates)
+                tmpPtCoordonates.removeAll()
+                attrIndex = 0
             }
         }
         
-        return annotations
+        totalCoordinate += [tmpPtCoordonates]
+        
+        for i in 0 ... totalCoordinate.count - 1 {
+            let coordinates = totalCoordinate[i]
+            let geodesic = MKGeodesicPolyline(coordinates: coordinates, count: coordinates.count)
+            geodesic.subtitle = String(i)
+            geodesics.append(geodesic)
+        }
+        
+        return (annotations,geodesics)
+        
     }
     
     
