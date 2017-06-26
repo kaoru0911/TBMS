@@ -24,18 +24,11 @@ class ScheduleTableViewController: UITableViewController {
     var selectedProcess: String!
     
     let googleMapSchemeStr = "https://www.google.es/maps/dir/"
-    //====test===
-    //    var sharedData = DataManager.shareDataManager
-    //=======
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
-        
-        //        data = (sharedData.pocketTrips?[0])!
-        
-        //        nDaySchedule = 2
         
         spotData = filter.filtBySpotNDays(nDays: nDaySchedule, trip: data)
         

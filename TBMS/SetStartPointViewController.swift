@@ -155,13 +155,7 @@ class SetStartPointViewController: UIViewController {
         vc.routesDetails = routesDetails
         vc.attractions = attractionsListToNextPage
         vc.selectedTravelMod = expectedTravelMode
-//        vc.map = vc.routeMapGenerator(attractions: attractionsListToNextPage)
-//        
-//        if vc.map == nil {
-//            print("map產生異常")
-//        }
         
-        // close the loading view
         customActivityIndicatory(self.view, startAnimate: false)
     }
 }

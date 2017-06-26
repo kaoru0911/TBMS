@@ -109,6 +109,9 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
         cellContentsArray.append(newDateCellContent)
         
         self.collectionView.reloadData()
+        
+        let lastIndex = IndexPath(item: cellContentsArray.count - 1, section: 0)
+        self.collectionView.scrollToItem(at: lastIndex, at: UICollectionViewScrollPosition.centeredVertically, animated: true)
     }
     
     
@@ -388,17 +391,17 @@ extension RearrangeScheduleVC {
         var tmpAttractionData = tripSpotData()
         var tmpDateStorage = 0
         var tmpCellIndexCount = 0
-        var tmpList = [Int]()
+        var removeList = [Int]()
         
         for i in 0...cellContentsArray.count - 1 {
             
-            if cellContentsArray[i] is DateCellContent && cellContentsArray[i+1] is DateCellContent {
+            guard i - 1 >= 0 else { continue }
+            
+            if cellContentsArray[i-1] is DateCellContent && cellContentsArray[i] is DateCellContent {
                 
-                tmpList.append(i)
+                removeList.insert(i, at: 0)
             }
         }
-        
-        let removeList = tmpList.sorted { $0 > $1 }
         
         for i in removeList {
             cellContentsArray.remove(at: i)
