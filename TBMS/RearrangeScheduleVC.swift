@@ -40,7 +40,6 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
     let defaultTravelTypeLabel = "異常"
     
     // MARK:- Values
-    //    @IBOutlet weak var coverPageImage: UIImageView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var map: MKMapView!
     
@@ -69,6 +68,7 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
     fileprivate let textfontSetting = UIFont(name: "Helvetica Bold", size: 20)
     
     fileprivate var longPressGesture: UILongPressGestureRecognizer!
+    fileprivate var swipeLeftGesture: UISwipeGestureRecognizer!
     
     // MARK: Methods/
     override func viewDidLoad() {
@@ -92,7 +92,6 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
         routeMapGenerator(attractions: attractions)
         
         // general the image whitch will display on the top
-        //        coverPageImage.image = commentModel.imageGeneratore(selectedCountry: shareData.chooseCountry)
     }
     
     
@@ -135,6 +134,32 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
         }
     }
     
+    func handleswipeLeftGesture( gesture: UISwipeGestureRecognizer) {
+        
+        guard gesture.direction == .left else { return }
+        
+        guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else { return }
+        
+        guard let cell = self.collectionView.cellForItem(at: selectedIndexPath) as? DateCell else {
+            return
+        }
+        
+//        cell.isFocused = true
+//        let frame = cell.addNewTripDayButton.frame
+//        
+//        let deleteButton = UIButton(frame: frame)
+//        deleteButton.titleLabel?.text = "刪除"
+//        deleteButton.isHidden = false
+//        deleteButton.addTarget(self, action: #selector(self.deleteCell), for: UIControlEvents.touchUpInside)
+//        cell.reloadInputViews()
+//        
+//        self.collectionView.reloadItems(at: [selectedIndexPath])
+        
+    }
+    
+    func deleteCell(index: IndexPath) {
+        
+    }
     
     /// Initialize the cells contents
     ///
@@ -168,20 +193,23 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
     
     fileprivate func prepareCellsColor(cellContents:[CellContent]) {
         
-        // 方案： 1. 重算. 2. 僅算插入
         var colorIndex = 0
         
-        for cellContent in cellContents {
+        for i in 0 ... cellContents.count - 1 {
             
-            if cellContent is DateCellContent {
-                colorIndex += 1
-            }
+            let cellContent = cellContents[i]
             
             if colorIndex > routeColors.count {
                 colorIndex = colorIndex % routeColors.count
             }
             
             cellContent.cellColor = routeColors[colorIndex]
+            
+            guard i+1 < cellContents.count else { continue }
+            
+            if cellContent is DateCellContent && (cellContents[i+1] is DateCellContent) == false {
+                colorIndex += 1
+            }
         }
     }
     
@@ -540,6 +568,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         //Check the cell is for prsenting Date or for presenting viewPoint and traffic information, then built it.
@@ -604,7 +633,8 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         return result
     }
     
-    // FIXME: 移動DateCell的情況未寫：1. 第三天移到第二天要自動變換, 2. 移回最末端會crash
+    
+    // FIXME: 移動DateCell的情況未寫：1. 第三天移到第二天要自動變換
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         guard sourceIndexPath != destinationIndexPath else {
@@ -625,7 +655,6 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             if cellContentsArray[srcPreIndex] is ScheduleAndTrafficCellContent {   //如果前一個是交通格式交通格式, 處理前一個屬性
                 
-                //                let indexPath = IndexPath(index: srcPreIndex)
                 var previousCellContent = cellContentsArray[srcPreIndex] as! ScheduleAndTrafficCellContent
                 
                 if srcNextIndex <= cellContentsArray.count - 1
@@ -640,7 +669,6 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
                                         completion: { (legsData) in
                                             previousCellContent.setTrafficValue(legsData: legsData)
                                             self.collectionView.reloadData()
-                                            //self.collectionView.reloadItems(at: [indexPath])
                     })
                     
                 } else {
@@ -656,12 +684,10 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         // 關於插入Cell後的動作
         if cellContentsArray[dstIndex] is ScheduleAndTrafficCellContent { //在移動的是交通模式
             
-            //            let indexPath = IndexPath(index: dstIndex)
             var movedCellContent = cellContentsArray[dstIndex] as! ScheduleAndTrafficCellContent
             //如果前一個cell是交通模式, 變更前一個的CellType, 並重算前一個的交通
             if dstPreIndex > 0 && cellContentsArray[dstPreIndex] is ScheduleAndTrafficCellContent {
                 
-                //                    print("移動後前一個是交通唷")
                 var dstPreCellContent = cellContentsArray[dstPreIndex] as! ScheduleAndTrafficCellContent
                 dstPreCellContent.type = CustomerCellType.scheduleAndTrafficCellType
                 
@@ -671,6 +697,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
                                     completion: { (legsData) in
                                         
                                         dstPreCellContent.setTrafficValue(legsData: legsData)
+                                        self.prepareCellsColor(cellContents: self.cellContentsArray)
                                         self.collectionView.reloadData()
                 })
             }
@@ -678,7 +705,6 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             if dstNextIndex <= cellContentsArray.count - 1
                 && cellContentsArray[dstNextIndex] is ScheduleAndTrafficCellContent {
                 
-                //                    print("移動後本身是交通唷")
                 let nextCellContent = cellContentsArray[dstNextIndex] as! ScheduleAndTrafficCellContent
                 getNewTrafficDetail(targetCellContent: &movedCellContent,
                                     destination: nextCellContent.attraction,
@@ -699,14 +725,13 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             
             // 如果前面是traffic, 將traffic inf設為nil, 並變更type為last
             if dstPreIndex >= 0 && cellContentsArray[dstPreIndex] is ScheduleAndTrafficCellContent {
-                //                    print("移動後前一個是交通唷")
                 var dstPreCellContent = cellContentsArray[dstPreIndex] as! ScheduleAndTrafficCellContent
                 transferToLastAttrCellContent(targetCellContent: &dstPreCellContent)
             }
             
-            prepareCellsColor(cellContents: cellContentsArray)
-            self.collectionView.reloadData()
-            //            reloadDataAndResetCellsDate()
+//            prepareCellsColor(cellContents: cellContentsArray)
+//            self.collectionView.reloadData()
+            reloadDataAndResetCellsDate()
         }
         
         //        prepareCellsColor(cellContents: cellContentsArray)
@@ -719,7 +744,6 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         map.removeOverlays(map.overlays)
         map.addAnnotations(newAnnotations)
         map.addOverlays(newGeodesics)
-        
     }
     
     
@@ -745,18 +769,18 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         }
     }
     
+    
     private func reloadDataAndResetCellsDate() {
         
-        var date = 0
+        var date = 1
         
         for cellContent in cellContentsArray {
             
-            if let content = cellContent as? DateCellContent {
-                content.date = date
+            if cellContent is DateCellContent {
+                (cellContent as! DateCellContent).date = date
                 date += 1
             }
         }
-        
         prepareCellsColor(cellContents: cellContentsArray)
         self.collectionView.reloadData()
     }

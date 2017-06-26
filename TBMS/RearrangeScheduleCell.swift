@@ -36,14 +36,17 @@ class CellContent: NSObject {
 
 /// For Storing the cell content about the DateType cell.
 class DateCellContent: CellContent {
+    
     var date: Int!
-    var dateStringForLabel: String!
+    var dateStringForLabel: String! {
+        get { return "第\(date!)天" }
+    }
     var colorTypeForScheduleOutoutPage: ColorSetting!
     
     required init(dateValue:Int) {
         super.init()
         self.date = dateValue
-        self.dateStringForLabel = "第\(dateValue)天"
+//        self.dateStringForLabel = "第\(dateValue)天"
         self.type = CustomerCellType.dateCellType
     }
 }
