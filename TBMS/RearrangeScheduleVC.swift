@@ -15,7 +15,7 @@ import GooglePlaces
 import GooglePlacePicker
 import GoogleMaps
 
-class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
+class RearrangeScheduleVC: UIViewController {
     
     // MARK: Keys
     fileprivate let keyOfDateCell = "dailyScheduleSetting"
@@ -44,14 +44,19 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
     @IBOutlet weak var map: MKMapView!
     
     let shareData = DataManager.shareDataManager
+    let commentModel = GeneralToolModels()
     
     var attractions: [Attraction]!
     var routesDetails: [LegsData]!
-    var cellContentsArray = [CellContent]()
-    var travelDays: Int!
-    var tmpTripData = [tripSpotData]()
     var selectedTravelMod: TravelMod!
-    let commentModel = GeneralToolModels()
+    
+    fileprivate var cellContentsArray = [CellContent]()
+    fileprivate var travelDays: Int!
+    fileprivate var tmpTripData = [tripSpotData]()
+    fileprivate var swipedCell : DateCell!
+    
+    fileprivate let textPtYRatio: CGFloat = 2/79
+    fileprivate let textfontSetting = UIFont(name: "Helvetica Bold", size: 20)
     
     fileprivate let currentPageDotTintColor = UIColor.black
     fileprivate let otherPageDotTintColor = UIColor.lightGray
@@ -64,20 +69,17 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
                                    UIColor.purple,
                                    UIColor.green]
     
-    fileprivate let textPtYRatio: CGFloat = 2/79
-    fileprivate let textfontSetting = UIFont(name: "Helvetica Bold", size: 20)
     
-    fileprivate var longPressGesture: UILongPressGestureRecognizer!
-    fileprivate var swipeLeftGesture: UISwipeGestureRecognizer!
+    //    fileprivate var longPressGesture: UILongPressGestureRecognizer!
+    //    fileprivate var swipeLeftGesture: UISwipeGestureRecognizer!
+    //    fileprivate var swipeRightGesture: UISwipeGestureRecognizer!
     
-    // MARK: Methods/
+    // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        // Setting gesture to let cell be movable.
-        longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(self.handleLongGesture(_:)))
-        self.collectionView.addGestureRecognizer(longPressGesture)
+        setupViewGesture()
         
         // Setting cells space
         let collectionViewLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
@@ -113,53 +115,15 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
         self.collectionView.scrollToItem(at: lastIndex, at: UICollectionViewScrollPosition.centeredVertically, animated: true)
     }
     
-    
-    // Setting gesture to let cells be movable
-    func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
+    @IBAction func deleteDateCellBtnPressed(_ sender: UIButton) {
         
-        switch(gesture.state) {
-            
-        case UIGestureRecognizerState.began:
-            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else { break }
-            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
-            
-        case UIGestureRecognizerState.changed:
-            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
-            
-        case UIGestureRecognizerState.ended:
-            collectionView.endInteractiveMovement()
-            
-        default:
-            collectionView.cancelInteractiveMovement()
-        }
+        let targetCellIndex = IndexPath(item: sender.tag, section: 0)
+        removeCell(cellIndex: targetCellIndex)
+        
+        prepareCellsColor(cellContents: self.cellContentsArray)
+        reloadDataAndResetCellsDate()
     }
     
-    func handleswipeLeftGesture( gesture: UISwipeGestureRecognizer) {
-        
-        guard gesture.direction == .left else { return }
-        
-        guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else { return }
-        
-        guard let cell = self.collectionView.cellForItem(at: selectedIndexPath) as? DateCell else {
-            return
-        }
-        
-//        cell.isFocused = true
-//        let frame = cell.addNewTripDayButton.frame
-//        
-//        let deleteButton = UIButton(frame: frame)
-//        deleteButton.titleLabel?.text = "刪除"
-//        deleteButton.isHidden = false
-//        deleteButton.addTarget(self, action: #selector(self.deleteCell), for: UIControlEvents.touchUpInside)
-//        cell.reloadInputViews()
-//        
-//        self.collectionView.reloadItems(at: [selectedIndexPath])
-        
-    }
-    
-    func deleteCell(index: IndexPath) {
-        
-    }
     
     /// Initialize the cells contents
     ///
@@ -329,6 +293,133 @@ class RearrangeScheduleVC: UIViewController, UIGestureRecognizerDelegate{
         }
         
         return "\(trafficTypeText), \(travelTime)"
+    }
+    
+    // MARK: Methods to handle gestures in collectionView.
+    func setupViewGesture(){
+        
+        // Setting up long press gesture to let cell be movable.
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongGesture(_:)))
+        
+        // Setting up swipe gesture recognizer
+        let swipeLeft : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeLeftGesture(_:)))
+        swipeLeft.direction = .left
+        
+        let swipeRight : UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeRightGesture))
+        swipeRight.direction = .right
+        
+        collectionView.addGestureRecognizer(longPress)
+        collectionView.addGestureRecognizer(swipeLeft)
+        collectionView.addGestureRecognizer(swipeRight)
+    }
+    
+    
+    func handleLongGesture(_ gesture: UILongPressGestureRecognizer) {
+        
+        switch(gesture.state) {
+            
+        case UIGestureRecognizerState.began:
+            guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else { break }
+            collectionView.beginInteractiveMovementForItem(at: selectedIndexPath)
+            
+        case UIGestureRecognizerState.changed:
+            collectionView.updateInteractiveMovementTargetPosition(gesture.location(in: gesture.view!))
+            
+        case UIGestureRecognizerState.ended:
+            collectionView.endInteractiveMovement()
+            
+        default:
+            collectionView.cancelInteractiveMovement()
+        }
+    }
+    
+    
+    func handleSwipeLeftGesture(_ gesture : UISwipeGestureRecognizer){
+        
+        let point = gesture.location(in: collectionView)
+        
+        guard let cell = getCellAtPoint(point) else { return }
+        
+        guard let firstCellContent = cellContentsArray[0] as? DateCellContent else {
+            print("ERROR: 1st cell isn't DateCell")
+            return
+        }
+        
+        guard cell.dateLabel.text != firstCellContent.dateStringForLabel else { return }
+        
+        let duration = animationDuration()
+        let moveSpace: CGFloat = cell.deleteBtn.frame.width
+        
+        if (swipedCell == nil) {
+            
+            swipedCell = cell
+            UIView.animate(withDuration: duration, animations: {
+                self.swipedCell.cellContentBlock.transform = CGAffineTransform(translationX: -moveSpace, y: 0)
+            })
+            
+        } else {
+            
+            //            // If the cell is the previously swiped cell, or nothing assume its the previously one.
+            //            if cell == swipedCell {
+            //                // To target the cell after that animation I test if the point of the swiping exists inside the now twice as tall cell frame
+            //                let cellFrame = swipedCell.frame
+            //                let rect = CGRect(x: cellFrame.origin.x, y: cellFrame.origin.y - cellFrame.height, width: cellFrame.width, height: cellFrame.height + moveSpace)
+            //
+            //                //                if rect.contains(point) {
+            //                //
+            //                //                    // If swipe point is in the cell delete it
+            //                //                    let indexPath = myView.indexPath(for: swipedCell)
+            //                //                    cats.remove(at: indexPath!.row)
+            //                //                    myView.deleteItems(at: [indexPath!])
+            //                //                }
+            //
+            //                // If another cell is swiped
+            //            } else if swipedCell != cell {
+            
+            // It's not the same cell that is swiped, so the previously selected cell will get unswiped and the new swiped.
+            UIView.animate(withDuration: duration,
+                           
+                           animations: {
+                            self.swipedCell.cellContentBlock.transform = CGAffineTransform.identity
+                            cell.cellContentBlock.transform = CGAffineTransform(translationX: -moveSpace, y: 0) },
+                           
+                           completion: {
+                            (Void) in
+                            self.swipedCell = cell })
+            //            }
+        }
+    }
+    
+    
+    func handleSwipeRightGesture(){
+        
+        // Revert back
+        if(swipedCell != nil){
+            let duration = animationDuration()
+            
+            UIView.animate(withDuration: duration, animations: {
+                self.swipedCell.cellContentBlock.transform = CGAffineTransform.identity
+            }, completion: {
+                (Void) in
+                self.swipedCell = nil
+            })
+        }
+    }
+    
+    private func getCellAtPoint(_ point: CGPoint) -> DateCell? {
+        // Function for getting item at point. Note optionals as it could be nil
+        let indexPath = collectionView.indexPathForItem(at: point)
+        
+        guard indexPath != nil else { return nil }
+        
+        guard let cell = collectionView.cellForItem(at: indexPath!) as? DateCell else {
+            return nil
+        }
+        return cell
+    }
+    
+    func animationDuration() -> Double {
+        return 0.5
     }
 }
 
@@ -512,6 +603,7 @@ extension RearrangeScheduleVC {
             tmpVCArray += [tmpVC]
             print("tmpVCArray=\(tmpVCArray.count)")
         }
+        
         return tmpVCArray
     }
     
@@ -530,7 +622,7 @@ extension RearrangeScheduleVC {
     }
     
     
-    func finishPlanningAndGoToNextPage() {
+    @objc fileprivate func finishPlanningAndGoToNextPage() {
         
         let sb = UIStoryboard(name: nameOfFinalScheduleStoryBoard, bundle: nil)
         let vc = sb.instantiateViewController(withIdentifier: nameOfUploadlScheduleVC) as! UploadTravelScheduleViewController
@@ -567,7 +659,13 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
@@ -579,7 +677,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdForDateTypeCell, for: indexPath) as! DateCell
             
             if indexPath.item == 0 {
-                
+
                 cell.addNewTripDayButton.isHidden = false
                 
             } else {
@@ -591,6 +689,9 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             let cellContent = cellContentsArray[indexPath.item] as! DateCellContent
             cell.dateLabel.text = cellContent.dateStringForLabel
             cell.dateLabel.font = UIFont.boldSystemFont(ofSize: 24)
+            cell.deleteBtn.tag = indexPath.item
+            
+            cell.cellContentBlock.transform = CGAffineTransform.identity
             
             return cell
             
@@ -634,7 +735,6 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     
-    // FIXME: 移動DateCell的情況未寫：1. 第三天移到第二天要自動變換
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         guard sourceIndexPath != destinationIndexPath else {
@@ -642,15 +742,27 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             return
         }
         
-        let srcIndex = sourceIndexPath.item
+        // 關於移走的cell的變動
+        let movedCellContent = removeCell(cellIndex: sourceIndexPath)
+        insertCell(insertCellContent: movedCellContent, destinationIndexPath: destinationIndexPath)
+        
+        let (newAnnotations,newGeodesics) = createAnnotationsAndGeodesics(cellContents: cellContentsArray)
+        
+        map.removeAnnotations(map.annotations)
+        map.removeOverlays(map.overlays)
+        map.addAnnotations(newAnnotations)
+        map.addOverlays(newGeodesics)
+        
+        print(self.collectionView.visibleCells)
+    }
+    
+    
+    fileprivate func removeCell(cellIndex: IndexPath) -> CellContent {
+        
+        let srcIndex = cellIndex.item
         let srcPreIndex = srcIndex - 1
         let srcNextIndex = srcIndex + 1
         
-        let dstIndex = (destinationIndexPath.item != 0 ? destinationIndexPath.item: 1)
-        let dstPreIndex = dstIndex - 1
-        let dstNextIndex = dstIndex + 1
-        
-        // 關於移走的cell的變動
         if srcPreIndex > 0 {
             
             if cellContentsArray[srcPreIndex] is ScheduleAndTrafficCellContent {   //如果前一個是交通格式交通格式, 處理前一個屬性
@@ -666,20 +778,27 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
                     let destination = (cellContentsArray[srcNextIndex] as! ScheduleAndTrafficCellContent).attraction
                     getNewTrafficDetail(targetCellContent: &previousCellContent,
                                         destination: destination!,
-                                        completion: { (legsData) in
+                                        completion: {
+                                            (legsData) in
                                             previousCellContent.setTrafficValue(legsData: legsData)
-                                            self.collectionView.reloadData()
-                    })
-                    
+                                            self.collectionView.reloadData() })
                 } else {
                     
                     transferToLastAttrCellContent(targetCellContent: &previousCellContent)
                 }
             }
         }
+        return cellContentsArray.remove(at: srcIndex)
+    }
+    
+    
+    private func insertCell (insertCellContent: CellContent, destinationIndexPath: IndexPath) {
         
-        let movedCellContent = cellContentsArray.remove(at: srcIndex)
-        cellContentsArray.insert(movedCellContent, at: dstIndex)
+        let dstIndex = (destinationIndexPath.item != 0 ? destinationIndexPath.item: 1)
+        let dstPreIndex = dstIndex - 1
+        let dstNextIndex = dstIndex + 1
+        
+        cellContentsArray.insert(insertCellContent, at: dstIndex)
         
         // 關於插入Cell後的動作
         if cellContentsArray[dstIndex] is ScheduleAndTrafficCellContent { //在移動的是交通模式
@@ -697,7 +816,6 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
                                     completion: { (legsData) in
                                         
                                         dstPreCellContent.setTrafficValue(legsData: legsData)
-                                        self.prepareCellsColor(cellContents: self.cellContentsArray)
                                         self.collectionView.reloadData()
                 })
             }
@@ -719,6 +837,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
                 transferToLastAttrCellContent(targetCellContent: &movedCellContent)
             }
             
+            self.prepareCellsColor(cellContents: self.cellContentsArray)
             self.collectionView.reloadData()
             
         } else {
@@ -729,21 +848,8 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
                 transferToLastAttrCellContent(targetCellContent: &dstPreCellContent)
             }
             
-//            prepareCellsColor(cellContents: cellContentsArray)
-//            self.collectionView.reloadData()
             reloadDataAndResetCellsDate()
         }
-        
-        //        prepareCellsColor(cellContents: cellContentsArray)
-        //        reloadData()
-        //        self.collectionView.reloadData()
-        
-        let (newAnnotations,newGeodesics) = createAnnotationsAndGeodesics(cellContents: cellContentsArray)
-        
-        map.removeAnnotations(map.annotations)
-        map.removeOverlays(map.overlays)
-        map.addAnnotations(newAnnotations)
-        map.addOverlays(newGeodesics)
     }
     
     
@@ -770,7 +876,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     
-    private func reloadDataAndResetCellsDate() {
+    fileprivate func reloadDataAndResetCellsDate() {
         
         var date = 1
         
@@ -785,6 +891,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
         self.collectionView.reloadData()
     }
 }
+
 
 // MARK: - Methods for Annotation & MKMapViewDelegate protocol
 extension RearrangeScheduleVC: MKMapViewDelegate {
@@ -823,7 +930,7 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
             result = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
             
             let image = UIImage(named:  "annotation.png")
-            let pinImg = ProducePinImg( text: annotation.subtitle! ?? "error",
+            let pinImg = producePinImg( text: annotation.subtitle! ?? "error",
                                         annotationImg: image! )
             
             guard let img = pinImg else {
@@ -954,7 +1061,7 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
     }
     
     
-    private func ProducePinImg(text: String, annotationImg: UIImage) -> UIImage? {
+    private func producePinImg(text: String, annotationImg: UIImage) -> UIImage? {
         
         let imgSize = annotationImg.size
         

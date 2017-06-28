@@ -514,7 +514,7 @@
 				TargetAttributes = {
 					A76BA9D81ECC67ED00443947 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = HFASZRDDQG;
+						DevelopmentTeam = 7Y4TPNE48W;
 						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
@@ -867,7 +867,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = YES;
 				CODE_SIGN_ENTITLEMENTS = TBMS/TBMS.entitlements;
-				DEVELOPMENT_TEAM = HFASZRDDQG;
+				DEVELOPMENT_TEAM = 7Y4TPNE48W;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/GoogleMaps/Base/Frameworks",
@@ -894,7 +894,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = YES;
 				CODE_SIGN_ENTITLEMENTS = TBMS/TBMS.entitlements;
-				DEVELOPMENT_TEAM = HFASZRDDQG;
+				DEVELOPMENT_TEAM = 7Y4TPNE48W;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Pods/GoogleMaps/Base/Frameworks",

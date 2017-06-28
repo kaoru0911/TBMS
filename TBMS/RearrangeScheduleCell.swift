@@ -8,6 +8,36 @@
 
 import UIKit
 
+class CustomerCell: UICollectionViewCell {
+    
+    
+    func handleswipeLeftGesture( gesture: UISwipeGestureRecognizer) {
+        
+        guard gesture.direction == .left else { return }
+        
+//        guard let selectedIndexPath = self.collectionView.indexPathForItem(at: gesture.location(in: self.collectionView)) else { return }
+        
+//        guard let cell = self.collectionView.cellForItem(at: selectedIndexPath) as? DateCell else {
+            return
+    }
+    
+        //        cell.isFocused = true
+        //        let frame = cell.addNewTripDayButton.frame
+        //
+        //        let deleteButton = UIButton(frame: frame)
+        //        deleteButton.titleLabel?.text = "刪除"
+        //        deleteButton.isHidden = false
+        //        deleteButton.addTarget(self, action: #selector(self.deleteCell), for: UIControlEvents.touchUpInside)
+        //        cell.reloadInputViews()
+        //
+        //        self.collectionView.reloadItems(at: [selectedIndexPath])
+    
+    
+    func deleteCell(index: IndexPath) {
+        
+    }
+}
+
 class ScheduleAndTrafficCell: UICollectionViewCell {
     
     @IBOutlet weak var viewPointBGBlock: UIImageView!
@@ -24,8 +54,11 @@ class LastAttractionCell: UICollectionViewCell {
 
 class DateCell: UICollectionViewCell {
     
+    @IBOutlet weak var cellContentBlock: UIView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var addNewTripDayButton: UIButton!
+    @IBOutlet weak var deleteBtn: UIButton!
+    
     @IBAction func addNewTripDay(_ sender: Any) {}
 }
 

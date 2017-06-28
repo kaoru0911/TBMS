@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Apw-6b-Oxl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Apw-6b-Oxl">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -444,38 +444,68 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="dateCell" id="bwU-tL-24C" customClass="DateCell" customModule="TBMS" customModuleProvider="target">
-                                        <rect key="frame" x="5" y="0.0" width="365" height="42"/>
+                                        <rect key="frame" x="1.5" y="0.0" width="372" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="365" height="42"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="372" height="42"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hP4-LW-2ag">
-                                                    <rect key="frame" x="273" y="6" width="62" height="30"/>
-                                                    <state key="normal" title="增加天數"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sUw-Bf-lz5" userLabel="DeleteBtn">
+                                                    <rect key="frame" x="306" y="0.0" width="66" height="42"/>
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="sUw-Bf-lz5" secondAttribute="height" multiplier="11:7" id="Qo6-yW-3mF"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Delete">
+                                                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
                                                     <connections>
-                                                        <action selector="addDateCellBtnPressed:" destination="DLZ-YW-dcw" eventType="touchUpInside" id="l8F-Mc-IqD"/>
-                                                        <action selector="addNewTripDay:" destination="bwU-tL-24C" eventType="touchUpInside" id="fwW-ab-hbO"/>
+                                                        <action selector="deleteDateCellBtnPressed:" destination="DLZ-YW-dcw" eventType="touchUpInside" id="zBA-BD-eBI"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第一天" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rZq-bA-8K2">
-                                                    <rect key="frame" x="156.5" y="11" width="52" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jfU-Bk-4Tz" userLabel="cellBG">
+                                                    <rect key="frame" x="0.0" y="0.0" width="372" height="42"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hP4-LW-2ag">
+                                                            <rect key="frame" x="290" y="6" width="62" height="30"/>
+                                                            <state key="normal" title="增加天數"/>
+                                                            <connections>
+                                                                <action selector="addDateCellBtnPressed:" destination="DLZ-YW-dcw" eventType="touchUpInside" id="l8F-Mc-IqD"/>
+                                                                <action selector="addNewTripDay:" destination="bwU-tL-24C" eventType="touchUpInside" id="fwW-ab-hbO"/>
+                                                            </connections>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="第一天" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rZq-bA-8K2">
+                                                            <rect key="frame" x="159.5" y="10" width="52" height="21"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="rZq-bA-8K2" firstAttribute="centerY" secondItem="jfU-Bk-4Tz" secondAttribute="centerY" id="8gT-yu-DFp"/>
+                                                        <constraint firstItem="hP4-LW-2ag" firstAttribute="centerY" secondItem="rZq-bA-8K2" secondAttribute="centerY" id="9q9-zO-F7n"/>
+                                                        <constraint firstItem="rZq-bA-8K2" firstAttribute="centerX" secondItem="jfU-Bk-4Tz" secondAttribute="centerX" id="LbB-J7-ypg"/>
+                                                        <constraint firstAttribute="trailing" secondItem="hP4-LW-2ag" secondAttribute="trailing" constant="20" id="XK0-8M-X3c"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="rZq-bA-8K2" firstAttribute="centerX" secondItem="bwU-tL-24C" secondAttribute="centerX" id="0Wi-Go-bOo"/>
-                                            <constraint firstItem="hP4-LW-2ag" firstAttribute="centerY" secondItem="rZq-bA-8K2" secondAttribute="centerY" id="7oo-oc-kRg"/>
-                                            <constraint firstAttribute="trailing" secondItem="hP4-LW-2ag" secondAttribute="trailing" constant="30" id="EG5-M1-Coc"/>
-                                            <constraint firstItem="rZq-bA-8K2" firstAttribute="centerY" secondItem="bwU-tL-24C" secondAttribute="centerY" id="gI0-Pi-QIb"/>
+                                            <constraint firstItem="jfU-Bk-4Tz" firstAttribute="height" secondItem="bwU-tL-24C" secondAttribute="height" id="59f-IV-4gl"/>
+                                            <constraint firstItem="sUw-Bf-lz5" firstAttribute="centerY" secondItem="bwU-tL-24C" secondAttribute="centerY" id="CLb-yk-bSo"/>
+                                            <constraint firstAttribute="trailing" secondItem="sUw-Bf-lz5" secondAttribute="trailing" id="EtC-sU-IWI"/>
+                                            <constraint firstItem="jfU-Bk-4Tz" firstAttribute="centerY" secondItem="bwU-tL-24C" secondAttribute="centerY" id="IyX-JO-BxW"/>
+                                            <constraint firstItem="jfU-Bk-4Tz" firstAttribute="centerX" secondItem="bwU-tL-24C" secondAttribute="centerX" id="KpK-By-TLB"/>
+                                            <constraint firstItem="sUw-Bf-lz5" firstAttribute="height" secondItem="bwU-tL-24C" secondAttribute="height" id="Vmr-oL-6QJ"/>
+                                            <constraint firstItem="jfU-Bk-4Tz" firstAttribute="width" secondItem="bwU-tL-24C" secondAttribute="width" id="nqx-Ju-Z6H"/>
                                         </constraints>
-                                        <size key="customSize" width="365" height="42"/>
+                                        <size key="customSize" width="372" height="42"/>
                                         <connections>
                                             <outlet property="addNewTripDayButton" destination="hP4-LW-2ag" id="aMe-3H-YvX"/>
+                                            <outlet property="cellContentBlock" destination="jfU-Bk-4Tz" id="AfM-Vz-zdB"/>
                                             <outlet property="dateLabel" destination="rZq-bA-8K2" id="0jO-Bt-0JJ"/>
+                                            <outlet property="deleteBtn" destination="sUw-Bf-lz5" id="ttd-wd-02d"/>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="scheduleAndTrafficCell" id="dwf-lD-3Z3" customClass="ScheduleAndTrafficCell" customModule="TBMS" customModuleProvider="target">
