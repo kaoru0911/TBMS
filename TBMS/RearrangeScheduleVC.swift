@@ -6,8 +6,6 @@
 //  Copyright © 2017年 Chiao. All rights reserved.
 //
 
-// TODO: 天cell的顏色, 增加天數的button
-
 import UIKit
 import CoreLocation
 import MapKit
@@ -69,11 +67,6 @@ class RearrangeScheduleVC: UIViewController {
                                    UIColor.purple,
                                    UIColor.green]
     
-    
-    //    fileprivate var longPressGesture: UILongPressGestureRecognizer!
-    //    fileprivate var swipeLeftGesture: UISwipeGestureRecognizer!
-    //    fileprivate var swipeRightGesture: UISwipeGestureRecognizer!
-    
     // MARK: - Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,6 +107,7 @@ class RearrangeScheduleVC: UIViewController {
         let lastIndex = IndexPath(item: cellContentsArray.count - 1, section: 0)
         self.collectionView.scrollToItem(at: lastIndex, at: UICollectionViewScrollPosition.centeredVertically, animated: true)
     }
+    
     
     @IBAction func deleteDateCellBtnPressed(_ sender: UIButton) {
         
@@ -359,66 +353,40 @@ class RearrangeScheduleVC: UIViewController {
             
         } else {
             
-            //            // If the cell is the previously swiped cell, or nothing assume its the previously one.
-            //            if cell == swipedCell {
-            //                // To target the cell after that animation I test if the point of the swiping exists inside the now twice as tall cell frame
-            //                let cellFrame = swipedCell.frame
-            //                let rect = CGRect(x: cellFrame.origin.x, y: cellFrame.origin.y - cellFrame.height, width: cellFrame.width, height: cellFrame.height + moveSpace)
-            //
-            //                //                if rect.contains(point) {
-            //                //
-            //                //                    // If swipe point is in the cell delete it
-            //                //                    let indexPath = myView.indexPath(for: swipedCell)
-            //                //                    cats.remove(at: indexPath!.row)
-            //                //                    myView.deleteItems(at: [indexPath!])
-            //                //                }
-            //
-            //                // If another cell is swiped
-            //            } else if swipedCell != cell {
-            
             // It's not the same cell that is swiped, so the previously selected cell will get unswiped and the new swiped.
             UIView.animate(withDuration: duration,
-                           
                            animations: {
                             self.swipedCell.cellContentBlock.transform = CGAffineTransform.identity
                             cell.cellContentBlock.transform = CGAffineTransform(translationX: -moveSpace, y: 0) },
-                           
-                           completion: {
-                            (Void) in
-                            self.swipedCell = cell })
-            //            }
+
+                           completion: { (Void) in self.swipedCell = cell })
         }
     }
     
-    
     func handleSwipeRightGesture(){
-        
         // Revert back
         if(swipedCell != nil){
             let duration = animationDuration()
             
-            UIView.animate(withDuration: duration, animations: {
-                self.swipedCell.cellContentBlock.transform = CGAffineTransform.identity
-            }, completion: {
-                (Void) in
-                self.swipedCell = nil
-            })
+            UIView.animate(withDuration: duration,
+                           animations: {
+                            self.swipedCell.cellContentBlock.transform = CGAffineTransform.identity },
+                           completion: { (Void) in self.swipedCell = nil })
         }
     }
     
     private func getCellAtPoint(_ point: CGPoint) -> DateCell? {
+        
         // Function for getting item at point. Note optionals as it could be nil
         let indexPath = collectionView.indexPathForItem(at: point)
-        
         guard indexPath != nil else { return nil }
         
-        guard let cell = collectionView.cellForItem(at: indexPath!) as? DateCell else {
-            return nil
-        }
+        guard let cell = collectionView.cellForItem(at: indexPath!) as? DateCell else { return nil }
+        
         return cell
     }
     
-    func animationDuration() -> Double {
+    private func animationDuration() -> Double {
         return 0.5
     }
 }
