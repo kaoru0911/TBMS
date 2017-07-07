@@ -16,6 +16,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var spotTextView: UITextView!
     @IBOutlet weak var imageView: UIImageView!
     
+    @IBOutlet weak var nameTitleLabel: UILabel!
     @IBOutlet weak var spotTableView: UITableView!
     @IBOutlet weak var addSpotBtn: UIButton!
     @IBOutlet weak var saveSpotBtn: UIButton!
@@ -36,10 +37,14 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         // Do any additional setup after loading the view, typically from a nib.
         placesClient = GMSPlacesClient.shared()
         
-        addSpotBtn.layer.cornerRadius = 5.0
+        addSpotBtn.layer.cornerRadius = 10.0
         saveSpotBtn.layer.cornerRadius = 5.0
         spotSearchBtn.layer.cornerRadius = 5.0
+        
+        addSpotBtn.isHidden = true
+        nameTitleLabel.isHidden = true
         imageView.image = UIImage(named: "GoogleMapLogo")
+        spotTextView.delegate = self as? UITextViewDelegate
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(addNewAttractionFromPocket(notification:)),
@@ -79,14 +84,6 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     var listArray: NSMutableArray = []
     var placesClient: GMSPlacesClient!
     
-    //    func goSetStartPointPage() {
-    //
-    //        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //        let setStartPointViewController = storyboard.instantiateViewController(withIdentifier :"SetStartPointViewController") as! SetStartPointViewController
-    //
-    //        self.navigationController?.pushViewController(setStartPointViewController, animated: true)
-    //    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -125,7 +122,6 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     @IBAction func addSpotBtn(_ sender: Any) {
-        
         
         // 檢查是否有存在相同景點
         var spotExistedChecking = false
@@ -186,6 +182,12 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             }
             
             self.spotTextView.text = place.name
+            self.spotTextView.isSelectable = true
+            self.spotTextView.isEditable = true
+            
+            self.nameTitleLabel.isHidden = false
+            self.addSpotBtn.isHidden = false
+            
             self.placeIdStorage = place.placeID
             
             if(self.placeIdStorage != nil){
@@ -193,11 +195,6 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             } else {
                 //..
             }
-            
-            print("Place name \(place.name)")
-            print("Place address \(String(describing: place.formattedAddress))")
-            print("Place attributions \(String(describing: place.attributions))")
-            print("placeID=\(place.placeID)")
             
             self.tmpPlaceData = place
         })
@@ -235,13 +232,14 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
 
 extension AddViewPointViewController {
     
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    func textViewDidEndEditing(_ textView: UITextView) {
+        
     }
-    
-    
+}
+
+extension AddViewPointViewController {
     
     func addNewAttractionFromPocket( notification:Notification ) {
-        
         
         if !sharedData.isLogin {
             showAlertMessage(title: "", message: "請先登入會員")
@@ -251,10 +249,12 @@ extension AddViewPointViewController {
         attractionStorage += ( notification.object as! [Attraction] )
         
         var cellTextArray = [String]()
+        
         for attr in attractionStorage {
             let name = attr.attrctionName
             cellTextArray.append(name ?? "")
         }
+        
         listArray = cellTextArray as! NSMutableArray
         
         self.spotTableView.reloadData()

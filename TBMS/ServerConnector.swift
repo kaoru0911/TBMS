@@ -20,7 +20,7 @@ class ServerConnector: NSObject {
     // ngrok安裝方法:
     // 網頁下載mgrok
     // 在terminal輸入ngrok的路徑位置後加上http 80 即產生網址
-    let baseURLStr: String = "https://e2a8afc8.ngrok.io/TravelByMyself/"
+    let baseURLStr: String = "http://arronni1314.000webhostapp.com/"//" https://5d181956.ngrok.io/TravelByMyself/"
     let memberURLstr: String = "member.php"
     let dataDownloadURLstr: String = "dataDownload.php"
     let dataUploadURLstr: String = "dataUpload.php"
@@ -78,7 +78,7 @@ class ServerConnector: NSObject {
     
     
     var sharedData = DataManager.shareDataManager
-//    var uploadIndex: Int = 0
+    //    var uploadIndex: Int = 0
     var downloadImgIndex: Int = 0
     var threadKey = NSLock.init()
     let fbManager = FBSDKLoginManager()
@@ -94,6 +94,7 @@ class ServerConnector: NSObject {
     let downloadCoverImgNotifier = Notification.Name("downloadCoverImgNotifier")
     let uploadTripNotifier = Notification.Name("tripUploadSpotNotifier")
     let uploadPocketSpotNotifier = Notification.Name("uploadPocketSpotNotifier")
+    let connectServerFail = Notification.Name("connectServerFail")
     
     
     /**
@@ -104,11 +105,11 @@ class ServerConnector: NSObject {
         guard ((sharedData.memberData?.account) != nil) ||
             ((sharedData.memberData?.password) != nil) else {
                 
-            print("account or password is nil")
+                print("account or password is nil")
                 
-            sharedData.isLogin = false
+                sharedData.isLogin = false
                 
-            return
+                return
         }
         
         // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
@@ -125,24 +126,26 @@ class ServerConnector: NSObject {
             
             switch(response.result) {
                 
-                case .success(let json):
-                    
-                    guard let getFeedback = json as? Dictionary<String,Any> else {
-                        return
-                    }
+            case .success(let json):
                 
-                    let result = getFeedback["result"] as! Bool
-                    let error = getFeedback["errorCode"] as! String
-                    let email = getFeedback["email"] as! String
+                guard let getFeedback = json as? Dictionary<String,Any> else {
+                    return
+                }
                 
-                    self.sharedData.isLogin = result
-                    self.sharedData.memberData?.email = email
+                let result = getFeedback["result"] as! Bool
+                let error = getFeedback["errorCode"] as! String
+                let email = getFeedback["email"] as! String
                 
-                    print("Result: \(result), Error code:", error)
+                self.sharedData.isLogin = result
+                self.sharedData.memberData?.email = email
                 
-                case .failure(_):
-                    self.sharedData.isLogin = false
-                    print("Server feedback fail")
+                print("Result: \(result), Error code:", error)
+                
+            case .failure(_):
+                self.sharedData.isLogin = false
+                
+                NotificationCenter.default.post(name: self.connectServerFail, object: nil)
+                
             }
             
             NotificationCenter.default.post(name: self.loginNotifier, object: nil)
@@ -163,7 +166,7 @@ class ServerConnector: NSObject {
         
         // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
         let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,
-                                     PASSWORD_KEY: sharedData.memberData!.password! as Any,                    
+                                     PASSWORD_KEY: sharedData.memberData!.password! as Any,
                                      REQUEST_KEY: FBLOGIN_REQ]
         
         Alamofire.request(baseURLStr + memberURLstr, method: .post, parameters: parameters).responseJSON { response in
@@ -190,13 +193,14 @@ class ServerConnector: NSObject {
                 
             case .failure(_):
                 self.sharedData.isLogin = false
-                print("Server feedback fail")
+                
+                NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
             
             NotificationCenter.default.post(name: self.fbLoginNotifier, object: nil)
         }
     }
-
+    
     
     func userLogout() {
         //clear login data
@@ -236,24 +240,25 @@ class ServerConnector: NSObject {
             
             switch(response.result) {
                 
-                case .success(let json):
-                    
-                    guard let getFeedback = json as? Dictionary<String,Any> else {
-                        return
-                    }
-                    
-                    let result = getFeedback["result"] as! Bool
-                    
-                    let error = getFeedback["errorCode"] as! String
-                    
-                    print("Result: \(result), Error code:", error)
+            case .success(let json):
                 
-                    if result {
-                        self.userLogin()
-                    }
+                guard let getFeedback = json as? Dictionary<String,Any> else {
+                    return
+                }
                 
-                case .failure(_):
-                    print("Server feedback fail")
+                let result = getFeedback["result"] as! Bool
+                
+                let error = getFeedback["errorCode"] as! String
+                
+                print("Result: \(result), Error code:", error)
+                
+                if result {
+                    self.userLogin()
+                }
+                
+            case .failure(_):
+                
+                NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
             
         }
@@ -288,20 +293,21 @@ class ServerConnector: NSObject {
             
             switch(response.result) {
                 
-                case .success(let json):
-                    
-                    guard let getFeedback = json as? Dictionary<String,Any> else {
-                        return
-                    }
-                    
-                    let result = getFeedback["result"] as! Bool
-                    
-                    let error = getFeedback["errorCode"] as! String
-                    
-                    print("Result: \(result), Error code:", error)
-                    
-                case .failure(_):
-                    print("Server feedback fail")
+            case .success(let json):
+                
+                guard let getFeedback = json as? Dictionary<String,Any> else {
+                    return
+                }
+                
+                let result = getFeedback["result"] as! Bool
+                
+                let error = getFeedback["errorCode"] as! String
+                
+                print("Result: \(result), Error code:", error)
+                
+            case .failure(_):
+                
+                NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
         }
     }
@@ -324,47 +330,48 @@ class ServerConnector: NSObject {
             
             switch(response.result) {
                 
-                case .success(let json):
+            case .success(let json):
+                
+                guard let getFeedback = json as? [Dictionary<String,Any>] else {
+                    NotificationCenter.default.post(name: self.getPocketTripNotifier, object: nil)
+                    return
+                }
+                
+                //                    self.downloadImgIndex = 0
+                
+                let ImgPathURL = self.baseURLStr + "pocketTripCoverImg/"
+                
+                var downloadImgName = [String]()
+                
+                for i in 0...getFeedback.count-1 {
                     
-                    guard let getFeedback = json as? [Dictionary<String,Any>] else {
-                        NotificationCenter.default.post(name: self.getPocketTripNotifier, object: nil)
-                        return
+                    let pocketTrip:tripData = tripData()
+                    
+                    pocketTrip.tripName = getFeedback[i]["tripName"] as? String
+                    
+                    pocketTrip.days = getFeedback[i]["tripDays"] as? Int
+                    
+                    pocketTrip.country = getFeedback[i]["tripCountry"] as? String
+                    
+                    pocketTrip.ownerUser = getFeedback[i]["ownerUser"] as? String
+                    
+                    guard let coverImgName = getFeedback[i]["coverImg"] as? String else {
+                        
+                        downloadImgName.append("noImg")
+                        continue
                     }
                     
-//                    self.downloadImgIndex = 0
+                    downloadImgName.append(coverImgName)
                     
-                    let ImgPathURL = self.baseURLStr + "pocketTripCoverImg/"
                     
-                    var downloadImgName = [String]()
-                    
-                    for i in 0...getFeedback.count-1 {
-                        
-                        let pocketTrip:tripData = tripData()
-                        
-                        pocketTrip.tripName = getFeedback[i]["tripName"] as? String
-                        
-                        pocketTrip.days = getFeedback[i]["tripDays"] as? Int
-                        
-                        pocketTrip.country = getFeedback[i]["tripCountry"] as? String
-                        
-                        pocketTrip.ownerUser = getFeedback[i]["ownerUser"] as? String
-                        
-                        guard let coverImgName = getFeedback[i]["coverImg"] as? String else {
-                            
-                            downloadImgName.append("noImg")
-                            continue
-                        }
-                        
-                        downloadImgName.append(coverImgName)
-
-                        
-                        self.sharedData.pocketTrips?.append(pocketTrip)
-                    }
+                    self.sharedData.pocketTrips?.append(pocketTrip)
+                }
                 
-                    self.downloadCoverImg(filePath: ImgPathURL, type: self.POCKETTRIP, imgName: downloadImgName)
+                self.downloadCoverImg(filePath: ImgPathURL, type: self.POCKETTRIP, imgName: downloadImgName)
                 
-                case .failure(_):
-                    print("Server feedback fail")
+            case .failure(_):
+                
+                NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
             
             NotificationCenter.default.post(name: self.getPocketTripNotifier, object: nil)
@@ -389,47 +396,48 @@ class ServerConnector: NSObject {
             
             switch(response.result) {
                 
-                case .success(let json):
+            case .success(let json):
+                
+                guard let getFeedback = json as? [Dictionary<String,Any>] else {
+                    NotificationCenter.default.post(name: self.getSharedTripNotifier, object: nil)
+                    return
+                }
+                
+                self.downloadImgIndex = 0
+                
+                let ImgPathURL = self.baseURLStr + "sharedTripCoverImg/"
+                
+                var downloadImgName = [String]()
+                
+                for i in 0...getFeedback.count-1 {
                     
-                    guard let getFeedback = json as? [Dictionary<String,Any>] else {
-                        NotificationCenter.default.post(name: self.getSharedTripNotifier, object: nil)
-                        return
+                    let sharedTrip:tripData = tripData()
+                    
+                    sharedTrip.tripName = getFeedback[i]["tripName"] as? String
+                    
+                    sharedTrip.days = getFeedback[i]["tripDays"] as? Int
+                    
+                    sharedTrip.country = getFeedback[i]["tripCountry"] as? String
+                    
+                    sharedTrip.ownerUser = getFeedback[i]["ownerUser"] as? String
+                    
+                    guard let coverImgName = getFeedback[i]["coverImg"] as? String else {
+                        
+                        downloadImgName.append("noImg")
+                        continue
                     }
                     
-                    self.downloadImgIndex = 0
+                    downloadImgName.append(coverImgName)
                     
-                    let ImgPathURL = self.baseURLStr + "sharedTripCoverImg/"
-                    
-                    var downloadImgName = [String]()
-                    
-                    for i in 0...getFeedback.count-1 {
-                        
-                        let sharedTrip:tripData = tripData()
-                        
-                        sharedTrip.tripName = getFeedback[i]["tripName"] as? String
-                        
-                        sharedTrip.days = getFeedback[i]["tripDays"] as? Int
-                        
-                        sharedTrip.country = getFeedback[i]["tripCountry"] as? String
-                        
-                        sharedTrip.ownerUser = getFeedback[i]["ownerUser"] as? String
-                        
-                        guard let coverImgName = getFeedback[i]["coverImg"] as? String else {
-                            
-                            downloadImgName.append("noImg")
-                            continue
-                        }
-                        
-                        downloadImgName.append(coverImgName)
-                        
-                        self.sharedData.sharedTrips?.append(sharedTrip)
-                    }
+                    self.sharedData.sharedTrips?.append(sharedTrip)
+                }
                 
-                    self.downloadCoverImg(filePath: ImgPathURL, type: self.SHAREDTRIP, imgName: downloadImgName)
+                self.downloadCoverImg(filePath: ImgPathURL, type: self.SHAREDTRIP, imgName: downloadImgName)
                 
                 
-                case .failure(_):
-                    print("Server feedback fail")
+            case .failure(_):
+                print("Server feedback fail")
+                NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
             
             NotificationCenter.default.post(name: self.getSharedTripNotifier, object: nil)
@@ -445,12 +453,12 @@ class ServerConnector: NSObject {
         // thread locked
         threadKey.lock()
         
-//        guard self.downloadImgIndex <= imgName.count - 1 else {
-//            
-//            // thread unlocked
-//            threadKey.unlock()
-//            return
-//        }
+        //        guard self.downloadImgIndex <= imgName.count - 1 else {
+        //
+        //            // thread unlocked
+        //            threadKey.unlock()
+        //            return
+        //        }
         
         for i in 0...imgName.count-1 {
             
@@ -515,28 +523,29 @@ class ServerConnector: NSObject {
             
             switch(response.result) {
                 
-                case .success(let json):
+            case .success(let json):
+                
+                guard let getFeedback = json as? [Dictionary<String,Any>] else {
+                    NotificationCenter.default.post(name: self.getPocketSpotNotifier, object: nil)
+                    return
+                }
+                
+                for i in 0...getFeedback.count-1 {
                     
-                    guard let getFeedback = json as? [Dictionary<String,Any>] else {
-                        NotificationCenter.default.post(name: self.getPocketSpotNotifier, object: nil)
-                        return
-                    }
+                    let spot:spotData = spotData()
                     
-                    for i in 0...getFeedback.count-1 {
-                        
-                        let spot:spotData = spotData()
-                        
-                        spot.spotName = getFeedback[i]["spotName"] as? String
-                        spot.spotCountry = getFeedback[i]["spotCountry"] as? String
-                        spot.placeID = getFeedback[i]["placeID"] as? String
-                        spot.latitude = (getFeedback[i]["latitude"] as! Double)
-                        spot.longitude = (getFeedback[i]["longitude"] as! Double)
-                        
-                        self.sharedData.pocketSpot?.append(spot)
-                    }
+                    spot.spotName = getFeedback[i]["spotName"] as? String
+                    spot.spotCountry = getFeedback[i]["spotCountry"] as? String
+                    spot.placeID = getFeedback[i]["placeID"] as? String
+                    spot.latitude = (getFeedback[i]["latitude"] as! Double)
+                    spot.longitude = (getFeedback[i]["longitude"] as! Double)
                     
-                case .failure(_):
-                    print("Server feedback fail")
+                    self.sharedData.pocketSpot?.append(spot)
+                }
+                
+            case .failure(_):
+                print("Server feedback fail")
+                NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
             
             NotificationCenter.default.post(name: self.getPocketSpotNotifier, object: nil)
@@ -589,7 +598,7 @@ class ServerConnector: NSObject {
                     getSpot.latitude = (getFeedback[i]["latitude"] as! Double)
                     getSpot.longitude = (getFeedback[i]["longitude"] as! Double)
                     
-//                    getSpot.spotCountry = (getFeedback[i]["spotCountry"] as? String)!
+                    //                    getSpot.spotCountry = (getFeedback[i]["spotCountry"] as? String)!
                     
                     self.sharedData.tempTripData?.spots.append(getSpot)
                 }
@@ -597,10 +606,11 @@ class ServerConnector: NSObject {
                 NotificationCenter.default.post(name: self.getTripSpotNotifier, object: nil)
                 
             case .failure(_):
-                print("Server feedback fail")
+                
+                NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
             
-//            NotificationCenter.default.post(name: self.getTripSpotNotifier, object: nil)
+            //            NotificationCenter.default.post(name: self.getTripSpotNotifier, object: nil)
         }
         
         
@@ -629,26 +639,27 @@ class ServerConnector: NSObject {
             
             switch(response.result) {
                 
-                case .success(let json):
-                    
-                    guard let getFeedback = json as? Dictionary<String,Any> else {
-                        return
-                    }
-                    
-                    let result = getFeedback["result"] as! Bool
-                    
-                    let error = getFeedback["errorCode"] as! String
-                    
-                    print("Result: \(result), Error code:", error)
-                    
-                case .failure(_):
-                    print("Server feedback fail")
+            case .success(let json):
+                
+                guard let getFeedback = json as? Dictionary<String,Any> else {
+                    return
+                }
+                
+                let result = getFeedback["result"] as! Bool
+                
+                let error = getFeedback["errorCode"] as! String
+                
+                print("Result: \(result), Error code:", error)
+                
+            case .failure(_):
+                
+                NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
             
             NotificationCenter.default.post(name: self.uploadPocketSpotNotifier, object: nil)
         }
     }
-
+    
     /**
      Upload a shared trip to server, including spot in trip and cover image
      */
@@ -669,29 +680,30 @@ class ServerConnector: NSObject {
             
             switch(response.result) {
                 
-                case .success(let json):
-                    
-                    guard let getFeedback = json as? Dictionary<String,Any> else {
-                        return
-                    }
-                    
-                    let result = getFeedback["result"] as! Bool
-                    
-                    let error = getFeedback["errorCode"] as! String
-                    
-                    print("Result: \(result), Error code:", error)
+            case .success(let json):
                 
-                    if result {
-                        
-                        self.uploadTripCoverImgToServer(tripData: tripData, Req: self.UPLOAD_SHAREDTRIPCOVER_REQ)
-                        
-//                        self.uploadIndex = tripData.spots.count
-                        
-                        self.uploadTripSpotToServer(tripData: tripData, request: self.UPLOAD_SHAREDTRIPSPOT_REQ)
-                    }                    
+                guard let getFeedback = json as? Dictionary<String,Any> else {
+                    return
+                }
+                
+                let result = getFeedback["result"] as! Bool
+                
+                let error = getFeedback["errorCode"] as! String
+                
+                print("Result: \(result), Error code:", error)
+                
+                if result {
                     
-                case .failure(_):
-                    print("Server feedback fail")
+                    self.uploadTripCoverImgToServer(tripData: tripData, Req: self.UPLOAD_SHAREDTRIPCOVER_REQ)
+                    
+                    //                        self.uploadIndex = tripData.spots.count
+                    
+                    self.uploadTripSpotToServer(tripData: tripData, request: self.UPLOAD_SHAREDTRIPSPOT_REQ)
+                }
+                
+            case .failure(_):
+                
+                NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
         }
     }
@@ -716,29 +728,30 @@ class ServerConnector: NSObject {
             
             switch(response.result) {
                 
-                case .success(let json):
+            case .success(let json):
+                
+                guard let getFeedback = json as? Dictionary<String,Any> else {
+                    return
+                }
+                
+                let result = getFeedback["result"] as! Bool
+                
+                let error = getFeedback["errorCode"] as! String
+                
+                print("Result: \(result), Error code:", error)
+                
+                if result {
                     
-                    guard let getFeedback = json as? Dictionary<String,Any> else {
-                        return
-                    }
+                    self.uploadTripCoverImgToServer(tripData: tripData, Req: self.UPLOAD_POCKETTRIPCOVER_REQ)
                     
-                    let result = getFeedback["result"] as! Bool
+                    //                        self.uploadIndex = tripData.spots.count
                     
-                    let error = getFeedback["errorCode"] as! String
-                    
-                    print("Result: \(result), Error code:", error)
-                    
-                    if result {
-                        
-                        self.uploadTripCoverImgToServer(tripData: tripData, Req: self.UPLOAD_POCKETTRIPCOVER_REQ)
-                        
-//                        self.uploadIndex = tripData.spots.count
-                        
-                        self.uploadTripSpotToServer(tripData: tripData, request: self.UPLOAD_POCKETTRIPSPOT_REQ)
-                    }
-                    
-                case .failure(_):
-                    print("Server feedback fail")
+                    self.uploadTripSpotToServer(tripData: tripData, request: self.UPLOAD_POCKETTRIPSPOT_REQ)
+                }
+                
+            case .failure(_):
+                
+                NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
         }
     }
@@ -749,7 +762,7 @@ class ServerConnector: NSObject {
     private func uploadTripCoverImgToServer(tripData:tripData, Req:String) {
         
         let imageData = UIImageJPEGRepresentation(tripData.coverImg!, 0.3)!
-            
+        
         Alamofire.upload(
             multipartFormData: { multipartFormData in
                 multipartFormData.append(imageData, withName: "coverImg", fileName: "tripCover.jpeg", mimeType: "file/jpeg")
@@ -772,8 +785,8 @@ class ServerConnector: NSObject {
                 case .failure(let encodingError):
                     print(encodingError)
                 }
-            }
-        )        
+        }
+        )
     }
     
     /**
@@ -805,7 +818,7 @@ class ServerConnector: NSObject {
                 print("Upload request: \(request)")
                 print("Is upload trip spot post success: \(response.result.isSuccess)")
                 print("Total count in spot array: \(String(tripData.spots.count))")
-//                print("Upload index in spot array: \(String(self.uploadIndex))")
+                //                print("Upload index in spot array: \(String(self.uploadIndex))")
                 print("Response: \(String(describing: response.result.value))")
             }
         }
@@ -848,7 +861,8 @@ class ServerConnector: NSObject {
                 print("Result: \(result), Error code:", error)
                 
             case .failure(_):
-                print("Server feedback fail")
+                
+                NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
         }
     }

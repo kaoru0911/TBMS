@@ -66,6 +66,8 @@ class MenuTableViewController: UITableViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketSpotNotifier"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "connectServerFail"), object: nil)
+        
         //        userDefault.set("FBTest", forKey: "FBSDKAccessToken")
         //        userDefault.set(nil, forKey: "FBSDKAccessToken")
         
@@ -217,6 +219,9 @@ class MenuTableViewController: UITableViewController {
     
     func NotificationDidGet() {
         
+//        guard Notification.Name.RawValue != "connectServerFail" else {
+//            
+//        }
         // stop loading view
         //        hideActivityIndicator(uiView: self.view)
         customActivityIndicatory(self.view, startAnimate: false)
