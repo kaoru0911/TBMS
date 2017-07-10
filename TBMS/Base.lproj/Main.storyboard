@@ -286,7 +286,7 @@
                     <navigationItem key="navigationItem" title="加入行程" id="Tnw-nd-jC3">
                         <barButtonItem key="rightBarButtonItem" title="開始規劃" id="ERH-H9-ZTO">
                             <connections>
-                                <segue destination="I8i-xe-uxU" kind="show" identifier="GoToSetStartPoint" id="YfR-ug-hd9"/>
+                                <action selector="startPlanningBtnPressed:" destination="EhH-8Q-d51" id="w4R-gJ-Tfp"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -299,6 +299,7 @@
                         <outlet property="spotSearchBtn" destination="J03-IL-xNB" id="a5j-eC-aLX"/>
                         <outlet property="spotTableView" destination="vqo-I4-Ae2" id="car-dt-zds"/>
                         <outlet property="spotTextView" destination="xVd-rj-Txe" id="YTn-Ud-6qc"/>
+                        <segue destination="I8i-xe-uxU" kind="show" identifier="GoToSetStartPoint" id="zbA-Oa-X0P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dNW-E9-0dS" sceneMemberID="firstResponder"/>
@@ -781,7 +782,7 @@
                 <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="Jr2-OO-ePz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="旅遊選單" image="airplane-symbol-7.png" id="8os-eW-EHn"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="AAa-mP-9bk">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AAa-mP-9bk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -1469,7 +1470,7 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="GFc-sQ-9Ib" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="會員專區" image="circle-user-7.png" id="QYa-H0-ek3"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="a3Z-4H-Xp4">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="a3Z-4H-Xp4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

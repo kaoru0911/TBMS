@@ -29,8 +29,9 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     var tmpPlaceDataStorage = [GMSPlace]()
     var attractionStorage = [Attraction]()
     var sharedData = DataManager.shareDataManager
+    let generalModels = GeneralToolModels()
     
-    
+    let segueId = "GoToSetStartPoint"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,6 +161,18 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         }
     }
     
+    @IBAction func startPlanningBtnPressed(_ sender: UIBarButtonItem) {
+        
+        guard attractionStorage.isEmpty == false else {
+            
+            let alert = generalModels.prepareCommentAlertVC(title: "您尚未選擇任何景點唷", message: nil, cancelBtnTitle: "取消")
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        performSegue(withIdentifier: segueId, sender: self)
+    }
+    
     func showAlertMessage(title: String, message: String) {
         
         let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
@@ -207,22 +220,11 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         })
     }
     
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == "GoToSetStartPoint" {
+        if segue.identifier == segueId {
             
-//            guard attractionStorage != nil else { return }
-            guard attractionStorage.isEmpty != true else {
-                
-                let alert = UIAlertController(title: "警告", message: "你還沒選任何景點唷", preferredStyle: UIAlertControllerStyle.alert)
-                let cancel = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(cancel)
-                
-                present(alert, animated: true, completion: nil)
-                return
-            }
+            guard attractionStorage.isEmpty else { return }
             
             let vc = segue.destination as! SetStartPointViewController
             vc.attractionsList = attractionStorage
@@ -237,12 +239,6 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     }
 }
 
-extension AddViewPointViewController {
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        
-    }
-}
 
 extension AddViewPointViewController {
     

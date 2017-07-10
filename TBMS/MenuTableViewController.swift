@@ -130,14 +130,17 @@ class MenuTableViewController: UITableViewController {
         let cell = menuTableView.dequeueReusableCell(withIdentifier: "menuCell", for: indexPath) as! MenuTableViewCell;
         
         cell.menuCellName.text = cellData[indexPath.row].0
+        cell.menuCellName.textColor = .white
+        cell.menuCellName.font = UIFont.boldSystemFont(ofSize: 30)
         
         cell.menuCellImage.image = cellData[indexPath.row].1
+        cell.menuCellImage.alpha = 0.5
+        cell.backgroundColor = .black
         
-        //cell.menuCellName.textColor = UIColor.white
-        
-        cell.menuCellName.shadowOffset = CGSize(width: 3, height: 3)
-        
-        cell.menuCellName.shadowColor = UIColor.white
+        cell.menuCellName.layer.shadowOpacity = 1
+        cell.menuCellName.layer.shadowRadius = 3
+        cell.menuCellName.layer.shadowOffset = CGSize(width: 0, height: 0)
+//        cell.menuCellName.shadowColor = .black
         
         return cell
     }
