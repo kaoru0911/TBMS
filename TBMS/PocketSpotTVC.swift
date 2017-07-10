@@ -100,16 +100,17 @@ class PocketSpotTVC: UITableViewController {
             
         } else {
             
-            let indexPath = IndexPath(index: index)
+            let indexPath = IndexPath(row: index, section: 0)
             let cell = tableView.cellForRow(at: indexPath) as! PocketSpotTVCell
             
-            print("index = \(indexPath.item)")
             print("cellSpotName = \(cell.spotName.text!)")
             guard let spotName = cell.spotName.text else {
                 print("SpotName doesn't exist")
                 return
             }
-
+            
+            sharedData.pocketSpot?.remove(at: index)
+            spotList.remove(at: index)
             server.deletePocketSpotFromServer(spotName: spotName)
         }
         
