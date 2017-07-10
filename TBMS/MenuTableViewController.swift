@@ -58,9 +58,9 @@ class MenuTableViewController: UITableViewController {
         
         cellData.append(("庫存景點" , UIImage(named: "Swizerland8")!))
         
-        //        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketTripNotifier"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketTripNotifier"), object: nil)
         //
-        //        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getSharedTripNotifier"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getSharedTripNotifier"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "downloadCoverImgNotifier"), object: nil)
         
@@ -152,14 +152,14 @@ class MenuTableViewController: UITableViewController {
             customActivityIndicatory(self.view, startAnimate: true)
             
         case "推薦行程":
-            //                if sharedData.sharedTrips?.count == 0 {
-            
-            sharedData.sharedTrips = [tripData]()
-            serverCommunicate.getSharedTripFromServer()
-            customActivityIndicatory(self.view, startAnimate: true)
-            //                } else{
-            //                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
-            //                }
+            if sharedData.sharedTrips?.count == 0 {
+                
+                sharedData.sharedTrips = [tripData]()
+                serverCommunicate.getSharedTripFromServer()
+                customActivityIndicatory(self.view, startAnimate: true)
+            } else{
+                performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+            }
             
         case "庫存行程":
             if !sharedData.isLogin {
@@ -167,14 +167,14 @@ class MenuTableViewController: UITableViewController {
                 return
             }
             
-            //                if sharedData.pocketTrips?.count == 0 {
-            sharedData.pocketTrips = [tripData]()
-            serverCommunicate.getPocketTripFromServer()
-            customActivityIndicatory(self.view, startAnimate: true)
-            
-            //                } else{
-            //                    performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
-            //                }
+            if sharedData.pocketTrips?.count == 0 {
+                sharedData.pocketTrips = [tripData]()
+                serverCommunicate.getPocketTripFromServer()
+                customActivityIndicatory(self.view, startAnimate: true)
+                
+            } else{
+                performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+            }
             
         case "庫存景點":
             if !sharedData.isLogin {
@@ -219,11 +219,6 @@ class MenuTableViewController: UITableViewController {
     
     func NotificationDidGet() {
         
-//        guard Notification.Name.RawValue != "connectServerFail" else {
-//            
-//        }
-        // stop loading view
-        //        hideActivityIndicator(uiView: self.view)
         customActivityIndicatory(self.view, startAnimate: false)
         
         performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)

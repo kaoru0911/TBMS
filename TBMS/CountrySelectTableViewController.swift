@@ -267,6 +267,7 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
         
         sharedData.chooseCountry = selectedCountry
         
+        
         performSegue(withIdentifier: segueID, sender: nil)
         
         //畫面精進，讓點選後的灰色不會卡在選擇列上，灰色會閃一下就消失

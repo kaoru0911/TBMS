@@ -13,7 +13,7 @@ import GooglePlacePicker
 // MARK: - 待建立.swift的model
 class GeneralToolModels {
     
-    func imageGeneratore(selectedCountry: String) -> UIImage {
+    func chooseCoverImg(selectedCountry: String) -> UIImage {
         
         let countryName = selectedCountry + "img.jpg"
         
@@ -38,6 +38,13 @@ class GeneralToolModels {
         let country = countryList[selectedCountry]
         return country!
     }
+    
+    
+//    func prepareAlert(message: String) -> UIAlertController {
+    
+//        let alert = UIAlertController(title: <#T##String?#>, message: <#T##String?#>, preferredStyle: <#T##UIAlertControllerStyle#>)
+//    }
+    
     
     func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) {
         

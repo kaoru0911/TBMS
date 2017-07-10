@@ -37,7 +37,7 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         saveTripBtn.layer.cornerRadius = cornerRadius
         cancelAndBackToMenu.layer.cornerRadius = cornerRadius
         
-        tripCoverImage.image = generalTools.imageGeneratore(selectedCountry: sharedData.chooseCountry)
+        tripCoverImage.image = generalTools.chooseCoverImg(selectedCountry: sharedData.chooseCountry)
         
         // dismiss keyboard
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))

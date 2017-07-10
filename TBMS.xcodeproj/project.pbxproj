@@ -877,7 +877,7 @@
 				);
 				INFOPLIST_FILE = TBMS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chiao.TBMS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.travelByMySelf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "TBMS/TBMS-Bridging-Header.h";
@@ -904,7 +904,7 @@
 				);
 				INFOPLIST_FILE = TBMS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chiao.TBMS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.travelByMySelf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "TBMS/TBMS-Bridging-Header.h";
