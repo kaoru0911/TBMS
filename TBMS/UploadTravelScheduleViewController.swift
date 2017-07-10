@@ -44,15 +44,18 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         view.addGestureRecognizer(tapGesture)
     }
     
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    
     override func canPerformUnwindSegueAction(_ action: Selector, from fromViewController: UIViewController, withSender sender: Any) -> Bool {
         
         return unwindSeguePassCheck
     }
+    
     
     @IBAction func changeCoverImgBtnPressed(_ sender: Any) {
         
@@ -78,30 +81,24 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
     @IBAction func uploadTripDataBtnPressed(_ sender: Any) {
         
         guard let tripName = tripNameTextField.text else {
-            let alert = UIAlertController(title: "請先為本次行程命名唷", message: nil, preferredStyle: .alert)
-            let ok = UIAlertAction(title: "確認", style: .cancel, handler: nil)
             
-            alert.addAction(ok)
+            let alert = generalTools.prepareCommentAlertVC(title: "請先為本次行程命名唷", message: nil, cancelBtnTitle: "OK")
             self.present(alert, animated: true, completion: nil)
             
             return
         }
         
         guard tripCoverImage.image != nil else {
-            let alert = UIAlertController(title: "請為本次行程選擇封面", message: nil, preferredStyle: .alert)
-            let ok = UIAlertAction(title: "確認", style: .cancel, handler: nil)
             
-            alert.addAction(ok)
+            let alert = generalTools.prepareCommentAlertVC(title: "請為本次行程選擇封面", message: nil, cancelBtnTitle: "OK")
             self.present(alert, animated: true, completion: nil)
             
             return
         }
         
         guard sharedData.memberData != nil else {
-            let alert = UIAlertController(title: "你還沒登入唷！", message: nil, preferredStyle: .alert)
-            let ok = UIAlertAction(title: "確認", style: .cancel, handler: nil)
             
-            alert.addAction(ok)
+            let alert = generalTools.prepareCommentAlertVC(title: "要儲存請先登入唷", message: nil, cancelBtnTitle: "OK")
             self.present(alert, animated: true, completion: nil)
             
             return

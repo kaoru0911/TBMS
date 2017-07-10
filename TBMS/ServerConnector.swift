@@ -479,6 +479,7 @@ class ServerConnector: NSObject {
                 case .success(_):
                     
                     guard let getImg = response.data else {
+                        print("response data not exist!")
                         return
                     }
                     
@@ -492,13 +493,15 @@ class ServerConnector: NSObject {
                         
                     }
                     
+                    NotificationCenter.default.post(name: self.downloadCoverImgNotifier, object: nil)
+                    
                 case .failure(_):
                     print("Server feedback fail")
+                    NotificationCenter.default.post(name: self.connectServerFail, object: nil)
                 }
             }
         }
         
-        NotificationCenter.default.post(name: self.downloadCoverImgNotifier, object: nil)
         
         // thread unlocked
         self.threadKey.unlock()

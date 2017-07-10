@@ -991,7 +991,7 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
         var annotations = [MKPointAnnotation]()
         var attrIndex = 0
         
-        var filteredCellContents = filterSuperfluousDateCellContents(cellContents: cellContents)
+        let filteredCellContents = filterSuperfluousDateCellContents(cellContents: cellContents)
         
         for cellContent in filteredCellContents {
             

@@ -40,10 +40,14 @@ class GeneralToolModels {
     }
     
     
-//    func prepareAlert(message: String) -> UIAlertController {
+    func prepareCommentAlertVC(title: String, message: String!, cancelBtnTitle: String) -> UIAlertController {
     
-//        let alert = UIAlertController(title: <#T##String?#>, message: <#T##String?#>, preferredStyle: <#T##UIAlertControllerStyle#>)
-//    }
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: cancelBtnTitle, style: .cancel, handler: nil)
+        alert.addAction(cancel)
+        
+        return alert
+    }
     
     
     func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) {
@@ -57,6 +61,10 @@ class GeneralToolModels {
         //================================
         mainContainer.tag = 789456123
         mainContainer.isUserInteractionEnabled = false
+        
+        //創一個手勢在這個view裡面
+        let touch = UITapGestureRecognizer(target: self, action: nil)
+        mainContainer.addGestureRecognizer(touch)
         
         // 旋轉圈圈放在這個view上
         let viewBackgroundLoading: UIView = UIView(frame: CGRect(x:0,y: 0,width: 80,height: 80))
@@ -113,7 +121,6 @@ struct GooglePlacePickerGenerator {
         
         let config = GMSPlacePickerConfig(viewport: bounds)
         let placePicker = GMSPlacePicker(config: config)
-        //        let pick = GMSPlacePickerViewController(config: config)
         
         return placePicker
     }

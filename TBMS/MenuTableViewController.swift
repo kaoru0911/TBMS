@@ -25,6 +25,7 @@ class MenuTableViewController: UITableViewController {
     var selectedPage : Int!
     var sharedData:DataManager = DataManager.shareDataManager
     var serverCommunicate:ServerConnector = ServerConnector()
+    let generalModels = GeneralToolModels()
     var filter:TripFilter = TripFilter()
     var filtArray = [tripData]()
     
@@ -58,15 +59,15 @@ class MenuTableViewController: UITableViewController {
         
         cellData.append(("庫存景點" , UIImage(named: "Swizerland8")!))
         
-        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketTripNotifier"), object: nil)
-        //
-        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getSharedTripNotifier"), object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketTripNotifier"), object: nil)
+//
+//        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getSharedTripNotifier"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "downloadCoverImgNotifier"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketSpotNotifier"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "connectServerFail"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(connectFail), name: NSNotification.Name(rawValue: "connectServerFail"), object: nil)
         
         //        userDefault.set("FBTest", forKey: "FBSDKAccessToken")
         //        userDefault.set(nil, forKey: "FBSDKAccessToken")
@@ -222,6 +223,12 @@ class MenuTableViewController: UITableViewController {
         customActivityIndicatory(self.view, startAnimate: false)
         
         performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+    }
+    
+    func connectFail() {
+        
+        let alert = generalModels.prepareCommentAlertVC(title: "伺服器連結異常", message: "請先確認網路訊號, 或晚點再做測試唷", cancelBtnTitle: "取消")
+        present(alert, animated: true, completion: nil)
     }
     
     func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) {

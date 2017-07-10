@@ -46,6 +46,9 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         imageView.image = UIImage(named: "GoogleMapLogo")
         spotTextView.delegate = self as? UITextViewDelegate
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        view.addGestureRecognizer(tapGesture)
+        
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(addNewAttractionFromPocket(notification:)),
                                                name: NSNotification.Name(rawValue: "PocketSpotTVCDisappear"),
@@ -78,6 +81,10 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
                 //self.attributionTextView.attributedText = photoMetadata.attributions;
             }
         })
+    }
+    
+    func hideKeyboard() {
+        view.endEditing(true)
     }
     
     // TableView陣列

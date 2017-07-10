@@ -16,6 +16,7 @@ class PocketSpotTVC: UITableViewController {
     var selectedCountry: String!
     var selectedProcess: String!
     var sharedData = DataManager.shareDataManager
+    let server = ServerConnector()
     var tripFilter: TripFilter!
     var spotList: [spotData]!
     
@@ -63,16 +64,20 @@ class PocketSpotTVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "spotCell", for: indexPath) as! PocketSpotTVCell
         
-        let image = UIImage(named:"addSpot.png")
-        
         cell.spotName.text = spotList[indexPath.row].spotName
         cell.selectStatus.isHidden = true
         cell.addSpotBtn.tag = indexPath.row
         
-        if selectedProcess == "庫存景點" || selectedIndex.contains(indexPath.row) {
-            cell.addSpotBtn.isHidden = true
-        } else {
+        if selectedProcess == "庫存景點" {
+            
             cell.addSpotBtn.isHidden = false
+            let image = UIImage(named:"deleteSpot.png")
+            cell.addSpotBtn.setBackgroundImage(image, for: .normal)
+            
+        } else if selectedIndex.contains(indexPath.row) == false {
+            
+            cell.addSpotBtn.isHidden = false
+            let image = UIImage(named:"addSpot.png")
             cell.addSpotBtn.setBackgroundImage(image, for: .normal)
         }
         
@@ -87,9 +92,26 @@ class PocketSpotTVC: UITableViewController {
         
         let index = sender.tag
         
-        selectedSpots.append(spotList[index])
-        selectedIndex.append(index)
-        sender.isHidden = true
+        if selectedProcess != "庫存景點" {
+            
+            selectedSpots.append(spotList[index])
+            selectedIndex.append(index)
+            sender.isHidden = true
+            
+        } else {
+            
+            let indexPath = IndexPath(index: index)
+            let cell = tableView.cellForRow(at: indexPath) as! PocketSpotTVCell
+            
+            print("index = \(indexPath.item)")
+            print("cellSpotName = \(cell.spotName.text!)")
+            guard let spotName = cell.spotName.text else {
+                print("SpotName doesn't exist")
+                return
+            }
+
+            server.deletePocketSpotFromServer(spotName: spotName)
+        }
         
         self.tableView.reloadData()
     }
