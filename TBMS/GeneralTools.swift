@@ -97,6 +97,18 @@ class GeneralToolModels {
             }
         }   
     }
+    
+    func printAllAttractionsDetailToDebug(attractions: [Attraction]) {
+        
+        for attraction in attractions {
+            let name = attraction.attrctionName ?? "none"
+            let addr = attraction.address ?? "none"
+            let placeId = attraction.placeID ?? "none"
+            let latCoord = attraction.coordinate?.latitude ?? 0.0
+            
+            print(" name: \(name).\n addr: \(addr).\n placeId: \(placeId).\n latCoordinate: \(latCoord)")
+        }
+    }
 }
 
 struct GooglePlacePickerGenerator {
@@ -183,4 +195,17 @@ enum BoundsCoordinate: String {
 enum Space {
     case positive, negative
 }
+
+enum NotificationName: String {
+    
+    case pocketSpotTVCDisappear
+    
+    case getPocketTripNotifier
+    case getPocketSpotNotifier
+    case downloadCoverImgNotifier
+    case connectServerFail
+    
+    case uploadPocketSpotNotifier
+}
+
 

@@ -28,6 +28,7 @@ class MenuTableViewController: UITableViewController {
     let generalModels = GeneralToolModels()
     var filter:TripFilter = TripFilter()
     var filtArray = [tripData]()
+    var segueLock = false
     
     let userDefault = UserDefaults.standard
     
@@ -104,6 +105,9 @@ class MenuTableViewController: UITableViewController {
         //        serverCommunicate.getTripSpotFromServer(selectTrip: testTripData, req: serverCommunicate.DOWNLOAD_SHAREDTRIPSPOT_REQ)
         //===========================
         
+        self.view.backgroundColor = .black
+//        self.tableView.rowHeight = 175
+        self.tableView.separatorStyle = .none
     }
     
     override func didReceiveMemoryWarning() {
@@ -134,7 +138,7 @@ class MenuTableViewController: UITableViewController {
         cell.menuCellName.font = UIFont.boldSystemFont(ofSize: 30)
         
         cell.menuCellImage.image = cellData[indexPath.row].1
-        cell.menuCellImage.alpha = 0.5
+        cell.menuCellImage.alpha = 0.65
         cell.backgroundColor = .black
         
         cell.menuCellName.layer.shadowOpacity = 1
@@ -145,9 +149,11 @@ class MenuTableViewController: UITableViewController {
         return cell
     }
     
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         choosen = cellData[indexPath.row].0
+        tableView.deselectRow(at: indexPath, animated: true)
         
         switch choosen {
         case "開始規劃":
@@ -225,13 +231,21 @@ class MenuTableViewController: UITableViewController {
         
         customActivityIndicatory(self.view, startAnimate: false)
         
+        guard segueLock == false else { return }
+        
         performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+        
+        segueLock = true
     }
     
     func connectFail() {
         
-        let alert = generalModels.prepareCommentAlertVC(title: "伺服器連結異常", message: "請先確認網路訊號, 或晚點再做測試唷", cancelBtnTitle: "取消")
+        let alert = generalModels.prepareCommentAlertVC(title: "伺服器連結異常",
+                                                        message: "請先確認網路訊號, 或晚點再做測試唷",
+                                                        cancelBtnTitle: "取消")
         present(alert, animated: true, completion: nil)
+        
+        customActivityIndicatory(self.view, startAnimate: false)
     }
     
     func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) {
@@ -333,11 +347,27 @@ extension MenuTableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.tabBarController?.tabBar.isHidden = false
+        self.segueLock = false
     }
     
     override func viewWillLayoutSubviews() {
         let color = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
         self.tabBarController?.tabBar.barTintColor = color
         self.navigationController?.navigationBar.barTintColor = color
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        guard let tabBarHeight = self.tabBarController?.tabBar.frame.height else {
+            return 140
+        }
+        guard let navigationBarHeight = self.navigationController?.navigationBar.frame.height else {
+            return 140
+        }
+        
+        let totalHeight = tableView.frame.height - tabBarHeight - navigationBarHeight
+        let height = totalHeight / 4
+        
+        return height
     }
 }

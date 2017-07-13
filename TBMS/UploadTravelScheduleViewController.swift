@@ -80,6 +80,14 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
     
     @IBAction func uploadTripDataBtnPressed(_ sender: Any) {
         
+        guard sharedData.memberData != nil else {
+            
+            let alert = generalTools.prepareCommentAlertVC(title: "要儲存請先登入唷", message: nil, cancelBtnTitle: "OK")
+            self.present(alert, animated: true, completion: nil)
+            
+            return
+        }
+        
         guard let tripName = tripNameTextField.text else {
             
             let alert = generalTools.prepareCommentAlertVC(title: "請先為本次行程命名唷", message: nil, cancelBtnTitle: "OK")
@@ -91,14 +99,6 @@ class UploadTravelScheduleViewController: UIViewController,UINavigationControlle
         guard tripCoverImage.image != nil else {
             
             let alert = generalTools.prepareCommentAlertVC(title: "請為本次行程選擇封面", message: nil, cancelBtnTitle: "OK")
-            self.present(alert, animated: true, completion: nil)
-            
-            return
-        }
-        
-        guard sharedData.memberData != nil else {
-            
-            let alert = generalTools.prepareCommentAlertVC(title: "要儲存請先登入唷", message: nil, cancelBtnTitle: "OK")
             self.present(alert, animated: true, completion: nil)
             
             return

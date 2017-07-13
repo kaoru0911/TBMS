@@ -174,10 +174,10 @@ function uploadSpot($db, $request){
 
 		echo '{"result":true, "errorCode":"none"}';
 
-	} else if($request = "uploadsharedtripSpot"){
+	} else if($request = "uploadSharedTripSpot"){
 
 		$db->prepare("
-			insert into `sharedtripSpot`
+			insert into `sharedtripspot`
 			(`spotName`,`tripName`,`nDay`,`nth`, `trafficTitle`, `trafficToNext`,`ownerUser`,`placeID`,`latitude`,`longitude`)
 			values
 			('$spotName','$tripName','$nDay','$nth','$trafficTitle','$traffic','$ownerUser','$placeID','$latitude','$longitude')

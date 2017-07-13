@@ -42,6 +42,8 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         saveSpotBtn.layer.cornerRadius = 5.0
         spotSearchBtn.layer.cornerRadius = 5.0
         
+//        spotSearchBtn.layer.
+        
         addSpotBtn.isHidden = true
         nameTitleLabel.isHidden = true
         imageView.image = UIImage(named: "GoogleMapLogo")
@@ -52,7 +54,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(addNewAttractionFromPocket(notification:)),
-                                               name: NSNotification.Name(rawValue: "PocketSpotTVCDisappear"),
+                                               name: NSNotification.Name(rawValue: NotificationName.pocketSpotTVCDisappear.rawValue),
                                                object: nil)
     }
     
@@ -88,8 +90,19 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         view.endEditing(true)
     }
     
+    func showAlertMessage(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
+        
+        alert.addAction(ok)
+        
+        self.present(alert,animated: true,completion: nil)
+    }
+    
     // TableView陣列
-    var listArray: NSMutableArray = []
+    var listArray = [String]()
     var placesClient: GMSPlacesClient!
     
     override func didReceiveMemoryWarning() {
@@ -117,7 +130,8 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        self.listArray.removeObject(at: indexPath.row)
+        
+        self.listArray.remove(at: indexPath.row)
         attractionStorage.remove(at: indexPath.row)
         
         self.spotTableView.reloadData()
@@ -150,7 +164,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         
         // 若沒有相同景點字串，可加入TableView陣列
         if spotExistedChecking == false {
-            listArray.add(spotTextView.text)
+            listArray.append(spotTextView.text)
             
             var attr = Attraction()
             attr.setValueToAttractionObject(place: tmpPlaceData)
@@ -172,18 +186,6 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         
         performSegue(withIdentifier: segueId, sender: self)
     }
-    
-    func showAlertMessage(title: String, message: String) {
-        
-        let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
-        
-        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
-        
-        alert.addAction(ok)
-        
-        self.present(alert,animated: true,completion: nil)
-    }
-    
     
     @IBAction func searchBtn(_ sender: Any) {
         
@@ -213,7 +215,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             if(self.placeIdStorage != nil){
                 self.loadFirstPhotoForPlace(placeID: self.placeIdStorage)
             } else {
-                //..
+                print("ERROR: placeId doesn't exist!!")
             }
             
             self.tmpPlaceData = place
@@ -224,10 +226,9 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         
         if segue.identifier == segueId {
             
-            guard attractionStorage.isEmpty else { return }
-            
             let vc = segue.destination as! SetStartPointViewController
             vc.attractionsList = attractionStorage
+            generalModels.printAllAttractionsDetailToDebug(attractions: vc.attractionsList)
             
         } else if segue.identifier == "ShowStorageAttration" {
             
@@ -244,21 +245,27 @@ extension AddViewPointViewController {
     
     func addNewAttractionFromPocket( notification:Notification ) {
         
-        if !sharedData.isLogin {
-            showAlertMessage(title: "", message: "請先登入會員")
+        guard let newAttractions = notification.object as? [Attraction] else {
+            print("ERROR: New attractions tansfered from pocketspot fail!!")
             return
         }
         
-        attractionStorage += ( notification.object as! [Attraction] )
+        guard newAttractions.isEmpty == false else {
+            print("WARNING: You havn't selected any spot!!")
+            return
+        }
         
-        var cellTextArray = [String]()
+        attractionStorage += newAttractions
+        generalModels.printAllAttractionsDetailToDebug(attractions: attractionStorage)
+        
+        var attractionsNameArray = [String]()
         
         for attr in attractionStorage {
             let name = attr.attrctionName
-            cellTextArray.append(name ?? "")
+            attractionsNameArray.append(name ?? "")
         }
         
-        listArray = cellTextArray as! NSMutableArray
+        listArray += attractionsNameArray
         
         self.spotTableView.reloadData()
     }

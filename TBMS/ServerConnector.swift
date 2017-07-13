@@ -5,7 +5,6 @@
 //  Created by popcool on 2017/5/10.
 //  Copyright © 2017年 Arwin Tsai. All rights reserved.
 //
-
 import UIKit
 import Alamofire
 import SwiftyJSON
@@ -20,7 +19,7 @@ class ServerConnector: NSObject {
     // ngrok安裝方法:
     // 網頁下載mgrok
     // 在terminal輸入ngrok的路徑位置後加上http 80 即產生網址
-    let baseURLStr: String = "http://arronni1314.000webhostapp.com/"//" https://5d181956.ngrok.io/TravelByMyself/"
+    let baseURLStr: String = "http://www.chiaoni3145951.com/App/TravelByMySelf/"
     let memberURLstr: String = "member.php"
     let dataDownloadURLstr: String = "dataDownload.php"
     let dataUploadURLstr: String = "dataUpload.php"
@@ -143,9 +142,8 @@ class ServerConnector: NSObject {
                 
             case .failure(_):
                 self.sharedData.isLogin = false
-                
+                print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
-                
             }
             
             NotificationCenter.default.post(name: self.loginNotifier, object: nil)
@@ -193,7 +191,7 @@ class ServerConnector: NSObject {
                 
             case .failure(_):
                 self.sharedData.isLogin = false
-                
+                print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
             
@@ -257,7 +255,7 @@ class ServerConnector: NSObject {
                 }
                 
             case .failure(_):
-                
+                print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
             
@@ -306,7 +304,7 @@ class ServerConnector: NSObject {
                 print("Result: \(result), Error code:", error)
                 
             case .failure(_):
-                
+                print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
         }
@@ -369,12 +367,13 @@ class ServerConnector: NSObject {
                 
                 self.downloadCoverImg(filePath: ImgPathURL, type: self.POCKETTRIP, imgName: downloadImgName)
                 
-            case .failure(_):
+                NotificationCenter.default.post(name: self.getPocketTripNotifier, object: nil)
                 
+            case .failure(_):
+                print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
             
-            NotificationCenter.default.post(name: self.getPocketTripNotifier, object: nil)
         }
     }
     
@@ -434,13 +433,13 @@ class ServerConnector: NSObject {
                 
                 self.downloadCoverImg(filePath: ImgPathURL, type: self.SHAREDTRIP, imgName: downloadImgName)
                 
+                NotificationCenter.default.post(name: self.getSharedTripNotifier, object: nil)
+                
                 
             case .failure(_):
                 print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
-            
-            NotificationCenter.default.post(name: self.getSharedTripNotifier, object: nil)
         }
     }
     
@@ -479,7 +478,6 @@ class ServerConnector: NSObject {
                 case .success(_):
                     
                     guard let getImg = response.data else {
-                        print("response data not exist!")
                         return
                     }
                     
@@ -495,13 +493,13 @@ class ServerConnector: NSObject {
                     
                     NotificationCenter.default.post(name: self.downloadCoverImgNotifier, object: nil)
                     
+                    
                 case .failure(_):
                     print("Server feedback fail")
                     NotificationCenter.default.post(name: self.connectServerFail, object: nil)
                 }
             }
         }
-        
         
         // thread unlocked
         self.threadKey.unlock()
@@ -545,6 +543,8 @@ class ServerConnector: NSObject {
                     
                     self.sharedData.pocketSpot?.append(spot)
                 }
+                
+                NotificationCenter.default.post(name: self.getPocketSpotNotifier, object: nil)
                 
             case .failure(_):
                 print("Server feedback fail")
@@ -609,7 +609,7 @@ class ServerConnector: NSObject {
                 NotificationCenter.default.post(name: self.getTripSpotNotifier, object: nil)
                 
             case .failure(_):
-                
+                print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
             
@@ -654,12 +654,13 @@ class ServerConnector: NSObject {
                 
                 print("Result: \(result), Error code:", error)
                 
-            case .failure(_):
+                NotificationCenter.default.post(name: self.uploadPocketSpotNotifier, object: nil)
                 
+            case .failure(_):
+                print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
             
-            NotificationCenter.default.post(name: self.uploadPocketSpotNotifier, object: nil)
         }
     }
     
@@ -705,7 +706,7 @@ class ServerConnector: NSObject {
                 }
                 
             case .failure(_):
-                
+                print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
         }
@@ -753,7 +754,7 @@ class ServerConnector: NSObject {
                 }
                 
             case .failure(_):
-                
+                print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
         }
@@ -864,7 +865,7 @@ class ServerConnector: NSObject {
                 print("Result: \(result), Error code:", error)
                 
             case .failure(_):
-                
+                print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
         }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		224A869C1F1362FC0050050F /* deleteSpot.png in Resources */ = {isa = PBXBuildFile; fileRef = 224A869B1F1362FC0050050F /* deleteSpot.png */; };
 		225C00B41EFCE6C500F01F2C /* annotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 225C00B31EFCE6C500F01F2C /* annotation.png */; };
 		229DDBF81EEFB58100488B48 /* GeneralTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229DDBF71EEFB58000488B48 /* GeneralTools.swift */; };
 		229DDBFA1EEFB61900488B48 /* ObjectTypeTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229DDBF91EEFB61900488B48 /* ObjectTypeTransformer.swift */; };
@@ -110,6 +111,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		224A869B1F1362FC0050050F /* deleteSpot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteSpot.png; sourceTree = "<group>"; };
 		225C00B31EFCE6C500F01F2C /* annotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = annotation.png; sourceTree = "<group>"; };
 		229DDBF71EEFB58000488B48 /* GeneralTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralTools.swift; sourceTree = "<group>"; };
 		229DDBF91EEFB61900488B48 /* ObjectTypeTransformer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectTypeTransformer.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 			isa = PBXGroup;
 			children = (
 				A74BDDE01ED6F10B00987446 /* addSpot.png */,
+				224A869B1F1362FC0050050F /* deleteSpot.png */,
 				A74BDDDB1ED5B70E00987446 /* TripList */,
 				A74BDDD11ED5B69000987446 /* PocketSpotTVC.swift */,
 				A74BDDD21ED5B69000987446 /* PocketSpotTVCell.swift */,
@@ -641,6 +644,7 @@
 				22ADDACC1EE9794200EB92F6 /* 泰國img.jpg in Resources */,
 				CDEACC691EE03ABE00280CEA /* 瑞士.png in Resources */,
 				A742B1461EDEBA4E00C7EA36 /* GoogleService-Info.plist in Resources */,
+				224A869C1F1362FC0050050F /* deleteSpot.png in Resources */,
 				CDEACC721EE03BE400280CEA /* 冰島.png in Resources */,
 				CDEACC741EE03BE400280CEA /* 委內瑞拉.png in Resources */,
 				225C00B41EFCE6C500F01F2C /* annotation.png in Resources */,

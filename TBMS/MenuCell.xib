@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,21 +22,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="185"/>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Siy-Ca-oNl">
-                        <rect key="frame" x="103" y="67" width="168" height="50"/>
+                        <rect key="frame" x="142.5" y="71" width="90.5" height="42"/>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Siy-Ca-oNl" firstAttribute="top" secondItem="Jjl-iv-une" secondAttribute="topMargin" constant="59" id="19X-Cf-i5R"/>
-                    <constraint firstItem="Siy-Ca-oNl" firstAttribute="centerY" secondItem="tmI-vJ-BOb" secondAttribute="centerY" id="3Er-Vh-D4c"/>
-                    <constraint firstItem="tmI-vJ-BOb" firstAttribute="leading" secondItem="Jjl-iv-une" secondAttribute="leading" id="6xU-IA-F06"/>
-                    <constraint firstItem="Siy-Ca-oNl" firstAttribute="centerX" secondItem="tmI-vJ-BOb" secondAttribute="centerX" id="Djx-X8-XIL"/>
-                    <constraint firstItem="tmI-vJ-BOb" firstAttribute="top" secondItem="Jjl-iv-une" secondAttribute="top" id="Ktg-04-0Hq"/>
-                    <constraint firstItem="Siy-Ca-oNl" firstAttribute="leading" secondItem="Jjl-iv-une" secondAttribute="leadingMargin" constant="95" id="Rab-ZE-lH8"/>
-                    <constraint firstAttribute="trailing" secondItem="tmI-vJ-BOb" secondAttribute="trailing" id="wca-Pn-C51"/>
-                    <constraint firstItem="tmI-vJ-BOb" firstAttribute="centerY" secondItem="Jjl-iv-une" secondAttribute="centerY" id="xPL-bk-dLb"/>
+                    <constraint firstItem="Siy-Ca-oNl" firstAttribute="centerX" secondItem="Jjl-iv-une" secondAttribute="centerX" id="BBK-9k-eed"/>
+                    <constraint firstAttribute="bottom" secondItem="tmI-vJ-BOb" secondAttribute="bottom" id="Cr4-Vq-Tq6"/>
+                    <constraint firstAttribute="trailing" secondItem="tmI-vJ-BOb" secondAttribute="trailing" id="Iyj-es-mdj"/>
+                    <constraint firstItem="tmI-vJ-BOb" firstAttribute="leading" secondItem="Jjl-iv-une" secondAttribute="leading" id="Vft-Tx-L7w"/>
+                    <constraint firstItem="tmI-vJ-BOb" firstAttribute="top" secondItem="Jjl-iv-une" secondAttribute="top" id="iZ4-8u-42j"/>
+                    <constraint firstItem="Siy-Ca-oNl" firstAttribute="centerY" secondItem="Jjl-iv-une" secondAttribute="centerY" id="thm-wF-ZU9"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

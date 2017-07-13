@@ -30,6 +30,8 @@ class RearrangeScheduleVC: UIViewController {
     fileprivate let saveTripBtnTitle = "儲存行程"
     fileprivate let arrowImageName = "downArrow2"
     
+    fileprivate let pinImageFileName = "annotation.png"
+    
     let bikeTravelTypeLabel = "單車"
     let drivingTravelTypeLabel = "開車"
     let walkingTravelTypeLabel = "走路"
@@ -178,7 +180,7 @@ class RearrangeScheduleVC: UIViewController {
     /// - Returns: The complete route information string including each step of the route.
     fileprivate func generateDetailRouteString (route:LegsData!) -> String! {
         
-        guard let routeData = route else { return "路線計算錯誤" }
+        guard let routeData = route else { return "路線計算異常" }
         guard let steps = routeData.steps else { return nil }
         
         var routeDetailString = String()
@@ -246,6 +248,11 @@ class RearrangeScheduleVC: UIViewController {
         
         returnString.characters.removeLast(2)
         
+        // If there's only one step, remove the number of the step.
+        if steps.count == 1 {
+            returnString.characters.removeFirst(3)
+        }
+        
         return returnString
     }
     
@@ -259,7 +266,7 @@ class RearrangeScheduleVC: UIViewController {
         
         guard let travelTime = cellContent.trafficTime else { return "時間重新計算中"/*時間計算error唷*/ }
         guard travelTime != "routeCalculate error" else { return "路線重新計算中"/*routeCalculate error*/ }
-        guard let travelMod = cellContent.travelMode else { return "交通方式error唷" }
+        guard let travelMod = cellContent.travelMode else { return "交通方式異常" }
         
         let selfTravelMod = self.selectedTravelMod
         let trafficTypeText: String
@@ -870,39 +877,47 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
         renderer.lineWidth = 2.5
         
         guard let indexString = renderer.polyline.subtitle else {
+            
             print("index不存在唷")
             renderer.strokeColor = routeColors[1]
             return renderer
         }
         
-        let geoIndex = Int(indexString)
+        let geoIndex = Int(indexString) ?? 0
         print("geoIndex = \(geoIndex)")
-        let colorIndex = (geoIndex! + 1) % routeColors.count
-        //        let colorIndex = 1
+        let colorIndex = (geoIndex + 1) % routeColors.count
+        
         renderer.strokeColor = routeColors[colorIndex]
         
         return renderer
     }
     
-    // TODO: 尋找隱藏圖標細節的方法
+    
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         if annotation is MKUserLocation {
             return nil
         }
         
-        let reuseID = annotation.subtitle! ?? "none"
-        var result = mapView.dequeueReusableAnnotationView(withIdentifier: reuseID)
+        guard let myAnnotation = annotation as? CustomerAnnotation else {
+            print("ERROR: Annotation ")
+            return MKAnnotationView(annotation: annotation, reuseIdentifier: "none")
+        }
+        
+        
+        let annotationID = String(myAnnotation.tag ?? 0)
+        var result = mapView.dequeueReusableAnnotationView(withIdentifier: annotationID)
         
         if result == nil {
-            result = MKAnnotationView(annotation: annotation, reuseIdentifier: reuseID)
+            result = MKAnnotationView(annotation: annotation, reuseIdentifier: annotationID)
             
-            let image = UIImage(named:  "annotation.png")
-            let pinImg = producePinImg( text: annotation.subtitle! ?? "error",
+            let image = UIImage(named: self.pinImageFileName)
+            let pinImg = producePinImg( text: annotationID,
                                         annotationImg: image! )
             
             guard let img = pinImg else {
-                print("沒有pinImg唷")
+                
+                print("ERROR: Image file of pin doesn't exist!!")
                 result?.image = image
                 return result
             }
@@ -914,7 +929,7 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
         }
         
         result?.canShowCallout = true
-        result?.detailCalloutAccessoryView?.isHidden = true /// 隱藏細節失敗
+//        result?.detailCalloutAccessoryView?.isHidden = true /// 隱藏細節失敗
         return result
     }
     
@@ -972,23 +987,23 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
     }
     
     
-    private func createAnnotation(attraction: Attraction, attrIndex: Int) -> MKPointAnnotation {
+    private func createAnnotation(attraction: Attraction, attrIndex: Int) -> CustomerAnnotation {
         
-        let annotation = MKPointAnnotation()
+        let annotation = CustomerAnnotation()
         annotation.coordinate = attraction.coordinate
         annotation.title = attraction.attrctionName
-        annotation.subtitle = String(attrIndex + 1) // For present the number on the pin image
+        annotation.tag = attrIndex + 1 // For present the number on the pin image
         
         return annotation
     }
     
     
-    fileprivate func createAnnotationsAndGeodesics(cellContents: [CellContent]) -> ([MKPointAnnotation],[MKGeodesicPolyline]) {
+    fileprivate func createAnnotationsAndGeodesics(cellContents: [CellContent]) -> ([CustomerAnnotation],[MKGeodesicPolyline]) {
         
         var tmpPtCoordonates = [CLLocationCoordinate2D]()
         var totalCoordinate = [[CLLocationCoordinate2D]]()
         var geodesics = [MKGeodesicPolyline]()
-        var annotations = [MKPointAnnotation]()
+        var annotations = [CustomerAnnotation]()
         var attrIndex = 0
         
         let filteredCellContents = filterSuperfluousDateCellContents(cellContents: cellContents)
@@ -1035,12 +1050,11 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
         
         let textFont = textfontSetting
         let textColor = UIColor.white
-        //let paragraph = NSMutableParagraphStyle()
-        //paragraph.alignment = .center
         let attributes = [ NSFontAttributeName: textFont,
                            NSForegroundColorAttributeName: textColor ]
         
-        let myText = NSMutableAttributedString(string: text, attributes: attributes)
+        let myText = NSMutableAttributedString(string: text,
+                                               attributes: attributes)
         let textSize = CGSize( width: myText.size().width,
                                height: myText.size().height )
         
@@ -1058,4 +1072,8 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
         
         return newImage!
     }
+}
+
+fileprivate class CustomerAnnotation: MKPointAnnotation {
+    var tag: Int?
 }

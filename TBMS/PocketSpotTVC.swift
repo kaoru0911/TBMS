@@ -103,7 +103,6 @@ class PocketSpotTVC: UITableViewController {
             let indexPath = IndexPath(row: index, section: 0)
             let cell = tableView.cellForRow(at: indexPath) as! PocketSpotTVCell
             
-            print("cellSpotName = \(cell.spotName.text!)")
             guard let spotName = cell.spotName.text else {
                 print("SpotName doesn't exist")
                 return
@@ -138,7 +137,7 @@ extension PocketSpotTVC {
         
         let selectedAttractions = typeTransformer.setValueToAtrractionListFromSpotList(spotList: selectedSpots)
         
-        NotificationCenter.default.post( name: NSNotification.Name(rawValue: "PocketSpotTVCDisappear"),
+        NotificationCenter.default.post( name: NSNotification.Name(rawValue: NotificationName.pocketSpotTVCDisappear.rawValue),
                                          object: selectedAttractions )
     }
     

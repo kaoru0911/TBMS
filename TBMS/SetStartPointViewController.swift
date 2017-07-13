@@ -21,7 +21,9 @@ class SetStartPointViewController: UIViewController {
     var attractionsList : [Attraction]!
     var routesDetails : [LegsData]!
     var attractionsListToNextPage : [Attraction]!
+    
     let shareData = DataManager.shareDataManager
+    let generalModels = GeneralToolModels()
     
     var expectedTravelMode: TravelMod = .walking
     
@@ -86,14 +88,31 @@ class SetStartPointViewController: UIViewController {
     
     @IBAction func goToNextPage(_ sender: Any) {
         
+        guard startPoint != nil else {
+            let alert = generalModels.prepareCommentAlertVC(title: "", message: "你忘了選擇出發地唷", cancelBtnTitle: "OK")
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        guard attractionsList[0] != nil else {
+            print("---attraList first element is nil----")
+            return
+        }
+        
+        guard attractionsList.isEmpty == false else {
+            print("attraList is empty")
+            return
+        }
+        
         // Present a loading view
-        customActivityIndicatory(self.view, startAnimate: true)
+        generalModels.customActivityIndicatory(self.view, startAnimate: true)
         
         let bestRoutePoductor = BestRouteCalculator(startingPoint: startPoint, attractionsList: attractionsList)
-        bestRoutePoductor.getBestRoute { (bestRouteAttrList) in
+        
+        bestRoutePoductor.getBestRoute {(bestRouteAttrList) in
             
             self.attractionsListToNextPage = bestRouteAttrList
-            self.getTotalRouteInformation( completion: { _ in
+            self.getTotalRouteInformation(completion: { _ in
                 
                 self.performSegue(withIdentifier: self.keyNextPageSegID, sender: nil)
             })
@@ -156,7 +175,9 @@ class SetStartPointViewController: UIViewController {
         vc.attractions = attractionsListToNextPage
         vc.selectedTravelMod = expectedTravelMode
         
-        customActivityIndicatory(self.view, startAnimate: false)
+        generalModels.customActivityIndicatory(self.view, startAnimate: false)
+        
+        generalModels.printAllAttractionsDetailToDebug(attractions: vc.attractions)
     }
 }
 
@@ -186,50 +207,50 @@ struct Attraction {
     }
 }
 
-extension SetStartPointViewController {
-    
-    func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) {
-        
-        // 做一個透明的view來裝
-        let mainContainer: UIView = UIView(frame: viewContainer.frame)
-        mainContainer.center = viewContainer.center
-        mainContainer.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
-        // background的alpha跟view的alpha不同
-        mainContainer.alpha = 0.5
-        //================================
-        mainContainer.tag = 789456123
-        mainContainer.isUserInteractionEnabled = false
-        
-        // 旋轉圈圈放在這個view上
-        let viewBackgroundLoading: UIView = UIView(frame: CGRect(x:0,y: 0,width: 80,height: 80))
-        viewBackgroundLoading.center = viewContainer.center
-        //        viewBackgroundLoading.backgroundColor = UIColor(red:0x7F, green:0x7F, blue:0x7F, alpha: 1)
-        viewBackgroundLoading.backgroundColor = UIColor(red:0, green:0, blue:0, alpha: 1)
-        //================================
-        //        viewBackgroundLoading.alpha = 0.5
-        //================================
-        viewBackgroundLoading.clipsToBounds = true
-        viewBackgroundLoading.layer.cornerRadius = 15
-        
-        // 創造旋轉圈圈
-        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
-        activityIndicatorView.frame = CGRect(x:0.0,y: 0.0,width: 40.0, height: 40.0)
-        activityIndicatorView.activityIndicatorViewStyle =
-            UIActivityIndicatorViewStyle.whiteLarge
-        activityIndicatorView.center = CGPoint(x: viewBackgroundLoading.frame.size.width / 2, y: viewBackgroundLoading.frame.size.height / 2)
-        
-        if startAnimate!{
-            viewBackgroundLoading.addSubview(activityIndicatorView)
-            mainContainer.addSubview(viewBackgroundLoading)
-            viewContainer.addSubview(mainContainer)
-            activityIndicatorView.startAnimating()
-        }else{
-            for subview in viewContainer.subviews{
-                if subview.tag == 789456123{
-                    subview.removeFromSuperview()
-                }
-            }
-        }
-        //        return activityIndicatorView
-    }
-}
+//extension SetStartPointViewController {
+//    
+//    func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) {
+//        
+//        // 做一個透明的view來裝
+//        let mainContainer: UIView = UIView(frame: viewContainer.frame)
+//        mainContainer.center = viewContainer.center
+//        mainContainer.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
+//        // background的alpha跟view的alpha不同
+//        mainContainer.alpha = 0.5
+//        //================================
+//        mainContainer.tag = 789456123
+//        mainContainer.isUserInteractionEnabled = false
+//        
+//        // 旋轉圈圈放在這個view上
+//        let viewBackgroundLoading: UIView = UIView(frame: CGRect(x:0,y: 0,width: 80,height: 80))
+//        viewBackgroundLoading.center = viewContainer.center
+//        //        viewBackgroundLoading.backgroundColor = UIColor(red:0x7F, green:0x7F, blue:0x7F, alpha: 1)
+//        viewBackgroundLoading.backgroundColor = UIColor(red:0, green:0, blue:0, alpha: 1)
+//        //================================
+//        //        viewBackgroundLoading.alpha = 0.5
+//        //================================
+//        viewBackgroundLoading.clipsToBounds = true
+//        viewBackgroundLoading.layer.cornerRadius = 15
+//        
+//        // 創造旋轉圈圈
+//        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+//        activityIndicatorView.frame = CGRect(x:0.0,y: 0.0,width: 40.0, height: 40.0)
+//        activityIndicatorView.activityIndicatorViewStyle =
+//            UIActivityIndicatorViewStyle.whiteLarge
+//        activityIndicatorView.center = CGPoint(x: viewBackgroundLoading.frame.size.width / 2, y: viewBackgroundLoading.frame.size.height / 2)
+//        
+//        if startAnimate!{
+//            viewBackgroundLoading.addSubview(activityIndicatorView)
+//            mainContainer.addSubview(viewBackgroundLoading)
+//            viewContainer.addSubview(mainContainer)
+//            activityIndicatorView.startAnimating()
+//        }else{
+//            for subview in viewContainer.subviews{
+//                if subview.tag == 789456123{
+//                    subview.removeFromSuperview()
+//                }
+//            }
+//        }
+//        //        return activityIndicatorView
+//    }
+//}

@@ -283,6 +283,7 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
             
             let nextPage = segue.destination as! AddViewPointViewController
             nextPage.selectedCountry = selectedCountry
+            
         } else if (segue.identifier == "goPocketSpotTVC") {
             
             let nextPage = segue.destination as! PocketSpotTVC
