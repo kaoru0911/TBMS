@@ -9,11 +9,11 @@
 import UIKit
 
 class PocketSpotTVCell: UITableViewCell {
+    
     @IBOutlet weak var spotName: UILabel!
     @IBOutlet weak var spotImage: UIImageView!
     @IBOutlet weak var selectStatus: UILabel!
     @IBOutlet weak var addSpotBtn: UIButton!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -18,6 +18,7 @@ class ScheduleTableViewController: UITableViewController {
     var spotData = [tripSpotData]()
     var addAttrIndexList = [Int]()
     var serverCommunicate:ServerConnector = ServerConnector()
+    let generalModels = GeneralToolModels()
     
     var filter = TripFilter()
     var nDaySchedule: Int!
@@ -29,6 +30,8 @@ class ScheduleTableViewController: UITableViewController {
         super.viewDidLoad()
         
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+        
+        generalModels.printAllSpotsDetailToDebug(spots: spotData, debugTitle: "viewDidLoad:")
         
         spotData = filter.filtBySpotNDays(nDays: nDaySchedule, trip: data)
         
@@ -150,8 +153,10 @@ class ScheduleTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         selectCellRow[indexPath.row] = !selectCellRow[indexPath.row]
         
+        tableView.deselectRow(at: indexPath, animated: true)
         tableView.reloadData()
     }
     

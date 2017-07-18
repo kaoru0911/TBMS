@@ -12,14 +12,14 @@ import FBSDKLoginKit
 import GoogleSignIn
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignInUIDelegate {
-
+    
     @IBOutlet weak var inputPassword: UITextField!
     @IBOutlet weak var inputAccountName: UITextField!
     
     @IBOutlet weak var accountLabel: UILabel!
     @IBOutlet weak var pswLabel: UILabel!
     @IBOutlet weak var FBLoginBtn: FBSDKLoginButton!
-   
+    
     @IBOutlet weak var loginBtn: UIButton!
     
     @IBOutlet weak var gmailLoginBtn: GIDSignInButton!
@@ -27,14 +27,18 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     
     var serverCommunicate: ServerConnector = ServerConnector()
     var sharedData = DataManager.shareDataManager
+    let generalModels = GeneralToolModels()
     var loginResponse = Bool()
     var fbAccess: String?
     
     let userDefault = UserDefaults.standard
     
+    let getPocketSpotAfterLoginNotifier = Notification.Name(NotificationName.getPocketSpotAfterLoginNotifier.rawValue)
+    let loginNotifier = Notification.Name(NotificationName.loginNotifier.rawValue)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         loginBtn.layer.cornerRadius = 5.0
         newMemberRegisterBtn.layer.cornerRadius = 5.0
@@ -61,17 +65,35 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         // dismiss keyboard
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(tapGesture)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(userLoginNotificationDidGet), name: NSNotification.Name(rawValue: "loginNotifier"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(fbLoginNotificationDidGet), name: NSNotification.Name(rawValue: "fbLoginNotifier"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(logoutNotificationDidGet), name: NSNotification.Name(rawValue: "logoutNotifier"), object: nil)
+        if sharedData.isLogin == true {
+            performSegue(withIdentifier: "goMemberVC", sender: self)
+        }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(fbLoginNotificationDidGet),
+                                               name: NSNotification.Name(rawValue: "fbLoginNotifier"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(logoutNotificationDidGet),
+                                               name: NSNotification.Name(rawValue: "logoutNotifier"),
+                                               object: nil)
+        
     }
     
     
@@ -90,13 +112,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
     // FB登入按鈕
     func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
         
-        
         guard let loginResult =  FBSDKAccessToken.current().userID  else {
             
             print("登入失敗", error)
             return
         }
-//
+        //
         print("成功登入")
         
         fbAccess = loginResult
@@ -152,50 +173,48 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
             }
         })
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        let nextPage = segue.destination as! MemberViewController
-//    }
     
     // 會員登入
     @IBAction func loginBtn(_ sender: Any) {
         
         if (inputAccountName.text?.isEmpty)! || (inputPassword.text?.isEmpty)! {
-            showAlertMessage(title: "Fail", message: "請輸入帳號與密碼")
+            let alert = generalModels.prepareCommentAlertVC(title: "Fail", message: "請輸入帳號與密碼")
+            present(alert, animated: true, completion: nil)
             return
         }
-            
+        
         sharedData.memberData?.account = inputAccountName.text
         
         sharedData.memberData?.password = inputPassword.text
-    
+        
         serverCommunicate.userLogin()
         
-        customActivityIndicatory(self.view, startAnimate: true)
+        generalModels.customActivityIndicatory(self.view, startAnimate: true)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(userLoginNotificationDidGet), name: self.loginNotifier, object: nil)
+        
     }
     
-//    func getUpdateNoti(noti:Notification) {
-//        loginResponse = noti.userInfo!["PASS"] as! Bool
-//    }
-
+    //    func getUpdateNoti(noti:Notification) {
+    //        loginResponse = noti.userInfo!["PASS"] as! Bool
+    //    }
+    
     
     func userLoginNotificationDidGet() {
         
-        customActivityIndicatory(self.view, startAnimate: false)
+        NotificationCenter.default.removeObserver(self, name: self.loginNotifier, object: nil)
         
-        if self.sharedData.isLogin == true {
+        guard self.sharedData.isLogin == true else {
+            let alert = generalModels.prepareCommentAlertVC(title: "Fail", message: "登入失敗，請確認帳號或密碼是否正確")
+            present(alert, animated: true, completion: nil)
+            return
+        }
+        
+        if sharedData.selectedProcess == .none {
             
-            showAlertMessage(title: "Success", message: "登入成功")
+            generalModels.customActivityIndicatory(self.view, startAnimate: false)
+            let alert = generalModels.prepareCommentAlertVC(title: "Success", message: "登入成功")
+            present(alert, animated: true, completion: nil)
             
             // =============================================
             // 創造一個新個TabBarController與NavigationController，再放回appDelegate內取代原本的root
@@ -205,7 +224,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
             let rootTabBarController = UITabBarController()
             
             // 注意！創造viewController的方式跟創造view的方式不同
-//            let rightTab = MemberViewController()
+            //            let rightTab = MemberViewController()
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let rightTab = storyboard.instantiateViewController(withIdentifier: "MemberViewController") as! MemberViewController
             rightTab.title = "會員專區"
@@ -216,7 +235,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
             // Navigation
             let rightNavigation = UINavigationController(rootViewController: rightTab)
             
-//            let leftTab = MenuTableViewController()
+            //            let leftTab = MenuTableViewController()
             let leftTab = storyboard.instantiateViewController(withIdentifier: "MenuTableViewController") as! MenuTableViewController
             leftTab.title = "TravelByMyself"
             
@@ -226,31 +245,71 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
             // Navigation
             let leftNavigation = UINavigationController(rootViewController: leftTab)
             
-            rootTabBarController.viewControllers = [leftNavigation, rightNavigation]            
+            rootTabBarController.viewControllers = [leftNavigation, rightNavigation]
             
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             
-            appDelegate.window?.rootViewController = rootTabBarController            
-            
-//            tabBarController?.selectedIndex = 0
+            appDelegate.window?.rootViewController = rootTabBarController
             
             
-        } else if self.sharedData.isLogin == false {
+        } else {
             
-            showAlertMessage(title: "Fail", message: "登入失敗，請確認帳號或密碼是否正確")
+            print("NOTE: Entering doSomeWorkAfterLoginNotifierDidGet")
+            doSomeWorkAfterLoginNotifierDidGet()
         }
-        
-        // 移除登入廣播監聽
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "loginNotifier"), object: nil)
     }
     
+    func doSomeWorkAfterLoginNotifierDidGet() {
+        
+        guard let previousVC = generalModels.getPreviousVCinNavigationVC(selfVC: self, distanceIndex: 1) else {
+            
+            print("ERROR: previousVC of LoginVC doesn't exist.")
+            return
+        }
+        
+        if previousVC is AddViewPointViewController {
+            
+            guard sharedData.pocketSpot?.count == 0 else {
+                print("WARNING: pocketSpot exist before login.")
+                return
+            }
+            
+            serverCommunicate.getPocketSpotFromServer(doSecondTypeNotifierPost: true, targetVC: self)
+            NotificationCenter.default.addObserver(self, selector: #selector(spotDownLoadNotifierDidGet), name: self.getPocketSpotAfterLoginNotifier, object: nil)
+            
+        } else if previousVC is UploadTravelScheduleViewController {
+            
+            self.navigationController?.popToViewController(previousVC, animated: true)
+        }
+
+    }
+    
+    func spotDownLoadNotifierDidGet() {
+        
+        generalModels.customActivityIndicatory(self.view, startAnimate: false)
+        
+        guard let previosVC = generalModels.getPreviousVCinNavigationVC(selfVC: self, distanceIndex: 1) else {
+            print("ERROR: spotDownLoadNotifierDidGet but previosVC doesn't exist.")
+            return
+        }
+    
+        self.navigationController?.popToViewController(previosVC, animated: true)
+    }
+    
+    
     func fbLoginNotificationDidGet() {
+        
         loginBtn.isHidden = true
         inputPassword.isHidden = true
         inputAccountName.isHidden = true
         accountLabel.isHidden = true
         pswLabel.isHidden = true
         newMemberRegisterBtn.isHidden = true
+        
+        guard sharedData.selectedProcess != .none else { return }
+        
+        print("NOTE: Entering doSomeWorkAfterLoginNotifierDidGet")
+        doSomeWorkAfterLoginNotifierDidGet()
     }
     
     func logoutNotificationDidGet() {
@@ -260,62 +319,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, GIDSignIn
         accountLabel.isHidden = false
         pswLabel.isHidden = false
         newMemberRegisterBtn.isHidden = false
-    }
-    
-    func showAlertMessage(title: String, message: String) {
-        
-        let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
-        
-        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
-        
-        alert.addAction(ok)
-        
-        self.present(alert,animated: true,completion: nil)
-    }
-    
-    func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) {
-        
-        // 做一個透明的view來裝
-        let mainContainer: UIView = UIView(frame: viewContainer.frame)
-        mainContainer.center = viewContainer.center
-        mainContainer.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
-        // background的alpha跟view的alpha不同
-        mainContainer.alpha = 0.5
-        //================================
-        mainContainer.tag = 789456123
-        mainContainer.isUserInteractionEnabled = false
-        
-        // 旋轉圈圈放在這個view上
-        let viewBackgroundLoading: UIView = UIView(frame: CGRect(x:0,y: 0,width: 80,height: 80))
-        viewBackgroundLoading.center = viewContainer.center
-        //        viewBackgroundLoading.backgroundColor = UIColor(red:0x7F, green:0x7F, blue:0x7F, alpha: 1)
-        viewBackgroundLoading.backgroundColor = UIColor(red:0, green:0, blue:0, alpha: 1)
-        //================================
-        //        viewBackgroundLoading.alpha = 0.5
-        //================================
-        viewBackgroundLoading.clipsToBounds = true
-        viewBackgroundLoading.layer.cornerRadius = 15
-        
-        // 創造旋轉圈圈
-        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
-        activityIndicatorView.frame = CGRect(x:0.0,y: 0.0,width: 40.0, height: 40.0)
-        activityIndicatorView.activityIndicatorViewStyle =
-            UIActivityIndicatorViewStyle.whiteLarge
-        activityIndicatorView.center = CGPoint(x: viewBackgroundLoading.frame.size.width / 2, y: viewBackgroundLoading.frame.size.height / 2)
-        
-        if startAnimate!{
-            viewBackgroundLoading.addSubview(activityIndicatorView)
-            mainContainer.addSubview(viewBackgroundLoading)
-            viewContainer.addSubview(mainContainer)
-            activityIndicatorView.startAnimating()
-        }else{
-            for subview in viewContainer.subviews{
-                if subview.tag == 789456123{
-                    subview.removeFromSuperview()
-                }
-            }
-        }
-        //        return activityIndicatorView
     }
 }
 

@@ -10,13 +10,7 @@ import UIKit
 
 class MenuTableViewController: UITableViewController {
     
-    
     @IBOutlet weak var menuTableView: UITableView!
-    
-    //    var container: UIView = UIView()
-    //    var loadingView: UIView = UIView()
-    //    var activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView()
-    
     
     var choosen = ""
     
@@ -106,7 +100,6 @@ class MenuTableViewController: UITableViewController {
         //===========================
         
         self.view.backgroundColor = .black
-//        self.tableView.rowHeight = 175
         self.tableView.separatorStyle = .none
     }
     
@@ -157,48 +150,63 @@ class MenuTableViewController: UITableViewController {
         
         switch choosen {
         case "開始規劃":
+            
+            sharedData.selectedProcess = .開始規劃
             sharedData.pocketSpot = [tripSpotData]()
             serverCommunicate.getPocketSpotFromServer()
-            customActivityIndicatory(self.view, startAnimate: true)
+            generalModels.customActivityIndicatory(self.view, startAnimate: true)
             
         case "推薦行程":
+            
+            sharedData.selectedProcess = .推薦行程
+            
             if sharedData.sharedTrips?.count == 0 {
-                
+    
                 sharedData.sharedTrips = [tripData]()
                 serverCommunicate.getSharedTripFromServer()
-                customActivityIndicatory(self.view, startAnimate: true)
+                generalModels.customActivityIndicatory(self.view, startAnimate: true)
+                
             } else{
                 performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
             }
             
         case "庫存行程":
-            if !sharedData.isLogin {
+            
+            guard sharedData.isLogin else {
                 showAlertMessage(title: "", message: "請先登入會員")
                 return
             }
             
+            sharedData.selectedProcess = .庫存行程
+            
             if sharedData.pocketTrips?.count == 0 {
+                
                 sharedData.pocketTrips = [tripData]()
                 serverCommunicate.getPocketTripFromServer()
-                customActivityIndicatory(self.view, startAnimate: true)
+                generalModels.customActivityIndicatory(self.view, startAnimate: true)
                 
             } else{
+                
                 performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+                
             }
             
         case "庫存景點":
-            if !sharedData.isLogin {
+            
+            guard sharedData.isLogin else {
                 showAlertMessage(title: "", message: "請先登入會員")
                 return
             }
+            
+            sharedData.selectedProcess = .庫存景點
             
             if sharedData.pocketSpot?.count == 0 {
                 
                 serverCommunicate.getPocketSpotFromServer()
+                generalModels.customActivityIndicatory(self.view, startAnimate: true)
                 
-                // show loading view
-                customActivityIndicatory(self.view, startAnimate: true)
             } else{
+                
                 performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
             }
             
@@ -207,11 +215,8 @@ class MenuTableViewController: UITableViewController {
         }
     }
     
-    //    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-    //
-    //    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         let nextPage = segue.destination as! CountrySelectTableViewController
         nextPage.selectedProcess = choosen
     }
@@ -229,7 +234,7 @@ class MenuTableViewController: UITableViewController {
     
     func NotificationDidGet() {
         
-        customActivityIndicatory(self.view, startAnimate: false)
+        generalModels.customActivityIndicatory(self.view, startAnimate: false)
         
         guard segueLock == false else { return }
         
@@ -245,52 +250,7 @@ class MenuTableViewController: UITableViewController {
                                                         cancelBtnTitle: "取消")
         present(alert, animated: true, completion: nil)
         
-        customActivityIndicatory(self.view, startAnimate: false)
-    }
-    
-    func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) {
-        
-        // 做一個透明的view來裝
-        let mainContainer: UIView = UIView(frame: viewContainer.frame)
-        mainContainer.center = viewContainer.center
-        mainContainer.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
-        // background的alpha跟view的alpha不同
-        mainContainer.alpha = 0.5
-        //================================
-        mainContainer.tag = 789456123
-        mainContainer.isUserInteractionEnabled = false
-        
-        // 旋轉圈圈放在這個view上
-        let viewBackgroundLoading: UIView = UIView(frame: CGRect(x:0,y: 0,width: 80,height: 80))
-        viewBackgroundLoading.center = viewContainer.center
-        //        viewBackgroundLoading.backgroundColor = UIColor(red:0x7F, green:0x7F, blue:0x7F, alpha: 1)
-        viewBackgroundLoading.backgroundColor = UIColor(red:0, green:0, blue:0, alpha: 1)
-        //================================
-        //        viewBackgroundLoading.alpha = 0.5
-        //================================
-        viewBackgroundLoading.clipsToBounds = true
-        viewBackgroundLoading.layer.cornerRadius = 15
-        
-        // 創造旋轉圈圈
-        let activityIndicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
-        activityIndicatorView.frame = CGRect(x:0.0,y: 0.0,width: 40.0, height: 40.0)
-        activityIndicatorView.activityIndicatorViewStyle =
-            UIActivityIndicatorViewStyle.whiteLarge
-        activityIndicatorView.center = CGPoint(x: viewBackgroundLoading.frame.size.width / 2, y: viewBackgroundLoading.frame.size.height / 2)
-        
-        if startAnimate!{
-            viewBackgroundLoading.addSubview(activityIndicatorView)
-            mainContainer.addSubview(viewBackgroundLoading)
-            viewContainer.addSubview(mainContainer)
-            activityIndicatorView.startAnimating()
-        }else{
-            for subview in viewContainer.subviews{
-                if subview.tag == 789456123{
-                    subview.removeFromSuperview()
-                }
-            }
-        }
-        //        return activityIndicatorView
+        generalModels.customActivityIndicatory(self.view, startAnimate: false)
     }
     
     /*
@@ -345,15 +305,25 @@ extension MenuTableViewController {
     @IBAction func functionName (_segue: UIStoryboardSegue) {}
     
     override func viewWillAppear(_ animated: Bool) {
+        
         super.viewWillAppear(true)
         self.tabBarController?.tabBar.isHidden = false
         self.segueLock = false
+        sharedData.selectedProcess = .none
     }
     
     override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
         let color = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
         self.tabBarController?.tabBar.barTintColor = color
         self.navigationController?.navigationBar.barTintColor = color
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        let name = Notification.Name(rawValue: NotificationName.connectServerFail.rawValue)
+        NotificationCenter.default.removeObserver(self, name: name, object: nil)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

@@ -10,8 +10,11 @@ import Foundation
 import GooglePlacePicker
 
 
-// MARK: - 待建立.swift的model
 class GeneralToolModels {
+    
+    let server = ServerConnector()
+    let shareData: DataManager = .shareDataManager
+    let getPocketSpotAfterLoginNotifier = Notification.Name(NotificationName.getPocketSpotAfterLoginNotifier.rawValue)
     
     func chooseCoverImg(selectedCountry: String) -> UIImage {
         
@@ -37,16 +40,6 @@ class GeneralToolModels {
         
         let country = countryList[selectedCountry]
         return country!
-    }
-    
-    
-    func prepareCommentAlertVC(title: String, message: String!, cancelBtnTitle: String) -> UIAlertController {
-    
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        let cancel = UIAlertAction(title: cancelBtnTitle, style: .cancel, handler: nil)
-        alert.addAction(cancel)
-        
-        return alert
     }
     
     
@@ -98,8 +91,138 @@ class GeneralToolModels {
         }   
     }
     
-    func printAllAttractionsDetailToDebug(attractions: [Attraction]) {
+    
+    // MARK: Alert Preparation Funtions.
+    func prepareCommentAlertVC(title: String, message: String!, cancelBtnTitle: String = "確定") -> UIAlertController {
         
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: cancelBtnTitle, style: .cancel, handler: nil)
+        alert.addAction(cancel)
+        
+        return alert
+    }
+    
+    
+    func prepareUnloginAlertVC( title: String,
+                                message: String!,
+                                segueID: String,
+                                targetVC: UIViewController,
+                                cancelBtnTitle: String = "取消",
+                                confirmBtnTitle: String = "登入" ) -> UIAlertController {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: cancelBtnTitle, style: .cancel, handler: nil)
+        let login = UIAlertAction(title: confirmBtnTitle, style: .destructive) { (login) in
+        
+            self.loginAlertAction(targetVC: targetVC, segueID: segueID)
+        }
+        
+        alert.addAction(cancel)
+        alert.addAction(login)
+        
+        return alert
+    }
+    
+    private func loginAlertAction(targetVC: UIViewController?, segueID: String) {
+        
+        guard let vc = targetVC else {
+            print("NOTE: UIVC doesn't exist.")
+            return
+        }
+        
+        guard shareData.chooseCountry != "" else {
+            print("ERROR: Selected country unknown.")
+            return
+        }
+        
+        guard let owner = shareData.memberData?.account else {
+            print("ERROR: User account unknown")
+            return
+        }
+        
+//        NotificationCenter.default.addObserver(vc,
+//                                               selector: #selector(loginAndGetPocketSpotNotifierDidGet(notification:)),
+//                                               name: self.getPocketSpotAfterLoginNotifier,
+//                                               object: nil)
+//        
+        vc.performSegue(withIdentifier: segueID, sender: vc)
+    }
+    
+//    @objc private func loginAndGetPocketSpotNotifierDidGet(notification: Notification) {
+//        
+//        guard let targetVC = notification.userInfo?["targetVC"] as? UIViewController else {
+//            print("ERROR: The userInfo pass by the Notification is not a UIViewController")
+//            return
+//        }
+//        
+//        NotificationCenter.default.removeObserver(targetVC,
+//                                                  name: self.getPocketSpotAfterLoginNotifier,
+//                                                  object: nil)
+//    }
+    
+    func getPreviousVCinNavigationVC(selfVC: UIViewController, distanceIndex: Int?, tagetVcClass: NSObject? = nil ) -> UIViewController? {
+        
+        guard let vcs = selfVC.navigationController?.viewControllers else {
+            print("ERROR:Navigation VC doesn't exist")
+            return nil
+        }
+        
+        
+        if let distanceIndex = distanceIndex {
+            
+            guard let index = vcs.index(of: selfVC) else {
+                print("ERROR: The vc doesn't exist in its Navigation vc.")
+                return nil
+            }
+            
+            let tagetVcIndex = index - distanceIndex
+            
+            guard tagetVcIndex >= 0 else {
+                print("ERROR: Target index is out of range")
+                return nil
+            }
+            
+            return vcs[tagetVcIndex]
+            
+//        } else if let tagetVcClass = tagetVcClass {
+//            
+//            let class = tagetVcClass.
+//            
+//            for i in 0 ... vcs.count - 1 {
+//                
+//                if vcs[i] is tagetVcClass.self {
+//                    
+//                    guard i-1 >= 0 else {
+//                        
+//                        print("ERROR: LoginViewController is the 1st VC in its navigationVC")
+//                        return
+//                    }
+//                    self.navigationController?.popToViewController(vcs[i-1], animated: true)
+//                    break
+//                }
+//            }
+            
+        } else {
+            return nil
+        }
+    }
+    
+    // MARK: Debug Funtions
+    func printAllAttractionsDetailToDebug(attractions: [Attraction]?, debugTitle: String) {
+        
+        print(debugTitle)
+        
+        guard let attractions = attractions else {
+            print("ERROR: The Attractions array is nil!")
+            return
+        }
+        
+        guard attractions.isEmpty != true else {
+            print("WARNING: The attractions array is empty!")
+            return
+        }
+        
+        print("--Attraction Debug:-----------------------")
         for attraction in attractions {
             let name = attraction.attrctionName ?? "none"
             let addr = attraction.address ?? "none"
@@ -108,62 +231,37 @@ class GeneralToolModels {
             
             print(" name: \(name).\n addr: \(addr).\n placeId: \(placeId).\n latCoordinate: \(latCoord)")
         }
+        print("------------------------------------------")
+    }
+    
+    func printAllSpotsDetailToDebug(spots: [spotData]?, debugTitle: String) {
+        
+        print(debugTitle)
+        
+        guard let spots = spots else {
+            print("ERROR: The Attractions array is nil!")
+            return
+        }
+        
+        guard spots.isEmpty != true else {
+            print("WARNING: The spots array is empty!")
+            return
+        }
+        
+        print("--Spot Debug:-----------------------------")
+        for spot in spots {
+            let name = spot.spotName ?? "none"
+            let addr = spot.spotAddress ?? "none"
+            let placeId = spot.placeID ?? "none"
+            let latCoord = spot.latitude ?? 0.0
+            
+            print(" name: \(name).\n addr: \(addr).\n placeId: \(placeId).\n latCoordinate: \(latCoord)")
+        }
+        print("------------------------------------------")
     }
 }
 
-struct GooglePlacePickerGenerator {
-    
-    func generatePlacePicker(selectedCountry: String) -> GMSPlacePicker {
-        
-        let commontTools = GeneralToolModels()
-        
-        let tmpCountry = commontTools.selectCountryTypeTrasformer(selectedCountry: selectedCountry)
-        var bounds: GMSCoordinateBounds? = nil
-        
-        if let country = tmpCountry {
-            let coordinateNE = getBoundCoordinate(selectedCountry: country, space: .positive)
-            let coordinateWS = getBoundCoordinate(selectedCountry: country, space: .negative)
-            
-            let path = GMSMutablePath()
-            path.add(coordinateNE)
-            path.add(coordinateWS)
-            
-            bounds = GMSCoordinateBounds(path: path)
-        }
-        
-        let config = GMSPlacePickerConfig(viewport: bounds)
-        let placePicker = GMSPlacePicker(config: config)
-        
-        return placePicker
-    }
-    
-    
-    private func getBoundCoordinate(selectedCountry: BoundsCoordinate, space: Space) -> CLLocationCoordinate2D {
-        
-        let seperateResult = selectedCountry.rawValue.components(separatedBy: ",")
-        let spaceValue = 0.01
-        let lat: Double
-        let lng: Double
-        
-        if space == .positive {
-            lat = Double(seperateResult[0])! + spaceValue
-            lng = Double(seperateResult[1])! + spaceValue
-        } else {
-            lat = Double(seperateResult[0])! - spaceValue
-            lng = Double(seperateResult[1])! - spaceValue
-        }
-        
-        return CLLocationCoordinate2DMake(lat, lng)
-    }
-    
-    func mySQLStringGenerator() {
-        //        let conn_string = MySlConn;
-        //        conn_string.Server = "mysql8.000webhost.com";
-        //        conn_string.UserID = "a1613857_***";
-        //        conn_string.Password = "*****";
-        //        conn_string.Database = "a1613857_****";
-    }
-}
+
 
 enum BoundsCoordinate: String {
     
@@ -200,12 +298,18 @@ enum NotificationName: String {
     
     case pocketSpotTVCDisappear
     
+    case loginNotifier
     case getPocketTripNotifier
     case getPocketSpotNotifier
+    case getPocketSpotAfterLoginNotifier
     case downloadCoverImgNotifier
     case connectServerFail
     
     case uploadPocketSpotNotifier
-}
+    case uploadCoverImgNotifier
+   
+    case deletePocketSpotNotifier
+    case deletePocketTripNotifier
 
+}
 

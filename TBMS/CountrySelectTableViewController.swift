@@ -65,6 +65,7 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
         }
     }
     
+    
     override var canBecomeFirstResponder: Bool {
         return true
     }
@@ -245,7 +246,10 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
         
         openSectionIndex = NSNotFound
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        tableView.deselectRow(at: indexPath, animated: true)
         
         switch selectedProcess {
         case "開始規劃":
@@ -267,17 +271,10 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
         
         sharedData.chooseCountry = selectedCountry
         
-        
         performSegue(withIdentifier: segueID, sender: nil)
-        
-        //畫面精進，讓點選後的灰色不會卡在選擇列上，灰色會閃一下就消失
-        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         
         if(segue.identifier == "goAddPointVC") {
             

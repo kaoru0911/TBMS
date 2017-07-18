@@ -20,8 +20,8 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var spotTableView: UITableView!
     @IBOutlet weak var addSpotBtn: UIButton!
     @IBOutlet weak var saveSpotBtn: UIButton!
-    
     @IBOutlet weak var spotSearchBtn: UIButton!
+    
     var selectedCountry : String!
     
     var placeIdStorage:String!
@@ -31,7 +31,9 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     var sharedData = DataManager.shareDataManager
     let generalModels = GeneralToolModels()
     
-    let segueId = "GoToSetStartPoint"
+    let toStartPointSegueID = "GoToSetStartPoint"
+    let storedSpotSegueID = "ShowStorageAttration"
+    let loginSegueID = "LoginSegue"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -184,7 +186,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             return
         }
         
-        performSegue(withIdentifier: segueId, sender: self)
+        performSegue(withIdentifier: toStartPointSegueID, sender: self)
     }
     
     @IBAction func searchBtn(_ sender: Any) {
@@ -222,26 +224,42 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         })
     }
     
+    @IBAction func storedAttractionsListBtnPressed(_ sender: UIButton) {
+        
+        guard sharedData.isLogin else {
+//            let alert = generalModels.prepareCommentAlertVC(title: "您尚未登入唷", message: nil, cancelBtnTitle: "OK")
+            let alert = generalModels.prepareUnloginAlertVC(title: "您尚未登入唷", message: nil, segueID: loginSegueID, targetVC: self)
+            present(alert, animated: true, completion: nil)
+            
+            return
+        }
+        
+        performSegue(withIdentifier: self.storedSpotSegueID, sender: nil)
+    }
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
-        if segue.identifier == segueId {
+        if segue.identifier == toStartPointSegueID {
             
             let vc = segue.destination as! SetStartPointViewController
             vc.attractionsList = attractionStorage
-            generalModels.printAllAttractionsDetailToDebug(attractions: vc.attractionsList)
+//            generalModels.printAllAttractionsDetailToDebug(attractions: vc.attractionsList, debugTitle: "addViewPoint - prepare toStartPointSegue:")
             
-        } else if segue.identifier == "ShowStorageAttration" {
+        } else if segue.identifier == self.storedSpotSegueID {
             
             let nextPage = segue.destination as! PocketSpotTVC
             nextPage.selectedCountry = sharedData.chooseCountry
             nextPage.selectedProcess = "開始規劃"
             nextPage.scheduleAttractions = attractionStorage
+//            generalModels.printAllAttractionsDetailToDebug(attractions: attractionStorage, debugTitle: "addViewPoint - prepare storedSpotSegue:")
         }
     }
 }
 
 
 extension AddViewPointViewController {
+
     
     func addNewAttractionFromPocket( notification:Notification ) {
         
@@ -256,7 +274,7 @@ extension AddViewPointViewController {
         }
         
         attractionStorage += newAttractions
-        generalModels.printAllAttractionsDetailToDebug(attractions: attractionStorage)
+//        generalModels.printAllAttractionsDetailToDebug(attractions: attractionStorage, debugTitle: "addNewAttractionFromPocket:")
         
         var attractionsNameArray = [String]()
         
@@ -265,7 +283,7 @@ extension AddViewPointViewController {
             attractionsNameArray.append(name ?? "")
         }
         
-        listArray += attractionsNameArray
+        listArray = attractionsNameArray
         
         self.spotTableView.reloadData()
     }

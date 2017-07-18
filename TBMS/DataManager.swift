@@ -18,6 +18,7 @@ class DataManager: NSObject {
     var sharedTrips:Array<tripData>?
     var menuCountries:Array<countryData> = []
     var chooseCountry:String = ""
+    var selectedProcess: SelectedProcess = .none
     var pocketSpot:Array<spotData>?
     var tempTripData:tripData?
     var isLogin:Bool!
@@ -145,6 +146,11 @@ class MemberData: NSObject {
     var account:String?
     var password:String?
     var email:String?
+}
+
+enum SelectedProcess: String {
+    case 開始規劃, 推薦行程, 庫存行程, 庫存景點
+    case none = ""
 }
 
 

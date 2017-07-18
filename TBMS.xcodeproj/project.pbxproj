@@ -273,11 +273,11 @@
 			children = (
 				22FCB46A1ED2CB6200F6F54E /* BestRouteCalculator.swift */,
 				22F43F4C1ECD662900791D55 /* CallGoogleDirection.swift */,
+				22F43F451ECD662000791D55 /* CallGooglePlaceAPI.swift */,
 				22F43F561ECD6AE600791D55 /* RequestURLGenerator.swift */,
 				22AF44DF1ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift */,
-				22F43F451ECD662000791D55 /* CallGooglePlaceAPI.swift */,
-				22F43F3F1ECD661200791D55 /* ProduceScrollViewWithVCArray.swift */,
 				22F43F401ECD661200791D55 /* ViewPointAndPathStoraged.swift */,
+				22F43F3F1ECD661200791D55 /* ProduceScrollViewWithVCArray.swift */,
 				22F43F411ECD661200791D55 /* ErrorCatch.swift */,
 				22FAC4671ED67E4E00C402D8 /* StorageProtocolAndClass.swift */,
 				229DDBF71EEFB58000488B48 /* GeneralTools.swift */,

@@ -13,7 +13,6 @@ import FBSDKLoginKit
 class ServerConnector: NSObject {
     
     // URL
-    
     // 本機server
     //let baseURLStr: String = "http://localhost/TravelByMyself/"
     // ngrok安裝方法:
@@ -86,14 +85,22 @@ class ServerConnector: NSObject {
     let loginNotifier = Notification.Name("loginNotifier")
     let logoutNotifier = Notification.Name("logoutNotifier")
     let fbLoginNotifier = Notification.Name("fbLoginNotifier")
+    
     let getPocketTripNotifier = Notification.Name("getPocketTripNotifier")
     let getSharedTripNotifier = Notification.Name("getSharedTripNotifier")
     let getPocketSpotNotifier = Notification.Name("getPocketSpotNotifier")
     let getTripSpotNotifier = Notification.Name("getTripSpotNotifier")
-    let downloadCoverImgNotifier = Notification.Name("downloadCoverImgNotifier")
+    let secondTyprGetTripSpotNotifier = Notification.Name(NotificationName.getPocketSpotAfterLoginNotifier.rawValue)
+    let downloadCoverImgNotifier = Notification.Name(NotificationName.downloadCoverImgNotifier.rawValue)
+    
     let uploadTripNotifier = Notification.Name("tripUploadSpotNotifier")
     let uploadPocketSpotNotifier = Notification.Name("uploadPocketSpotNotifier")
-    let connectServerFail = Notification.Name("connectServerFail")
+    let uploadCoverImgNotifier = Notification.Name(NotificationName.uploadCoverImgNotifier.rawValue)
+    
+    let deletePocketSpotNotifier = Notification.Name(NotificationName.deletePocketSpotNotifier.rawValue)
+    let deletePocketTripNotifier = Notification.Name(NotificationName.deletePocketTripNotifier.rawValue)
+    
+    let connectServerFail = Notification.Name(NotificationName.connectServerFail.rawValue)
     
     
     /**
@@ -332,10 +339,9 @@ class ServerConnector: NSObject {
                 
                 guard let getFeedback = json as? [Dictionary<String,Any>] else {
                     NotificationCenter.default.post(name: self.getPocketTripNotifier, object: nil)
+                    NotificationCenter.default.post(name: self.downloadCoverImgNotifier, object: nil)
                     return
                 }
-                
-                //                    self.downloadImgIndex = 0
                 
                 let ImgPathURL = self.baseURLStr + "pocketTripCoverImg/"
                 
@@ -373,7 +379,6 @@ class ServerConnector: NSObject {
                 print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
-            
         }
     }
     
@@ -418,7 +423,9 @@ class ServerConnector: NSObject {
                     
                     sharedTrip.country = getFeedback[i]["tripCountry"] as? String
                     
-                    sharedTrip.ownerUser = getFeedback[i]["ownerUser"] as? String
+                    sharedTrip.ownerUser = "\(getFeedback[i]["ownerUser"]!)"
+                    
+//                    sharedTrip.ownerUser = String(describing: getFeedback[i]["ownerUser"])
                     
                     guard let coverImgName = getFeedback[i]["coverImg"] as? String else {
                         
@@ -493,7 +500,6 @@ class ServerConnector: NSObject {
                     
                     NotificationCenter.default.post(name: self.downloadCoverImgNotifier, object: nil)
                     
-                    
                 case .failure(_):
                     print("Server feedback fail")
                     NotificationCenter.default.post(name: self.connectServerFail, object: nil)
@@ -508,7 +514,8 @@ class ServerConnector: NSObject {
     /**
      Download user pocket spot from server
      */
-    func getPocketSpotFromServer() {
+    func getPocketSpotFromServer(doSecondTypeNotifierPost: Bool = false,
+                                 targetVC: UIViewController? = nil      ) {
         
         // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
         let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,
@@ -544,21 +551,39 @@ class ServerConnector: NSObject {
                     self.sharedData.pocketSpot?.append(spot)
                 }
                 
-                NotificationCenter.default.post(name: self.getPocketSpotNotifier, object: nil)
+//                NotificationCenter.default.post(name: self.getPocketSpotNotifier, object: nil)
                 
             case .failure(_):
+                
                 print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
+                
             }
             
-            NotificationCenter.default.post(name: self.getPocketSpotNotifier, object: nil)
+            if doSecondTypeNotifierPost { // 分開兩個是因不想處理menu頁面的監聽
+                
+                guard let userInfo = targetVC else {
+                    
+                    print("ERROR: DownloadTripSpot sucess but didn't select the target VC.")
+                    NotificationCenter.default.post(name: self.connectServerFail, object: nil)
+                    return
+                }
+                
+                NotificationCenter.default.post(name: self.secondTyprGetTripSpotNotifier,
+                                                object: nil,
+                                                userInfo: ["targetVC":userInfo])
+                
+            } else {
+                
+                NotificationCenter.default.post(name: self.getPocketSpotNotifier, object: nil)
+            }
         }
     }
     
     /**
      Download user shared trip spot from server
      */
-    func getTripSpotFromServer(selectTrip:tripData, req:String) {
+    func getTripSpotFromServer(selectTrip:tripData, req:String ) {
         
         // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
         let parameters:Parameters = [USER_NAME_KEY: selectTrip.ownerUser! as Any,
@@ -577,7 +602,7 @@ class ServerConnector: NSObject {
             case .success(let json):
                 
                 guard let getFeedback = json as? [Dictionary<String,Any>] else {
-                    NotificationCenter.default.post(name: self.getTripSpotNotifier, object: nil)
+                    NotificationCenter.default.post(name: self.connectServerFail, object: nil)
                     return
                 }
                 
@@ -609,14 +634,11 @@ class ServerConnector: NSObject {
                 NotificationCenter.default.post(name: self.getTripSpotNotifier, object: nil)
                 
             case .failure(_):
+                
                 print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
             }
-            
-            //            NotificationCenter.default.post(name: self.getTripSpotNotifier, object: nil)
         }
-        
-        
     }
     
     /**
@@ -700,8 +722,6 @@ class ServerConnector: NSObject {
                     
                     self.uploadTripCoverImgToServer(tripData: tripData, Req: self.UPLOAD_SHAREDTRIPCOVER_REQ)
                     
-                    //                        self.uploadIndex = tripData.spots.count
-                    
                     self.uploadTripSpotToServer(tripData: tripData, request: self.UPLOAD_SHAREDTRIPSPOT_REQ)
                 }
                 
@@ -747,9 +767,6 @@ class ServerConnector: NSObject {
                 if result {
                     
                     self.uploadTripCoverImgToServer(tripData: tripData, Req: self.UPLOAD_POCKETTRIPCOVER_REQ)
-                    
-                    //                        self.uploadIndex = tripData.spots.count
-                    
                     self.uploadTripSpotToServer(tripData: tripData, request: self.UPLOAD_POCKETTRIPSPOT_REQ)
                 }
                 
@@ -785,6 +802,7 @@ class ServerConnector: NSObject {
                         
                         print("Is upload pocket trip cover img post success: \(response.result.isSuccess)")
                         print("Response: \(String(describing: response.result.value))")
+                        NotificationCenter.default.post(name: self.uploadCoverImgNotifier, object: nil)
                     }
                 case .failure(let encodingError):
                     print(encodingError)
@@ -824,10 +842,9 @@ class ServerConnector: NSObject {
                 print("Total count in spot array: \(String(tripData.spots.count))")
                 //                print("Upload index in spot array: \(String(self.uploadIndex))")
                 print("Response: \(String(describing: response.result.value))")
+                NotificationCenter.default.post(name: self.uploadTripNotifier, object: nil)
             }
         }
-        
-        NotificationCenter.default.post(name: self.uploadTripNotifier, object: nil)
         
         // thread unlocked
         self.threadKey.unlock()
@@ -864,6 +881,8 @@ class ServerConnector: NSObject {
                 
                 print("Result: \(result), Error code:", error)
                 
+                NotificationCenter.default.post(name: self.deletePocketSpotNotifier, object: nil)
+                
             case .failure(_):
                 print("Server feedback fail")
                 NotificationCenter.default.post(name: self.connectServerFail, object: nil)
@@ -874,7 +893,8 @@ class ServerConnector: NSObject {
     /**
      Delete user pocket trip from server, trip spot and cover image would also be delete from server
      */
-    func deletePocketTripFromServer(tripName:String) {
+    func deletePocketTripFromServer(tripName:String,
+                                    completion: @escaping ()->Void) {
         
         // 一定要解包，否則php端讀到的$_POST內容會帶有"Option"這個字串而導致判斷出問題
         let parameters:Parameters = [USER_NAME_KEY: sharedData.memberData!.account! as Any,
@@ -887,7 +907,8 @@ class ServerConnector: NSObject {
             debugPrint(response)
             print("Is delete pocket trip post success: \(response.result.isSuccess)")
             print("Response: \(String(describing: response.result.value))")
+            NotificationCenter.default.post(name: self.deletePocketTripNotifier, object: nil)
+            completion()
         }
     }
-    
 }

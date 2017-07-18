@@ -562,7 +562,7 @@ extension RearrangeScheduleVC {
         var tmpVCArray = [ScheduleTableViewController]()
         
         guard let cellContents = cellContents else {
-            print("沒有spot唷")
+            print("ERROR: SpotData doesn't exist")
             return tmpVCArray
         }
         
@@ -713,7 +713,7 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         
         guard sourceIndexPath != destinationIndexPath else {
-            print("沒動cell唷")
+            print("Cell doesn't move")
             return
         }
         
