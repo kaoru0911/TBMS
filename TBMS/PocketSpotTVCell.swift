@@ -18,6 +18,10 @@ class PocketSpotTVCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        spotName.lineBreakMode = .byTruncatingTail
+        spotImage.layer.cornerRadius = 10.0
+        spotImage.layer.masksToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

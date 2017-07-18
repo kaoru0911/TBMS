@@ -23,6 +23,8 @@ class ScheduleTableViewController: UITableViewController {
     var filter = TripFilter()
     var nDaySchedule: Int!
     var selectedProcess: String!
+    var spotItemLabelBGColor = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
+    let routeColors = GeneralToolModels.generalColorSetting
     
     let googleMapSchemeStr = "https://www.google.es/maps/dir/"
     
@@ -38,6 +40,8 @@ class ScheduleTableViewController: UITableViewController {
         checkSpotPosition(spotArray: &spotData)
         
         NotificationCenter.default.addObserver(self, selector: #selector(uploadPocketSpotNotificationDidGet), name: NSNotification.Name(rawValue: "uploadPocketSpotNotifier"), object: nil)
+        
+        spotItemLabelBGColor = choseColorFromColorArray(date: nDaySchedule, colorArray: routeColors)
     }
     
     
@@ -78,7 +82,7 @@ class ScheduleTableViewController: UITableViewController {
         
         cell.spotItemLabel.text = spotData[indexPath.row].spotName  //spotArray[indexPath.row]
         
-        cell.spotItemLabel.backgroundColor = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
+        cell.spotItemLabel.backgroundColor = spotItemLabelBGColor
         
         cell.spotItemLabel.layer.cornerRadius = 10
         cell.spotItemLabel.layer.masksToBounds = true
@@ -344,5 +348,18 @@ extension ScheduleTableViewController {
         }
         
         return travelTypeString
+    }
+    
+    func choseColorFromColorArray(date: Int, colorArray: [UIColor]) -> UIColor {
+    
+        let totalColorsCount = colorArray.count
+        
+        var index = date
+        
+        if index >= colorArray.count {
+            index = index % colorArray.count
+        }
+        
+        return colorArray[index]
     }
 }

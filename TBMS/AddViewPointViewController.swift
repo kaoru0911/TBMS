@@ -16,7 +16,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var spotTextView: UITextView!
     @IBOutlet weak var imageView: UIImageView!
     
-    @IBOutlet weak var nameTitleLabel: UILabel!
+    //    @IBOutlet weak var nameTitleLabel: UILabel!
     @IBOutlet weak var spotTableView: UITableView!
     @IBOutlet weak var addSpotBtn: UIButton!
     @IBOutlet weak var saveSpotBtn: UIButton!
@@ -44,11 +44,15 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         saveSpotBtn.layer.cornerRadius = 5.0
         spotSearchBtn.layer.cornerRadius = 5.0
         
-//        spotSearchBtn.layer.
-        
         addSpotBtn.isHidden = true
-        nameTitleLabel.isHidden = true
+        //        nameTitleLabel.isHidden = true
+        
         imageView.image = UIImage(named: "GoogleMapLogo")
+        imageView.layer.cornerRadius = 10.0
+        imageView.layer.masksToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        
+//        spotTextView.text = "TEST"
         spotTextView.delegate = self as? UITextViewDelegate
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
@@ -82,25 +86,16 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
                 // TODO: handle the error.
                 print("Error: \(error.localizedDescription)")
             } else {
+                
                 self.imageView.image = photo;
-                //self.attributionTextView.attributedText = photoMetadata.attributions;
+                self.imageView.contentMode = .scaleAspectFill
+                
             }
         })
     }
     
     func hideKeyboard() {
         view.endEditing(true)
-    }
-    
-    func showAlertMessage(title: String, message: String) {
-        
-        let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
-        
-        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
-        
-        alert.addAction(ok)
-        
-        self.present(alert,animated: true,completion: nil)
     }
     
     // TableView陣列
@@ -157,7 +152,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
         
         // 尋訪若有相同景點字串，即跳出
         for  i in 0..<listArray.count {
-            let spotExisted:String = listArray[i] as! String
+            let spotExisted:String = listArray[i]
             guard spotExisted != spotTextView.text else {
                 spotExistedChecking = true
                 return
@@ -209,7 +204,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             self.spotTextView.isSelectable = true
             self.spotTextView.isEditable = true
             
-            self.nameTitleLabel.isHidden = false
+            //            self.nameTitleLabel.isHidden = false
             self.addSpotBtn.isHidden = false
             
             self.placeIdStorage = place.placeID
@@ -227,7 +222,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     @IBAction func storedAttractionsListBtnPressed(_ sender: UIButton) {
         
         guard sharedData.isLogin else {
-//            let alert = generalModels.prepareCommentAlertVC(title: "您尚未登入唷", message: nil, cancelBtnTitle: "OK")
+            //            let alert = generalModels.prepareCommentAlertVC(title: "您尚未登入唷", message: nil, cancelBtnTitle: "OK")
             let alert = generalModels.prepareUnloginAlertVC(title: "您尚未登入唷", message: nil, segueID: loginSegueID, targetVC: self)
             present(alert, animated: true, completion: nil)
             
@@ -244,7 +239,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             
             let vc = segue.destination as! SetStartPointViewController
             vc.attractionsList = attractionStorage
-//            generalModels.printAllAttractionsDetailToDebug(attractions: vc.attractionsList, debugTitle: "addViewPoint - prepare toStartPointSegue:")
+            //            generalModels.printAllAttractionsDetailToDebug(attractions: vc.attractionsList, debugTitle: "addViewPoint - prepare toStartPointSegue:")
             
         } else if segue.identifier == self.storedSpotSegueID {
             
@@ -252,14 +247,14 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             nextPage.selectedCountry = sharedData.chooseCountry
             nextPage.selectedProcess = "開始規劃"
             nextPage.scheduleAttractions = attractionStorage
-//            generalModels.printAllAttractionsDetailToDebug(attractions: attractionStorage, debugTitle: "addViewPoint - prepare storedSpotSegue:")
+            //            generalModels.printAllAttractionsDetailToDebug(attractions: attractionStorage, debugTitle: "addViewPoint - prepare storedSpotSegue:")
         }
     }
 }
 
 
 extension AddViewPointViewController {
-
+    
     
     func addNewAttractionFromPocket( notification:Notification ) {
         
@@ -274,7 +269,7 @@ extension AddViewPointViewController {
         }
         
         attractionStorage += newAttractions
-//        generalModels.printAllAttractionsDetailToDebug(attractions: attractionStorage, debugTitle: "addNewAttractionFromPocket:")
+        //        generalModels.printAllAttractionsDetailToDebug(attractions: attractionStorage, debugTitle: "addNewAttractionFromPocket:")
         
         var attractionsNameArray = [String]()
         

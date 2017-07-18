@@ -12,9 +12,17 @@ import GooglePlacePicker
 
 class GeneralToolModels {
     
-    let server = ServerConnector()
-    let shareData: DataManager = .shareDataManager
-    let getPocketSpotAfterLoginNotifier = Notification.Name(NotificationName.getPocketSpotAfterLoginNotifier.rawValue)
+    private let server = ServerConnector()
+    private let shareData: DataManager = .shareDataManager
+    fileprivate let getPocketSpotAfterLoginNotifier = Notification.Name(NotificationName.getPocketSpotAfterLoginNotifier.rawValue)
+    
+    static let generalColorSetting = [UIColor(red: 177/255, green: 143/255, blue: 106/255, alpha: 1),
+                               UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1),
+                               UIColor(red: 145/255, green: 168/255, blue: 205/255, alpha: 1),
+                               UIColor(red: 247/255, green: 202/255, blue: 201/255, alpha: 1),
+                               UIColor(red: 3/255, green: 79/255, blue: 132/255, alpha: 1),
+                               UIColor(red: 251/255, green: 227/255, blue: 55/255, alpha: 1),
+                               UIColor(red: 247/255, green: 120/255, blue: 107/255, alpha: 1)]
     
     func chooseCoverImg(selectedCountry: String) -> UIImage {
         

@@ -310,6 +310,9 @@ extension MenuTableViewController {
         self.tabBarController?.tabBar.isHidden = false
         self.segueLock = false
         sharedData.selectedProcess = .none
+//        sharedData.sharedTrips?.removeAll()
+//        sharedData.pocketTrips?.removeAll()
+//        sharedData.pocketSpot?.removeAll()
     }
     
     override func viewWillLayoutSubviews() {

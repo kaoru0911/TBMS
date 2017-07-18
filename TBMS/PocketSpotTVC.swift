@@ -61,6 +61,7 @@ class PocketSpotTVC: UITableViewController {
         let spot = spotList[indexPath.row]
         
         cell.spotName.text = spot.spotName
+        cell.spotName.lineBreakMode = .byTruncatingTail
         cell.selectStatus.isHidden = true
         cell.addSpotBtn.tag = indexPath.row
         

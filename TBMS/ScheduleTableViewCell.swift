@@ -11,9 +11,9 @@ import UIKit
 
 class ScheduleTableViewCell: UITableViewCell {
     
-    let spotArray:Array = ["清水寺", "平等院", "宇治"]
-    let spotTraffic:Array = ["十號公車車車車車車車車車車車車車車車車車車車", "二號公車", "五號公車"]
-    
+//    let spotArray:Array = ["清水寺", "平等院", "宇治"]
+//    let spotTraffic:Array = ["十號公車車車車車車車車車車車車車車車車車車車", "二號公車", "五號公車"]
+//    
     @IBOutlet weak var describeLabel: UILabel!
 
     @IBOutlet weak var spotItemLabel: UILabel!
@@ -37,6 +37,7 @@ class ScheduleTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        spotItemLabel.lineBreakMode = .byTruncatingTail
     }
     /*
     required init?(coder aDecoder: NSCoder) {

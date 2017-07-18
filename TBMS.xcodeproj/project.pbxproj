@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22167DDB1F1DEE3F0077F980 /* addBtn2.png in Resources */ = {isa = PBXBuildFile; fileRef = 22167DDA1F1DEE3F0077F980 /* addBtn2.png */; };
 		224A869C1F1362FC0050050F /* deleteSpot.png in Resources */ = {isa = PBXBuildFile; fileRef = 224A869B1F1362FC0050050F /* deleteSpot.png */; };
 		225C00B41EFCE6C500F01F2C /* annotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 225C00B31EFCE6C500F01F2C /* annotation.png */; };
 		229DDBF81EEFB58100488B48 /* GeneralTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229DDBF71EEFB58000488B48 /* GeneralTools.swift */; };
@@ -111,6 +112,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22167DDA1F1DEE3F0077F980 /* addBtn2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addBtn2.png; sourceTree = "<group>"; };
 		224A869B1F1362FC0050050F /* deleteSpot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteSpot.png; sourceTree = "<group>"; };
 		225C00B31EFCE6C500F01F2C /* annotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = annotation.png; sourceTree = "<group>"; };
 		229DDBF71EEFB58000488B48 /* GeneralTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralTools.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 		A74BDDDC1ED5B72F00987446 /* PocketSpot */ = {
 			isa = PBXGroup;
 			children = (
+				22167DDA1F1DEE3F0077F980 /* addBtn2.png */,
 				A74BDDE01ED6F10B00987446 /* addSpot.png */,
 				224A869B1F1362FC0050050F /* deleteSpot.png */,
 				A74BDDDB1ED5B70E00987446 /* TripList */,
@@ -625,6 +628,7 @@
 				A742B14B1EDEC55000C7EA36 /* CertificateSigningRequest.certSigningRequest in Resources */,
 				22ADDAC51EE9794200EB92F6 /* 瑞士img.jpg in Resources */,
 				A74BDDE11ED6F10B00987446 /* addSpot.png in Resources */,
+				22167DDB1F1DEE3F0077F980 /* addBtn2.png in Resources */,
 				CDEACC631EE03ABE00280CEA /* 英國.png in Resources */,
 				CDEACC6A1EE03ABE00280CEA /* 義大利.png in Resources */,
 				CDEACC5F1EE03ABE00280CEA /* 法國.png in Resources */,

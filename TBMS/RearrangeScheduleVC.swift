@@ -44,7 +44,7 @@ class RearrangeScheduleVC: UIViewController {
     @IBOutlet weak var map: MKMapView!
     
     let shareData = DataManager.shareDataManager
-    let commentModel = GeneralToolModels()
+    let generalModels = GeneralToolModels()
     
     var attractions: [Attraction]!
     var routesDetails: [LegsData]!
@@ -61,13 +61,7 @@ class RearrangeScheduleVC: UIViewController {
     fileprivate let currentPageDotTintColor = UIColor.black
     fileprivate let otherPageDotTintColor = UIColor.lightGray
     fileprivate let scheduleTypeCellColor = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
-    fileprivate let routeColors = [UIColor.brown,
-                                   UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1),
-                                   UIColor.orange,
-                                   UIColor.red,
-                                   UIColor.blue,
-                                   UIColor.purple,
-                                   UIColor.green]
+    fileprivate var routeColors = GeneralToolModels.generalColorSetting
     
     // MARK: - Methods
     override func viewDidLoad() {
@@ -171,6 +165,7 @@ class RearrangeScheduleVC: UIViewController {
                 colorIndex += 1
             }
         }
+        
     }
     
     
@@ -678,6 +673,8 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             let cellContent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
             
             cell.viewPointName.text = cellContent.viewPointName
+            cell.viewPointName.lineBreakMode = .byTruncatingTail
+            
             cell.arrow.image = UIImage(named: arrowImageName)
             cell.trafficInf.text = generateRouteTitleString(cellContent: cellContent)
             
@@ -693,6 +690,8 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
             let cellContent = cellContentsArray[indexPath.item] as! ScheduleAndTrafficCellContent
             
             cell.viewPointName.text = cellContent.viewPointName
+            cell.viewPointName.lineBreakMode = .byTruncatingTail
+            
             cell.viewPointBGBlock.layer.cornerRadius = 10
             cell.viewPointBGBlock.backgroundColor = cellContent.cellColor//scheduleTypeCellColor
             
