@@ -170,6 +170,9 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             print(listArray)
             self.spotTableView.reloadData();
         }
+        
+        let indexPath = IndexPath(row: listArray.count - 1, section: 0)
+        self.spotTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     
     @IBAction func startPlanningBtnPressed(_ sender: UIBarButtonItem) {

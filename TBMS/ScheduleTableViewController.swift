@@ -156,7 +156,7 @@ class ScheduleTableViewController: UITableViewController {
         
         selectCellRow[indexPath.row] = !selectCellRow[indexPath.row]
         
-        tableView.deselectRow(at: indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: false)
         tableView.reloadData()
     }
     
@@ -241,7 +241,9 @@ class ScheduleTableViewController: UITableViewController {
             for spot in pocketSpots {
                 
                 guard spot.spotName != selectSpot.spotName else {
-                    print("WARNING: This spot already in user's pocket")
+                    
+                    let alert = generalModels.prepareCommentAlertVC(title: "無法加入", message: "這個景點已經在收藏中囉", cancelBtnTitle: "OK")
+                    present(alert, animated: true, completion: nil)
                     return
                 }
             }
@@ -275,7 +277,6 @@ extension ScheduleTableViewController {
     
     func parameterURLGenerator(startPoint: String, destination: String, trafficTitle: String) -> String {
         
-        //        let travelMod = seperateTravelModString(trafficTitle: trafficTitle)
         let str = "'\(startPoint)'/'\(destination)'"//&directionsmode=\(travelMod)"
         
         return str
