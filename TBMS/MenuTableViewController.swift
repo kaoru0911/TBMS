@@ -46,10 +46,6 @@ class MenuTableViewController: UITableViewController {
         //註冊，forCellReuseIdentifier是你的TableView裡面設定的Cell名稱
         menuTableView.register(nib, forCellReuseIdentifier: "menuCell")
         
-        //menuTableView.delegate = self
-        
-        //menuTableView.dataSource = self
-        
         cellData.append(("開始規劃" , UIImage(named: "kyoto2")!))
         
         cellData.append(("推薦行程" , UIImage(named: "paris3")!))
@@ -57,12 +53,6 @@ class MenuTableViewController: UITableViewController {
         cellData.append(("庫存行程" , UIImage(named: "Swizerland7")!))
         
         cellData.append(("庫存景點" , UIImage(named: "Swizerland8")!))
-        
-//        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketTripNotifier"), object: nil)
-//
-//        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getSharedTripNotifier"), object: nil
-        //        userDefault.set("FBTest", forKey: "FBSDKAccessToken")
-        //        userDefault.set(nil, forKey: "FBSDKAccessToken")
         
         if userDefault.string(forKey: "FBSDKAccessToken") != nil {
             
@@ -72,29 +62,6 @@ class MenuTableViewController: UITableViewController {
             
             serverCommunicate.useFBLogin()
         }
-        
-        
-        //        serverCommunicate.uploadPocketSpotToServer(spotName: "清水寺")
-        //        serverCommunicate.uploadPocketTripToServer(tripData: (sharedData.pocketTrips?[0])!)
-        //        serverCommunicate.uploadSharedTripToServer(tripData: (sharedData.sharedTrips?[0])!)
-        //        serverCommunicate.deletePocketSpotFromServer(spotName: "清水寺")
-        //        serverCommunicate.deletePocketTripFromServer(tripName: "香港三日遊")
-        //        serverCommunicate.createAccount()
-        //        serverCommunicate.userLogin()
-        //                serverCommunicate.getPocketSpotFromServer()
-        //                serverCommunicate.getPocketTripFromServer()
-        //        serverCommunicate.userInfoUpdate()
-        //                serverCommunicate.getSharedTripFromServer()
-        //                serverCommunicate.uploadTripCoverImgToServer(tripData: (sharedData.pocketTrips?[0])!, Req: "uploadPocketTripCover")
-        //        serverCommunicate.uploadTripCoverImgToServer(tripData: (sharedData.pocketTrips?[0])!, Req: "uploadSharedTripCover")
-        
-        //===========================
-        //        let testTripData = tripData()
-        //        testTripData.ownerUser = "create"
-        //        testTripData.tripName = "日本五日遊"
-        //
-        //        serverCommunicate.getTripSpotFromServer(selectTrip: testTripData, req: serverCommunicate.DOWNLOAD_SHAREDTRIPSPOT_REQ)
-        //===========================
         
         self.view.backgroundColor = .black
         self.tableView.separatorStyle = .none
@@ -113,21 +80,6 @@ class MenuTableViewController: UITableViewController {
         sharedData.selectedProcess = .none
         sharedData.pocketSpot?.removeAll()
         sharedData.pocketTrips?.removeAll()
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(NotificationDidGet),
-                                               name: serverCommunicate.downloadCoverImgNotifier,
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(NotificationDidGet),
-                                               name: serverCommunicate.getPocketSpotNotifier,
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(connectFail),
-                                               name: serverCommunicate.connectServerFail,
-                                               object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -210,6 +162,18 @@ class MenuTableViewController: UITableViewController {
         choosen = cellData[indexPath.row].0
         tableView.deselectRow(at: indexPath, animated: true)
         
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(NotificationDidGet),
+                                               name: serverCommunicate.downloadCoverImgNotifier,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(NotificationDidGet),
+                                               name: serverCommunicate.getPocketSpotNotifier,
+                                               object: nil)
+        
+        
+        
         switch choosen {
         case "開始規劃":
             
@@ -217,6 +181,10 @@ class MenuTableViewController: UITableViewController {
             sharedData.pocketSpot = [tripSpotData]()
             serverCommunicate.getPocketSpotFromServer()
             generalModels.customActivityIndicatory(self.view, startAnimate: true)
+            NotificationCenter.default.addObserver(self,
+                                                   selector: #selector(NotificationDidGet),
+                                                   name: serverCommunicate.getPocketSpotNotifier,
+                                                   object: nil)
             
         case "推薦行程":
             
@@ -227,9 +195,24 @@ class MenuTableViewController: UITableViewController {
                 sharedData.sharedTrips = [tripData]()
                 serverCommunicate.getSharedTripFromServer()
                 generalModels.customActivityIndicatory(self.view, startAnimate: true)
+                NotificationCenter.default.addObserver(self,
+                                                       selector: #selector(NotificationDidGet),
+                                                       name: serverCommunicate.downloadCoverImgNotifier,
+                                                       object: nil)
+                
                 
             } else{
                 performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+            }
+            
+            if sharedData.isLogin {
+                guard let pocketSpot = sharedData.pocketSpot else {
+                    return
+                }
+                
+                if pocketSpot.isEmpty {
+                    serverCommunicate.getPocketSpotFromServer()
+                }
             }
             
         case "庫存行程":
@@ -246,6 +229,10 @@ class MenuTableViewController: UITableViewController {
                 sharedData.pocketTrips = [tripData]()
                 serverCommunicate.getPocketTripFromServer()
                 generalModels.customActivityIndicatory(self.view, startAnimate: true)
+                NotificationCenter.default.addObserver(self,
+                                                       selector: #selector(NotificationDidGet),
+                                                       name: serverCommunicate.downloadCoverImgNotifier,
+                                                       object: nil)
                 
             } else{
                 
@@ -266,6 +253,10 @@ class MenuTableViewController: UITableViewController {
                 
                 serverCommunicate.getPocketSpotFromServer()
                 generalModels.customActivityIndicatory(self.view, startAnimate: true)
+                NotificationCenter.default.addObserver(self,
+                                                       selector: #selector(NotificationDidGet),
+                                                       name: serverCommunicate.getPocketSpotNotifier,
+                                                       object: nil)
                 
             } else{
                 
@@ -275,6 +266,11 @@ class MenuTableViewController: UITableViewController {
         default:
             break
         }
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(connectFail),
+                                               name: serverCommunicate.connectServerFail,
+                                               object: nil)
     }
 
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

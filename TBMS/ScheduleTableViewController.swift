@@ -17,8 +17,9 @@ class ScheduleTableViewController: UITableViewController {
     var data = tripData()
     var spotData = [tripSpotData]()
     var addAttrIndexList = [Int]()
-    var serverCommunicate:ServerConnector = ServerConnector()
+    let serverCommunicate:ServerConnector = ServerConnector()
     let generalModels = GeneralToolModels()
+    let shareData = DataManager.shareDataManager
     
     var filter = TripFilter()
     var nDaySchedule: Int!
@@ -216,12 +217,39 @@ class ScheduleTableViewController: UITableViewController {
     
     @IBAction func saveSpotBtnPress(_ sender: AnyObject) {
         
-        let btnPos: CGPoint = sender.convert(CGPoint.zero, to: self.tableView)
-        let indexPath: NSIndexPath = self.tableView.indexPathForRow(at: btnPos)! as NSIndexPath
+        let btnPos = sender.convert(CGPoint.zero, to: self.tableView)
         
-        let selectSpot = spotData[indexPath.row] as spotData
+        guard let indexPath = self.tableView.indexPathForRow(at: btnPos) else {
+            print("WARNING: indexPathForRow(at: btnPos) is nil")
+            return
+        }
+        
+        let selectSpot = spotData[indexPath.row]
+        
+        guard shareData.isLogin else {
+            print("WARNING: User hasn't login")
+            return
+        }
+        
+        guard let pocketSpots = shareData.pocketSpot else {
+            print("ERROR: pocketSpot is nil")
+            return
+        }
+        
+        if pocketSpots.isEmpty == false {
+            
+            for spot in pocketSpots {
+                
+                guard spot.spotName != selectSpot.spotName else {
+                    print("WARNING: This spot already in user's pocket")
+                    return
+                }
+            }
+        }
         
         selectSpot.spotCountry = data.country
+        
+        shareData.pocketSpot?.append(selectSpot)
         
         generalModels.customActivityIndicatory(self.view, startAnimate: true)
         
