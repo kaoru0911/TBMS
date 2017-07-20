@@ -286,15 +286,13 @@ class CountrySelectTableViewController: UITableViewController, ContinentalViewDe
             let nextPage = segue.destination as! PocketSpotTVC
             
             nextPage.selectedCountry = selectedCountry
-            
-            nextPage.selectedProcess = selectedProcess
+            nextPage.selectedProcess = sharedData.selectedProcess
             
         } else if (segue.identifier == "goTripListViewController") {
             
             let nextPage = segue.destination as! TripListViewController
             
-            nextPage.selectedProcess = selectedProcess
-            
+            nextPage.selectedProcess = sharedData.selectedProcess
             nextPage.selectedCountry = selectedCountry
         }
     }

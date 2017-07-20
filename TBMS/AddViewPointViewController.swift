@@ -245,7 +245,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
             
             let nextPage = segue.destination as! PocketSpotTVC
             nextPage.selectedCountry = sharedData.chooseCountry
-            nextPage.selectedProcess = "開始規劃"
+            nextPage.selectedProcess = .開始規劃
             nextPage.scheduleAttractions = attractionStorage
             //            generalModels.printAllAttractionsDetailToDebug(attractions: attractionStorage, debugTitle: "addViewPoint - prepare storedSpotSegue:")
         }

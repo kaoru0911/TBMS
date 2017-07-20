@@ -32,11 +32,18 @@ class TripFilter: NSObject {
         return resultArray
     }
     
-    func filtBySpotCountry(country:String, spotArray:Array<spotData>) -> Array<spotData> {
+    func filtBySpotCountry(country:String, spotArray:Array<spotData>?) -> Array<spotData> {
+        
+        guard let spots = spotArray else {
+            print("WARNING: spotArray is nil")
+            var spots = [spotData()]
+            spots.removeAll()
+            return spots
+        }
         
         var resultArray = [spotData]()
         
-        resultArray = spotArray.filter { (spotData) -> Bool in
+        resultArray = spots.filter { (spotData) -> Bool in
             spotData.spotCountry == country
         }
         

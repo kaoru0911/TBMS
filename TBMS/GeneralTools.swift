@@ -54,22 +54,24 @@ class GeneralToolModels {
     func customActivityIndicatory(_ viewContainer: UIView, startAnimate:Bool? = true) {
         
         // 做一個透明的view來裝
-        let mainContainer: UIView = UIView(frame: viewContainer.frame)
-        mainContainer.center = viewContainer.center
+        guard let frame = viewContainer.superview?.frame else { return }
+        
+        let mainContainer = UIView(frame: frame)
         mainContainer.backgroundColor = UIColor(white: 0xffffff, alpha: 0.3)
         // background的alpha跟view的alpha不同
-        mainContainer.alpha = 0.5
+        mainContainer.alpha = 0.3
         //================================
         mainContainer.tag = 789456123
-        mainContainer.isUserInteractionEnabled = false
+        mainContainer.isUserInteractionEnabled = true
         
         //創一個手勢在這個view裡面
         let touch = UITapGestureRecognizer(target: self, action: nil)
         mainContainer.addGestureRecognizer(touch)
         
         // 旋轉圈圈放在這個view上
-        let viewBackgroundLoading: UIView = UIView(frame: CGRect(x:0,y: 0,width: 80,height: 80))
-        viewBackgroundLoading.center = viewContainer.center
+        let viewBackgroundLoading = UIView(frame: CGRect(x:0,y: 0,width: 80,height: 80))
+        viewBackgroundLoading.center = CGPoint(x: mainContainer.frame.width/2,
+                                               y: mainContainer.frame.height/2)
         //        viewBackgroundLoading.backgroundColor = UIColor(red:0x7F, green:0x7F, blue:0x7F, alpha: 1)
         viewBackgroundLoading.backgroundColor = UIColor(red:0, green:0, blue:0, alpha: 1)
         //================================
@@ -266,6 +268,19 @@ class GeneralToolModels {
             print(" name: \(name).\n addr: \(addr).\n placeId: \(placeId).\n latCoordinate: \(latCoord)")
         }
         print("------------------------------------------")
+    }
+    
+    func printCellTripDataDetails(tripData: tripData?) {
+        
+        guard let trip = tripData else {
+            print("ERROR: tripData is nil.")
+            return
+        }
+        
+        print("TRIPLISTTEST: \(trip.ownerUser ?? "nothing exist")!!!!")
+        print("TRIPLISTTEST: \(trip.country ?? "nothing exist")!!!!")
+        print("TRIPLISTTEST: \(trip.tripName ?? "nothing exist")!!!!")
+        print("TRIPLISTTEST: \(trip.days ?? 0)!!!!")
     }
 }
 

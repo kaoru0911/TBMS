@@ -293,12 +293,13 @@
 			children = (
 				22BBB6D11EE0551000F3D0FD /* UploadTravelScheduleViewController.swift */,
 				A76BA9FE1ECC697000443947 /* SetStartPointViewController.swift */,
-				A74764641ED83F050059D586 /* Schedule */,
 				A74BDDDF1ED5B7A700987446 /* Login&Register */,
 				A74BDDDE1ED5B78B00987446 /* Menu */,
 				A74BDDDD1ED5B76E00987446 /* CountrySelect */,
-				A74BDDDC1ED5B72F00987446 /* PocketSpot */,
 				22F43F551ECD669800791D55 /* AddViewPoint */,
+				A74BDDDC1ED5B72F00987446 /* PocketSpot */,
+				A74BDDDB1ED5B70E00987446 /* TripList */,
+				A74764641ED83F050059D586 /* Schedule */,
 				22F43F501ECD666900791D55 /* RearrangeSchedule */,
 			);
 			name = Controller;
@@ -365,7 +366,6 @@
 				22167DDA1F1DEE3F0077F980 /* addBtn2.png */,
 				A74BDDE01ED6F10B00987446 /* addSpot.png */,
 				224A869B1F1362FC0050050F /* deleteSpot.png */,
-				A74BDDDB1ED5B70E00987446 /* TripList */,
 				A74BDDD11ED5B69000987446 /* PocketSpotTVC.swift */,
 				A74BDDD21ED5B69000987446 /* PocketSpotTVCell.swift */,
 			);

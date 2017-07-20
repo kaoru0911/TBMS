@@ -13,7 +13,7 @@ import GooglePlaces
 class PocketSpotTVC: UITableViewController {
     
     var selectedCountry: String!
-    var selectedProcess: String!
+    var selectedProcess: SelectedProcess!
     var sharedData = DataManager.shareDataManager
     let server = ServerConnector()
     let generalModel = GeneralToolModels()
@@ -25,6 +25,7 @@ class PocketSpotTVC: UITableViewController {
     var selectedIndex = [Int]()
     var scheduleAttractions = [Attraction]()
     let typeTransformer = DataTypeTransformer()
+    var deleteSpotCheck = false
     
     var spotImages = [CustormerImage]()
     
@@ -32,15 +33,40 @@ class PocketSpotTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        selectedProcess = sharedData.selectedProcess
         // Uncomment the following line to preserve selection between
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        if selectedProcess == .庫存景點 {
+            let btn = UIBarButtonItem(title: "回\(selectedProcess.rawValue)", style: .done, target: self, action: #selector(navigationBtnAction))
+            self.navigationItem.leftBarButtonItem = btn
+        }
+        
+        tripFilter = TripFilter()
+        
+        let inputSpotList = tripFilter.filtBySpotCountry(country: selectedCountry, spotArray: sharedData.pocketSpot)
+        let existSpots = typeTransformer.setValueToSpotDataList(attractionList: scheduleAttractions)
+        spotList = existSpotsFilter(totalSpotDatas: inputSpotList, existSpotDatas: existSpots)
+        
+        guard spotList.isEmpty == false else {
+            return
+        }
+        
+        for _ in 0 ... spotList.count - 1 {
+            
+            let image = CustormerImage()
+            spotImages.append(image)
+        }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     
     // MARK: - Table view data source
     
@@ -66,10 +92,10 @@ class PocketSpotTVC: UITableViewController {
         cell.addSpotBtn.tag = indexPath.row
         
         let image = spotImages[indexPath.row]
-//        image.index = indexPath.row
+        //        image.index = indexPath.row
         cell.spotImage.image = image.image
         
-        if selectedProcess == "庫存景點" {
+        if selectedProcess == .庫存景點 {
             
             cell.addSpotBtn.isHidden = false
             let image = UIImage(named:"deleteSpot.png")
@@ -94,7 +120,7 @@ class PocketSpotTVC: UITableViewController {
             }
             
             let name = googlePlaceCaller.nameAndIndexEncodeToNotificationName(name: self.imageDownloadNotidicationName,
-                                                                         index: image.index ?? 0)
+                                                                              index: image.index ?? 0)
             let notificationName = Notification.Name(rawValue: name)
             
             NotificationCenter.default.addObserver(self, selector: #selector(imgDownLoadSuccessNotificationDidGet), name: notificationName, object: nil)
@@ -109,7 +135,7 @@ class PocketSpotTVC: UITableViewController {
         
         let index = sender.tag
         
-        if selectedProcess != "庫存景點" {
+        if selectedProcess != .庫存景點 {
             
             selectedSpots.append(spotList[index])
             selectedIndex.append(index)
@@ -128,6 +154,7 @@ class PocketSpotTVC: UITableViewController {
             sharedData.pocketSpot?.remove(at: index)
             spotList.remove(at: index)
             server.deletePocketSpotFromServer(spotName: spotName)
+            deleteSpotCheck = true
         }
         
         self.tableView.reloadData()
@@ -138,43 +165,17 @@ class PocketSpotTVC: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    func prepareSpotList(pocketSpot:[spotData]) -> [spotData] {
-        
-        let spotList: [spotData]
-        
-        spotList = tripFilter.filtBySpotCountry(country: selectedCountry, spotArray: pocketSpot)
-        
-        return spotList
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
 }
 
 extension PocketSpotTVC {
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         
-        tripFilter = TripFilter()
-        
-        let inputSpotList = tripFilter.filtBySpotCountry(country: selectedCountry, spotArray: sharedData.pocketSpot!)
-        let existSpots = typeTransformer.setValueToSpotDataList(attractionList: scheduleAttractions)
-        spotList = existSpotsFilter(totalSpotDatas: inputSpotList, existSpotDatas: existSpots)
-        
-        guard spotList.isEmpty == false else {
-            return
-        }
-        
-        for _ in 0 ... spotList.count - 1 {
-            
-            let image = CustormerImage()
-            spotImages.append(image)
-        }
     }
     
-    
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
         
         NotificationCenter.default.removeObserver(self)
         
@@ -237,5 +238,36 @@ extension PocketSpotTVC {
         
         NotificationCenter.default.removeObserver(self, name: notificationName, object: nil)
     }
+    
+    func prepareSpotList(pocketSpot:[spotData]) -> [spotData] {
+        
+        let spotList: [spotData]
+        
+        spotList = tripFilter.filtBySpotCountry(country: selectedCountry, spotArray: pocketSpot)
+        
+        return spotList
+    }
+    
+    func navigationBtnAction() {
+        
+        if deleteSpotCheck {
+            
+            sharedData.pocketSpot?.removeAll()
+            server.getPocketSpotFromServer()
+            generalModel.customActivityIndicatory(self.view, startAnimate: true)
+            NotificationCenter.default.addObserver(self, selector: #selector(dowloadSpotNotifierDidGet), name: server.getPocketSpotNotifier, object: nil)
+            
+        } else {
+            
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    func dowloadSpotNotifierDidGet() {
+        
+        generalModel.customActivityIndicatory(self.view, startAnimate: false)
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 }
 

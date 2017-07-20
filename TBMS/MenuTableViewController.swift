@@ -30,6 +30,10 @@ class MenuTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let color = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
+        self.tabBarController?.tabBar.barTintColor = color
+        self.navigationController?.navigationBar.barTintColor = color
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -56,14 +60,7 @@ class MenuTableViewController: UITableViewController {
         
 //        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketTripNotifier"), object: nil)
 //
-//        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getSharedTripNotifier"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "downloadCoverImgNotifier"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getPocketSpotNotifier"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(connectFail), name: NSNotification.Name(rawValue: "connectServerFail"), object: nil)
-        
+//        NotificationCenter.default.addObserver(self, selector: #selector(NotificationDidGet), name: NSNotification.Name(rawValue: "getSharedTripNotifier"), object: nil
         //        userDefault.set("FBTest", forKey: "FBSDKAccessToken")
         //        userDefault.set(nil, forKey: "FBSDKAccessToken")
         
@@ -310,23 +307,28 @@ extension MenuTableViewController {
         self.tabBarController?.tabBar.isHidden = false
         self.segueLock = false
         sharedData.selectedProcess = .none
-//        sharedData.sharedTrips?.removeAll()
-//        sharedData.pocketTrips?.removeAll()
-//        sharedData.pocketSpot?.removeAll()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
         
-        let color = UIColor(red: 152/255, green: 221/255, blue: 222/255, alpha: 1)
-        self.tabBarController?.tabBar.barTintColor = color
-        self.navigationController?.navigationBar.barTintColor = color
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(NotificationDidGet),
+                                               name: NSNotification.Name(rawValue: "downloadCoverImgNotifier"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(NotificationDidGet),
+                                               name: NSNotification.Name(rawValue: "getPocketSpotNotifier"),
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(connectFail),
+                                               name: NSNotification.Name(rawValue: "connectServerFail"),
+                                               object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         
-        let name = Notification.Name(rawValue: NotificationName.connectServerFail.rawValue)
-        NotificationCenter.default.removeObserver(self, name: name, object: nil)
+//        let name = Notification.Name(rawValue: NotificationName.connectServerFail.rawValue)
+//        NotificationCenter.default.removeObserver(self, name: name, object: nil)
+        NotificationCenter.default.removeObserver(self)
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
