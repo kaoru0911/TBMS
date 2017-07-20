@@ -104,6 +104,7 @@ class PocketSpotTVC: UITableViewController {
         
         if selectedIndex.contains(indexPath.row) {
             cell.selectStatus.isHidden = false
+            cell.addSpotBtn.isHidden = true
         }
         
         if image.imageType == .loadingImg {
@@ -132,6 +133,7 @@ class PocketSpotTVC: UITableViewController {
         
         let index = sender.tag
         let indexPath = IndexPath(row: index, section: 0)
+//        print()
         
         if selectedProcess != .庫存景點 {
             
@@ -139,6 +141,7 @@ class PocketSpotTVC: UITableViewController {
             selectedIndex.append(index)
             sender.isHidden = true
             self.tableView.reloadRows(at: [indexPath], with: .none)
+//            self.tableView.reloadData()
             
         } else {
             
