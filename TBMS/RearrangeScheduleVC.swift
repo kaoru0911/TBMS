@@ -81,7 +81,6 @@ class RearrangeScheduleVC: UIViewController {
         // Setting the routeMapRegion & annotation
         map.delegate = self
         routeMapGenerator(attractions: attractions)
-        
         // general the image whitch will display on the top
     }
     
@@ -861,7 +860,9 @@ extension RearrangeScheduleVC: UICollectionViewDelegate, UICollectionViewDataSou
                 date += 1
             }
         }
+        
         prepareCellsColor(cellContents: cellContentsArray)
+        
         self.collectionView.reloadData()
     }
 }
@@ -940,6 +941,8 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
             map.removeAnnotations(map.annotations)
         }
         
+        var showCalloutAnnotation: CustomerAnnotation?
+        
         var points = [CLLocationCoordinate2D]()
         var latSum = Double()
         var lngSum = Double()
@@ -952,6 +955,7 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
                 print("attr.coordinate isn't exist.")
                 return
             }
+            
             points.append(point)
             
             latSum += Double(point.latitude)
@@ -959,6 +963,10 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
             
             let annotation = createAnnotation(attraction: attr, attrIndex: i)
             map.addAnnotation(annotation)
+            
+            if i == 0 {
+                showCalloutAnnotation = annotation
+            }
         }
         
         let totalPoints = Double(map.annotations.count)
@@ -983,6 +991,13 @@ extension RearrangeScheduleVC: MKMapViewDelegate {
         
         let geodesic = MKGeodesicPolyline(coordinates: points, count: points.count)
         map.add(geodesic)
+        
+        guard let targetAnnotation = showCalloutAnnotation else {
+            print("NOTE: No annotation exist.")
+            return
+        }
+        
+        map.selectAnnotation(targetAnnotation, animated: true)
     }
     
     
