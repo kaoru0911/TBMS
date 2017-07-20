@@ -14,7 +14,9 @@ class GooglePlaceCaller: NSObject {
     
     let generalModels = GeneralToolModels()
     
-    func loadFirstPhotoForPlace(placeID: String, notificationName: String) {
+    func loadFirstPhotoForPlace(placeID: String,
+                                notificationName: String = "",
+                                completion: @escaping (_ image: CustormerImage) -> Void ) {
         
         GMSPlacesClient.shared().lookUpPhotos(forPlaceID: placeID) { (photos, error) -> Void in
             
@@ -27,12 +29,15 @@ class GooglePlaceCaller: NSObject {
             
             if let firstPhoto = photos.results.first {
                 self.loadImageForMetadata(photoMetadata: firstPhoto,
-                                          notificationName: notificationName)
+                                          notificationName: notificationName,
+                                          completion: completion)
             }
         }
     }
     
-    private func loadImageForMetadata(photoMetadata: GMSPlacePhotoMetadata, notificationName: String) {
+    private func loadImageForMetadata(photoMetadata: GMSPlacePhotoMetadata,
+                                      notificationName: String = "",
+                                      completion: @escaping (_ image: CustormerImage) -> Void ) {
         
         GMSPlacesClient.shared().loadPlacePhoto(photoMetadata, callback: {
             (photo, error) -> Void in
@@ -51,9 +56,7 @@ class GooglePlaceCaller: NSObject {
             image.imageType = .downloadImg
             image.index = self.notificationNameDecodeToIndex(notificationName: notificationName)
             
-            
-            let name = Notification.Name(notificationName)
-            NotificationCenter.default.post(name: name, object: image)
+            completion(image)
         })
     }
     

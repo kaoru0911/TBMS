@@ -105,12 +105,77 @@ class MenuTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - Table view data source
-    
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+    override func viewWillAppear(_ animated: Bool) {
+        
+        super.viewWillAppear(true)
+        self.tabBarController?.tabBar.isHidden = false
+        self.segueLock = false
+        sharedData.selectedProcess = .none
+        sharedData.pocketSpot?.removeAll()
+        sharedData.pocketTrips?.removeAll()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(NotificationDidGet),
+                                               name: serverCommunicate.downloadCoverImgNotifier,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(NotificationDidGet),
+                                               name: serverCommunicate.getPocketSpotNotifier,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(connectFail),
+                                               name: serverCommunicate.connectServerFail,
+                                               object: nil)
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        
+        NotificationCenter.default.removeObserver(self)
+    }
+
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let nextPage = segue.destination as! CountrySelectTableViewController
+        nextPage.selectedProcess = choosen
+    }
+    
+    
+    func showAlertMessage(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
+        
+        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
+        
+        alert.addAction(ok)
+        
+        self.present(alert,animated: true,completion: nil)
+    }
+    
+    func NotificationDidGet() {
+        
+        generalModels.customActivityIndicatory(self.view, startAnimate: false)
+        
+        guard segueLock == false else { return }
+        
+        performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
+        
+        segueLock = true
+    }
+    
+    func connectFail() {
+        
+        let alert = generalModels.prepareCommentAlertVC(title: "伺服器連結異常",
+                                                        message: "請先確認網路訊號, 或晚點再做測試唷",
+                                                        cancelBtnTitle: "取消")
+        present(alert, animated: true, completion: nil)
+        
+        generalModels.customActivityIndicatory(self.view, startAnimate: false)
+    }
+    
+    // MARK: - Table view data source
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
@@ -134,7 +199,7 @@ class MenuTableViewController: UITableViewController {
         cell.menuCellName.layer.shadowOpacity = 1
         cell.menuCellName.layer.shadowRadius = 3
         cell.menuCellName.layer.shadowOffset = CGSize(width: 0, height: 0)
-//        cell.menuCellName.shadowColor = .black
+        //        cell.menuCellName.shadowColor = .black
         
         return cell
     }
@@ -158,7 +223,7 @@ class MenuTableViewController: UITableViewController {
             sharedData.selectedProcess = .推薦行程
             
             if sharedData.sharedTrips?.count == 0 {
-    
+                
                 sharedData.sharedTrips = [tripData]()
                 serverCommunicate.getSharedTripFromServer()
                 generalModels.customActivityIndicatory(self.view, startAnimate: true)
@@ -211,126 +276,7 @@ class MenuTableViewController: UITableViewController {
             break
         }
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        let nextPage = segue.destination as! CountrySelectTableViewController
-        nextPage.selectedProcess = choosen
-    }
-    
-    func showAlertMessage(title: String, message: String) {
-        
-        let alert = UIAlertController(title: title, message:message, preferredStyle: .alert)
-        
-        let ok = UIAlertAction(title: "確定", style: .default, handler: nil)
-        
-        alert.addAction(ok)
-        
-        self.present(alert,animated: true,completion: nil)
-    }
-    
-    func NotificationDidGet() {
-        
-        generalModels.customActivityIndicatory(self.view, startAnimate: false)
-        
-        guard segueLock == false else { return }
-        
-        performSegue(withIdentifier: "CountrySelectTableViewController", sender: nil)
-        
-        segueLock = true
-    }
-    
-    func connectFail() {
-        
-        let alert = generalModels.prepareCommentAlertVC(title: "伺服器連結異常",
-                                                        message: "請先確認網路訊號, 或晚點再做測試唷",
-                                                        cancelBtnTitle: "取消")
-        present(alert, animated: true, completion: nil)
-        
-        generalModels.customActivityIndicatory(self.view, startAnimate: false)
-    }
-    
-    /*
-     // Override to support conditional editing of the table view.
-     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
-     return true
-     }
-     */
-    
-    /*
-     // Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the data source
-     tableView.deleteRows(at: [indexPath], with: .fade)
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
-    /*
-     // Override to support rearranging the table view.
-     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-     
-     }
-     */
-    
-    /*
-     // Override to support conditional rearranging of the table view.
-     override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the item to be re-orderable.
-     return true
-     }
-     */
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
-}
 
-extension MenuTableViewController {
-    
-    @IBAction func functionName (_segue: UIStoryboardSegue) {}
-    
-    override func viewWillAppear(_ animated: Bool) {
-        
-        super.viewWillAppear(true)
-        self.tabBarController?.tabBar.isHidden = false
-        self.segueLock = false
-        sharedData.selectedProcess = .none
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(NotificationDidGet),
-                                               name: NSNotification.Name(rawValue: "downloadCoverImgNotifier"),
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(NotificationDidGet),
-                                               name: NSNotification.Name(rawValue: "getPocketSpotNotifier"),
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(connectFail),
-                                               name: NSNotification.Name(rawValue: "connectServerFail"),
-                                               object: nil)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        
-//        let name = Notification.Name(rawValue: NotificationName.connectServerFail.rawValue)
-//        NotificationCenter.default.removeObserver(self, name: name, object: nil)
-        NotificationCenter.default.removeObserver(self)
-    }
-    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         guard let tabBarHeight = self.tabBarController?.tabBar.frame.height else {
@@ -345,4 +291,12 @@ extension MenuTableViewController {
         
         return height
     }
+}
+
+extension MenuTableViewController {
+    
+    @IBAction func functionName (_segue: UIStoryboardSegue) {}
+    
+    
+    
 }

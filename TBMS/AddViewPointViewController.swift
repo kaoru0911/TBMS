@@ -113,7 +113,7 @@ class AddViewPointViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell: viewPointTableViewCell = tableView.dequeueReusableCell(withIdentifier: "viewPointTableViewCell") as! viewPointTableViewCell
+        let cell: ViewPointTableViewCell = tableView.dequeueReusableCell(withIdentifier: "ViewPointTableViewCell") as! ViewPointTableViewCell
         
         cell.noCellLabel.text = "\(indexPath.row + 1 ). "
         cell.spotCellLabel.text = attractionStorage[indexPath.row].attrctionName

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class viewPointTableViewCell: UITableViewCell {
+class ViewPointTableViewCell: UITableViewCell {
 
     @IBOutlet weak var noCellLabel: UILabel!
     @IBOutlet weak var spotCellLabel: UILabel!

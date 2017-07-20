@@ -133,6 +133,7 @@ class GeneralToolModels {
         return alert
     }
     
+    
     private func loginAlertAction(targetVC: UIViewController?, segueID: String) {
         
         guard let vc = targetVC else {
@@ -158,18 +159,6 @@ class GeneralToolModels {
         vc.performSegue(withIdentifier: segueID, sender: vc)
     }
     
-//    @objc private func loginAndGetPocketSpotNotifierDidGet(notification: Notification) {
-//        
-//        guard let targetVC = notification.userInfo?["targetVC"] as? UIViewController else {
-//            print("ERROR: The userInfo pass by the Notification is not a UIViewController")
-//            return
-//        }
-//        
-//        NotificationCenter.default.removeObserver(targetVC,
-//                                                  name: self.getPocketSpotAfterLoginNotifier,
-//                                                  object: nil)
-//    }
-    
     func getPreviousVCinNavigationVC(selfVC: UIViewController, distanceIndex: Int?, tagetVcClass: NSObject? = nil ) -> UIViewController? {
         
         guard let vcs = selfVC.navigationController?.viewControllers else {
@@ -193,25 +182,7 @@ class GeneralToolModels {
             }
             
             return vcs[tagetVcIndex]
-            
-//        } else if let tagetVcClass = tagetVcClass {
-//            
-//            let class = tagetVcClass.
-//            
-//            for i in 0 ... vcs.count - 1 {
-//                
-//                if vcs[i] is tagetVcClass.self {
-//                    
-//                    guard i-1 >= 0 else {
-//                        
-//                        print("ERROR: LoginViewController is the 1st VC in its navigationVC")
-//                        return
-//                    }
-//                    self.navigationController?.popToViewController(vcs[i-1], animated: true)
-//                    break
-//                }
-//            }
-            
+           
         } else {
             return nil
         }

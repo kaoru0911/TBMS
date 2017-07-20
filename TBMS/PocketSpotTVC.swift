@@ -70,16 +70,10 @@ class PocketSpotTVC: UITableViewController {
     
     // MARK: - Table view data source
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
-    }
-    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return spotList.count
     }
-    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "spotCell", for: indexPath) as! PocketSpotTVCell
@@ -125,21 +119,26 @@ class PocketSpotTVC: UITableViewController {
             
             NotificationCenter.default.addObserver(self, selector: #selector(imgDownLoadSuccessNotificationDidGet), name: notificationName, object: nil)
             
-            googlePlaceCaller.loadFirstPhotoForPlace(placeID: placeID, notificationName: name)
+            googlePlaceCaller.loadFirstPhotoForPlace(placeID: placeID, notificationName: name, completion: { (newImage) in
+                
+                self.spotImages[indexPath.row] = newImage
+                tableView.reloadRows(at: [indexPath], with: .none)
+            })
         }
-        
         return cell
     }
     
     @IBAction func addSpotPress(_ sender: UIButton) {
         
         let index = sender.tag
+        let indexPath = IndexPath(row: index, section: 0)
         
         if selectedProcess != .庫存景點 {
             
             selectedSpots.append(spotList[index])
             selectedIndex.append(index)
             sender.isHidden = true
+            self.tableView.reloadRows(at: [indexPath], with: .none)
             
         } else {
             
@@ -151,13 +150,14 @@ class PocketSpotTVC: UITableViewController {
                 return
             }
             
-            sharedData.pocketSpot?.remove(at: index)
-            spotList.remove(at: index)
-            server.deletePocketSpotFromServer(spotName: spotName)
             deleteSpotCheck = true
+            spotList.remove(at: index)
+            spotImages.remove(at: index)
+            sharedData.pocketSpot?.remove(at: index)
+            server.deletePocketSpotFromServer(spotName: spotName)
+            
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
         }
-        
-        self.tableView.reloadData()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

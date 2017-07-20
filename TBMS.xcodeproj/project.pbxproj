@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		22167DDB1F1DEE3F0077F980 /* addBtn2.png in Resources */ = {isa = PBXBuildFile; fileRef = 22167DDA1F1DEE3F0077F980 /* addBtn2.png */; };
+		2222F8FF1F20977B00C09B59 /* viewPointTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2222F8FE1F20977B00C09B59 /* viewPointTableViewCell.swift */; };
 		224A869C1F1362FC0050050F /* deleteSpot.png in Resources */ = {isa = PBXBuildFile; fileRef = 224A869B1F1362FC0050050F /* deleteSpot.png */; };
 		225C00B41EFCE6C500F01F2C /* annotation.png in Resources */ = {isa = PBXBuildFile; fileRef = 225C00B31EFCE6C500F01F2C /* annotation.png */; };
 		229DDBF81EEFB58100488B48 /* GeneralTools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229DDBF71EEFB58000488B48 /* GeneralTools.swift */; };
@@ -76,9 +77,6 @@
 		A76BAA101ECC697000443947 /* MenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BA9FC1ECC697000443947 /* MenuTableViewController.swift */; };
 		A76BAA111ECC697000443947 /* SectionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BA9FD1ECC697000443947 /* SectionInfo.swift */; };
 		A76BAA121ECC697000443947 /* SetStartPointViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BA9FE1ECC697000443947 /* SetStartPointViewController.swift */; };
-		A76BAA131ECC697000443947 /* ViewPointDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BA9FF1ECC697000443947 /* ViewPointDetailViewController.swift */; };
-		A76BAA141ECC697000443947 /* ViewPointListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BAA001ECC697000443947 /* ViewPointListCell.swift */; };
-		A76BAA151ECC697000443947 /* viewPointTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */; };
 		A76BAC401ECC6B4000443947 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76BAC3F1ECC6B4000443947 /* AppDelegate.swift */; };
 		A7929A401ED56A2C0024B4D7 /* ServerConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A3F1ED56A2C0024B4D7 /* ServerConnector.swift */; };
 		A7929A441ED573F00024B4D7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7929A431ED573F00024B4D7 /* RegisterViewController.swift */; };
@@ -113,6 +111,7 @@
 
 /* Begin PBXFileReference section */
 		22167DDA1F1DEE3F0077F980 /* addBtn2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addBtn2.png; sourceTree = "<group>"; };
+		2222F8FE1F20977B00C09B59 /* viewPointTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = viewPointTableViewCell.swift; sourceTree = "<group>"; };
 		224A869B1F1362FC0050050F /* deleteSpot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = deleteSpot.png; sourceTree = "<group>"; };
 		225C00B31EFCE6C500F01F2C /* annotation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = annotation.png; sourceTree = "<group>"; };
 		229DDBF71EEFB58000488B48 /* GeneralTools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralTools.swift; sourceTree = "<group>"; };
@@ -187,9 +186,6 @@
 		A76BA9FC1ECC697000443947 /* MenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTableViewController.swift; sourceTree = "<group>"; };
 		A76BA9FD1ECC697000443947 /* SectionInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionInfo.swift; sourceTree = "<group>"; };
 		A76BA9FE1ECC697000443947 /* SetStartPointViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetStartPointViewController.swift; sourceTree = "<group>"; };
-		A76BA9FF1ECC697000443947 /* ViewPointDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPointDetailViewController.swift; sourceTree = "<group>"; };
-		A76BAA001ECC697000443947 /* ViewPointListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewPointListCell.swift; sourceTree = "<group>"; };
-		A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = viewPointTableViewCell.swift; sourceTree = "<group>"; };
 		A76BAC3F1ECC6B4000443947 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7929A3F1ED56A2C0024B4D7 /* ServerConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerConnector.swift; sourceTree = "<group>"; };
 		A7929A431ED573F00024B4D7 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -318,6 +314,7 @@
 			isa = PBXGroup;
 			children = (
 				A76BA9EE1ECC697000443947 /* AddViewPointViewController.swift */,
+				2222F8FE1F20977B00C09B59 /* viewPointTableViewCell.swift */,
 			);
 			name = AddViewPoint;
 			sourceTree = "<group>";
@@ -442,9 +439,6 @@
 				A76BA9E01ECC67ED00443947 /* Main.storyboard */,
 				22F43F4F1ECD664D00791D55 /* Controller */,
 				22F43F3E1ECD660000791D55 /* Model */,
-				A76BA9FF1ECC697000443947 /* ViewPointDetailViewController.swift */,
-				A76BAA001ECC697000443947 /* ViewPointListCell.swift */,
-				A76BAA011ECC697000443947 /* viewPointTableViewCell.swift */,
 				225C00B21EFA615000F01F2C /* Img */,
 				22ADDAAE1EE96D4300EB92F6 /* coverImg */,
 				A76BA9E31ECC67ED00443947 /* Assets.xcassets */,
@@ -721,6 +715,7 @@
 				A7929A461ED574520024B4D7 /* LoginViewController.swift in Sources */,
 				A74BDDD41ED5B69000987446 /* PocketSpotTVCell.swift in Sources */,
 				A747645F1ED8111F0059D586 /* MemberViewController.swift in Sources */,
+				2222F8FF1F20977B00C09B59 /* viewPointTableViewCell.swift in Sources */,
 				A7929A401ED56A2C0024B4D7 /* ServerConnector.swift in Sources */,
 				22AF44E01ED3086F00F35BAF /* ResponceAndJsonAnalyst.swift in Sources */,
 				A74BDDD91ED5B6A100987446 /* TripListTableViewCell.swift in Sources */,
@@ -728,7 +723,6 @@
 				22F43F441ECD661200791D55 /* ErrorCatch.swift in Sources */,
 				22F43F421ECD661200791D55 /* ProduceScrollViewWithVCArray.swift in Sources */,
 				A76BAA061ECC697000443947 /* ContinentalGroup.swift in Sources */,
-				A76BAA131ECC697000443947 /* ViewPointDetailViewController.swift in Sources */,
 				22BBB6D21EE0551000F3D0FD /* UploadTravelScheduleViewController.swift in Sources */,
 				A76BAA101ECC697000443947 /* MenuTableViewController.swift in Sources */,
 				A76BAA021ECC697000443947 /* AddViewPointViewController.swift in Sources */,
@@ -750,9 +744,7 @@
 				A7929A441ED573F00024B4D7 /* RegisterViewController.swift in Sources */,
 				A76BAA111ECC697000443947 /* SectionInfo.swift in Sources */,
 				A76BAA0D1ECC697000443947 /* DataManager.swift in Sources */,
-				A76BAA141ECC697000443947 /* ViewPointListCell.swift in Sources */,
 				A7929A481ED586FB0024B4D7 /* EmailRegisterViewController.swift in Sources */,
-				A76BAA151ECC697000443947 /* viewPointTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
